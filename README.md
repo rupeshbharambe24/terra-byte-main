@@ -1,73 +1,140 @@
-# Welcome to your Lovable project
+# 🌾 TerraByte – The Ultimate Unified Agriculture Platform
 
-## Project info
+**TerraByte** is a smart agriculture platform powered by AI, IoT, and Machine Learning to empower farmers with real-time decision-making, intelligent crop management, disease detection, and access to government schemes. It offers a seamless web-based interface to monitor soil health, predict yield, detect diseases, automate irrigation, and get expert support.
 
-**URL**: https://lovable.dev/projects/12adf253-1bf4-48fc-99b3-b6679756482a
+---
 
-## How can I edit this code?
+## 📁 Project Structure
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/12adf253-1bf4-48fc-99b3-b6679756482a) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
 ```
 
-**Edit a file directly in GitHub**
+terra-byte-main/
+├── backend/                 # Flask backend for AI models, APIs, and sensor integrations
+├── public/                  # Static frontend assets
+├── src/                     # React + TypeScript source files
+├── index.html               # Entry HTML (Vite)
+├── package.json             # Frontend dependencies and scripts
+├── vite.config.ts           # Vite configuration
+├── tailwind.config.ts       # Tailwind styling setup
+├── tsconfig.\*.json          # TypeScript configurations
+└── app.py (inside backend/) # Flask app entry point
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+````
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🚀 Getting Started
 
-## What technologies are used for this project?
+### 1️⃣ Frontend (React + TypeScript + Vite)
 
-This project is built with:
+```bash
+# Install dependencies
+npm install
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+# Start the development server
+npm run dev
+````
 
-## How can I deploy this project?
+### 2️⃣ Backend (Python Flask)
 
-Simply open [Lovable](https://lovable.dev/projects/12adf253-1bf4-48fc-99b3-b6679756482a) and click on Share -> Publish.
+```bash
+# Move to backend directory
+cd backend
 
-## Can I connect a custom domain to my Lovable project?
+# Run the Flask backend
+python app.py
+```
 
-Yes, you can!
+> ⚠️ Make sure Python 3.x is installed. You may need Flask and other libraries:
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```bash
+pip install flask flask-cors
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+---
+
+## 🔧 Tech Stack
+
+| Layer       | Technology                                      |
+| ----------- | ----------------------------------------------- |
+| Frontend    | React, TypeScript, Tailwind CSS, Vite           |
+| Backend     | Python, Flask                                   |
+| AI/ML       | TensorFlow, PyTorch, OpenCV, Scikit-learn       |
+| Styling     | Tailwind CSS                                    |
+| IoT Sensors | Soil NPK, pH, Moisture (via ESP32/Raspberry Pi) |
+| Deployment  | Localhost (Docker-ready)                        |
+
+---
+
+## 🌟 Features
+
+* 🔍 **AI-Based Crop Recommendation**
+* 🦠 **Image-Based Disease Detection using CNN**
+* 🌡️ **Real-Time Soil Monitoring with IoT Sensors**
+* 💧 **Automated Irrigation Logic**
+* 📈 **Yield & Price Forecasting with ML**
+* 🧾 **Government Scheme Access & Subsidy Info**
+* 👨‍🌾 **Farmer Dashboard with Expert & Peer Forums**
+* 🌦️ **Weather-Based Crop Planning**
+
+---
+
+## 🤖 Machine Learning Models
+
+* Trained CNN models for plant disease classification
+* ML regression for yield prediction based on:
+
+  * Soil health
+  * Weather conditions
+  * Crop type
+* Dataset support for custom training or API data ingestion
+
+---
+
+## 💡 Future Scope
+
+* 🔒 Aadhaar & OTP-based Farmer Login
+* 🌐 Multilingual Voice Assistant for Illiterate Farmers
+* 🛰️ Satellite NDVI Crop Mapping Integration
+* 📱 Mobile PWA (Progressive Web App) Version
+* 🧠 Edge AI Deployment for Offline Use
+
+---
+
+## 🧪 Example Use Case Flow
+
+1. Farmer logs in to dashboard
+2. Inputs soil parameters manually or via IoT
+3. Uploads crop leaf image for disease detection
+4. Gets instant recommendations on:
+
+   * Crop type
+   * Fertilizer use
+   * Irrigation timing
+   * Preventive disease treatment
+5. Monitors yield prediction and weather risks
+
+---
+
+## 📘 License
+
+MIT License.
+Feel free to use, extend, and contribute to this project with credits.
+
+---
+
+## 👥 Contributors
+
+* **Rupesh Bharambe** — Full Stack, AI/ML & System Design
+* **Harshal More** - AI/ML, Data Analytics
+* **Onkar Kalyankar** - AI/ML, Data Analytics
+* **Aniket Wahul** - Web Development
+* **Sanket Sarode** - Web Development
+
+---
+
+## 🌍 Let’s Cultivate Smarter, Together
+
+> "TerraByte brings together technology and tradition—empowering the next generation of agriculture."
+
+```
