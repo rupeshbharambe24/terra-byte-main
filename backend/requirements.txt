@@ -1,0 +1,13 @@
+# Inferred from imports in backend/ (versions not pinned in the original project)
+flask
+flask-cors
+firebase-admin
+tensorflow
+numpy
+pandas
+openpyxl
+scikit-learn
+joblib
+pillow
+requests
+google-generativeai
