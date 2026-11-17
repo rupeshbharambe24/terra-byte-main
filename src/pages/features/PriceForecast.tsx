@@ -62,7 +62,7 @@ const PriceForecast: React.FC = () => {
   useEffect(() => {
     const fetchAvailableCommodities = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/price_forecast/health');
+        const response = await fetch('http://localhost:5000/api/price-forecast/health');
         if (!response.ok) {
           throw new Error('Failed to fetch available commodities');
         }

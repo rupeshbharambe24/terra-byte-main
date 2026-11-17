@@ -10,28 +10,28 @@ class PriceForecast:
         # Path configurations
         self.MODEL_PATHS = {
             'bhindi': {
-                'model': "ai_models\Bhendi\Bhendi_feature_scaler.save",
-                'feature_scaler': "ai_models\Bhendi\Bhendi_feature_scaler.save",
-                'target_scaler': "ai_models\Bhendi\Bhendi_target_scaler.save",
-                'data': "datasets\Bhendi_with_distances.xlsx"
+                'model': "ai_models/Bhendi/Bhendi_price_lstm_model.keras",
+                'feature_scaler': "ai_models/Bhendi/Bhendi_feature_scaler.save",
+                'target_scaler': "ai_models/Bhendi/Bhendi_target_scaler.save",
+                'data': "datasets/Bhendi_with_distances.xlsx"
             },
             'onion': {
-                'model': "ai_models\Onion\onion_price_lstm_model.keras",
-                'feature_scaler': "ai_models\Onion\onion_feature_scaler.save",
-                'target_scaler': "ai_models\Onion\onion_target_scaler.save",
-                'data': "datasets\Onion_Merged_with_distance.xlsx"
+                'model': "ai_models/Onion/onion_price_lstm_model.keras",
+                'feature_scaler': "ai_models/Onion/onion_feature_scaler.save",
+                'target_scaler': "ai_models/Onion/onion_target_scaler.save",
+                'data': "datasets/Onion_Merged_with_distance.xlsx"
             },
             'potato': {
-                'model': "ai_models\Potato\Potato_price_lstm_model.keras",
-                'feature_scaler': "ai_models\Potato\Potato_feature_scaler.save",
-                'target_scaler': "ai_models\Potato\Potato_target_scaler.save",
-                'data': "datasets\Potato_with_distances.xlsx"
+                'model': "ai_models/Potato/Potato_price_lstm_model.keras",
+                'feature_scaler': "ai_models/Potato/Potato_feature_scaler.save",
+                'target_scaler': "ai_models/Potato/Potato_target_scaler.save",
+                'data': "datasets/Potato_with_distances.xlsx"
             },
             'tomato': {
-                'model': "ai_models\Tomato\Tomato_price_lstm_model.keras",
-                'feature_scaler': "ai_models\Tomato\Tomato_feature_scaler.save",
-                'target_scaler': "ai_models\Tomato\Tomato_target_scaler.save",
-                'data': "datasets\Tomato_with_distances.xlsx"
+                'model': "ai_models/Tomato/Tomato_price_lstm_model.keras",
+                'feature_scaler': "ai_models/Tomato/Tomato_feature_scaler.save",
+                'target_scaler': "ai_models/Tomato/Tomato_target_scaler.save",
+                'data': "datasets/Tomato_with_distances.xlsx"
             }
         }
         
