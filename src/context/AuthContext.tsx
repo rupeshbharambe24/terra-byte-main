@@ -12,13 +12,14 @@ import {
 } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 
+// Firebase web config is a publishable client config; override via .env (VITE_FIREBASE_*).
 const firebaseConfig = {
-  apiKey: "AIzaSyDj0dnSq3hN2O6aDBcxcZETMOeS2aNXo4A",
-  authDomain: "terrabyte-auth.firebaseapp.com",
-  projectId: "terrabyte-auth",
-  storageBucket: "terrabyte-auth.firebasestorage.app",
-  messagingSenderId: "800612470562",
-  appId: "1:800612470562:web:0c0f4ef261431d2df85f7b"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY ?? "AIzaSyDj0dnSq3hN2O6aDBcxcZETMOeS2aNXo4A",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN ?? "terrabyte-auth.firebaseapp.com",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID ?? "terrabyte-auth",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET ?? "terrabyte-auth.firebasestorage.app",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID ?? "800612470562",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID ?? "1:800612470562:web:0c0f4ef261431d2df85f7b"
 };
 
 const app = initializeApp(firebaseConfig);

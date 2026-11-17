@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, request, jsonify
 import requests
 from flask_cors import CORS
@@ -5,8 +7,8 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-# Your API key
-API_KEY = "REDACTED"
+# data.gov.in API key (get one at https://data.gov.in) -- read from the environment
+API_KEY = os.getenv("DATA_GOV_IN_API_KEY", "")
 RESOURCE_ID = "9ef84268-d588-465a-a308-a864a43d0070"
 
 @app.route('/api/market-prices', methods=['GET'])

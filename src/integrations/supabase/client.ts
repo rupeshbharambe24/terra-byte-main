@@ -2,8 +2,9 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
-const SUPABASE_URL = "https://chctibmzgjmyinbbjqym.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNoY3RpYm16Z2pteWluYmJqcXltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg0MjMxMTAsImV4cCI6MjA2Mzk5OTExMH0.mZvSr88CvyyxObD_CJCg8rDTWshCKI-I0Rw49HphHLk";
+// Publishable (anon) client values; override via .env (VITE_SUPABASE_*).
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL ?? "https://chctibmzgjmyinbbjqym.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY ?? "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNoY3RpYm16Z2pteWluYmJqcXltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg0MjMxMTAsImV4cCI6MjA2Mzk5OTExMH0.mZvSr88CvyyxObD_CJCg8rDTWshCKI-I0Rw49HphHLk";
 
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";

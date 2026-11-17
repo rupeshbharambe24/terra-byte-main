@@ -17,7 +17,15 @@ def create_app():
     })
     
     # Initialize Firebase
-    cred = credentials.Certificate(os.path.join(os.path.dirname(__file__), 'firebase-serviceAccountKey.json'))
+    # Service-account JSON is NOT committed. Point FIREBASE_CREDENTIALS (or
+    # GOOGLE_APPLICATION_CREDENTIALS) at your own key file, or place it at
+    # backend/firebase-serviceAccountKey.json (git-ignored).
+    cred_path = (
+        os.getenv('FIREBASE_CREDENTIALS')
+        or os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+        or os.path.join(os.path.dirname(__file__), 'firebase-serviceAccountKey.json')
+    )
+    cred = credentials.Certificate(cred_path)
     firebase_app = initialize_app(cred)
     
     # Import all blueprints
