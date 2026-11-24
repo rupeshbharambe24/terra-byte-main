@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from sqlalchemy import CheckConstraint, DateTime, ForeignKey, String, Text
+from sqlalchemy import CheckConstraint, ForeignKey, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
-from terrabyte.db import Base, TimestampMixin, utcnow
+from terrabyte.db import Base, TimestampMixin, UTCDateTime, utcnow
 from terrabyte.models.enums import ModerationStatus, ReportStatus, db_enum
 
 
@@ -22,9 +22,7 @@ class ForumPost(TimestampMixin, Base):
     moderation_status: Mapped[ModerationStatus] = mapped_column(
         db_enum(ModerationStatus), default=ModerationStatus.published, index=True
     )
-    updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), default=utcnow, onupdate=utcnow
-    )
+    updated_at: Mapped[datetime] = mapped_column(UTCDateTime(), default=utcnow, onupdate=utcnow)
 
 
 class ForumReply(TimestampMixin, Base):
@@ -64,7 +62,7 @@ class ForumReport(TimestampMixin, Base):
         db_enum(ReportStatus), default=ReportStatus.open, index=True
     )
     resolved_by_id: Mapped[int | None] = mapped_column(ForeignKey("users.id"))
-    resolved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    resolved_at: Mapped[datetime | None] = mapped_column(UTCDateTime())
 
 
 class Notification(TimestampMixin, Base):
@@ -76,4 +74,4 @@ class Notification(TimestampMixin, Base):
     title: Mapped[str] = mapped_column(String(200))
     body: Mapped[str | None] = mapped_column(Text)
     link: Mapped[str | None] = mapped_column(String(255))
-    read_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    read_at: Mapped[datetime | None] = mapped_column(UTCDateTime())

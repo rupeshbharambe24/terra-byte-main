@@ -3,10 +3,10 @@ from __future__ import annotations
 from datetime import datetime
 from decimal import Decimal
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, Numeric, String, Text
+from sqlalchemy import Boolean, ForeignKey, Integer, Numeric, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from terrabyte.db import Base, TimestampMixin, utcnow
+from terrabyte.db import Base, TimestampMixin, UTCDateTime, utcnow
 from terrabyte.models.enums import (
     OrderStatus,
     PaymentMethod,
@@ -31,9 +31,7 @@ class Product(TimestampMixin, Base):
     description: Mapped[str | None] = mapped_column(Text)
     image_path: Mapped[str | None] = mapped_column(String(255))
     active: Mapped[bool] = mapped_column(Boolean, default=True, index=True)
-    updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), default=utcnow, onupdate=utcnow
-    )
+    updated_at: Mapped[datetime] = mapped_column(UTCDateTime(), default=utcnow, onupdate=utcnow)
 
 
 class Order(TimestampMixin, Base):
@@ -51,13 +49,11 @@ class Order(TimestampMixin, Base):
     delivery_address: Mapped[str] = mapped_column(Text)
     payment_method: Mapped[PaymentMethod] = mapped_column(db_enum(PaymentMethod))
     note: Mapped[str | None] = mapped_column(String(500))
-    updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), default=utcnow, onupdate=utcnow
-    )
-    accepted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    shipped_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    delivered_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    cancelled_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    updated_at: Mapped[datetime] = mapped_column(UTCDateTime(), default=utcnow, onupdate=utcnow)
+    accepted_at: Mapped[datetime | None] = mapped_column(UTCDateTime())
+    shipped_at: Mapped[datetime | None] = mapped_column(UTCDateTime())
+    delivered_at: Mapped[datetime | None] = mapped_column(UTCDateTime())
+    cancelled_at: Mapped[datetime | None] = mapped_column(UTCDateTime())
 
     items: Mapped[list[OrderItem]] = relationship(
         back_populates="order", cascade="all, delete-orphan"

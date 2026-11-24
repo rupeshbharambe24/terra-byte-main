@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from datetime import date, datetime
 
-from sqlalchemy import Date, DateTime, Float, ForeignKey, String, Text
+from sqlalchemy import Date, Float, ForeignKey, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from terrabyte.db import Base, TimestampMixin, utcnow
+from terrabyte.db import Base, TimestampMixin, UTCDateTime, utcnow
 from terrabyte.models.enums import ConsultationStatus, db_enum
 
 
@@ -43,9 +43,7 @@ class Consultation(TimestampMixin, Base):
     status: Mapped[ConsultationStatus] = mapped_column(
         db_enum(ConsultationStatus), default=ConsultationStatus.open, index=True
     )
-    updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), default=utcnow, onupdate=utcnow
-    )
+    updated_at: Mapped[datetime] = mapped_column(UTCDateTime(), default=utcnow, onupdate=utcnow)
 
     messages: Mapped[list[ConsultationMessage]] = relationship(
         back_populates="consultation",

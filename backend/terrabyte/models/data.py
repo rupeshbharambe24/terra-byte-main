@@ -7,7 +7,6 @@ from typing import Any
 from sqlalchemy import (
     JSON,
     Date,
-    DateTime,
     Float,
     ForeignKey,
     Numeric,
@@ -16,7 +15,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import Mapped, mapped_column
 
-from terrabyte.db import Base, TimestampMixin, utcnow
+from terrabyte.db import Base, TimestampMixin, UTCDateTime, utcnow
 from terrabyte.models.enums import LedgerType, db_enum
 
 
@@ -61,7 +60,7 @@ class MandiPrice(Base):
     max_price: Mapped[Decimal] = mapped_column(Numeric(12, 2))
     modal_price: Mapped[Decimal] = mapped_column(Numeric(12, 2))
     source: Mapped[str] = mapped_column(String(120))
-    fetched_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    fetched_at: Mapped[datetime] = mapped_column(UTCDateTime(), default=utcnow)
 
 
 class ModelEvaluation(Base):
@@ -75,5 +74,5 @@ class ModelEvaluation(Base):
     dataset: Mapped[str] = mapped_column(String(200))
     metric_name: Mapped[str] = mapped_column(String(60))
     value: Mapped[float] = mapped_column(Float)
-    evaluated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    evaluated_at: Mapped[datetime] = mapped_column(UTCDateTime(), default=utcnow)
     details: Mapped[dict[str, Any] | None] = mapped_column(JSON)
