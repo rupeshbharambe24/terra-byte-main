@@ -2,14 +2,25 @@
 
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-Vite-3178C6?logo=typescript&logoColor=white)
-![Flask](https://img.shields.io/badge/Flask-backend-000000?logo=flask)
-![TensorFlow](https://img.shields.io/badge/TensorFlow-Keras-FF6F00?logo=tensorflow&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-backend-009688?logo=fastapi&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-Postgres--ready-003B57?logo=sqlite&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
-![Status](https://img.shields.io/badge/status-prototype-orange)
+![Status](https://img.shields.io/badge/status-rebuilding-orange)
 
-**TerraByte** is a smart agriculture platform powered by AI, IoT, and Machine Learning to empower farmers with real-time decision-making, intelligent crop management, disease detection, and access to government schemes. It offers a seamless web-based interface to monitor soil health, detect diseases, plan irrigation, forecast prices, and get expert support.
+**TerraByte** is a web platform for farmers in Maharashtra with five roles: farmers, agri-input vendors,
+equipment rental vendors, agriculture experts and admins. The UI is available in **English, Hindi and Marathi**.
 
-> **Status:** prototype. Several dashboard pages (finance, soil monitoring, irrigation, analytics) use mock data in the UI; the AI features below are backed by real models in `backend/`.
+> **Status (Phase 1 of 4 done).** The prototype is being rebuilt so that every workflow, model and number is
+> real; only the users are test accounts.
+>
+> - **Real now:** our own FastAPI backend and database (Firebase/Supabase removed), registration and sign-in
+>   (phone or email + password), server-side roles, admin approval of vendors/experts, admin *User management*
+>   and *Approvals* pages, notifications API, English/Hindi/Marathi shell, mobile layout.
+> - **Still demo:** every other page (dashboards, marketplace, rentals, soil, irrigation, crop planning,
+>   disease detection, price forecast, schemes, KVK, forum, farm accounts, settings, vendor/hardware/expert
+>   pages, admin analytics/moderation/KVK/model pages). Each shows a **"Demo data — this page is being
+>   rebuilt"** banner. The old disease, fertilizer and price models are not served (their API answers
+>   `503 being rebuilt`) until they are retrained and evaluated in Phase 3.
 
 ---
 
@@ -17,143 +28,82 @@
 
 ```text
 terra-byte-main/
-├── backend/                     # Flask backend for AI models and APIs
-│   ├── app.py                   # Flask app entry point (registers all blueprints)
-│   ├── current_market_prices.py # Stand-alone Flask app: live mandi prices via data.gov.in
-│   ├── disease_detection.py     # Keras CNN crop-disease classifier (+ Gemini explanation)
-│   ├── fertilizer_recommendation.py  # scikit-learn fertilizer recommender
-│   ├── price_forecast.py        # Per-commodity LSTM price forecaster
-│   ├── routes/                  # Blueprints: disease, fertilizer, price-forecast, marketplace, equipment
-│   ├── ai_models/               # Trained models (.keras, .pkl) and scalers
-│   ├── datasets/                # Commodity price history (.xlsx) used by the forecaster
-│   └── requirements.txt
-├── public/                      # Static frontend assets
-├── src/                         # React + TypeScript source (pages, components, contexts)
-├── index.html                   # Entry HTML (Vite)
-├── package.json                 # Frontend dependencies and scripts
-├── vite.config.ts               # Vite configuration (dev server on :8080)
-├── tailwind.config.ts           # Tailwind styling setup
-├── tsconfig.*.json              # TypeScript configurations
-└── .env.example                 # Environment variables (frontend + backend)
+├── backend/                 # FastAPI API (uv project)
+│   ├── terrabyte/           # app: config, db, models/, schemas/, routers/, services/, security, seed
+│   ├── tests/               # pytest
+│   ├── legacy/              # old Flask prototype + its models and Pune price datasets (reference only)
+│   ├── DEMO_ACCOUNTS.md     # demo logins created by the seed command
+│   └── .env.example         # backend settings (copy to backend/.env)
+├── src/                     # React + TypeScript frontend
+│   ├── lib/api.ts           # the single API client
+│   ├── context/             # AuthContext (backend auth), ThemeContext
+│   ├── locales/{en,hi,mr}/  # translations
+│   └── pages/               # pages (lazy-loaded per route)
+├── .github/workflows/ci.yml # backend + frontend CI
+└── .env.example             # frontend settings
 ```
 
 ---
 
 ## 🚀 Getting Started
 
-### 1️⃣ Frontend (React + TypeScript + Vite)
+Requirements: [uv](https://docs.astral.sh/uv/) (installs Python 3.12 for you) and Node.js 20+.
 
-```bash
-# Install dependencies
-npm install
-
-# Start the development server (http://localhost:8080)
-npm run dev
-```
-
-The Supabase / Firebase **web** client config is publishable and has defaults in the code; to point the app at your own projects, copy the `VITE_*` entries from `.env.example` into `.env.local`.
-
-### 2️⃣ Backend (Python Flask)
+### 1️⃣ Backend (FastAPI, http://127.0.0.1:8000)
 
 ```bash
 cd backend
-pip install -r requirements.txt
-
-# Secrets are read from the environment (see .env.example)
-export FIREBASE_CREDENTIALS=/absolute/path/to/firebase-serviceAccountKey.json
-export GEMINI_API_KEY=your-gemini-api-key
-
-# Run from inside backend/ (model paths are relative) - serves http://localhost:5000
-python app.py
+uv sync
+uv run terrabyte-seed     # creates backend/data/terrabyte.db and the demo accounts (safe to re-run)
+uv run terrabyte-api      # or: uv run uvicorn terrabyte.main:app --port 8000
 ```
 
-> 🔐 **Firebase Admin credentials are not committed.** Create a service account in your Firebase project (*Project settings → Service accounts → Generate new private key*) and either set `FIREBASE_CREDENTIALS` (or `GOOGLE_APPLICATION_CREDENTIALS`) to its path, or save it as `backend/firebase-serviceAccountKey.json` (that path is git-ignored).
+Settings are optional in development; copy `backend/.env.example` to `backend/.env` to change them
+(database URL, JWT secret, CORS origins, upload size, data.gov.in key). API docs: http://127.0.0.1:8000/api/docs.
 
-Live market prices are served by a separate script that needs a free [data.gov.in](https://data.gov.in) API key:
+Create a real admin (admins cannot self-register): `uv run terrabyte-admin create-admin --name "..." --phone 9XXXXXXXXX`.
+
+### 2️⃣ Frontend (Vite, http://localhost:8080)
 
 ```bash
-cd backend
-export DATA_GOV_IN_API_KEY=your-data-gov-in-api-key
-python current_market_prices.py   # also binds :5000, so run it instead of app.py when testing prices
+npm ci
+npm run dev               # proxies /api to the backend on :8000
 ```
 
-<details>
-<summary><b>API endpoints (backend/app.py)</b></summary>
+### 🔑 Demo accounts
 
-| Method | Path | Purpose |
-| ------ | ---- | ------- |
-| POST | `/api/disease/detect` | Classify a leaf image (38 PlantVillage-style classes) |
-| POST | `/api/fertilizer-recommendation` | Fertilizer recommendation from soil/crop inputs |
-| GET  | `/api/price-forecast/health` | Which commodity forecasters are loaded |
-| POST | `/api/price-forecast/` | LSTM price forecast (onion, potato, tomato, bhindi) |
-| POST | `/api/marketplace/purchase` | Create a marketplace order (Firestore) |
-| POST | `/api/equipment/rent` | Create an equipment rental (Firestore) |
+See [`backend/DEMO_ACCOUNTS.md`](backend/DEMO_ACCOUNTS.md): one or more test accounts per role (admin,
+2 farmers, 2 vendors + 1 pending vendor, 2 equipment rental vendors, 1 expert). They are for local testing only.
 
-`current_market_prices.py` adds `GET /api/market-prices?market=` and `GET /api/commodity-details?market=&commodity=`.
+### ✅ Checks
 
-</details>
+```bash
+cd backend && uv run ruff check . && uv run pytest
+npm run typecheck && npm run lint && npm test && npm run build
+```
 
 ---
 
 ## 🔧 Tech Stack
 
-| Layer       | Technology                                                  |
-| ----------- | ----------------------------------------------------------- |
-| Frontend    | React, TypeScript, Vite, Tailwind CSS, shadcn/ui            |
-| Auth / Data | Firebase Auth + Firestore, Supabase client                  |
-| Backend     | Python, Flask, Flask-CORS, Firebase Admin SDK               |
-| AI/ML       | TensorFlow/Keras (CNN, LSTM), scikit-learn, Google Gemini   |
-| External    | data.gov.in mandi price API                                 |
-| IoT Sensors | Soil NPK, pH, Moisture (planned; UI uses simulated readings) |
-| Deployment  | Localhost                                                   |
+| Layer     | Technology                                                                 |
+| --------- | -------------------------------------------------------------------------- |
+| Frontend  | React 18, TypeScript, Vite, Tailwind CSS, shadcn/ui, TanStack Query, i18next |
+| Backend   | Python 3.12, FastAPI, SQLAlchemy 2, Pydantic, Argon2 passwords, JWT         |
+| Database  | SQLite (default), Postgres via `DATABASE_URL`                               |
+| Tests/CI  | pytest, ruff, Vitest, Testing Library, GitHub Actions                       |
 
 ---
 
-## 🌟 Features
+## 🗺️ Roadmap
 
-* 🔍 **AI-Based Crop Planning**
-* 🦠 **Image-Based Disease Detection using CNN**
-* 🌡️ **Soil Monitoring Dashboard** (IoT-ready UI)
-* 💧 **Smart Irrigation Planning**
-* 📈 **Commodity Price Forecasting with LSTM**
-* 🧪 **Precision Fertilizer Recommendation**
-* 🛒 **Marketplace & Equipment Rentals**
-* 🧾 **Government Scheme Access & Subsidy Info**
-* 👨‍🌾 **Role-based Dashboards** (farmer, vendor, hardware vendor, expert, admin) with Expert & Peer Forums
-
----
-
-## 🤖 Machine Learning Models
-
-* **Crop disease classifier** – Keras CNN (`ai_models/crop-disease-model.keras`) over 38 PlantVillage-style classes; Gemini generates treatment guidance for the predicted class
-* **Fertilizer recommender** – scikit-learn model (`ai_models/fertilizer_model.pkl` + label encoders)
-* **Price forecaster** – one LSTM per commodity (onion, potato, tomato, bhindi) trained on the market price histories in `backend/datasets/`
-
----
-
-## 💡 Future Scope
-
-* 🔒 Aadhaar & OTP-based Farmer Login
-* 🌐 Multilingual Voice Assistant for Illiterate Farmers
-* 🛰️ Satellite NDVI Crop Mapping Integration
-* 📡 Live IoT sensor ingestion (ESP32 / Raspberry Pi)
-* 📱 Mobile PWA (Progressive Web App) Version
-* 🧠 Edge AI Deployment for Offline Use
-
----
-
-## 🧪 Example Use Case Flow
-
-1. Farmer logs in to dashboard
-2. Inputs soil parameters
-3. Uploads crop leaf image for disease detection
-4. Gets instant recommendations on:
-
-   * Crop type
-   * Fertilizer use
-   * Irrigation timing
-   * Preventive disease treatment
-5. Checks price forecasts before selling at the mandi
+1. **Foundation** (done): backend, data model, auth, roles, approvals, seed users, i18n, mobile layout, CI.
+2. **Workflows:** marketplace orders, equipment bookings, consultations and KVKs, forum and moderation,
+   notifications, farm accounts, real admin analytics.
+3. **Real data and models:** weather (Open-Meteo), FAO-56 irrigation, soil-test fertilizer doses from official
+   recommendations, mandi prices from data.gov.in, honestly benchmarked price forecasts, a retrained disease
+   model that can say "not sure", curated schemes and KVK directory, model metrics from held-out evaluations.
+4. **Polish:** full Hindi/Marathi coverage, accessibility, performance, deployment notes.
 
 ---
 
