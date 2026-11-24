@@ -48,7 +48,8 @@ def test_seed_is_idempotent(client):
         first = seed(db)
         second = seed(db)
         assert first["users"] == len(DEMO_USERS)
-        assert second == {"users": 0, "fields": 0, "products": 0, "equipment": 0}
+        assert first["walkthrough"] == 1
+        assert second == {"users": 0, "fields": 0, "products": 0, "equipment": 0, "walkthrough": 0}
         assert db.query(User).filter(User.status == UserStatus.pending).count() == 1
         assert db.query(Product).count() == first["products"] > 0
 
@@ -61,3 +62,29 @@ def test_catalog_lists_seeded_products(client):
     assert products["total"] > 0 and all(p["vendor_name"] for p in products["items"])
     equipment = client.get("/api/equipment", headers=auth_header(token)).json()
     assert equipment["total"] > 0
+
+
+def test_seed_walkthrough_covers_every_workflow(client):
+    from terrabyte.models import (
+        KVK,
+        Booking,
+        Consultation,
+        ForumPost,
+        ForumReport,
+        KnowledgeArticle,
+        LedgerEntry,
+        Notification,
+        Order,
+    )
+
+    with client.app.state.db.session_factory() as db:
+        seed(db)
+        statuses = {o.status.value for o in db.query(Order)}
+        assert statuses == {"delivered", "shipped", "placed", "accepted", "rejected"}
+        assert {b.status.value for b in db.query(Booking)} == {"accepted", "requested", "completed"}
+        assert {c.status.value for c in db.query(Consultation)} == {"answered", "open"}
+        assert db.query(LedgerEntry).count() == 2  # delivered order + completed rental only
+        assert db.query(ForumPost).count() == 3 and db.query(ForumReport).count() == 1
+        assert db.query(KnowledgeArticle).filter_by(published=True).count() == 1
+        assert db.query(Notification).count() > 0
+        assert db.query(KVK).count() == 0  # filled only by the verified import

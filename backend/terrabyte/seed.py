@@ -1,15 +1,20 @@
 """``terrabyte-seed``: idempotent demo data (test users for every role + starter listings).
 
 Only the *users* are fake. Products and equipment are clearly labelled as listings entered by
-demo vendors; their prices are vendor-set listing prices, not market data. No agronomic numbers
-(soil tests, yields, mandi prices) are seeded.
+demo vendors; their prices are vendor-set listing prices, not market data. A small walkthrough
+(orders in different states, bookings, a consultation thread, forum posts, an expert article) is
+created once, through the same service functions the API uses, and is authored by the demo users
+and labelled "(demo)". No agronomic numbers (soil tests, yields, mandi prices, doses) are seeded,
+and the KVK directory is left empty until the verified list is imported
+(``terrabyte-import-kvk``).
 """
 
 from __future__ import annotations
 
 import argparse
+import sys
 from dataclasses import dataclass, field
-from datetime import date
+from datetime import date, datetime, time, timedelta
 from decimal import Decimal
 from pathlib import Path
 
@@ -17,18 +22,36 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from terrabyte.config import BACKEND_DIR, get_settings
-from terrabyte.db import Database, utcnow
+from terrabyte.db import Base, Database, utcnow
 from terrabyte.models import (
+    Booking,
+    BookingStatus,
     Equipment,
     Field,
+    ForumPost,
+    ForumReply,
+    ForumReport,
+    KnowledgeArticle,
     Language,
+    Order,
+    PaymentMethod,
     Product,
     ProductCategory,
+    RentalUnit,
     User,
     UserRole,
     UserStatus,
 )
+from terrabyte.schemas.advisory import ConsultationIn, MessageIn
+from terrabyte.schemas.market import OrderIn, OrderLineIn
+from terrabyte.schemas.rental import BookingIn
 from terrabyte.security import hash_password
+from terrabyte.services import consultations as consultation_service
+from terrabyte.services.bookings import change_booking_status, create_booking
+from terrabyte.services.common import money
+from terrabyte.services.ledger import record_booking_expense
+from terrabyte.services.orders import change_order_status, place_orders
+from terrabyte.timeutil import IST, today_ist
 
 DEMO_PASSWORD = "Demo@12345"
 DEMO_NOTE = "Demo listing entered by a seeded test vendor; the price is set by the vendor."
@@ -330,7 +353,217 @@ def seed(db: Session, reset: bool = False) -> dict[str, int]:
         counts["equipment"] += 1
 
     db.commit()
+    counts["walkthrough"] = int(seed_walkthrough(db, users))
     return counts
+
+
+def _product(db: Session, owner: User, name: str) -> Product:
+    return db.scalars(
+        select(Product).where(Product.vendor_id == owner.id, Product.name == name)
+    ).one()
+
+
+def _equipment(db: Session, owner: User, name: str) -> Equipment:
+    return db.scalars(
+        select(Equipment).where(Equipment.owner_id == owner.id, Equipment.name == name)
+    ).one()
+
+
+def _at(day: date, hour: int) -> datetime:
+    return datetime.combine(day, time(hour), tzinfo=IST)
+
+
+def seed_walkthrough(db: Session, users: dict[str, User]) -> bool:
+    """Create the demo walkthrough once (skipped when the demo farmers already have orders)."""
+    farmer, farmer2 = users["farmer_pune"], users["farmer_nashik"]
+    if db.scalar(select(Order.id).where(Order.buyer_id.in_([farmer.id, farmer2.id])).limit(1)):
+        return False
+    v1, v2 = users["vendor_pune"], users["vendor_nashik"]
+    h1, h2, expert = users["hardware_pune"], users["hardware_nashik"], users["expert"]
+    address1 = "Demo address: Narayangaon, Tal. Junnar, Dist. Pune"
+    address2 = "Demo address: Niphad, Dist. Nashik"
+
+    def order(buyer: User, address: str, lines: list[tuple[Product, int]], note: str) -> Order:
+        data = OrderIn(
+            items=[OrderLineIn(product_id=p.id, quantity=q) for p, q in lines],
+            delivery_address=address,
+            payment_method=PaymentMethod.cod,
+            note=note,
+        )
+        return place_orders(db, buyer, data)[0]
+
+    # Marketplace: one order in each state of the fulfilment flow.
+    o = order(farmer, address1, [(_product(db, v1, "Urea, neem-coated"), 2)], "Demo order")
+    for action in ("accept", "ship", "deliver"):
+        change_order_status(db, v1, o.id, action, None)  # delivered -> farm-accounts entry
+    o = order(farmer, address1, [(_product(db, v1, "Onion seed (open-pollinated)"), 1)], "Demo")
+    for action in ("accept", "ship"):
+        change_order_status(db, v1, o.id, action, None)
+    order(farmer, address1, [(_product(db, v2, "Neem oil 1500 ppm"), 2)], "Demo order")
+    o = order(farmer2, address2, [(_product(db, v2, "Muriate of Potash (MOP)"), 1)], "Demo")
+    change_order_status(db, v2, o.id, "accept", None)
+    o = order(farmer2, address2, [(_product(db, v2, "Single Super Phosphate (SSP)"), 2)], "Demo")
+    change_order_status(db, v2, o.id, "reject", "Demo: no delivery to this village this week")
+
+    # Rentals: an accepted and a requested booking ahead, one completed rental in the past.
+    tomorrow = today_ist() + timedelta(days=1)
+    tractor = _equipment(db, h1, "Tractor 45 HP with rotavator and operator")
+    b = create_booking(
+        db,
+        farmer,
+        BookingIn(
+            equipment_id=tractor.id,
+            unit=RentalUnit.hour,
+            start_at=_at(tomorrow, 8),
+            end_at=_at(tomorrow, 11),
+            note="Demo booking: rotavator for the road-side plot",
+        ),
+    )
+    change_booking_status(db, h1, b.id, "accept", None)
+    mini = _equipment(db, h2, "Mini tractor 20 HP for orchards")
+    create_booking(
+        db,
+        farmer2,
+        BookingIn(
+            equipment_id=mini.id,
+            unit=RentalUnit.day,
+            start_at=_at(tomorrow + timedelta(days=2), 0),
+            end_at=_at(tomorrow + timedelta(days=3), 0),
+            note="Demo booking request",
+        ),
+    )
+    sprayer = _equipment(db, h1, "Power sprayer (petrol engine)")
+    past = today_ist() - timedelta(days=6)
+    done = Booking(
+        equipment_id=sprayer.id,
+        farmer_id=farmer.id,
+        start_at=_at(past, 0),
+        end_at=_at(past + timedelta(days=1), 0),
+        unit=RentalUnit.day,
+        units=1,
+        rate_inr=money(sprayer.rate_per_day_inr or 0),
+        amount_inr=money(sprayer.rate_per_day_inr or 0),
+        status=BookingStatus.completed,
+        note="Demo booking (completed)",
+        accepted_at=_at(past - timedelta(days=2), 10),
+        completed_at=_at(past + timedelta(days=1), 9),
+    )
+    db.add(done)
+    db.flush()
+    record_booking_expense(db, done)
+    db.commit()
+
+    # Consultations: one answered thread, one open question waiting for an expert.
+    upload_dir = get_settings().upload_dir
+    c = consultation_service.create(
+        db,
+        farmer,
+        ConsultationIn(
+            crop="Onion",
+            category="nutrient",
+            question=(
+                "(Demo question) Leaf tips are turning yellow in the well-side onion plot, a few "
+                "weeks after transplanting. What should I check first?"
+            ),
+        ),
+        upload_dir,
+    )
+    consultation_service.claim(db, expert, c.id)
+    consultation_service.add_message(
+        db,
+        expert,
+        c.id,
+        MessageIn(
+            body=(
+                "(Demo reply from a test expert account, not agronomic advice.) Please tell me "
+                "when you last irrigated and fertilised, whether the yellowing starts on older or "
+                "younger leaves, and send a close photo of a few leaves. A recent soil test report "
+                "would also help."
+            )
+        ),
+        upload_dir,
+    )
+    consultation_service.create(
+        db,
+        farmer2,
+        ConsultationIn(
+            crop="Grape",
+            category="disease",
+            question=(
+                "(Demo question) White powdery patches are appearing on some grape leaves after "
+                "cloudy days. Can an expert tell me what to look for?"
+            ),
+        ),
+        upload_dir,
+    )
+
+    # Expert knowledge: one published article (about using the platform) and one draft.
+    db.add_all(
+        [
+            KnowledgeArticle(
+                author_id=expert.id,
+                title="How to ask a question that an expert can answer (demo article)",
+                crop=None,
+                body=(
+                    "This is a demo article written by a test expert account.\n\n"
+                    "When you ask a question, please include: the crop and its stage, which part "
+                    "of the plant is affected and since when, what you applied recently "
+                    "(irrigation, fertiliser, sprays), and clear photos of the whole plant and of "
+                    "a close-up of the problem. If you have a Soil Health Card or a recent soil "
+                    "test, mention it."
+                ),
+                published=True,
+                published_at=utcnow(),
+            ),
+            KnowledgeArticle(
+                author_id=expert.id,
+                title="Draft: questions to ask before the rabi season (demo draft)",
+                body="Demo draft. Not published, so farmers cannot see it yet.",
+                published=False,
+            ),
+        ]
+    )
+
+    # Forum: two discussions with replies and one open report for the moderation queue.
+    p1 = ForumPost(
+        author_id=farmer.id,
+        title="Sharing a rotavator booking near Narayangaon? (demo)",
+        body="(Demo post) Is anyone nearby interested in sharing a rotavator booking next week?",
+        category="equipment",
+        crop=None,
+    )
+    p2 = ForumPost(
+        author_id=farmer2.id,
+        title="Soil testing lab near Niphad (demo)",
+        body="(Demo post) Has anyone had their soil tested near Niphad? How long did it take?",
+        category="soil_water",
+    )
+    p3 = ForumPost(
+        author_id=farmer2.id,
+        title="Selling used drip lateral rolls (demo)",
+        body="(Demo post) Call me for used drip lateral rolls.",
+        category="market",
+    )
+    db.add_all([p1, p2, p3])
+    db.flush()
+    db.add_all(
+        [
+            ForumReply(post_id=p1.id, author_id=farmer2.id, body="(Demo reply) Too far for me."),
+            ForumReply(
+                post_id=p2.id,
+                author_id=expert.id,
+                body="(Demo reply) Ask at your taluka agriculture office about Soil Health Card "
+                "sampling in your village.",
+            ),
+            ForumReport(
+                reporter_id=farmer.id,
+                post_id=p3.id,
+                reason="(Demo report) Advertisement, not a discussion.",
+            ),
+        ]
+    )
+    db.commit()
+    return True
 
 
 def demo_accounts_markdown() -> str:
@@ -356,9 +589,16 @@ def demo_accounts_markdown() -> str:
         "",
         "- The pending vendor (`9000000023`) cannot log in until an admin approves it on",
         "  *Admin → Vendor approvals*; use it to try the approval flow.",
-        "- `uv run terrabyte-seed --reset` restores the passwords and statuses above.",
+        "- `uv run terrabyte-seed --reset` **wipes the development database** and recreates it",
+        "  with these accounts and the demo walkthrough (re-run `terrabyte-import-kvk` after it).",
         "- Starter products and equipment belong to the demo vendors. They are labelled as demo",
         "  listings; prices are vendor-entered listing prices, not market data.",
+        "- The walkthrough (created once): orders in every state (delivered, shipped, placed,",
+        "  accepted, rejected), an accepted and a requested equipment booking, one completed",
+        "  rental, a consultation thread, an open question, an expert article, forum posts and",
+        '  one open report. All of it is authored by the demo users and marked "(demo)".',
+        "- The KVK directory is empty until the verified list is imported with",
+        "  `uv run terrabyte-import-kvk <file.json>`.",
         "- Create a real admin with `uv run terrabyte-admin create-admin` (admins cannot",
         "  self-register).",
         "",
@@ -371,13 +611,21 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument(
         "--reset",
         action="store_true",
-        help="reset demo account passwords, statuses and profile fields",
+        help="DROP every table and recreate the database with fresh demo data (development only)",
     )
     parser.add_argument("--no-write", action="store_true", help="do not write DEMO_ACCOUNTS.md")
     args = parser.parse_args(argv)
 
     settings = get_settings()
     database = Database(settings.database_url)
+    if args.reset:
+        if settings.is_production:
+            print("--reset is refused when ENVIRONMENT=production.", file=sys.stderr)
+            raise SystemExit(2)
+        from terrabyte import models  # noqa: F401  (registers every table)
+
+        Base.metadata.drop_all(database.engine)
+        print("Dropped all tables (--reset).")
     database.create_all()
     with database.session_factory() as db:
         counts = seed(db, reset=args.reset)
