@@ -17,8 +17,10 @@ from terrabyte.errors import install_error_handlers
 from terrabyte.middleware import BodySizeLimitMiddleware
 from terrabyte.routers import (
     admin,
+    advisory,
     auth,
     farm,
+    forum,
     health,
     market,
     me,
@@ -73,6 +75,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         market,
         rentals,
         farm,
+        advisory,
+        forum,
         uploads,
         rebuilding,
     ):

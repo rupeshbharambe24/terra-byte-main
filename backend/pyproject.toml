@@ -21,6 +21,7 @@ dependencies = [
 terrabyte-api = "terrabyte.main:run"
 terrabyte-seed = "terrabyte.seed:main"
 terrabyte-admin = "terrabyte.cli:main"
+terrabyte-import-kvk = "terrabyte.kvk_import:main"
 
 [build-system]
 requires = ["hatchling"]
