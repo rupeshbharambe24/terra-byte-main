@@ -1,8 +1,8 @@
 """All ORM models. Importing this package registers every table on ``Base.metadata``."""
 
-from terrabyte.models.advisory import KVK, Consultation, ConsultationMessage
+from terrabyte.models.advisory import KVK, Consultation, ConsultationMessage, KnowledgeArticle
 from terrabyte.models.community import ForumPost, ForumReply, ForumReport, Notification
-from terrabyte.models.data import LedgerEntry, MandiPrice, ModelEvaluation
+from terrabyte.models.data import DataImport, LedgerEntry, MandiPrice, ModelEvaluation
 from terrabyte.models.enums import (
     BookingStatus,
     ConsultationStatus,
@@ -29,8 +29,10 @@ __all__ = [
     "Consultation",
     "ConsultationMessage",
     "ConsultationStatus",
+    "DataImport",
     "Equipment",
     "Field",
+    "KnowledgeArticle",
     "ForumPost",
     "ForumReply",
     "ForumReport",

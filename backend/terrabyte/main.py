@@ -15,7 +15,18 @@ from terrabyte.config import Settings, get_settings
 from terrabyte.db import Database
 from terrabyte.errors import install_error_handlers
 from terrabyte.middleware import BodySizeLimitMiddleware
-from terrabyte.routers import admin, auth, catalog, health, me, notifications, rebuilding, uploads
+from terrabyte.routers import (
+    admin,
+    auth,
+    farm,
+    health,
+    market,
+    me,
+    notifications,
+    rebuilding,
+    rentals,
+    uploads,
+)
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -53,7 +64,18 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     )
     app.add_middleware(BodySizeLimitMiddleware, max_bytes=settings.max_request_bytes)
 
-    for module in (health, auth, me, admin, notifications, catalog, uploads, rebuilding):
+    for module in (
+        health,
+        auth,
+        me,
+        admin,
+        notifications,
+        market,
+        rentals,
+        farm,
+        uploads,
+        rebuilding,
+    ):
         app.include_router(module.router, prefix="/api")
 
     settings.upload_dir.mkdir(parents=True, exist_ok=True)

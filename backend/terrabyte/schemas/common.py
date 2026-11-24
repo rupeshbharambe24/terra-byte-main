@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import re
-from typing import Annotated
+from decimal import Decimal
+from typing import Annotated, Generic, TypeVar
 
-from pydantic import AfterValidator, BeforeValidator
+from pydantic import AfterValidator, BaseModel, BeforeValidator, Field, PlainSerializer
 
 _PHONE_RE = re.compile(r"^[6-9]\d{9}$")
 
@@ -38,3 +39,30 @@ def _blank_to_none(value: object) -> object:
 
 IndianMobile = Annotated[str, AfterValidator(_check_phone)]
 BlankToNone = BeforeValidator(_blank_to_none)
+
+
+def _money(value: Decimal | None) -> float | None:
+    return None if value is None else round(float(value), 2)
+
+
+# Money leaves the API as a JSON number rounded to paise; it enters as a Decimal with 2 places.
+MoneyOut = Annotated[Decimal, PlainSerializer(_money, return_type=float)]
+OptMoneyOut = Annotated[Decimal | None, PlainSerializer(_money, return_type=float | None)]
+MoneyIn = Annotated[Decimal, Field(gt=0, le=Decimal("10000000"), max_digits=10, decimal_places=2)]
+OptMoneyIn = Annotated[
+    Decimal | None, Field(gt=0, le=Decimal("10000000"), max_digits=10, decimal_places=2)
+]
+Reason = Annotated[str | None, Field(max_length=500), BeforeValidator(_blank_to_none)]
+
+T = TypeVar("T")
+
+
+class Page(BaseModel, Generic[T]):  # noqa: UP046 (pydantic generic model)
+    items: list[T]
+    total: int
+    limit: int
+    offset: int
+
+
+class ReasonIn(BaseModel):
+    reason: Reason = None

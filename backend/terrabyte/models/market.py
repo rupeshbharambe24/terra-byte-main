@@ -54,6 +54,9 @@ class Order(TimestampMixin, Base):
     shipped_at: Mapped[datetime | None] = mapped_column(UTCDateTime())
     delivered_at: Mapped[datetime | None] = mapped_column(UTCDateTime())
     cancelled_at: Mapped[datetime | None] = mapped_column(UTCDateTime())
+    rejected_at: Mapped[datetime | None] = mapped_column(UTCDateTime())
+    # Reason given when the vendor rejects or the buyer cancels.
+    status_reason: Mapped[str | None] = mapped_column(String(500))
 
     items: Mapped[list[OrderItem]] = relationship(
         back_populates="order", cascade="all, delete-orphan"

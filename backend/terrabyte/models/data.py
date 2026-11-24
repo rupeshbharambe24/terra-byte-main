@@ -76,3 +76,18 @@ class ModelEvaluation(Base):
     value: Mapped[float] = mapped_column(Float)
     evaluated_at: Mapped[datetime] = mapped_column(UTCDateTime(), default=utcnow)
     details: Mapped[dict[str, Any] | None] = mapped_column(JSON)
+
+
+class DataImport(Base):
+    """Log of a reference-data import (e.g. the KVK directory), shown to admins."""
+
+    __tablename__ = "data_imports"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    kind: Mapped[str] = mapped_column(String(40), index=True)
+    source: Mapped[str] = mapped_column(String(255))
+    created: Mapped[int] = mapped_column(default=0)
+    updated: Mapped[int] = mapped_column(default=0)
+    skipped: Mapped[int] = mapped_column(default=0)
+    errors: Mapped[list[str] | None] = mapped_column(JSON)
+    imported_at: Mapped[datetime] = mapped_column(UTCDateTime(), default=utcnow)

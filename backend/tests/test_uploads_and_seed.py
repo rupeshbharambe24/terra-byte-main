@@ -58,6 +58,6 @@ def test_catalog_lists_seeded_products(client):
         seed(db)
     token = register(client).json()["access_token"]
     products = client.get("/api/products", headers=auth_header(token)).json()
-    assert products and all(p["vendor_name"] for p in products)
+    assert products["total"] > 0 and all(p["vendor_name"] for p in products["items"])
     equipment = client.get("/api/equipment", headers=auth_header(token)).json()
-    assert equipment
+    assert equipment["total"] > 0

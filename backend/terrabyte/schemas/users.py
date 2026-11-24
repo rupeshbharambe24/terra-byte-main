@@ -8,9 +8,9 @@ from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
 from terrabyte.models import Language, UserRole, UserStatus
 from terrabyte.schemas.common import BlankToNone, IndianMobile
 
-OptStr80 = Annotated[str | None, BlankToNone, Field(max_length=80)]
-OptStr120 = Annotated[str | None, BlankToNone, Field(max_length=120)]
-OptStr160 = Annotated[str | None, BlankToNone, Field(max_length=160)]
+OptStr80 = Annotated[str | None, Field(max_length=80), BlankToNone]
+OptStr120 = Annotated[str | None, Field(max_length=120), BlankToNone]
+OptStr160 = Annotated[str | None, Field(max_length=160), BlankToNone]
 OptEmail = Annotated[EmailStr | None, BlankToNone]
 # Rough bounding box of India; rejects swapped lat/lon and obvious typos.
 Lat = Annotated[float | None, Field(ge=6.0, le=38.0)]
@@ -57,7 +57,7 @@ class RegisterIn(BaseModel):
     email: OptEmail = None
     preferred_language: Language = Language.en
     organization: OptStr160 = None
-    qualifications: Annotated[str | None, BlankToNone, Field(max_length=2000)] = None
+    qualifications: Annotated[str | None, Field(max_length=2000), BlankToNone] = None
     state: OptStr80 = None
     district: OptStr80 = None
     village: OptStr120 = None
@@ -100,7 +100,7 @@ class MeUpdate(BaseModel):
     email: OptEmail = None
     preferred_language: Language | None = None
     organization: OptStr160 = None
-    qualifications: Annotated[str | None, BlankToNone, Field(max_length=2000)] = None
+    qualifications: Annotated[str | None, Field(max_length=2000), BlankToNone] = None
     state: OptStr80 = None
     district: OptStr80 = None
     village: OptStr120 = None
@@ -119,4 +119,4 @@ class PasswordChange(BaseModel):
 
 
 class StatusChangeIn(BaseModel):
-    reason: Annotated[str | None, BlankToNone, Field(max_length=500)] = None
+    reason: Annotated[str | None, Field(max_length=500), BlankToNone] = None

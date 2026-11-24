@@ -70,3 +70,57 @@ def admin_token(client: TestClient) -> str:
     res = login(client, ADMIN_PHONE, ADMIN_PASSWORD)
     assert res.status_code == 200, res.text
     return res.json()["access_token"]
+
+
+class Actor:
+    """An approved user created directly in the test database, with a ready auth header."""
+
+    def __init__(self, client: TestClient, user_id: int, phone: str, password: str) -> None:
+        self.client = client
+        self.id = user_id
+        self.phone = phone
+        token = login(client, phone, password).json()["access_token"]
+        self.h = auth_header(token)
+
+    def get(self, url: str, **kw):
+        return self.client.get(url, headers=self.h, **kw)
+
+    def post(self, url: str, json: object | None = None, **kw):
+        return self.client.post(url, headers=self.h, json=json, **kw)
+
+    def patch(self, url: str, json: object | None = None, **kw):
+        return self.client.patch(url, headers=self.h, json=json, **kw)
+
+    def delete(self, url: str, **kw):
+        return self.client.delete(url, headers=self.h, **kw)
+
+
+@pytest.fixture
+def make_actor(client: TestClient):
+    counter = iter(range(100, 999))
+
+    def _make(role: str, name: str | None = None, district: str = "Pune") -> Actor:
+        phone = f"9811{next(counter):06d}"
+        with client.app.state.db.session_factory() as db:
+            user = User(
+                name=name or f"Test {role}",
+                phone=phone,
+                password_hash=hash_password("actor-pass-123"),
+                role=UserRole(role),
+                status=UserStatus.approved,
+                state="Maharashtra",
+                district=district,
+            )
+            db.add(user)
+            db.commit()
+            user_id = user.id
+        return Actor(client, user_id, phone, "actor-pass-123")
+
+    return _make
+
+
+@pytest.fixture
+def admin(client: TestClient) -> Actor:
+    with client.app.state.db.session_factory() as db:
+        admin_id = db.query(User.id).filter(User.phone == ADMIN_PHONE).scalar()
+    return Actor(client, admin_id, ADMIN_PHONE, ADMIN_PASSWORD)

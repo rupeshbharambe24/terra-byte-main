@@ -117,3 +117,13 @@ def test_error_responses_have_no_stack_trace(client):
     )
     assert res.status_code == 422
     assert "Traceback" not in res.text
+
+
+def test_profile_update_accepts_explicit_nulls_and_blanks(client):
+    token = register(client, village="Narayangaon").json()["access_token"]
+    h = auth_header(token)
+    res = client.patch("/api/me", headers=h, json={"village": None, "district": "  ", "lat": None})
+    assert res.status_code == 200, res.text
+    assert res.json()["village"] is None and res.json()["district"] is None
+    res = client.patch("/api/me", headers=h, json={"village": "x" * 121})
+    assert res.status_code == 422

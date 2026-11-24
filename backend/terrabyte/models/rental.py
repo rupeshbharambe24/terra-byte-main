@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from decimal import Decimal
 
-from sqlalchemy import Boolean, ForeignKey, Numeric, String, Text
+from sqlalchemy import Boolean, ForeignKey, Integer, Numeric, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from terrabyte.db import Base, TimestampMixin, UTCDateTime, utcnow
@@ -39,9 +39,16 @@ class Booking(TimestampMixin, Base):
     start_at: Mapped[datetime] = mapped_column(UTCDateTime(), index=True)
     end_at: Mapped[datetime] = mapped_column(UTCDateTime(), index=True)
     unit: Mapped[RentalUnit] = mapped_column(db_enum(RentalUnit))
+    units: Mapped[int] = mapped_column(Integer)  # number of hours or days
+    rate_inr: Mapped[Decimal] = mapped_column(Money)  # equipment rate copied at booking time
     amount_inr: Mapped[Decimal] = mapped_column(Money)
     status: Mapped[BookingStatus] = mapped_column(
         db_enum(BookingStatus), default=BookingStatus.requested, index=True
     )
     note: Mapped[str | None] = mapped_column(String(500))
+    status_reason: Mapped[str | None] = mapped_column(String(500))
     updated_at: Mapped[datetime] = mapped_column(UTCDateTime(), default=utcnow, onupdate=utcnow)
+    accepted_at: Mapped[datetime | None] = mapped_column(UTCDateTime())
+    rejected_at: Mapped[datetime | None] = mapped_column(UTCDateTime())
+    cancelled_at: Mapped[datetime | None] = mapped_column(UTCDateTime())
+    completed_at: Mapped[datetime | None] = mapped_column(UTCDateTime())

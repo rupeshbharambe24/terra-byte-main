@@ -6,6 +6,7 @@ Re-encoding drops EXIF (including GPS) and anything that is not pixel data.
 from __future__ import annotations
 
 import io
+import re
 import uuid
 import warnings
 from dataclasses import dataclass
@@ -94,3 +95,16 @@ async def save_image(
     name = f"{uuid.uuid4().hex}.jpg"
     (target_dir / name).write_bytes(data)
     return SavedImage(f"{subdir}/{name}", width, height, len(data))
+
+
+_OWN_IMAGE_RE = re.compile(r"^images/u(\d+)/[0-9a-f]{32}\.jpg$")
+
+
+def check_owned_image(path: str | None, user_id: int, upload_dir: Path) -> str | None:
+    """Accept an image path only if this user uploaded it through ``POST /uploads/image``."""
+    if path is None:
+        return None
+    match = _OWN_IMAGE_RE.match(path)
+    if match is None or int(match.group(1)) != user_id or not (upload_dir / path).is_file():
+        raise ApiError(422, "invalid_image_path", "Upload the image first, then attach it.")
+    return path
