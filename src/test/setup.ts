@@ -1,0 +1,35 @@
+import '@testing-library/jest-dom/vitest';
+
+// Newer Node versions ship their own (file-backed, often disabled) global localStorage that can
+// shadow jsdom's. Tests need a working one, so install an in-memory Storage when it is missing.
+function memoryStorage(): Storage {
+  let store = new Map<string, string>();
+  return {
+    get length() {
+      return store.size;
+    },
+    clear: () => {
+      store = new Map();
+    },
+    getItem: (key) => (store.has(key) ? (store.get(key) as string) : null),
+    key: (index) => Array.from(store.keys())[index] ?? null,
+    removeItem: (key) => {
+      store.delete(key);
+    },
+    setItem: (key, value) => {
+      store.set(key, String(value));
+    },
+  };
+}
+
+for (const name of ['localStorage', 'sessionStorage'] as const) {
+  let usable = false;
+  try {
+    usable = typeof globalThis[name]?.clear === 'function';
+  } catch {
+    usable = false;
+  }
+  if (!usable) {
+    Object.defineProperty(globalThis, name, { value: memoryStorage(), configurable: true, writable: true });
+  }
+}
