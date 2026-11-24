@@ -1,423 +1,359 @@
 import React, { useState } from 'react';
-import Header from '../../components/common/Header';
-import Sidebar from '../../components/common/Sidebar';
-import { Button } from '../../components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
-import { Input } from '../../components/ui/input';
-import { Label } from '../../components/ui/label';
-import { Textarea } from '../../components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../../components/ui/dialog';
-import { useToast } from '../../hooks/use-toast';
-import { Plus, MapPin, Phone, Mail, Edit, Trash2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { Building2, Plus, Search } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
+import AppShell from '@/components/common/AppShell';
+import PageHeader from '@/components/common/PageHeader';
+import PageSpinner from '@/components/common/PageSpinner';
+import Pager from '@/components/common/Pager';
+import { EmptyState, ErrorAlert } from '@/components/common/QueryState';
+import ConfirmButton from '@/components/advice/ConfirmButton';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Textarea } from '@/components/ui/textarea';
+import { useDebouncedValue } from '@/hooks/useDebouncedValue';
+import { PINCODE_RE, blankToNull, optionalNumber } from '@/lib/advice';
+import { adviceApi } from '@/lib/api';
+import { MAHARASHTRA_DISTRICTS, PAGE_SIZE } from '@/lib/constants';
+import { errorMessage } from '@/lib/errors';
+import { formatDate } from '@/lib/format';
+import type { KVK, KVKInput } from '@/lib/types';
 
-interface KVKCenter {
-  id: string;
-  name: string;
-  address: string;
-  district: string;
-  state: string;
-  pincode: string;
-  contact: string;
-  email: string;
-  latitude: number;
-  longitude: number;
-  specializations: string[];
-  status: 'active' | 'inactive';
+const ALL = 'all';
+const TEXT_FIELDS = [
+  'name',
+  'district',
+  'state',
+  'host_organisation',
+  'address',
+  'pincode',
+  'phone',
+  'email',
+  'website',
+  'lat',
+  'lon',
+  'source_url',
+  'verified_on',
+] as const;
+type FormField = (typeof TEXT_FIELDS)[number];
+type FormState = Record<FormField, string>;
+
+function toForm(k: KVK | null): FormState {
+  const form = Object.fromEntries(TEXT_FIELDS.map((f) => [f, ''])) as FormState;
+  form.state = 'Maharashtra';
+  if (!k) return form;
+  for (const f of TEXT_FIELDS) {
+    const v = k[f];
+    form[f] = v === null || v === undefined ? '' : String(v);
+  }
+  return form;
 }
 
-const KVKManagement: React.FC = () => {
-  const [kvkCenters, setKvkCenters] = useState<KVKCenter[]>([
-    {
-      id: '1',
-      name: 'KVK Pune',
-      address: 'Agricultural College Campus, Pune',
-      district: 'Pune',
-      state: 'Maharashtra',
-      pincode: '411005',
-      contact: '+91 20 2569 1234',
-      email: 'kvkpune@gmail.com',
-      latitude: 18.5204,
-      longitude: 73.8567,
-      specializations: ['Crop Production', 'Soil Management', 'Organic Farming'],
-      status: 'active'
-    },
-    {
-      id: '2',
-      name: 'KVK Nashik',
-      address: 'MPKV Campus, Rahuri, Nashik',
-      district: 'Nashik',
-      state: 'Maharashtra',
-      pincode: '413722',
-      contact: '+91 2426 243 100',
-      email: 'kvknashik@rediffmail.com',
-      latitude: 19.9975,
-      longitude: 73.7898,
-      specializations: ['Horticulture', 'Irrigation', 'Pest Management'],
-      status: 'active'
-    }
-  ]);
+const isUrl = (v: string) => !v.trim() || /^https?:\/\/\S+$/i.test(v.trim());
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingKVK, setEditingKVK] = useState<KVKCenter | null>(null);
-  const [formData, setFormData] = useState({
-    name: '',
-    address: '',
-    district: '',
-    state: '',
-    pincode: '',
-    contact: '',
-    email: '',
-    latitude: '',
-    longitude: '',
-    specializations: '',
-    status: 'active' as 'active' | 'inactive'
+/** Client-side checks mirroring the API (which validates again). Returns field -> message key. */
+function validate(f: FormState): Partial<Record<FormField, string>> {
+  const errors: Partial<Record<FormField, string>> = {};
+  if (f.name.trim().length < 3) errors.name = 'kvkAdmin.errors.required';
+  if (f.district.trim().length < 2) errors.district = 'kvkAdmin.errors.required';
+  if (f.state.trim().length < 2) errors.state = 'kvkAdmin.errors.required';
+  if (f.pincode.trim() && !PINCODE_RE.test(f.pincode.replace(/\s/g, ''))) errors.pincode = 'kvkAdmin.errors.pincode';
+  if (f.email.trim() && !f.email.includes('@')) errors.email = 'kvkAdmin.errors.email';
+  if (!isUrl(f.website)) errors.website = 'kvkAdmin.errors.url';
+  if (!isUrl(f.source_url)) errors.source_url = 'kvkAdmin.errors.url';
+  const lat = optionalNumber(f.lat);
+  const lon = optionalNumber(f.lon);
+  if (lat !== null && !(lat >= 6 && lat <= 38)) errors.lat = 'kvkAdmin.errors.lat';
+  if (lon !== null && !(lon >= 68 && lon <= 98)) errors.lon = 'kvkAdmin.errors.lon';
+  return errors;
+}
+
+function toPayload(f: FormState): KVKInput {
+  return {
+    name: f.name.trim(),
+    district: f.district.trim(),
+    state: f.state.trim(),
+    host_organisation: blankToNull(f.host_organisation),
+    address: blankToNull(f.address),
+    pincode: blankToNull(f.pincode.replace(/\s/g, '')),
+    phone: blankToNull(f.phone),
+    email: blankToNull(f.email),
+    website: blankToNull(f.website),
+    lat: optionalNumber(f.lat),
+    lon: optionalNumber(f.lon),
+    source_url: blankToNull(f.source_url),
+    verified_on: blankToNull(f.verified_on),
+  };
+}
+
+const KVKDialog: React.FC<{ kvk: KVK | null; open: boolean; onOpenChange: (o: boolean) => void }> = ({
+  kvk,
+  open,
+  onOpenChange,
+}) => {
+  const { t } = useTranslation(['advice', 'common']);
+  const queryClient = useQueryClient();
+  const [form, setForm] = useState<FormState>(() => toForm(kvk));
+  const [touched, setTouched] = useState(false);
+  const errors = validate(form);
+  const valid = Object.keys(errors).length === 0;
+
+  const save = useMutation({
+    mutationFn: () => (kvk ? adviceApi.updateKvk(kvk.id, toPayload(form)) : adviceApi.createKvk(toPayload(form))),
+    onSuccess: () => {
+      toast.success(t('kvkAdmin.saved'));
+      void queryClient.invalidateQueries({ queryKey: ['kvks'] });
+      void queryClient.invalidateQueries({ queryKey: ['kvk-status'] });
+      onOpenChange(false);
+    },
+    onError: (err) => toast.error(errorMessage(t, err)),
   });
 
-  const { toast } = useToast();
-
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.name || !formData.address || !formData.contact) {
-      toast({
-        title: "Missing Information",
-        description: "Please fill in all required fields",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    const newKVK: KVKCenter = {
-      id: editingKVK?.id || Date.now().toString(),
-      name: formData.name,
-      address: formData.address,
-      district: formData.district,
-      state: formData.state,
-      pincode: formData.pincode,
-      contact: formData.contact,
-      email: formData.email,
-      latitude: parseFloat(formData.latitude) || 0,
-      longitude: parseFloat(formData.longitude) || 0,
-      specializations: formData.specializations.split(',').map(s => s.trim()).filter(s => s),
-      status: formData.status
-    };
-
-    if (editingKVK) {
-      setKvkCenters(prev => prev.map(kvk => kvk.id === editingKVK.id ? newKVK : kvk));
-      toast({
-        title: "KVK Updated",
-        description: "KVK center has been updated successfully",
-      });
-    } else {
-      setKvkCenters(prev => [...prev, newKVK]);
-      toast({
-        title: "KVK Added",
-        description: "New KVK center has been added successfully",
-      });
-    }
-
-    resetForm();
-  };
-
-  const resetForm = () => {
-    setFormData({
-      name: '',
-      address: '',
-      district: '',
-      state: '',
-      pincode: '',
-      contact: '',
-      email: '',
-      latitude: '',
-      longitude: '',
-      specializations: '',
-      status: 'active'
-    });
-    setEditingKVK(null);
-    setIsDialogOpen(false);
-  };
-
-  const handleEdit = (kvk: KVKCenter) => {
-    setEditingKVK(kvk);
-    setFormData({
-      name: kvk.name,
-      address: kvk.address,
-      district: kvk.district,
-      state: kvk.state,
-      pincode: kvk.pincode,
-      contact: kvk.contact,
-      email: kvk.email,
-      latitude: kvk.latitude.toString(),
-      longitude: kvk.longitude.toString(),
-      specializations: kvk.specializations.join(', '),
-      status: kvk.status
-    });
-    setIsDialogOpen(true);
-  };
-
-  const handleDelete = (id: string) => {
-    setKvkCenters(prev => prev.filter(kvk => kvk.id !== id));
-    toast({
-      title: "KVK Deleted",
-      description: "KVK center has been deleted successfully",
-    });
-  };
+  const field = (name: FormField, opts: { type?: string; inputMode?: 'decimal' | 'numeric' | 'tel' | 'email' | 'url'; list?: string } = {}) => (
+    <div className="space-y-1">
+      <Label htmlFor={`kvk-${name}`}>{t(`kvkAdmin.fields.${name}`)}</Label>
+      <Input
+        id={`kvk-${name}`}
+        type={opts.type ?? 'text'}
+        inputMode={opts.inputMode}
+        list={opts.list}
+        value={form[name]}
+        onChange={(e) => setForm((f) => ({ ...f, [name]: e.target.value }))}
+        aria-invalid={touched && Boolean(errors[name])}
+      />
+      {touched && errors[name] && <p className="text-xs text-red-600">{t(errors[name] as string)}</p>}
+    </div>
+  );
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header />
-      
-      <div className="flex">
-        <Sidebar />
-        
-        <main className="flex-1 min-w-0 p-4 md:p-6">
-          <div className="mb-8">
-            <div className="flex justify-between items-center">
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                  KVK Center Management
-                </h1>
-                <p className="text-gray-600 dark:text-gray-400 mt-2">
-                  Manage Krishi Vigyan Kendra centers and their information.
-                </p>
-              </div>
-              
-              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <DialogTrigger asChild>
-                  <Button className="bg-green-600 hover:bg-green-700">
-                    <Plus className="w-4 h-4 mr-2" />
-                    Add KVK Center
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-                  <DialogHeader>
-                    <DialogTitle>{editingKVK ? 'Edit' : 'Add'} KVK Center</DialogTitle>
-                    <DialogDescription>
-                      {editingKVK ? 'Update' : 'Add'} KVK center information and location details.
-                    </DialogDescription>
-                  </DialogHeader>
-                  
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="name">Center Name *</Label>
-                        <Input
-                          id="name"
-                          value={formData.name}
-                          onChange={(e) => handleInputChange('name', e.target.value)}
-                          placeholder="KVK Center Name"
-                          required
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label htmlFor="district">District *</Label>
-                        <Input
-                          id="district"
-                          value={formData.district}
-                          onChange={(e) => handleInputChange('district', e.target.value)}
-                          placeholder="District"
-                          required
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="address">Address *</Label>
-                      <Textarea
-                        id="address"
-                        value={formData.address}
-                        onChange={(e) => handleInputChange('address', e.target.value)}
-                        placeholder="Full address"
-                        required
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div>
-                        <Label htmlFor="state">State</Label>
-                        <Input
-                          id="state"
-                          value={formData.state}
-                          onChange={(e) => handleInputChange('state', e.target.value)}
-                          placeholder="State"
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label htmlFor="pincode">Pincode</Label>
-                        <Input
-                          id="pincode"
-                          value={formData.pincode}
-                          onChange={(e) => handleInputChange('pincode', e.target.value)}
-                          placeholder="Pincode"
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label htmlFor="status">Status</Label>
-                        <Select value={formData.status} onValueChange={(value) => handleInputChange('status', value)}>
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="active">Active</SelectItem>
-                            <SelectItem value="inactive">Inactive</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="contact">Contact Number *</Label>
-                        <Input
-                          id="contact"
-                          value={formData.contact}
-                          onChange={(e) => handleInputChange('contact', e.target.value)}
-                          placeholder="+91 XXXXXXXXXX"
-                          required
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label htmlFor="email">Email</Label>
-                        <Input
-                          id="email"
-                          type="email"
-                          value={formData.email}
-                          onChange={(e) => handleInputChange('email', e.target.value)}
-                          placeholder="email@example.com"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="latitude">Latitude</Label>
-                        <Input
-                          id="latitude"
-                          value={formData.latitude}
-                          onChange={(e) => handleInputChange('latitude', e.target.value)}
-                          placeholder="18.5204"
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label htmlFor="longitude">Longitude</Label>
-                        <Input
-                          id="longitude"
-                          value={formData.longitude}
-                          onChange={(e) => handleInputChange('longitude', e.target.value)}
-                          placeholder="73.8567"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="specializations">Specializations</Label>
-                      <Input
-                        id="specializations"
-                        value={formData.specializations}
-                        onChange={(e) => handleInputChange('specializations', e.target.value)}
-                        placeholder="Crop Production, Soil Management, Organic Farming (comma separated)"
-                      />
-                    </div>
-
-                    <DialogFooter>
-                      <Button type="button" variant="outline" onClick={resetForm}>
-                        Cancel
-                      </Button>
-                      <Button type="submit" className="bg-green-600 hover:bg-green-700">
-                        {editingKVK ? 'Update' : 'Add'} KVK Center
-                      </Button>
-                    </DialogFooter>
-                  </form>
-                </DialogContent>
-              </Dialog>
-            </div>
+    <Dialog open={open} onOpenChange={(o) => !save.isPending && onOpenChange(o)}>
+      <DialogContent className="max-h-[90vh] max-w-[calc(100vw-2rem)] overflow-y-auto sm:max-w-2xl">
+        <DialogHeader>
+          <DialogTitle>{kvk ? t('kvkAdmin.dialogEdit') : t('kvkAdmin.dialogAdd')}</DialogTitle>
+          <DialogDescription>{t('kvkAdmin.dialogHint')}</DialogDescription>
+        </DialogHeader>
+        <form
+          id="kvk-form"
+          className="grid gap-3 sm:grid-cols-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setTouched(true);
+            if (valid) save.mutate();
+          }}
+        >
+          <div className="sm:col-span-2">{field('name')}</div>
+          {field('district', { list: 'mh-districts' })}
+          {field('state')}
+          <div className="sm:col-span-2">{field('host_organisation')}</div>
+          <div className="space-y-1 sm:col-span-2">
+            <Label htmlFor="kvk-address">{t('kvkAdmin.fields.address')}</Label>
+            <Textarea
+              id="kvk-address"
+              rows={2}
+              value={form.address}
+              maxLength={1000}
+              onChange={(e) => setForm((f) => ({ ...f, address: e.target.value }))}
+            />
           </div>
-
-          {/* KVK Centers Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-            {kvkCenters.map((kvk) => (
-              <Card key={kvk.id} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="text-lg">{kvk.name}</CardTitle>
-                      <CardDescription className="flex items-center mt-1">
-                        <MapPin className="w-4 h-4 mr-1" />
-                        {kvk.district}, {kvk.state}
-                      </CardDescription>
-                    </div>
-                    <div className={`px-2 py-1 rounded text-xs ${
-                      kvk.status === 'active' 
-                        ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300'
-                        : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
-                    }`}>
-                      {kvk.status}
-                    </div>
-                  </div>
-                </CardHeader>
-                
-                <CardContent className="space-y-3">
-                  <p className="text-sm text-gray-600 dark:text-gray-400">{kvk.address}</p>
-                  
-                  <div className="flex items-center space-x-2 text-sm">
-                    <Phone className="w-4 h-4 text-gray-400" />
-                    <span>{kvk.contact}</span>
-                  </div>
-                  
-                  {kvk.email && (
-                    <div className="flex items-center space-x-2 text-sm">
-                      <Mail className="w-4 h-4 text-gray-400" />
-                      <span>{kvk.email}</span>
-                    </div>
-                  )}
-                  
-                  <div className="flex flex-wrap gap-1 mt-2">
-                    {kvk.specializations.map((spec, index) => (
-                      <span 
-                        key={index}
-                        className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300 text-xs rounded"
-                      >
-                        {spec}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  <div className="flex space-x-2 mt-4">
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => handleEdit(kvk)}
-                      className="flex-1"
-                    >
-                      <Edit className="w-4 h-4 mr-2" />
-                      Edit
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => handleDelete(kvk.id)}
-                      className="text-red-600 hover:text-red-700"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+          {field('pincode', { inputMode: 'numeric' })}
+          {field('phone', { inputMode: 'tel' })}
+          {field('email', { type: 'email' })}
+          {field('website', { type: 'url' })}
+          {field('lat', { inputMode: 'decimal' })}
+          {field('lon', { inputMode: 'decimal' })}
+          {field('source_url', { type: 'url' })}
+          {field('verified_on', { type: 'date' })}
+          <datalist id="mh-districts">
+            {MAHARASHTRA_DISTRICTS.map((d) => (
+              <option key={d} value={d} />
             ))}
-          </div>
-        </main>
+          </datalist>
+        </form>
+        <DialogFooter className="gap-2 sm:gap-0">
+          <Button variant="outline" onClick={() => onOpenChange(false)} disabled={save.isPending}>
+            {t('common:actions.cancel')}
+          </Button>
+          <Button type="submit" form="kvk-form" disabled={save.isPending}>
+            {save.isPending ? t('common:actions.saving') : t('common:actions.save')}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+/** Admin CRUD on the KVK directory stored in the database. */
+const KVKManagement: React.FC = () => {
+  const { t, i18n } = useTranslation(['advice', 'common']);
+  const queryClient = useQueryClient();
+  const [search, setSearch] = useState('');
+  const [district, setDistrict] = useState<string>(ALL);
+  const [page, setPage] = useState(0);
+  const [editing, setEditing] = useState<KVK | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogKey, setDialogKey] = useState(0);
+  const q = useDebouncedValue(search.trim(), 300);
+  const filters = { q: q || undefined, district: district === ALL ? undefined : district, limit: PAGE_SIZE, offset: page * PAGE_SIZE };
+  const query = useQuery({
+    queryKey: ['kvks', 'admin', filters],
+    queryFn: () => adviceApi.kvks(filters),
+    placeholderData: keepPreviousData,
+  });
+  const remove = useMutation({
+    mutationFn: (id: number) => adviceApi.deleteKvk(id),
+    onSuccess: () => {
+      toast.success(t('kvkAdmin.deleted'));
+      void queryClient.invalidateQueries({ queryKey: ['kvks'] });
+      void queryClient.invalidateQueries({ queryKey: ['kvk-status'] });
+    },
+    onError: (err) => toast.error(errorMessage(t, err)),
+  });
+
+  const openDialog = (k: KVK | null) => {
+    setEditing(k);
+    setDialogKey((n) => n + 1);
+    setDialogOpen(true);
+  };
+  const filtered = Boolean(filters.q || filters.district);
+
+  return (
+    <AppShell>
+      <PageHeader
+        title={t('kvkAdmin.title')}
+        subtitle={t('kvkAdmin.subtitle')}
+        actions={
+          <>
+            <Button variant="outline" asChild>
+              <Link to="/admin-kvk-integration">{t('kvkAdmin.importStatus')}</Link>
+            </Button>
+            <Button onClick={() => openDialog(null)}>
+              <Plus className="mr-2 h-4 w-4" aria-hidden="true" />
+              {t('kvkAdmin.add')}
+            </Button>
+          </>
+        }
+      />
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" aria-hidden="true" />
+          <Input
+            type="search"
+            className="pl-10"
+            value={search}
+            aria-label={t('kvk.search')}
+            placeholder={t('kvk.search')}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setPage(0);
+            }}
+          />
+        </div>
+        <Select
+          value={district}
+          onValueChange={(v) => {
+            setDistrict(v);
+            setPage(0);
+          }}
+        >
+          <SelectTrigger className="sm:w-64" aria-label={t('kvk.district')}>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={ALL}>{t('kvk.allDistricts')}</SelectItem>
+            {MAHARASHTRA_DISTRICTS.map((d) => (
+              <SelectItem key={d} value={d}>
+                {d}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
-    </div>
+      {query.isLoading ? (
+        <PageSpinner />
+      ) : query.isError ? (
+        <ErrorAlert error={query.error} />
+      ) : !query.data || query.data.total === 0 ? (
+        <EmptyState
+          icon={Building2}
+          title={filtered ? t('kvk.noMatch') : t('kvkAdmin.empty')}
+          body={filtered ? undefined : t('kvkAdmin.emptyBody')}
+        />
+      ) : (
+        <>
+          <p className="mb-2 text-sm text-gray-600 dark:text-gray-400" aria-live="polite">
+            {t('kvk.count', { count: query.data.total })}
+          </p>
+          <Card>
+            <CardContent className="p-0">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>{t('kvkAdmin.columns.name')}</TableHead>
+                    <TableHead className="hidden sm:table-cell">{t('kvkAdmin.columns.district')}</TableHead>
+                    <TableHead className="hidden md:table-cell">{t('kvkAdmin.columns.contact')}</TableHead>
+                    <TableHead className="hidden md:table-cell">{t('kvkAdmin.columns.verified')}</TableHead>
+                    <TableHead>{t('kvkAdmin.columns.actions')}</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {query.data.items.map((k) => (
+                    <TableRow key={k.id}>
+                      <TableCell>
+                        <div className="font-medium break-words">{k.name}</div>
+                        {k.host_organisation && <div className="text-sm text-gray-500">{k.host_organisation}</div>}
+                        <div className="text-sm text-gray-500 sm:hidden">{k.district}</div>
+                      </TableCell>
+                      <TableCell className="hidden sm:table-cell">
+                        {k.district}
+                        <div className="text-xs text-gray-500">{k.state}</div>
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell text-sm">
+                        {[k.phone, k.email].filter(Boolean).join(' · ') || '—'}
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell whitespace-nowrap text-sm">
+                        {k.verified_on ? formatDate(k.verified_on, i18n.resolvedLanguage) : t('kvk.notVerified')}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex flex-wrap gap-2">
+                          <Button size="sm" variant="outline" onClick={() => openDialog(k)}>
+                            {t('common:actions.edit')}
+                          </Button>
+                          <ConfirmButton
+                            label={t('common:actions.delete')}
+                            title={t('kvkAdmin.deleteTitle', { name: k.name })}
+                            body={t('kvkAdmin.deleteBody')}
+                            confirmLabel={t('common:actions.delete')}
+                            cancelLabel={t('common:actions.cancel')}
+                            onConfirm={() => remove.mutate(k.id)}
+                            disabled={remove.isPending}
+                          />
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+          <Pager page={page} total={query.data.total} pageSize={PAGE_SIZE} onPage={setPage} />
+        </>
+      )}
+      <KVKDialog key={dialogKey} kvk={editing} open={dialogOpen} onOpenChange={setDialogOpen} />
+    </AppShell>
   );
 };
 
