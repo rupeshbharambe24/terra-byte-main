@@ -53,6 +53,14 @@ const AdminKVKManagement = lazy(() => import('@/pages/admin/KVKManagement'));
 const ExpertConsultations = lazy(() => import('@/pages/expert/ExpertConsultations'));
 const ExpertKnowledge = lazy(() => import('@/pages/expert/ExpertKnowledge'));
 
+const MyOrders = lazy(() => import('@/pages/farmer/MyOrders'));
+const OrderDetail = lazy(() => import('@/pages/farmer/OrderDetail'));
+const Knowledge = lazy(() => import('@/pages/farmer/Knowledge'));
+const ArticleView = lazy(() => import('@/pages/farmer/ArticleView'));
+const ConsultationThread = lazy(() => import('@/pages/shared/ConsultationThread'));
+const AdminConsultations = lazy(() => import('@/pages/admin/AdminConsultations'));
+const ForumPost = lazy(() => import('@/pages/features/ForumPost'));
+
 const WeatherComingSoon: React.FC = () => <ComingSoon titleKey="weatherTitle" bodyKey="weatherBody" />;
 
 interface AppRoute {
@@ -67,46 +75,53 @@ const ALL_ROLES: Role[] = ['farmer', 'vendor', 'hardware_vendor', 'admin', 'expe
 
 const PROTECTED_ROUTES: AppRoute[] = [
   // Farmer
-  { path: '/farmer-dashboard', roles: ['farmer'], Component: FarmerDashboard, demo: true },
+  { path: '/farmer-dashboard', roles: ['farmer'], Component: FarmerDashboard },
   { path: '/soil-monitoring', roles: ['farmer'], Component: SoilMonitoring, demo: true },
   { path: '/smart-irrigation', roles: ['farmer'], Component: SmartIrrigation, demo: true },
   { path: '/weather-forecast', roles: ['farmer'], Component: WeatherComingSoon },
   { path: '/crop-planning', roles: ['farmer'], Component: CropPlanning, demo: true },
   { path: '/disease-detection', roles: ['farmer'], Component: DiseaseDetection, demo: true },
-  { path: '/equipment-rentals', roles: ['farmer'], Component: EquipmentRentals, demo: true },
-  { path: '/marketplace', roles: ['farmer', 'vendor'], Component: Marketplace, demo: true },
+  { path: '/equipment-rentals', roles: ['farmer'], Component: EquipmentRentals },
+  { path: '/marketplace', roles: ['farmer', 'vendor'], Component: Marketplace },
+  { path: '/orders', roles: ['farmer'], Component: MyOrders },
+  { path: '/orders/:orderId', roles: ['farmer'], Component: OrderDetail },
   { path: '/price-forecast', roles: ['farmer'], Component: PriceForecast, demo: true },
-  { path: '/financial-management', roles: ['farmer'], Component: FinancialManagement, demo: true },
+  { path: '/financial-management', roles: ['farmer'], Component: FinancialManagement },
   { path: '/government-schemes', roles: ['farmer'], Component: GovernmentSchemes, demo: true },
-  { path: '/kvk-consultation', roles: ['farmer'], Component: KVKConsultation, demo: true },
-  { path: '/forums', roles: ['farmer', 'expert'], Component: Forums, demo: true },
+  { path: '/kvk-consultation', roles: ['farmer'], Component: KVKConsultation },
+  { path: '/knowledge', roles: ['farmer', 'expert', 'admin'], Component: Knowledge },
+  { path: '/knowledge/:articleId', roles: ['farmer', 'expert', 'admin'], Component: ArticleView },
+  { path: '/consultations/:consultationId', roles: ['farmer', 'expert', 'admin'], Component: ConsultationThread },
+  { path: '/forums', roles: ['farmer', 'expert', 'admin'], Component: Forums },
+  { path: '/forums/:postId', roles: ['farmer', 'expert', 'admin'], Component: ForumPost },
   { path: '/precision-fertilizer', roles: ['farmer'], Component: PrecisionFertilizer, demo: true },
   // Everyone
-  { path: '/notifications', roles: ALL_ROLES, Component: Notifications, demo: true },
-  { path: '/settings', roles: ALL_ROLES, Component: Settings, demo: true },
+  { path: '/notifications', roles: ALL_ROLES, Component: Notifications },
+  { path: '/settings', roles: ALL_ROLES, Component: Settings },
   // Vendor
-  { path: '/vendor-dashboard', roles: ['vendor'], Component: VendorDashboard, demo: true },
-  { path: '/vendor-products', roles: ['vendor'], Component: VendorProducts, demo: true },
-  { path: '/vendor-orders', roles: ['vendor'], Component: VendorOrders, demo: true },
-  { path: '/vendor-analytics', roles: ['vendor'], Component: VendorAnalytics, demo: true },
+  { path: '/vendor-dashboard', roles: ['vendor'], Component: VendorDashboard },
+  { path: '/vendor-products', roles: ['vendor'], Component: VendorProducts },
+  { path: '/vendor-orders', roles: ['vendor'], Component: VendorOrders },
+  { path: '/vendor-analytics', roles: ['vendor'], Component: VendorAnalytics },
   // Hardware vendor
-  { path: '/hardware-vendor-dashboard', roles: ['hardware_vendor'], Component: HardwareVendorDashboard, demo: true },
-  { path: '/hardware-equipment', roles: ['hardware_vendor'], Component: HardwareEquipment, demo: true },
-  { path: '/hardware-rentals', roles: ['hardware_vendor'], Component: HardwareRentals, demo: true },
-  { path: '/hardware-calendar', roles: ['hardware_vendor'], Component: HardwareCalendar, demo: true },
+  { path: '/hardware-vendor-dashboard', roles: ['hardware_vendor'], Component: HardwareVendorDashboard },
+  { path: '/hardware-equipment', roles: ['hardware_vendor'], Component: HardwareEquipment },
+  { path: '/hardware-rentals', roles: ['hardware_vendor'], Component: HardwareRentals },
+  { path: '/hardware-calendar', roles: ['hardware_vendor'], Component: HardwareCalendar },
   // Admin
-  { path: '/admin-dashboard', roles: ['admin'], Component: AdminDashboard, demo: true },
+  { path: '/admin-dashboard', roles: ['admin'], Component: AdminDashboard },
   { path: '/admin-users', roles: ['admin'], Component: AdminUsers },
   { path: '/admin-vendor-approvals', roles: ['admin'], Component: AdminVendorApprovals },
-  { path: '/admin-analytics', roles: ['admin'], Component: AdminAnalytics, demo: true },
-  { path: '/admin-content', roles: ['admin'], Component: AdminContent, demo: true },
-  { path: '/admin-ai-performance', roles: ['admin'], Component: AdminAIPerformance, demo: true },
-  { path: '/admin-kvk-integration', roles: ['admin'], Component: AdminKVKIntegration, demo: true },
-  { path: '/admin-kvk-management', roles: ['admin'], Component: AdminKVKManagement, demo: true },
+  { path: '/admin-analytics', roles: ['admin'], Component: AdminAnalytics },
+  { path: '/admin-content', roles: ['admin'], Component: AdminContent },
+  { path: '/admin-consultations', roles: ['admin'], Component: AdminConsultations },
+  { path: '/admin-ai-performance', roles: ['admin'], Component: AdminAIPerformance },
+  { path: '/admin-kvk-integration', roles: ['admin'], Component: AdminKVKIntegration },
+  { path: '/admin-kvk-management', roles: ['admin'], Component: AdminKVKManagement },
   // Expert
-  { path: '/expert-dashboard', roles: ['expert'], Component: ExpertDashboard, demo: true },
-  { path: '/expert-consultations', roles: ['expert'], Component: ExpertConsultations, demo: true },
-  { path: '/expert-knowledge', roles: ['expert'], Component: ExpertKnowledge, demo: true },
+  { path: '/expert-dashboard', roles: ['expert'], Component: ExpertDashboard },
+  { path: '/expert-consultations', roles: ['expert'], Component: ExpertConsultations },
+  { path: '/expert-knowledge', roles: ['expert'], Component: ExpertKnowledge },
 ];
 
 const AppRoutes: React.FC = () => (

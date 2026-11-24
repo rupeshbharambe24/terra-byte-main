@@ -10,17 +10,20 @@
 **TerraByte** is a web platform for farmers in Maharashtra with five roles: farmers, agri-input vendors,
 equipment rental vendors, agriculture experts and admins. The UI is available in **English, Hindi and Marathi**.
 
-> **Status (Phase 1 of 4 done).** The prototype is being rebuilt so that every workflow, model and number is
-> real; only the users are test accounts.
+> **Status (Phases 1 and 2 of 4 done).** The prototype is being rebuilt so that every workflow, model and
+> number is real; only the users are test accounts.
 >
-> - **Real now:** our own FastAPI backend and database (Firebase/Supabase removed), registration and sign-in
->   (phone or email + password), server-side roles, admin approval of vendors/experts, admin *User management*
->   and *Approvals* pages, notifications API, English/Hindi/Marathi shell, mobile layout.
-> - **Still demo:** every other page (dashboards, marketplace, rentals, soil, irrigation, crop planning,
->   disease detection, price forecast, schemes, KVK, forum, farm accounts, settings, vendor/hardware/expert
->   pages, admin analytics/moderation/KVK/model pages). Each shows a **"Demo data — this page is being
->   rebuilt"** banner. The old disease, fertilizer and price models are not served (their API answers
->   `503 being rebuilt`) until they are retrained and evaluated in Phase 3.
+> - **Real now:** our own FastAPI backend and database, sign-in with server-side roles and admin approvals;
+>   the marketplace (vendor products → farmer orders → accept/ship/deliver, stock and totals on the server);
+>   equipment rentals (bookings with overlap checks, owner requests and calendar); consultations with experts,
+>   expert articles, the KVK directory (empty until the verified list is imported) and its admin import
+>   status; forum with reports and moderation; notifications; farm accounts with summaries and CSV export;
+>   settings and fields; every dashboard and analytics page (numbers computed from the database, empty
+>   states when there is no data).
+> - **Still demo:** soil monitoring, smart irrigation, crop planning, disease detection, precision fertilizer,
+>   price forecast, government schemes and weather. Each shows a **"Demo data — this page is being rebuilt"**
+>   banner (weather shows "coming soon"). The old disease, fertilizer and price models are not served (their
+>   API answers `503 being rebuilt`) until they are retrained and evaluated in Phase 3.
 
 ---
 
@@ -54,7 +57,7 @@ Requirements: [uv](https://docs.astral.sh/uv/) (installs Python 3.12 for you) an
 ```bash
 cd backend
 uv sync
-uv run terrabyte-seed     # creates backend/data/terrabyte.db and the demo accounts (safe to re-run)
+uv run terrabyte-seed     # creates backend/data/terrabyte.db, demo accounts and a demo walkthrough (safe to re-run)
 uv run terrabyte-api      # or: uv run uvicorn terrabyte.main:app --port 8000
 ```
 
@@ -62,6 +65,8 @@ Settings are optional in development; copy `backend/.env.example` to `backend/.e
 (database URL, JWT secret, CORS origins, upload size, data.gov.in key). API docs: http://127.0.0.1:8000/api/docs.
 
 Create a real admin (admins cannot self-register): `uv run terrabyte-admin create-admin --name "..." --phone 9XXXXXXXXX`.
+`uv run terrabyte-seed --reset` wipes and recreates the development database; `uv run terrabyte-import-kvk
+file.json` imports the KVK directory. See [`backend/README.md`](backend/README.md) for endpoints and formats.
 
 ### 2️⃣ Frontend (Vite, http://localhost:8080)
 
@@ -98,7 +103,7 @@ npm run typecheck && npm run lint && npm test && npm run build
 ## 🗺️ Roadmap
 
 1. **Foundation** (done): backend, data model, auth, roles, approvals, seed users, i18n, mobile layout, CI.
-2. **Workflows:** marketplace orders, equipment bookings, consultations and KVKs, forum and moderation,
+2. **Workflows** (done): marketplace orders, equipment bookings, consultations and KVKs, forum and moderation,
    notifications, farm accounts, real admin analytics.
 3. **Real data and models:** weather (Open-Meteo), FAO-56 irrigation, soil-test fertilizer doses from official
    recommendations, mandi prices from data.gov.in, honestly benchmarked price forecasts, a retrained disease
