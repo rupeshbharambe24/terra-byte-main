@@ -1,172 +1,114 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../../components/common/Header';
-import Sidebar from '../../components/common/Sidebar';
-import { useAuth } from '../../context/AuthContext';
+import { useQuery } from '@tanstack/react-query';
+import { BookOpen, CheckCircle2, Clock, Inbox, MessageSquare } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import AppShell from '@/components/common/AppShell';
+import PageHeader from '@/components/common/PageHeader';
+import PageSpinner from '@/components/common/PageSpinner';
+import { ErrorAlert } from '@/components/common/QueryState';
+import StatusPill from '@/components/common/StatusPill';
+import Section from '@/components/dashboard/Section';
+import StatCard from '@/components/dashboard/StatCard';
+import { useAuth } from '@/context/AuthContext';
+import { dashboardApi } from '@/lib/api';
+import { formatHours } from '@/lib/dashboard';
+import { formatDate } from '@/lib/format';
 
 const ExpertDashboard: React.FC = () => {
+  const { t, i18n } = useTranslation(['dashboard', 'common']);
+  const lng = i18n.resolvedLanguage;
+  const units = { min: t('shared.unitMin'), h: t('shared.unitHour') };
   const { user } = useAuth();
-
-  const expertCards = [
-    {
-      title: 'Farmer Queries',
-      description: 'Answer farmer questions',
-      icon: '💬',
-      path: '/forums',
-      count: '24 new queries'
-    },
-    {
-      title: 'Knowledge Base',
-      description: 'Manage knowledge articles',
-      icon: '📚',
-      path: '/knowledge-base',
-      count: '145 articles'
-    },
-    {
-      title: 'Disease Detection',
-      description: 'Review AI disease predictions',
-      icon: '🔬',
-      path: '/disease-review',
-      count: '8 pending reviews'
-    },
-    {
-      title: 'Crop Trends',
-      description: 'View regional crop data',
-      icon: '📈',
-      path: '/crop-trends',
-      count: 'Updated daily'
-    }
-  ];
-
-  const recentQueries = [
-    {
-      farmer: 'Rajesh Kumar',
-      question: 'Yellow spots on wheat leaves - what could be the cause?',
-      time: '2 hours ago',
-      status: 'pending'
-    },
-    {
-      farmer: 'Priya Sharma',
-      question: 'Best fertilizer schedule for cotton crop?',
-      time: '4 hours ago',
-      status: 'answered'
-    },
-    {
-      farmer: 'Suresh Patel',
-      question: 'How to improve soil pH naturally?',
-      time: '6 hours ago',
-      status: 'pending'
-    },
-    {
-      farmer: 'Maya Singh',
-      question: 'Organic pest control methods for tomatoes?',
-      time: '1 day ago',
-      status: 'answered'
-    }
-  ];
-
-  const stats = [
-    { label: 'Queries Answered', value: '156', period: 'This Month' },
-    { label: 'Farmer Helped', value: '89', period: 'This Month' },
-    { label: 'Response Rate', value: '98%', period: 'Average' },
-    { label: 'Rating', value: '4.9', period: '5 Star Rating' }
-  ];
+  const { data, isLoading, isError, error } = useQuery({ queryKey: ['dashboard', 'expert'], queryFn: dashboardApi.expert });
+  const rt = data?.response_times;
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header />
-      
-      <div className="flex">
-        <Sidebar />
-        
-        <main className="flex-1 min-w-0 p-4 md:p-6">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              Expert Dashboard
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              Help farmers with your expertise and knowledge.
-            </p>
+    <AppShell>
+      <PageHeader title={t('expert.title')} subtitle={user ? t('shared.welcome', { name: user.name }) : undefined} />
+      {isLoading ? (
+        <PageSpinner />
+      ) : isError || !data || !rt ? (
+        <ErrorAlert error={error} />
+      ) : (
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <StatCard icon={Inbox} label={t('expert.unassigned')} value={data.open_unassigned} hint={t('expert.unassignedHint')} to="/expert-consultations" />
+            <StatCard icon={MessageSquare} label={t('expert.waiting')} value={data.waiting_for_me} hint={t('expert.waitingHint')} to="/expert-consultations" />
+            <StatCard icon={CheckCircle2} label={t('expert.answered')} value={data.answered_by_me} hint={t('expert.closed', { count: data.closed_by_me })} />
+            <StatCard
+              icon={BookOpen}
+              label={t('expert.articles')}
+              value={data.articles_published}
+              hint={t('expert.drafts', { count: data.articles_draft })}
+              to="/expert-knowledge"
+            />
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-                <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">{stat.label}</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{stat.period}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Expert Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {expertCards.map((card, index) => (
-              <Link
-                key={index}
-                to={card.path}
-                className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all transform hover:scale-105"
-              >
-                <div className="text-3xl mb-4">{card.icon}</div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                  {card.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
-                  {card.description}
-                </p>
-                <p className="text-green-600 dark:text-green-400 text-sm font-medium">
-                  {card.count}
-                </p>
-              </Link>
-            ))}
-          </div>
-
-          {/* Recent Queries */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Recent Farmer Queries</h2>
-              <Link
-                to="/forums"
-                className="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 text-sm font-medium"
-              >
-                View All
-              </Link>
-            </div>
-            <div className="space-y-4">
-              {recentQueries.map((query, index) => (
-                <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2 mb-2">
-                        <span className="font-medium text-gray-900 dark:text-white">{query.farmer}</span>
-                        <span className={`px-2 py-1 rounded-full text-xs ${
-                          query.status === 'pending' 
-                            ? 'bg-yellow-100 dark:bg-yellow-800 text-yellow-700 dark:text-yellow-300'
-                            : 'bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-300'
-                        }`}>
-                          {query.status}
-                        </span>
-                      </div>
-                      <p className="text-gray-600 dark:text-gray-400 mb-2">{query.question}</p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">{query.time}</p>
-                    </div>
-                    {query.status === 'pending' && (
-                      <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
-                        Answer
-                      </button>
-                    )}
+          <div className="grid gap-6 lg:grid-cols-2">
+            <Section title={t('expert.responseTime')} note={t('expert.responseTimeNote')}>
+              {rt.responded === 0 ? (
+                <p className="text-sm text-gray-500 dark:text-gray-400">{t('expert.noReplies')}</p>
+              ) : (
+                <dl className="grid grid-cols-2 gap-4">
+                  <div>
+                    <dt className="text-sm text-gray-600 dark:text-gray-400">{t('shared.median')}</dt>
+                    <dd className="text-2xl font-bold">
+                      <Clock className="mr-1 inline h-5 w-5 text-green-700" aria-hidden="true" />
+                      {formatHours(rt.median_hours, lng, units)}
+                    </dd>
                   </div>
-                </div>
+                  <div>
+                    <dt className="text-sm text-gray-600 dark:text-gray-400">{t('shared.average')}</dt>
+                    <dd className="text-2xl font-bold">{formatHours(rt.average_hours, lng, units)}</dd>
+                  </div>
+                  <p className="col-span-2 text-xs text-gray-500">{t('shared.basedOn', { count: rt.responded })}</p>
+                </dl>
+              )}
+            </Section>
+
+            <Section title={t('expert.recent')} link={{ to: '/expert-consultations', label: t('shared.viewAll') }}>
+              {data.recent.length === 0 ? (
+                <p className="text-sm text-gray-500 dark:text-gray-400">{t('expert.noRecent')}</p>
+              ) : (
+                <ul className="divide-y dark:divide-gray-700">
+                  {data.recent.map((c) => (
+                    <li key={c.id} className="flex flex-wrap items-center justify-between gap-2 py-2">
+                      <div className="min-w-0">
+                        <Link to={`/consultations/${c.id}`} className="block truncate font-medium text-gray-900 hover:underline dark:text-gray-100">
+                          {c.crop ? `${c.crop}: ` : ''}
+                          {c.question}
+                        </Link>
+                        <p className="text-xs text-gray-500">
+                          {c.farmer_name}
+                          {c.farmer_district ? ` · ${c.farmer_district}` : ''} · {formatDate(c.created_at, lng)}
+                        </p>
+                      </div>
+                      <StatusPill kind="consultation" status={c.status} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </Section>
+          </div>
+
+          <Section title={t('shared.quickLinks')}>
+            <div className="flex flex-wrap gap-2">
+              {[
+                ['/expert-consultations', 'common:sidebar.consultations'],
+                ['/expert-knowledge', 'common:sidebar.knowledgeBase'],
+                ['/forums', 'common:sidebar.forums'],
+                ['/notifications', 'common:sidebar.notifications'],
+              ].map(([to, key]) => (
+                <Link key={to} to={to} className="rounded-lg border px-3 py-2 text-sm hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800">
+                  {t(key)}
+                </Link>
               ))}
             </div>
-          </div>
-        </main>
-      </div>
-    </div>
+          </Section>
+        </div>
+      )}
+    </AppShell>
   );
 };
 

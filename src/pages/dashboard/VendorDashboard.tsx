@@ -1,182 +1,137 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../../components/common/Header';
-import Sidebar from '../../components/common/Sidebar';
-import { useAuth } from '../../context/AuthContext';
+import { useQuery } from '@tanstack/react-query';
+import { AlertTriangle, BarChart3, IndianRupee, Package, ShoppingCart } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import AppShell from '@/components/common/AppShell';
+import PageHeader from '@/components/common/PageHeader';
+import PageSpinner from '@/components/common/PageSpinner';
+import { ErrorAlert } from '@/components/common/QueryState';
+import StatusPill from '@/components/common/StatusPill';
+import Breakdown from '@/components/dashboard/Breakdown';
+import Section from '@/components/dashboard/Section';
+import StatCard from '@/components/dashboard/StatCard';
+import { useAuth } from '@/context/AuthContext';
+import { dashboardApi } from '@/lib/api';
+import { orderedCounts } from '@/lib/dashboard';
+import { formatDate, formatMoney, formatMonth } from '@/lib/format';
+import { ORDER_STATUSES } from '@/lib/types';
 
 const VendorDashboard: React.FC = () => {
+  const { t, i18n } = useTranslation(['dashboard', 'common']);
+  const lng = i18n.resolvedLanguage;
   const { user } = useAuth();
-
-  const vendorCards = [
-    {
-      title: 'My Products',
-      description: 'Manage your product listings',
-      icon: '📦',
-      path: '/vendor-products',
-      count: '45 products'
-    },
-    {
-      title: 'Orders',
-      description: 'View and manage orders',
-      icon: '📋',
-      path: '/vendor-orders',
-      count: '12 pending'
-    },
-    {
-      title: 'Inventory',
-      description: 'Track stock levels',
-      icon: '📊',
-      path: '/vendor-inventory',
-      count: '89% in stock'
-    },
-    {
-      title: 'Analytics',
-      description: 'Sales and performance data',
-      icon: '📈',
-      path: '/vendor-analytics',
-      count: '₹2.5L this month'
-    }
-  ];
-
-  const recentOrders = [
-    {
-      id: 'ORD-001',
-      farmer: 'Rajesh Kumar',
-      product: 'Organic Fertilizer (50kg)',
-      amount: '₹2,500',
-      status: 'pending',
-      time: '2 hours ago'
-    },
-    {
-      id: 'ORD-002',
-      farmer: 'Priya Sharma',
-      product: 'Wheat Seeds (10kg)',
-      amount: '₹1,200',
-      status: 'shipped',
-      time: '1 day ago'
-    },
-    {
-      id: 'ORD-003',
-      farmer: 'Suresh Patel',
-      product: 'NPK Fertilizer (25kg)',
-      amount: '₹1,800',
-      status: 'delivered',
-      time: '2 days ago'
-    }
-  ];
-
-  const stats = [
-    { label: 'Total Sales', value: '₹4.2L', trend: '+18%' },
-    { label: 'Orders', value: '156', trend: '+12%' },
-    { label: 'Customers', value: '89', trend: '+25%' },
-    { label: 'Rating', value: '4.8', trend: '+0.2' }
-  ];
+  const { data, isLoading, isError, error } = useQuery({ queryKey: ['dashboard', 'vendor'], queryFn: dashboardApi.vendor });
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header />
-      
-      <div className="flex">
-        <Sidebar />
-        
-        <main className="flex-1 min-w-0 p-4 md:p-6">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              Vendor Dashboard
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              Manage your agricultural products and orders.
-            </p>
+    <AppShell>
+      <PageHeader title={t('vendor.title')} subtitle={user ? t('shared.welcome', { name: user.name }) : undefined} />
+      {isLoading ? (
+        <PageSpinner />
+      ) : isError || !data ? (
+        <ErrorAlert error={error} />
+      ) : (
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <StatCard
+              icon={Package}
+              label={t('vendor.activeProducts')}
+              value={`${data.products_active} / ${data.products_total}`}
+              hint={t('vendor.outOfStock', { count: data.out_of_stock })}
+              to="/vendor-products"
+            />
+            <StatCard icon={ShoppingCart} label={t('vendor.openOrders')} value={data.open_orders} hint={t('vendor.openOrdersHint')} to="/vendor-orders" />
+            <StatCard
+              icon={IndianRupee}
+              label={t('vendor.revenueMonth', { month: formatMonth(data.month, lng) })}
+              value={formatMoney(data.revenue_this_month, lng)}
+              hint={t('vendor.deliveredOnly')}
+            />
+            <StatCard
+              icon={BarChart3}
+              label={t('vendor.revenueTotal')}
+              value={formatMoney(data.revenue_total, lng)}
+              hint={t('vendor.deliveredOnly')}
+              to="/vendor-analytics"
+            />
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{stat.label}</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
-                  </div>
-                  <div className="text-green-600 dark:text-green-400 text-sm font-medium">
-                    {stat.trend}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Vendor Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {vendorCards.map((card, index) => (
-              <Link
-                key={index}
-                to={card.path}
-                className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all transform hover:scale-105"
-              >
-                <div className="text-3xl mb-4">{card.icon}</div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                  {card.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
-                  {card.description}
-                </p>
-                <p className="text-blue-600 dark:text-blue-400 text-sm font-medium">
-                  {card.count}
-                </p>
-              </Link>
-            ))}
-          </div>
-
-          {/* Recent Orders */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Recent Orders</h2>
-              <Link
-                to="/vendor-orders"
-                className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium"
-              >
-                View All
-              </Link>
-            </div>
-            <div className="space-y-4">
-              {recentOrders.map((order, index) => (
-                <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-3 mb-2">
-                        <span className="font-medium text-gray-900 dark:text-white">#{order.id}</span>
-                        <span className={`px-2 py-1 rounded-full text-xs ${
-                          order.status === 'pending' 
-                            ? 'bg-yellow-100 dark:bg-yellow-800 text-yellow-700 dark:text-yellow-300'
-                            : order.status === 'shipped'
-                            ? 'bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-300'
-                            : 'bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-300'
-                        }`}>
-                          {order.status}
-                        </span>
+          <div className="grid gap-6 lg:grid-cols-2">
+            <Section title={t('vendor.recentOrders')} link={{ to: '/vendor-orders', label: t('shared.viewAll') }}>
+              {data.recent_orders.length === 0 ? (
+                <p className="text-sm text-gray-500 dark:text-gray-400">{t('vendor.noOrders')}</p>
+              ) : (
+                <ul className="divide-y dark:divide-gray-700">
+                  {data.recent_orders.map((o) => (
+                    <li key={o.id} className="flex flex-wrap items-center justify-between gap-2 py-2">
+                      <div className="min-w-0">
+                        <Link to="/vendor-orders" className="font-medium text-gray-900 hover:underline dark:text-gray-100">
+                          {t('shared.orderNo', { id: o.id })} · {o.buyer_name}
+                        </Link>
+                        <p className="text-xs text-gray-500">{formatDate(o.created_at, lng)} · {formatMoney(o.total_inr, lng)}</p>
                       </div>
-                      <p className="text-gray-900 dark:text-white font-medium">{order.farmer}</p>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm">{order.product}</p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">{order.time}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg font-semibold text-gray-900 dark:text-white">{order.amount}</p>
-                      {order.status === 'pending' && (
-                        <button className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm mt-2 transition-colors">
-                          Process
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
+                      <StatusPill kind="order" status={o.status} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </Section>
+
+            <Section title={t('vendor.ordersByStatus')}>
+              <Breakdown
+                ariaLabel={t('vendor.ordersByStatus')}
+                emptyText={t('vendor.noOrders')}
+                rows={orderedCounts(data.orders_by_status, ORDER_STATUSES).map(({ key, count }) => ({
+                  key,
+                  label: t(`common:orderStatus.${key}`),
+                  count,
+                }))}
+              />
+            </Section>
+          </div>
+
+          <Section
+            title={t('vendor.lowStock')}
+            note={t('vendor.lowStockNote')}
+            link={{ to: '/vendor-products', label: t('vendor.manageProducts') }}
+          >
+            {data.low_stock.length === 0 ? (
+              <p className="text-sm text-gray-500 dark:text-gray-400">{t('vendor.noLowStock')}</p>
+            ) : (
+              <ul className="divide-y dark:divide-gray-700">
+                {data.low_stock.map((p) => (
+                  <li key={p.id} className="flex items-center justify-between gap-2 py-2 text-sm">
+                    <span className="min-w-0 truncate">
+                      {p.stock === 0 && <AlertTriangle className="mr-1 inline h-4 w-4 text-red-600" aria-hidden="true" />}
+                      {p.name} <span className="text-gray-500">({p.unit})</span>
+                    </span>
+                    <span className={p.stock === 0 ? 'font-medium text-red-600' : 'font-medium'}>
+                      {p.stock === 0 ? t('vendor.soldOut') : t('vendor.left', { count: p.stock })}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Section>
+
+          <Section title={t('shared.quickLinks')}>
+            <div className="flex flex-wrap gap-2">
+              {[
+                ['/vendor-products', 'common:sidebar.products'],
+                ['/vendor-orders', 'common:sidebar.orders'],
+                ['/vendor-analytics', 'common:sidebar.analytics'],
+                ['/marketplace', 'common:sidebar.marketplace'],
+                ['/notifications', 'common:sidebar.notifications'],
+              ].map(([to, key]) => (
+                <Link key={to} to={to} className="rounded-lg border px-3 py-2 text-sm hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800">
+                  {t(key)}
+                </Link>
               ))}
             </div>
-          </div>
-        </main>
-      </div>
-    </div>
+          </Section>
+        </div>
+      )}
+    </AppShell>
   );
 };
 
