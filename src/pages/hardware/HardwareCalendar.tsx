@@ -1,284 +1,180 @@
+import React, { useMemo, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { CalendarDays, ChevronLeft, ChevronRight, Tractor } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import AppShell from '@/components/common/AppShell';
+import PageHeader from '@/components/common/PageHeader';
+import PageSpinner from '@/components/common/PageSpinner';
+import { EmptyState, ErrorAlert } from '@/components/common/QueryState';
+import StatusPill from '@/components/common/StatusPill';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { rentalsApi } from '@/lib/api';
+import { formatDateTime, formatMonth, formatMoney, todayIST } from '@/lib/format';
+import { CALENDAR_STATUSES, dayStatuses, monthGrid, monthWindow, shiftMonth } from '@/lib/rentals';
+import type { BookingStatus } from '@/lib/types';
 
-import React, { useState } from 'react';
-import Header from '../../components/common/Header';
-import Sidebar from '../../components/common/Sidebar';
-import { Button } from '../../components/ui/button';
-import { Badge } from '../../components/ui/badge';
-import { ChevronLeft, ChevronRight, Calendar as CalendarIcon } from 'lucide-react';
+const LOCALES: Record<string, string> = { en: 'en-IN', hi: 'hi-IN', mr: 'mr-IN' };
+
+const DAY_CLASS: Partial<Record<BookingStatus, string>> = {
+  requested: 'bg-amber-100 text-amber-900 dark:bg-amber-900 dark:text-amber-100',
+  accepted: 'bg-blue-100 text-blue-900 dark:bg-blue-900 dark:text-blue-100',
+  completed: 'bg-green-100 text-green-900 dark:bg-green-900 dark:text-green-100',
+};
+
+/** Short weekday names, Monday first (1 Jan 2024 was a Monday). */
+function weekdayNames(language: string | undefined): string[] {
+  const fmt = new Intl.DateTimeFormat(LOCALES[language ?? 'en'] ?? 'en-IN', { weekday: 'short', timeZone: 'UTC' });
+  return Array.from({ length: 7 }, (_, i) => fmt.format(new Date(Date.UTC(2024, 0, 1 + i))));
+}
 
 const HardwareCalendar: React.FC = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const { t, i18n } = useTranslation(['rentals', 'common']);
+  const lng = i18n.resolvedLanguage;
+  const today = todayIST();
+  const [month, setMonth] = useState(() => ({ year: Number(today.slice(0, 4)), month: Number(today.slice(5, 7)) }));
+  const [selected, setSelected] = useState<number | null>(null);
 
-  const bookings = [
-    {
-      id: 1,
-      date: '2024-01-20',
-      equipment: 'John Deere Tractor',
-      farmer: 'Rajesh Kumar',
-      duration: 3,
-      status: 'confirmed'
-    },
-    {
-      id: 2,
-      date: '2024-01-18',
-      equipment: 'Case IH Harvester',
-      farmer: 'Priya Sharma',
-      duration: 2,
-      status: 'active'
-    },
-    {
-      id: 3,
-      date: '2024-01-25',
-      equipment: 'Field Sprayer',
-      farmer: 'Suresh Patel',
-      duration: 1,
-      status: 'pending'
-    },
-    {
-      id: 4,
-      date: '2024-01-28',
-      equipment: 'Lemken Plough',
-      farmer: 'Anita Devi',
-      duration: 2,
-      status: 'confirmed'
-    }
-  ];
+  const equipment = useQuery({
+    queryKey: ['equipment', 'mine', 'calendar'],
+    queryFn: () => rentalsApi.myEquipment({ limit: 100 }),
+  });
+  const equipmentId = selected ?? equipment.data?.items[0]?.id ?? null;
+  const window = monthWindow(month.year, month.month);
+  const bookings = useQuery({
+    queryKey: ['bookings', 'calendar', equipmentId, window],
+    queryFn: () => rentalsApi.bookings({ equipment_id: equipmentId as number, ...window, limit: 100 }),
+    enabled: equipmentId !== null,
+  });
 
-  const getDaysInMonth = (date: Date) => {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const daysInMonth = lastDay.getDate();
-    const startingDayOfWeek = firstDay.getDay();
-    
-    const days = [];
-    
-    // Add empty cells for days before the first day of the month
-    for (let i = 0; i < startingDayOfWeek; i++) {
-      days.push(null);
-    }
-    
-    // Add days of the month
-    for (let day = 1; day <= daysInMonth; day++) {
-      days.push(day);
-    }
-    
-    return days;
-  };
-
-  const getBookingsForDate = (day: number) => {
-    if (!day) return [];
-    const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    return bookings.filter(booking => booking.date === dateStr);
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'confirmed':
-        return 'bg-green-500';
-      case 'active':
-        return 'bg-blue-500';
-      case 'pending':
-        return 'bg-yellow-500';
-      default:
-        return 'bg-gray-500';
-    }
-  };
-
-  const navigateMonth = (direction: 'prev' | 'next') => {
-    setCurrentDate(prev => {
-      const newDate = new Date(prev);
-      if (direction === 'prev') {
-        newDate.setMonth(prev.getMonth() - 1);
-      } else {
-        newDate.setMonth(prev.getMonth() + 1);
-      }
-      return newDate;
-    });
-  };
-
-  const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
-
-  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-  const days = getDaysInMonth(currentDate);
-
-  const upcomingBookings = bookings
-    .filter(booking => new Date(booking.date) >= new Date())
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-    .slice(0, 5);
+  const weeks = useMemo(() => monthGrid(month.year, month.month), [month]);
+  const statuses = useMemo(() => dayStatuses(bookings.data?.items ?? []), [bookings.data]);
+  const weekdays = useMemo(() => weekdayNames(lng), [lng]);
+  const monthLabel = formatMonth(`${month.year}-${String(month.month).padStart(2, '0')}`, lng);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header />
-      
-      <div className="flex">
-        <Sidebar />
-        
-        <main className="flex-1 min-w-0 p-4 md:p-6">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              Rental Calendar
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              View and manage your equipment rental schedules.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Calendar */}
-            <div className="lg:col-span-2">
-              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border p-6">
-                {/* Calendar Header */}
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                    {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
-                  </h2>
-                  <div className="flex space-x-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => navigateMonth('prev')}
-                    >
-                      <ChevronLeft className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => navigateMonth('next')}
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
-
-                {/* Day Names */}
-                <div className="grid grid-cols-7 gap-1 mb-2">
-                  {dayNames.map(day => (
-                    <div key={day} className="p-2 text-center text-sm font-medium text-gray-500 dark:text-gray-400">
-                      {day}
-                    </div>
+    <AppShell>
+      <PageHeader title={t('calendar.title')} subtitle={t('calendar.subtitle')} />
+      {equipment.isLoading ? (
+        <PageSpinner />
+      ) : equipment.isError ? (
+        <ErrorAlert error={equipment.error} />
+      ) : !equipment.data || equipment.data.items.length === 0 ? (
+        <EmptyState icon={Tractor} title={t('calendar.noEquipment')} />
+      ) : (
+        <>
+          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="sm:w-80">
+              <Select value={String(equipmentId)} onValueChange={(v) => setSelected(Number(v))}>
+                <SelectTrigger aria-label={t('calendar.equipment')}><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {equipment.data.items.map((eq) => (
+                    <SelectItem key={eq.id} value={String(eq.id)}>
+                      {eq.name}
+                      {eq.active ? '' : ` (${t('equipment.inactive')})`}
+                    </SelectItem>
                   ))}
-                </div>
-
-                {/* Calendar Grid */}
-                <div className="grid grid-cols-7 gap-1">
-                  {days.map((day, index) => {
-                    const dayBookings = getBookingsForDate(day);
-                    const isToday = day && 
-                      day === new Date().getDate() && 
-                      currentDate.getMonth() === new Date().getMonth() && 
-                      currentDate.getFullYear() === new Date().getFullYear();
-
-                    return (
-                      <div
-                        key={index}
-                        className={`min-h-24 p-2 border border-gray-200 dark:border-gray-700 ${
-                          day ? 'bg-white dark:bg-gray-800' : 'bg-gray-50 dark:bg-gray-900'
-                        } ${isToday ? 'ring-2 ring-purple-500' : ''}`}
-                      >
-                        {day && (
-                          <>
-                            <div className={`text-sm font-medium mb-1 ${
-                              isToday ? 'text-purple-600' : 'text-gray-900 dark:text-white'
-                            }`}>
-                              {day}
-                            </div>
-                            <div className="space-y-1">
-                              {dayBookings.map(booking => (
-                                <div
-                                  key={booking.id}
-                                  className={`text-xs px-2 py-1 rounded text-white ${getStatusColor(booking.status)}`}
-                                >
-                                  {booking.equipment.split(' ')[0]}
-                                </div>
-                              ))}
-                            </div>
-                          </>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* Legend */}
-                <div className="flex items-center space-x-4 mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 bg-green-500 rounded"></div>
-                    <span className="text-sm text-gray-600 dark:text-gray-400">Confirmed</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 bg-blue-500 rounded"></div>
-                    <span className="text-sm text-gray-600 dark:text-gray-400">Active</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 bg-yellow-500 rounded"></div>
-                    <span className="text-sm text-gray-600 dark:text-gray-400">Pending</span>
-                  </div>
-                </div>
-              </div>
+                </SelectContent>
+              </Select>
             </div>
-
-            {/* Upcoming Bookings */}
-            <div className="space-y-6">
-              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border p-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                  Upcoming Bookings
-                </h3>
-                <div className="space-y-4">
-                  {upcomingBookings.map(booking => (
-                    <div key={booking.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-medium text-gray-900 dark:text-white">
-                          {booking.equipment}
-                        </span>
-                        <Badge className={`${getStatusColor(booking.status)} text-white`}>
-                          {booking.status}
-                        </Badge>
-                      </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">{booking.farmer}</p>
-                      <div className="flex items-center space-x-2 mt-2 text-sm text-gray-500 dark:text-gray-400">
-                        <CalendarIcon className="w-4 h-4" />
-                        <span>{booking.date}</span>
-                        <span>•</span>
-                        <span>{booking.duration} day(s)</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Quick Stats */}
-              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border p-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                  This Month
-                </h3>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">Total Bookings</span>
-                    <span className="font-medium text-gray-900 dark:text-white">
-                      {bookings.length}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">Equipment Utilization</span>
-                    <span className="font-medium text-green-600">78%</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">Revenue</span>
-                    <span className="font-medium text-purple-600">₹13,900</span>
-                  </div>
-                </div>
-              </div>
+            <div className="flex items-center justify-between gap-2">
+              <Button
+                variant="outline"
+                size="icon"
+                aria-label={t('calendar.prev')}
+                onClick={() => setMonth((m) => shiftMonth(m.year, m.month, -1))}
+              >
+                <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+              </Button>
+              <span className="min-w-[8rem] text-center font-medium" aria-live="polite">{monthLabel}</span>
+              <Button
+                variant="outline"
+                size="icon"
+                aria-label={t('calendar.next')}
+                onClick={() => setMonth((m) => shiftMonth(m.year, m.month, 1))}
+              >
+                <ChevronRight className="h-4 w-4" aria-hidden="true" />
+              </Button>
             </div>
           </div>
-        </main>
-      </div>
-    </div>
+
+          <Card className="mb-4">
+            <CardContent className="p-2 sm:p-4">
+              <table className="w-full table-fixed border-separate border-spacing-1 text-center text-sm" aria-label={monthLabel}>
+                <thead>
+                  <tr>
+                    {weekdays.map((d) => (
+                      <th key={d} scope="col" className="truncate py-1 text-xs font-medium text-gray-500">{d}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {weeks.map((week, wi) => (
+                    <tr key={wi}>
+                      {week.map((day, di) => {
+                        if (!day) return <td key={di} />;
+                        const status = statuses[day];
+                        const isToday = day === today;
+                        return (
+                          <td
+                            key={day}
+                            className={`h-10 rounded-md sm:h-14 ${status ? DAY_CLASS[status] : 'bg-gray-50 dark:bg-gray-800'} ${isToday ? 'ring-2 ring-green-600' : ''}`}
+                            title={status ? t(`common:bookingStatus.${status}`) : undefined}
+                          >
+                            <span className="font-medium">{Number(day.slice(8))}</span>
+                            {status && <span className="sr-only"> {t(`common:bookingStatus.${status}`)}</span>}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <ul className="mt-3 flex flex-wrap gap-3 text-xs" aria-label={t('calendar.legend')}>
+                {CALENDAR_STATUSES.map((s) => (
+                  <li key={s} className="flex items-center gap-1">
+                    <span className={`inline-block h-3 w-3 rounded ${DAY_CLASS[s]}`} aria-hidden="true" />
+                    {t(`common:bookingStatus.${s}`)}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+
+          <h2 className="mb-2 text-lg font-semibold">{t('calendar.monthBookings', { month: monthLabel })}</h2>
+          {bookings.isLoading ? (
+            <PageSpinner />
+          ) : bookings.isError ? (
+            <ErrorAlert error={bookings.error} />
+          ) : !bookings.data || bookings.data.items.length === 0 ? (
+            <EmptyState icon={CalendarDays} title={t('calendar.noBookings')} />
+          ) : (
+            <ul className="space-y-2">
+              {[...bookings.data.items]
+                .sort((a, b) => a.start_at.localeCompare(b.start_at))
+                .map((b) => (
+                  <li key={b.id}>
+                    <Card>
+                      <CardContent className="flex flex-col gap-2 p-3 text-sm sm:flex-row sm:items-center sm:justify-between">
+                        <div className="min-w-0">
+                          <p className="font-medium break-words">
+                            {t('period', { start: formatDateTime(b.start_at, lng), end: formatDateTime(b.end_at, lng) })}
+                          </p>
+                          <p className="text-gray-600 dark:text-gray-400">
+                            {b.farmer_name} · {formatMoney(b.amount_inr, lng)}
+                          </p>
+                        </div>
+                        <StatusPill kind="booking" status={b.status} />
+                      </CardContent>
+                    </Card>
+                  </li>
+                ))}
+            </ul>
+          )}
+        </>
+      )}
+    </AppShell>
   );
 };
 
