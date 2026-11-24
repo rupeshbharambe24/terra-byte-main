@@ -1,426 +1,309 @@
-
 import React, { useState } from 'react';
-import Header from '../../components/common/Header';
-import Sidebar from '../../components/common/Sidebar';
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
-import { Button } from '../../components/ui/button';
-import { useAuth } from '../../context/AuthContext';
-import { useTheme } from '../../context/ThemeContext';
+import { useMutation } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
+import AppShell from '@/components/common/AppShell';
+import PageHeader from '@/components/common/PageHeader';
+import FieldsCard from '@/components/farm/FieldsCard';
+import LocationButton from '@/components/farm/LocationButton';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useAuth } from '@/context/AuthContext';
+import { LANGUAGE_NAMES, LANGUAGES } from '@/i18n/resources';
+import { accountApi } from '@/lib/api';
+import { MAHARASHTRA_DISTRICTS } from '@/lib/constants';
+import { errorMessage } from '@/lib/errors';
+import { isInIndia, parseOptionalNumber, roundCoord } from '@/lib/farm';
+import type { Language, MeUpdate, User } from '@/lib/types';
+import { MIN_PASSWORD_LENGTH } from '@/lib/validation';
 
-const Settings: React.FC = () => {
-  const { user } = useAuth();
-  const { isDark, toggleTheme } = useTheme();
-  const [activeTab, setActiveTab] = useState('profile');
+const OTHER = '__other__';
+const NONE = '__none__';
+const KNOWN_DISTRICTS: readonly string[] = MAHARASHTRA_DISTRICTS;
 
-  const tabs = [
-    { id: 'profile', name: 'Profile', icon: '👤' },
-    { id: 'farm', name: 'Farm Details', icon: '🚜' },
-    { id: 'notifications', name: 'Notifications', icon: '🔔' },
-    { id: 'security', name: 'Security', icon: '🔒' },
-    { id: 'preferences', name: 'Preferences', icon: '⚙️' }
-  ];
+interface ProfileForm {
+  name: string;
+  email: string;
+  state: string;
+  districtChoice: string;
+  districtOther: string;
+  village: string;
+  organization: string;
+  lat: string;
+  lon: string;
+}
+
+function profileFrom(user: User): ProfileForm {
+  const district = user.district ?? '';
+  const known = KNOWN_DISTRICTS.includes(district);
+  return {
+    name: user.name,
+    email: user.email ?? '',
+    state: user.state ?? 'Maharashtra',
+    districtChoice: !district ? NONE : known ? district : OTHER,
+    districtOther: known ? '' : district,
+    village: user.village ?? '',
+    organization: user.organization ?? '',
+    lat: user.lat === null ? '' : String(user.lat),
+    lon: user.lon === null ? '' : String(user.lon),
+  };
+}
+
+const ProfileCard: React.FC<{ user: User }> = ({ user }) => {
+  const { t } = useTranslation(['farm', 'common']);
+  const { updateProfile, setLanguage } = useAuth();
+  const [form, setForm] = useState<ProfileForm>(() => profileFrom(user));
+  const [error, setError] = useState<string | null>(null);
+  const set = (key: keyof ProfileForm) => (e: React.ChangeEvent<HTMLInputElement>) =>
+    setForm((f) => ({ ...f, [key]: e.target.value }));
+
+  const mutation = useMutation({
+    mutationFn: (data: MeUpdate) => updateProfile(data),
+    onSuccess: (updated) => {
+      setForm(profileFrom(updated));
+      toast.success(t('settings.profile.saved'));
+    },
+    onError: (err) => setError(errorMessage(t, err)),
+  });
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    const name = form.name.trim().replace(/\s+/g, ' ');
+    if (name.length < 2) return setError(t('settings.profile.nameInvalid'));
+    const lat = parseOptionalNumber(form.lat);
+    const lon = parseOptionalNumber(form.lon);
+    if ((lat === null) !== (lon === null) || (lat !== null && lon !== null && !isInIndia(lat, lon))) {
+      return setError(t('location.invalid'));
+    }
+    const district =
+      form.districtChoice === OTHER ? form.districtOther.trim() : form.districtChoice === NONE ? '' : form.districtChoice;
+    const data: MeUpdate = {
+      name,
+      email: form.email.trim() || null,
+      state: form.state.trim() || null,
+      district: district || null,
+      village: form.village.trim() || null,
+      lat: lat === null ? null : roundCoord(lat),
+      lon: lon === null ? null : roundCoord(lon),
+    };
+    if (user.role !== 'farmer') data.organization = form.organization.trim() || null;
+    mutation.mutate(data);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header />
-      
-      <div className="flex">
-        <Sidebar />
-        
-        <main className="flex-1 min-w-0 p-4 md:p-6">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Settings</h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              Manage your account settings and preferences.
+    <Card>
+      <CardHeader>
+        <CardTitle>{t('settings.profile.title')}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="mb-6 max-w-xs space-y-2">
+          <Label htmlFor="settings-language">{t('settings.profile.language')}</Label>
+          <Select value={user.preferred_language} onValueChange={(v) => void setLanguage(v as Language)}>
+            <SelectTrigger id="settings-language">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {LANGUAGES.map((l) => (
+                <SelectItem key={l} value={l}>
+                  {LANGUAGE_NAMES[l]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <p className="text-xs text-gray-500">{t('settings.profile.languageHint')}</p>
+        </div>
+
+        <form onSubmit={submit} className="space-y-4" noValidate>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-2">
+              <Label htmlFor="settings-name">{t('settings.profile.name')}</Label>
+              <Input id="settings-name" value={form.name} maxLength={120} onChange={set('name')} required />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="settings-phone">{t('settings.profile.phone')}</Label>
+              <Input id="settings-phone" value={user.phone} disabled readOnly />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="settings-email">{t('settings.profile.email')}</Label>
+              <Input id="settings-email" type="email" value={form.email} maxLength={254} onChange={set('email')} />
+            </div>
+            {user.role !== 'farmer' && (
+              <div className="space-y-2">
+                <Label htmlFor="settings-org">{t('settings.profile.organization')}</Label>
+                <Input id="settings-org" value={form.organization} maxLength={160} onChange={set('organization')} />
+              </div>
+            )}
+            <div className="space-y-2">
+              <Label htmlFor="settings-state">{t('settings.profile.state')}</Label>
+              <Input id="settings-state" value={form.state} maxLength={80} onChange={set('state')} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="settings-district">{t('settings.profile.district')}</Label>
+              <Select value={form.districtChoice} onValueChange={(v) => setForm((f) => ({ ...f, districtChoice: v }))}>
+                <SelectTrigger id="settings-district">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={NONE}>{t('settings.profile.districtNone')}</SelectItem>
+                  {MAHARASHTRA_DISTRICTS.map((d) => (
+                    <SelectItem key={d} value={d}>
+                      {d}
+                    </SelectItem>
+                  ))}
+                  <SelectItem value={OTHER}>{t('settings.profile.districtOther')}</SelectItem>
+                </SelectContent>
+              </Select>
+              {form.districtChoice === OTHER && (
+                <Input
+                  aria-label={t('settings.profile.districtOtherLabel')}
+                  placeholder={t('settings.profile.districtOtherLabel')}
+                  value={form.districtOther}
+                  maxLength={80}
+                  onChange={set('districtOther')}
+                />
+              )}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="settings-village">{t('settings.profile.village')}</Label>
+              <Input id="settings-village" value={form.village} maxLength={120} onChange={set('village')} />
+            </div>
+          </div>
+
+          <fieldset className="space-y-2">
+            <legend className="text-sm font-medium">{t('location.title')}</legend>
+            <p className="text-xs text-gray-500">{t('settings.profile.locationHint')}</p>
+            <div className="grid grid-cols-2 gap-2 max-w-md">
+              <Input
+                aria-label={t('location.lat')}
+                placeholder={t('location.lat')}
+                inputMode="decimal"
+                value={form.lat}
+                onChange={set('lat')}
+              />
+              <Input
+                aria-label={t('location.lon')}
+                placeholder={t('location.lon')}
+                inputMode="decimal"
+                value={form.lon}
+                onChange={set('lon')}
+              />
+            </div>
+            <LocationButton
+              onLocate={({ lat, lon }) => setForm((f) => ({ ...f, lat: String(lat), lon: String(lon) }))}
+            />
+          </fieldset>
+
+          {error && (
+            <p role="alert" className="text-sm text-red-600">
+              {error}
             </p>
+          )}
+          <Button type="submit" className="bg-green-600 hover:bg-green-700 text-white" disabled={mutation.isPending}>
+            {mutation.isPending ? t('common:actions.saving') : t('settings.profile.save')}
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
+  );
+};
+
+const PasswordCard: React.FC = () => {
+  const { t } = useTranslation(['farm', 'common']);
+  const [current, setCurrent] = useState('');
+  const [next, setNext] = useState('');
+  const [confirm, setConfirm] = useState('');
+  const [error, setError] = useState<string | null>(null);
+
+  const mutation = useMutation({
+    mutationFn: () => accountApi.changePassword(current, next),
+    onSuccess: () => {
+      setCurrent('');
+      setNext('');
+      setConfirm('');
+      toast.success(t('settings.password.saved'));
+    },
+    onError: (err) => setError(errorMessage(t, err)),
+  });
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    if (!current) return setError(t('settings.password.currentRequired'));
+    if (next.length < MIN_PASSWORD_LENGTH) return setError(t('settings.password.tooShort', { min: MIN_PASSWORD_LENGTH }));
+    if (next !== confirm) return setError(t('settings.password.mismatch'));
+    mutation.mutate();
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{t('settings.password.title')}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={submit} className="space-y-4 max-w-md" noValidate>
+          <div className="space-y-2">
+            <Label htmlFor="pw-current">{t('settings.password.current')}</Label>
+            <Input
+              id="pw-current"
+              type="password"
+              autoComplete="current-password"
+              value={current}
+              onChange={(e) => setCurrent(e.target.value)}
+            />
           </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {/* Settings Navigation */}
-            <div className="lg:col-span-1">
-              <Card>
-                <CardContent className="p-4">
-                  <nav className="space-y-2">
-                    {tabs.map((tab) => (
-                      <button
-                        key={tab.id}
-                        onClick={() => setActiveTab(tab.id)}
-                        className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors ${
-                          activeTab === tab.id
-                            ? 'bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-300'
-                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
-                        }`}
-                      >
-                        <span className="text-xl">{tab.icon}</span>
-                        <span className="font-medium">{tab.name}</span>
-                      </button>
-                    ))}
-                  </nav>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Settings Content */}
-            <div className="lg:col-span-3">
-              {activeTab === 'profile' && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Profile Information</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-6">
-                      <div className="flex items-center space-x-6">
-                        <div className="w-24 h-24 bg-green-100 dark:bg-green-800 rounded-full flex items-center justify-center">
-                          <span className="text-3xl">👤</span>
-                        </div>
-                        <div>
-                          <Button variant="outline" size="sm">
-                            Change Photo
-                          </Button>
-                          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                            JPG, PNG or GIF. Max size 2MB.
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Full Name
-                          </label>
-                          <input
-                            type="text"
-                            defaultValue={user?.name || ''}
-                            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Email Address
-                          </label>
-                          <input
-                            type="email"
-                            defaultValue={user?.email || ''}
-                            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Phone Number
-                          </label>
-                          <input
-                            type="tel"
-                            defaultValue="+91 98765 43210"
-                            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Location
-                          </label>
-                          <input
-                            type="text"
-                            defaultValue="Maharashtra, India"
-                            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Bio
-                        </label>
-                        <textarea
-                          rows={4}
-                          defaultValue="Experienced farmer with 15 years in sustainable agriculture. Specializing in rice, wheat, and organic farming techniques."
-                          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                        />
-                      </div>
-
-                      <Button>Save Changes</Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-
-              {activeTab === 'farm' && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Farm Details</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-6">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Farm Name
-                          </label>
-                          <input
-                            type="text"
-                            defaultValue="Green Valley Farm"
-                            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Total Area (acres)
-                          </label>
-                          <input
-                            type="number"
-                            defaultValue="25.5"
-                            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Soil Type
-                          </label>
-                          <select className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
-                            <option>Loamy</option>
-                            <option>Clay</option>
-                            <option>Sandy</option>
-                            <option>Silty</option>
-                            <option>Mixed</option>
-                          </select>
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Irrigation Type
-                          </label>
-                          <select className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
-                            <option>Drip Irrigation</option>
-                            <option>Sprinkler</option>
-                            <option>Surface Irrigation</option>
-                            <option>Subsurface</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                          Primary Crops
-                        </label>
-                        <input
-                          type="text"
-                          defaultValue="Rice, Wheat, Cotton"
-                          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                          placeholder="Separate multiple crops with commas"
-                        />
-                      </div>
-
-                      <Button>Update Farm Details</Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-
-              {activeTab === 'preferences' && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>App Preferences</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-6">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h3 className="font-semibold text-gray-900 dark:text-white">Dark Mode</h3>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
-                            Switch between light and dark themes
-                          </p>
-                        </div>
-                        <Button
-                          onClick={toggleTheme}
-                          variant={isDark ? "default" : "outline"}
-                        >
-                          {isDark ? '🌙 Dark' : '☀️ Light'}
-                        </Button>
-                      </div>
-
-                      <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Language & Region</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                              Language
-                            </label>
-                            <select className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
-                              <option>English</option>
-                              <option>Hindi</option>
-                              <option>Marathi</option>
-                              <option>Tamil</option>
-                              <option>Telugu</option>
-                            </select>
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                              Timezone
-                            </label>
-                            <select className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
-                              <option>Asia/Kolkata (IST)</option>
-                              <option>Asia/Mumbai (IST)</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Units & Measurements</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                              Area Unit
-                            </label>
-                            <select className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
-                              <option>Acres</option>
-                              <option>Hectares</option>
-                              <option>Square Meters</option>
-                            </select>
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                              Temperature Unit
-                            </label>
-                            <select className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white">
-                              <option>Celsius (°C)</option>
-                              <option>Fahrenheit (°F)</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-
-                      <Button>Save Preferences</Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-
-              {activeTab === 'security' && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Security Settings</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-6">
-                      <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Change Password</h3>
-                        <div className="space-y-4">
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                              Current Password
-                            </label>
-                            <input
-                              type="password"
-                              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                              New Password
-                            </label>
-                            <input
-                              type="password"
-                              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                              Confirm New Password
-                            </label>
-                            <input
-                              type="password"
-                              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                            />
-                          </div>
-                          <Button>Update Password</Button>
-                        </div>
-                      </div>
-
-                      <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Two-Factor Authentication</h3>
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <p className="text-gray-700 dark:text-gray-300">Secure your account with 2FA</p>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">Currently disabled</p>
-                          </div>
-                          <Button variant="outline">Enable 2FA</Button>
-                        </div>
-                      </div>
-
-                      <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Active Sessions</h3>
-                        <div className="space-y-3">
-                          <div className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
-                            <div>
-                              <p className="font-medium text-gray-900 dark:text-white">Current Device</p>
-                              <p className="text-sm text-gray-500 dark:text-gray-400">Chrome on Windows • Mumbai, India</p>
-                            </div>
-                            <span className="text-green-600 dark:text-green-400 text-sm">Active now</span>
-                          </div>
-                          <div className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
-                            <div>
-                              <p className="font-medium text-gray-900 dark:text-white">Mobile App</p>
-                              <p className="text-sm text-gray-500 dark:text-gray-400">Android • Mumbai, India</p>
-                            </div>
-                            <Button variant="outline" size="sm">Revoke</Button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-
-              {activeTab === 'notifications' && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Notification Settings</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-6">
-                      <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Email Notifications</h3>
-                        <div className="space-y-3">
-                          {[
-                            'Weather alerts and warnings',
-                            'Irrigation reminders and schedules',
-                            'Market price updates',
-                            'Equipment rental confirmations',
-                            'System maintenance notifications'
-                          ].map((item, index) => (
-                            <div key={index} className="flex items-center justify-between">
-                              <span className="text-gray-700 dark:text-gray-300">{item}</span>
-                              <input type="checkbox" defaultChecked className="w-4 h-4" />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">SMS Notifications</h3>
-                        <div className="space-y-3">
-                          {[
-                            'Critical weather alerts',
-                            'Urgent irrigation alerts',
-                            'Security notifications'
-                          ].map((item, index) => (
-                            <div key={index} className="flex items-center justify-between">
-                              <span className="text-gray-700 dark:text-gray-300">{item}</span>
-                              <input type="checkbox" defaultChecked className="w-4 h-4" />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      <Button>Save Notification Settings</Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
+          <div className="space-y-2">
+            <Label htmlFor="pw-new">{t('settings.password.new')}</Label>
+            <Input
+              id="pw-new"
+              type="password"
+              autoComplete="new-password"
+              value={next}
+              onChange={(e) => setNext(e.target.value)}
+            />
+            <p className="text-xs text-gray-500">{t('settings.password.tooShort', { min: MIN_PASSWORD_LENGTH })}</p>
           </div>
-        </main>
-      </div>
-    </div>
+          <div className="space-y-2">
+            <Label htmlFor="pw-confirm">{t('settings.password.confirm')}</Label>
+            <Input
+              id="pw-confirm"
+              type="password"
+              autoComplete="new-password"
+              value={confirm}
+              onChange={(e) => setConfirm(e.target.value)}
+            />
+          </div>
+          {error && (
+            <p role="alert" className="text-sm text-red-600">
+              {error}
+            </p>
+          )}
+          <Button type="submit" variant="outline" disabled={mutation.isPending}>
+            {mutation.isPending ? t('common:actions.saving') : t('settings.password.save')}
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
+  );
+};
+
+const Settings: React.FC = () => {
+  const { t } = useTranslation(['farm', 'common']);
+  const { user } = useAuth();
+  return (
+    <AppShell>
+      <PageHeader title={t('settings.title')} subtitle={t('settings.subtitle')} />
+      {user && (
+        <div className="space-y-6 max-w-4xl">
+          <ProfileCard key={user.id} user={user} />
+          {user.role === 'farmer' && <FieldsCard />}
+          <PasswordCard />
+        </div>
+      )}
+    </AppShell>
   );
 };
 
