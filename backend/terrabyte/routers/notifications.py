@@ -6,30 +6,53 @@ from sqlalchemy import func, select, update
 from terrabyte.db import utcnow
 from terrabyte.errors import ApiError
 from terrabyte.models import Notification
-from terrabyte.schemas.misc import NotificationOut, NotificationPage
+from terrabyte.schemas.misc import NotificationOut, NotificationPage, UnreadCount
 from terrabyte.security import CurrentUser, DbSession
 
 router = APIRouter(prefix="/notifications", tags=["notifications"])
 
 
+def _unread(db: DbSession, user_id: int) -> int:
+    return (
+        db.scalar(
+            select(func.count())
+            .select_from(Notification)
+            .where(Notification.user_id == user_id, Notification.read_at.is_(None))
+        )
+        or 0
+    )
+
+
 @router.get("", response_model=NotificationPage)
 def list_notifications(
-    user: CurrentUser, db: DbSession, limit: Annotated[int, Query(ge=1, le=100)] = 50
+    user: CurrentUser,
+    db: DbSession,
+    limit: Annotated[int, Query(ge=1, le=100)] = 50,
+    offset: Annotated[int, Query(ge=0)] = 0,
+    unread_only: bool = False,
 ) -> NotificationPage:
+    stmt = select(Notification).where(Notification.user_id == user.id)
+    if unread_only:
+        stmt = stmt.where(Notification.read_at.is_(None))
+    total = db.scalar(select(func.count()).select_from(stmt.subquery())) or 0
     rows = db.scalars(
-        select(Notification)
-        .where(Notification.user_id == user.id)
-        .order_by(Notification.created_at.desc(), Notification.id.desc())
+        stmt.order_by(Notification.created_at.desc(), Notification.id.desc())
         .limit(limit)
-    )
-    unread = db.scalar(
-        select(func.count())
-        .select_from(Notification)
-        .where(Notification.user_id == user.id, Notification.read_at.is_(None))
+        .offset(offset)
     )
     return NotificationPage(
-        items=[NotificationOut.model_validate(n) for n in rows], unread=unread or 0
+        items=[NotificationOut.model_validate(n) for n in rows],
+        unread=_unread(db, user.id),
+        total=total,
+        limit=limit,
+        offset=offset,
     )
+
+
+@router.get("/unread-count", response_model=UnreadCount)
+def unread_count(user: CurrentUser, db: DbSession) -> UnreadCount:
+    """Cheap endpoint for the header badge."""
+    return UnreadCount(unread=_unread(db, user.id))
 
 
 @router.post("/{notification_id}/read", status_code=status.HTTP_204_NO_CONTENT)

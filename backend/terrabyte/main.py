@@ -19,6 +19,7 @@ from terrabyte.routers import (
     admin,
     advisory,
     auth,
+    dashboard,
     farm,
     forum,
     health,
@@ -77,6 +78,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         farm,
         advisory,
         forum,
+        dashboard,
         uploads,
         rebuilding,
     ):

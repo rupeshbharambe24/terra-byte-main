@@ -20,6 +20,13 @@ class NotificationOut(BaseModel):
 class NotificationPage(BaseModel):
     items: list[NotificationOut]
     unread: int
+    total: int
+    limit: int
+    offset: int
+
+
+class UnreadCount(BaseModel):
+    unread: int
 
 
 class UploadOut(BaseModel):
