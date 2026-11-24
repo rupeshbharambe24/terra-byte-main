@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { apiUrl } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -17,8 +18,8 @@ interface Equipment {
   capacity: string;
   rentPrice: string;
   image: string;
-  owner_id: string; // Added owner_id for backend integration
-  owner_name: string;
+  owner_id?: string;
+  owner_name?: string;
 }
 
 interface RentalFormProps {
@@ -105,7 +106,7 @@ const RentalForm: React.FC<RentalFormProps> = ({ equipment, onRentalSuccess }) =
 
       console.log('Final rental data being sent:', rentalData);
 
-      const response = await fetch('http://localhost:5000/api/equipment/rent', {
+      const response = await fetch(apiUrl('/equipment/rent'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

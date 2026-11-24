@@ -94,17 +94,6 @@ const EquipmentRentals: React.FC = () => {
     }
   ];
 
-  const handleRent = (rentalData: any) => {
-    console.log('Rental booking:', rentalData);
-    // TODO: Integrate with Flask backend API
-    // Example API call structure:
-    // fetch('/api/rentals', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(rentalData)
-    // });
-    alert('Equipment booked successfully! Booking ID: ' + Date.now());
-  };
 
   const filteredEquipment = equipment.filter(item => {
     const matchesCategory = activeCategory === 'all' || item.category === activeCategory;
@@ -142,7 +131,7 @@ const EquipmentRentals: React.FC = () => {
       <div className="flex">
         <Sidebar />
         
-        <main className="flex-1 p-6">
+        <main className="flex-1 min-w-0 p-4 md:p-6">
           <OrderTracking />
           
           <div className="mb-8">
@@ -243,7 +232,7 @@ const EquipmentRentals: React.FC = () => {
                   
                   <div className="flex gap-2">
                     {item.availability === 'Available' ? (
-                      <RentalForm equipment={item} onRent={handleRent} />
+                      <RentalForm equipment={item} />
                     ) : (
                       <button disabled className="flex-1 bg-gray-300 text-gray-500 py-2 px-4 rounded-lg cursor-not-allowed">
                         <Calendar className="w-4 h-4 mr-2" />

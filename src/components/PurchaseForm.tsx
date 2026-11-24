@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { apiUrl } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,7 +17,7 @@ interface Product {
   price: string;
   unit: string;
   vendor: string;
-  vendor_id: string; // Added vendor_id for backend integration
+  vendor_id?: string;
   image: string;
 }
 
@@ -61,7 +62,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ product, onPurchaseSuccess 
         vendor_id: product.vendor_id
       };
 
-      const response = await fetch('/api/marketplace/purchase', {
+      const response = await fetch(apiUrl('/marketplace/purchase'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

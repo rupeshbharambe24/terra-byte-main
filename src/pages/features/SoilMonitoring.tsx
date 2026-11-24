@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { apiUrl } from '@/lib/api';
 import Header from '../../components/common/Header';
 import Sidebar from '../../components/common/Sidebar';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
@@ -99,7 +100,7 @@ const SoilMonitoring: React.FC = () => {
         moisture: userInputs.moisture || 50      // Default value if not provided
       };
 
-      const response = await fetch('http://localhost:5000/api/fertilizer-recommendation', {
+      const response = await fetch(apiUrl('/fertilizer-recommendation'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -127,7 +128,7 @@ const SoilMonitoring: React.FC = () => {
       <div className="flex">
         <Sidebar />
         
-        <main className="flex-1 p-6">
+        <main className="flex-1 min-w-0 p-4 md:p-6">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Soil Monitoring</h1>
             <p className="text-gray-600 dark:text-gray-400 mt-2">

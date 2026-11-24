@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { apiUrl } from '@/lib/api';
 import Header from '../../components/common/Header';
 import Sidebar from '../../components/common/Sidebar';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
-import { DatePicker } from '../../components/ui/date-picker'; // Assuming you have a date picker component
 
 interface MarketPrice {
   crop: string;
@@ -62,7 +62,7 @@ const PriceForecast: React.FC = () => {
   useEffect(() => {
     const fetchAvailableCommodities = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/price-forecast/health');
+        const response = await fetch(apiUrl('/price-forecast/health'));
         if (!response.ok) {
           throw new Error('Failed to fetch available commodities');
         }
@@ -167,7 +167,7 @@ const PriceForecast: React.FC = () => {
       setLoading(true);
       setError('');
       
-      const response = await fetch('http://localhost:5000/api/price-forecast', {
+      const response = await fetch(apiUrl('/price-forecast'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -199,7 +199,7 @@ const PriceForecast: React.FC = () => {
       setMarketLoading(true);
       setMarketError('');
       try {
-        const response = await fetch(`http://localhost:5000/api/market-prices?market=${encodeURIComponent(market)}`);
+        const response = await fetch(apiUrl(`/market-prices?market=${encodeURIComponent(market)}`));
         if (!response.ok) {
           throw new Error('Market not found');
         }
@@ -227,7 +227,7 @@ const PriceForecast: React.FC = () => {
       <div className="flex">
         <Sidebar />
         
-        <main className="flex-1 p-6">
+        <main className="flex-1 min-w-0 p-4 md:p-6">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Price Forecast</h1>
             <p className="text-gray-600 dark:text-gray-400 mt-2">

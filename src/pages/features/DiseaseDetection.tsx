@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { apiUrl } from '@/lib/api';
 import Header from '../../components/common/Header';
 import Sidebar from '../../components/common/Sidebar';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
@@ -90,7 +91,7 @@ const DiseaseDetection: React.FC = () => {
       const formData = new FormData();
       formData.append('image', imageFile);
       
-      const response = await fetch('http://localhost:5000/api/disease/detect', {
+      const response = await fetch(apiUrl('/disease/detect'), {
         method: 'POST',
         body: formData
       });
@@ -102,9 +103,9 @@ const DiseaseDetection: React.FC = () => {
       const result = await response.json();
       setAnalysisResult(result);
       
-    } catch (err: any) {
+    } catch (err) {
       console.error('Analysis failed:', err);
-      setError(err.message || 'Failed to analyze image');
+      setError(err instanceof Error && err.message ? err.message : 'Failed to analyze image');
     } finally {
       setIsAnalyzing(false);
     }
@@ -135,7 +136,7 @@ const DiseaseDetection: React.FC = () => {
       <div className="flex">
         <Sidebar />
         
-        <main className="flex-1 p-6">
+        <main className="flex-1 min-w-0 p-4 md:p-6">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Disease Detection</h1>
             <p className="text-gray-600 dark:text-gray-400 mt-2">

@@ -1,226 +1,130 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { initializeApp } from 'firebase/app';
-import { 
-  getAuth, 
-  signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-  setPersistence,
-  browserSessionPersistence,
-  browserLocalPersistence
-} from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import i18n, { isAppLanguage } from '@/i18n';
+import { authApi, tokenStore, UNAUTHORIZED_EVENT } from '@/lib/api';
+import type { Language, MeUpdate, RegisterPayload, RegisterResponse, User } from '@/lib/types';
 
-// Firebase web config is a publishable client config; override via .env (VITE_FIREBASE_*).
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY ?? "AIzaSyDj0dnSq3hN2O6aDBcxcZETMOeS2aNXo4A",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN ?? "terrabyte-auth.firebaseapp.com",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID ?? "terrabyte-auth",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET ?? "terrabyte-auth.firebasestorage.app",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID ?? "800612470562",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID ?? "1:800612470562:web:0c0f4ef261431d2df85f7b"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: 'admin' | 'farmer' | 'expert' | 'agri_vendor' | 'hardware_vendor';
-  phone?: string;
-  isApproved?: boolean;
-  aadhar?: string;
-  landSize?: number;
-  qualifications?: string;
-  companyName?: string;
-  address?: string;
-}
-
+export type { User } from '@/lib/types';
 
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
+  /** True while the stored session is being restored on page load. */
   isLoading: boolean;
-  login: (email: string, password: string, rememberMe: boolean) => Promise<boolean>;
-  logout: () => Promise<void>;
-  register: (userData: any) => Promise<{success: boolean, error?: string}>;
+  login: (identifier: string, password: string) => Promise<User>;
+  register: (data: RegisterPayload) => Promise<RegisterResponse>;
+  logout: () => void;
+  updateProfile: (data: MeUpdate) => Promise<User>;
+  setLanguage: (lng: Language) => Promise<void>;
 }
-
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const useAuth = () => {
+// eslint-disable-next-line react-refresh/only-export-components
+export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!context) throw new Error('useAuth must be used within an AuthProvider');
   return context;
 };
 
+function applyUserLanguage(user: User) {
+  if (isAppLanguage(user.preferred_language) && i18n.resolvedLanguage !== user.preferred_language) {
+    void i18n.changeLanguage(user.preferred_language);
+  }
+}
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const queryClient = useQueryClient();
   const [user, setUser] = useState<User | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>(() => tokenStore.get() !== null);
 
+  // Restore the session from the stored token.
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
-        try {
-          const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
-          if (userDoc.exists()) {
-            const userData = userDoc.data() as User;
-            
-            // Check if user is approved (except farmers who are auto-approved)
-            if (userData.role !== 'farmer' && !userData.isApproved) {
-              await auth.signOut();
-              setUser(null);
-              setIsAuthenticated(false);
-              return;
-            }
-            
-            setUser(userData);
-            setIsAuthenticated(true);
-          } else {
-            await auth.signOut();
-            setUser(null);
-            setIsAuthenticated(false);
-          }
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-          await auth.signOut();
-          setUser(null);
-          setIsAuthenticated(false);
-        }
-      } else {
+    if (!tokenStore.get()) return;
+    const controller = new AbortController();
+    authApi
+      .me(controller.signal)
+      .then((me) => {
+        setUser(me);
+        applyUserLanguage(me);
+      })
+      .catch((err) => {
+        if (err instanceof DOMException && err.name === 'AbortError') return;
+        tokenStore.clear();
         setUser(null);
-        setIsAuthenticated(false);
-      }
-      setIsLoading(false);
-    });
-
-    return () => unsubscribe();
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setIsLoading(false);
+      });
+    return () => controller.abort();
   }, []);
 
-  const login = async (email: string, password: string, rememberMe: boolean): Promise<boolean> => {
-    try {
-      setIsLoading(true);
-      
-      // Set persistence based on rememberMe
-      await setPersistence(
-        auth, 
-        rememberMe ? browserLocalPersistence : browserSessionPersistence
-      );
-      
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const userDoc = await getDoc(doc(db, 'users', userCredential.user.uid));
-      
-      if (userDoc.exists()) {
-        const userData = userDoc.data() as User;
-        
-        // Check if user is approved (except farmers who are auto-approved)
-        if (userData.role !== 'farmer' && !userData.isApproved) {
-          await auth.signOut();
-          throw new Error('Your account is pending approval');
-        }
-        
-        setUser(userData);
-        setIsAuthenticated(true);
-        return true;
-      }
-      
-      await auth.signOut();
-      throw new Error('User data not found');
-    } catch (error: any) {
-      console.error('Login error:', error);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const register = async (userData: any): Promise<{success: boolean, error?: string}> => {
-    try {
-      setIsLoading(true);
-      
-      // Create auth user
-      const userCredential = await createUserWithEmailAndPassword(
-        auth, 
-        userData.email, 
-        userData.password
-      );
-      
-      // Create user document in Firestore
-      const newUser: User = {
-        id: userCredential.user.uid,
-        name: userData.name,
-        email: userData.email,
-        role: userData.role,
-        phone: userData.phone,
-        isApproved: userData.role === 'farmer', // Auto-approve farmers
-        address: userData.address,
-        ...(userData.role === 'farmer' && {
-          aadhar: userData.aadhar,
-          landSize: userData.landSize
-        }),
-        ...(userData.role === 'expert' && {
-          qualifications: userData.qualifications
-        }),
-        ...((userData.role === 'agri_vendor' || userData.role === 'hardware_vendor') && {
-          companyName: userData.companyName
-        })
-      };
-      
-      await setDoc(doc(db, 'users', userCredential.user.uid), newUser);
-      
-      // Set user in state (but don't set as authenticated if not approved)
-      setUser(newUser);
-      setIsAuthenticated(newUser.isApproved || newUser.role === 'farmer');
-      
-      return { success: true };
-    } catch (error: any) {
-      console.error('Registration error:', error);
-      
-      let errorMessage = 'Registration failed. Please try again.';
-      if (error.code === 'auth/email-already-in-use') {
-        errorMessage = 'Email already in use. Please use a different email.';
-      } else if (error.code === 'auth/weak-password') {
-        errorMessage = 'Password should be at least 6 characters.';
-      }
-      
-      return { success: false, error: errorMessage };
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const logout = async (): Promise<void> => {
-    try {
-      setIsLoading(true);
-      await signOut(auth);
+  // Any 401 from the API (expired token) signs the user out.
+  useEffect(() => {
+    const onUnauthorized = () => {
       setUser(null);
-      setIsAuthenticated(false);
-    } catch (error) {
-      console.error('Logout error:', error);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
-  };
+      queryClient.clear();
+    };
+    window.addEventListener(UNAUTHORIZED_EVENT, onUnauthorized);
+    return () => window.removeEventListener(UNAUTHORIZED_EVENT, onUnauthorized);
+  }, [queryClient]);
 
-  return (
-    <AuthContext.Provider value={{ 
-      user, 
-      isAuthenticated, 
-      isLoading,
-      login, 
-      logout, 
-      register 
-    }}>
-      {children}
-    </AuthContext.Provider>
+  const login = useCallback(async (identifier: string, password: string) => {
+    const res = await authApi.login(identifier.trim(), password);
+    tokenStore.set(res.access_token);
+    setUser(res.user);
+    applyUserLanguage(res.user);
+    return res.user;
+  }, []);
+
+  const register = useCallback(async (data: RegisterPayload) => {
+    const res = await authApi.register(data);
+    if (res.access_token) {
+      tokenStore.set(res.access_token);
+      setUser(res.user);
+    }
+    return res;
+  }, []);
+
+  const logout = useCallback(() => {
+    tokenStore.clear();
+    setUser(null);
+    queryClient.clear();
+  }, [queryClient]);
+
+  const updateProfile = useCallback(async (data: MeUpdate) => {
+    const updated = await authApi.updateMe(data);
+    setUser(updated);
+    return updated;
+  }, []);
+
+  const setLanguage = useCallback(
+    async (lng: Language) => {
+      await i18n.changeLanguage(lng);
+      if (user && user.preferred_language !== lng) {
+        try {
+          setUser(await authApi.updateMe({ preferred_language: lng }));
+        } catch {
+          /* the UI language already changed; saving the preference can be retried later */
+        }
+      }
+    },
+    [user]
   );
-}; 
+
+  const value = useMemo(
+    () => ({
+      user,
+      isAuthenticated: user !== null,
+      isLoading,
+      login,
+      register,
+      logout,
+      updateProfile,
+      setLanguage,
+    }),
+    [user, isLoading, login, register, logout, updateProfile, setLanguage]
+  );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};

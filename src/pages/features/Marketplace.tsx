@@ -100,17 +100,6 @@ const Marketplace: React.FC = () => {
     ));
   };
 
-  const handlePurchase = (orderData: any) => {
-    console.log('Purchase order:', orderData);
-    // TODO: Integrate with Flask backend API
-    // Example API call structure:
-    // fetch('/api/orders', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(orderData)
-    // });
-    alert('Order placed successfully! Order ID: ' + Date.now());
-  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -119,7 +108,7 @@ const Marketplace: React.FC = () => {
       <div className="flex">
         <Sidebar />
         
-        <main className="flex-1 p-6">
+        <main className="flex-1 min-w-0 p-4 md:p-6">
           <OrderTracking />
           
           <div className="mb-8">
@@ -207,7 +196,7 @@ const Marketplace: React.FC = () => {
                   </div>
                   
                   <div className="flex gap-2">
-                    <PurchaseForm product={product} onPurchase={handlePurchase} />
+                    <PurchaseForm product={product} />
                     <button className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                       ❤️
                     </button>
