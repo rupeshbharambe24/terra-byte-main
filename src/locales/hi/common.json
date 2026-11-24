@@ -43,10 +43,13 @@
     "systemAnalytics": "सिस्टम विश्लेषण",
     "contentModeration": "सामग्री मॉडरेशन",
     "aiModelPerformance": "मॉडल प्रदर्शन",
-    "kvkIntegration": "केवीके एकीकरण",
+    "kvkIntegration": "केवीके आयात स्थिति",
     "kvkManagement": "केवीके प्रबंधन",
     "consultations": "परामर्श",
-    "knowledgeBase": "ज्ञान भंडार"
+    "knowledgeBase": "ज्ञान भंडार",
+    "myOrders": "मेरे ऑर्डर",
+    "knowledge": "विशेषज्ञ लेख",
+    "adminConsultations": "परामर्श"
   },
   "roles": {
     "farmer": "किसान",
@@ -110,6 +113,100 @@
     "invalid_transition": "उपयोगकर्ता की मौजूदा स्थिति में यह काम संभव नहीं है।",
     "cannot_modify_admin": "एडमिन खातों को यहाँ से बदला नहीं जा सकता।",
     "not_found": "नहीं मिला।",
-    "internal_error": "सर्वर में त्रुटि। कृपया थोड़ी देर बाद कोशिश करें।"
+    "internal_error": "सर्वर में त्रुटि। कृपया थोड़ी देर बाद कोशिश करें।",
+    "out_of_stock": "इस ऑर्डर के लिए पर्याप्त स्टॉक नहीं है। मात्रा कम करके फिर कोशिश करें।",
+    "product_unavailable": "एक उत्पाद अब उपलब्ध नहीं है।",
+    "booking_clash": "इस समय के कुछ हिस्से में उपकरण पहले से बुक है। दूसरा समय चुनें।",
+    "invalid_period": "सही अवधि चुनें (पूरे घंटे या दिन, अंत शुरुआत के बाद)।",
+    "start_in_past": "शुरुआत का समय बीत चुका है।",
+    "unit_not_offered": "मालिक इस उपकरण को इस इकाई में किराए पर नहीं देता।",
+    "equipment_unavailable": "यह उपकरण उपलब्ध नहीं है।",
+    "booking_started": "बुकिंग शुरू होने से पहले ही रद्द की जा सकती है।",
+    "booking_expired": "इस बुकिंग की अवधि पहले ही खत्म हो चुकी है।",
+    "booking_not_started": "बुकिंग शुरू होने के बाद ही पूरी की जा सकती है।",
+    "already_claimed": "यह प्रश्न किसी दूसरे विशेषज्ञ ने पहले ही ले लिया है।",
+    "not_assigned": "उत्तर देने से पहले प्रश्न अपने नाम लें।",
+    "consultation_closed": "यह परामर्श बंद है।",
+    "invalid_image_path": "फ़ोटो फिर से अपलोड करके कोशिश करें।",
+    "linked_entry": "इस प्रविष्टि की राशि, प्रकार और तारीख ऑर्डर या बुकिंग से आती है, इन्हें बदला नहीं जा सकता।",
+    "too_many_fields": "आप खेतों की अधिकतम संख्या तक पहुँच गए हैं।",
+    "cannot_report_own": "आप अपनी ही सामग्री की शिकायत नहीं कर सकते।",
+    "already_reported": "आप इसकी शिकायत पहले ही कर चुके हैं।",
+    "post_hidden": "यह पोस्ट छिपी हुई है; इस पर जवाब बंद हैं।",
+    "wrong_password": "मौजूदा पासवर्ड गलत है।",
+    "conflict": "यह कार्य मौजूदा स्थिति से मेल नहीं खाता। पेज रीफ़्रेश करके फिर कोशिश करें।",
+    "empty_file": "फ़ाइल खाली है।",
+    "image_too_large": "फ़ोटो का आकार बहुत बड़ा है।"
+  },
+  "actions": {
+    "save": "सहेजें",
+    "cancel": "रद्द करें",
+    "edit": "बदलें",
+    "delete": "हटाएँ",
+    "confirm": "पुष्टि करें",
+    "close": "बंद करें",
+    "back": "वापस",
+    "retry": "फिर से कोशिश करें",
+    "search": "खोजें",
+    "all": "सभी",
+    "submit": "भेजें",
+    "add": "जोड़ें",
+    "view": "देखें",
+    "saving": "सहेजा जा रहा है…"
+  },
+  "pager": {
+    "previous": "पिछला",
+    "next": "अगला",
+    "page": "पृष्ठ {{page}} / {{pages}}"
+  },
+  "orderStatus": {
+    "placed": "ऑर्डर दिया गया",
+    "accepted": "स्वीकार किया",
+    "shipped": "भेजा गया",
+    "delivered": "पहुँचा दिया",
+    "cancelled": "रद्द",
+    "rejected": "अस्वीकार"
+  },
+  "bookingStatus": {
+    "requested": "अनुरोध किया",
+    "accepted": "स्वीकार किया",
+    "rejected": "अस्वीकार",
+    "cancelled": "रद्द",
+    "completed": "पूरा हुआ"
+  },
+  "consultationStatus": {
+    "open": "विशेषज्ञ की प्रतीक्षा",
+    "assigned": "विशेषज्ञ के पास",
+    "answered": "उत्तर मिला",
+    "closed": "बंद"
+  },
+  "image": {
+    "upload": "फ़ोटो जोड़ें",
+    "change": "फ़ोटो बदलें",
+    "remove": "फ़ोटो हटाएँ",
+    "uploading": "अपलोड हो रहा है…",
+    "preview": "चुनी गई फ़ोटो",
+    "hint": "JPEG, PNG या WebP, अधिकतम {{mb}} MB"
+  },
+  "units": {
+    "acres": "एकड़",
+    "guntha": "गुंठा",
+    "hectares": "हेक्टेयर"
+  },
+  "notificationsBadge": "{{count}} अपठित सूचनाएँ",
+  "notifications": {
+    "title": "सूचनाएँ",
+    "subtitle": "आपके ऑर्डर, बुकिंग, प्रश्नों और खाते से जुड़ी जानकारी।",
+    "unreadOnly": "केवल अपठित",
+    "markAllRead": "सभी को पढ़ा हुआ करें",
+    "markRead": "पढ़ा हुआ करें",
+    "allRead": "सभी सूचनाएँ पढ़ी हुई कर दी गईं।",
+    "empty": "अभी कोई सूचना नहीं",
+    "emptyBody": "कुछ भी बदलने पर आपको यहाँ सूचना मिलेगी।",
+    "emptyUnread": "कोई अपठित सूचना नहीं।",
+    "unreadCount_one": "{{count}} अपठित",
+    "unreadCount_other": "{{count}} अपठित",
+    "new": "नई",
+    "open": "खोलें"
   }
 }

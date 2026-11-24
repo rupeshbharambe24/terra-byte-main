@@ -43,10 +43,13 @@
     "systemAnalytics": "System Analytics",
     "contentModeration": "Content Moderation",
     "aiModelPerformance": "Model Performance",
-    "kvkIntegration": "KVK Integration",
+    "kvkIntegration": "KVK import status",
     "kvkManagement": "KVK Management",
     "consultations": "Consultations",
-    "knowledgeBase": "Knowledge Base"
+    "knowledgeBase": "Knowledge Base",
+    "myOrders": "My orders",
+    "knowledge": "Expert articles",
+    "adminConsultations": "Consultations"
   },
   "roles": {
     "farmer": "Farmer",
@@ -110,6 +113,100 @@
     "invalid_transition": "This action is not possible for the user's current status.",
     "cannot_modify_admin": "Admin accounts cannot be changed here.",
     "not_found": "Not found.",
-    "internal_error": "Server error. Please try again later."
+    "internal_error": "Server error. Please try again later.",
+    "out_of_stock": "Not enough stock for this order. Reduce the quantity and try again.",
+    "product_unavailable": "One of the products is no longer available.",
+    "booking_clash": "The equipment is already booked for part of this time. Choose another time.",
+    "invalid_period": "Choose a valid period (whole hours or days, end after start).",
+    "start_in_past": "The start time is in the past.",
+    "unit_not_offered": "The owner does not rent this equipment by that unit.",
+    "equipment_unavailable": "This equipment is not available.",
+    "booking_started": "A booking can only be cancelled before it starts.",
+    "booking_expired": "This booking period is already over.",
+    "booking_not_started": "A booking can be completed only after it starts.",
+    "already_claimed": "Another expert has already taken this question.",
+    "not_assigned": "Take the question before replying.",
+    "consultation_closed": "This consultation is closed.",
+    "invalid_image_path": "Upload the photo again and retry.",
+    "linked_entry": "Amount, type and date of this entry come from an order or booking and cannot be changed.",
+    "too_many_fields": "You have reached the maximum number of fields.",
+    "cannot_report_own": "You cannot report your own content.",
+    "already_reported": "You have already reported this.",
+    "post_hidden": "This post is hidden; replies are closed.",
+    "wrong_password": "The current password is incorrect.",
+    "conflict": "This action conflicts with the current state. Refresh and try again.",
+    "empty_file": "The file is empty.",
+    "image_too_large": "The image dimensions are too large."
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "close": "Close",
+    "back": "Back",
+    "retry": "Try again",
+    "search": "Search",
+    "all": "All",
+    "submit": "Submit",
+    "add": "Add",
+    "view": "View",
+    "saving": "Saving…"
+  },
+  "pager": {
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {{page}} of {{pages}}"
+  },
+  "orderStatus": {
+    "placed": "Placed",
+    "accepted": "Accepted",
+    "shipped": "Shipped",
+    "delivered": "Delivered",
+    "cancelled": "Cancelled",
+    "rejected": "Rejected"
+  },
+  "bookingStatus": {
+    "requested": "Requested",
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "cancelled": "Cancelled",
+    "completed": "Completed"
+  },
+  "consultationStatus": {
+    "open": "Waiting for an expert",
+    "assigned": "With an expert",
+    "answered": "Answered",
+    "closed": "Closed"
+  },
+  "image": {
+    "upload": "Add photo",
+    "change": "Change photo",
+    "remove": "Remove photo",
+    "uploading": "Uploading…",
+    "preview": "Selected photo",
+    "hint": "JPEG, PNG or WebP, up to {{mb}} MB"
+  },
+  "units": {
+    "acres": "acres",
+    "guntha": "guntha",
+    "hectares": "ha"
+  },
+  "notificationsBadge": "{{count}} unread notifications",
+  "notifications": {
+    "title": "Notifications",
+    "subtitle": "Updates about your orders, bookings, questions and account.",
+    "unreadOnly": "Unread only",
+    "markAllRead": "Mark all as read",
+    "markRead": "Mark as read",
+    "allRead": "All notifications marked as read.",
+    "empty": "No notifications yet",
+    "emptyBody": "You will be notified here when something changes.",
+    "emptyUnread": "No unread notifications.",
+    "unreadCount_one": "{{count}} unread",
+    "unreadCount_other": "{{count}} unread",
+    "new": "New",
+    "open": "Open"
   }
 }
