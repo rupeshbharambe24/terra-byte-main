@@ -1,0 +1,115 @@
+{
+  "appName": "TerraByte",
+  "loading": "Loading…",
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "dashboard": "Dashboard",
+    "marketplace": "Marketplace",
+    "forums": "Forums",
+    "login": "Sign in",
+    "register": "Register",
+    "logout": "Sign out",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "mainMenu": "Main menu",
+    "hello": "Hello, {{name}}"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "soilMonitoring": "Soil Monitoring",
+    "smartIrrigation": "Smart Irrigation",
+    "weatherForecast": "Weather Forecast",
+    "cropPlanning": "Crop Planning",
+    "diseaseDetection": "Disease Detection",
+    "equipmentRentals": "Equipment Rentals",
+    "marketplace": "Marketplace",
+    "priceForecast": "Price Forecast",
+    "financialManagement": "Farm Accounts",
+    "governmentSchemes": "Government Schemes",
+    "kvkConsultation": "KVK Consultation",
+    "forums": "Forums",
+    "precisionFertilizer": "Precision Fertilizer",
+    "notifications": "Notifications",
+    "settings": "Settings",
+    "products": "Products",
+    "orders": "Orders",
+    "analytics": "Analytics",
+    "equipment": "Equipment",
+    "rentals": "Rentals",
+    "calendar": "Calendar",
+    "userManagement": "User Management",
+    "vendorApprovals": "Approvals",
+    "systemAnalytics": "System Analytics",
+    "contentModeration": "Content Moderation",
+    "aiModelPerformance": "Model Performance",
+    "kvkIntegration": "KVK Integration",
+    "kvkManagement": "KVK Management",
+    "consultations": "Consultations",
+    "knowledgeBase": "Knowledge Base"
+  },
+  "roles": {
+    "farmer": "Farmer",
+    "vendor": "Agri-input vendor",
+    "hardware_vendor": "Equipment rental vendor",
+    "expert": "Agriculture expert",
+    "admin": "Admin"
+  },
+  "status": {
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "suspended": "Suspended"
+  },
+  "language": {
+    "label": "Language"
+  },
+  "theme": {
+    "toggle": "Switch between light and dark mode"
+  },
+  "demoBanner": {
+    "title": "Demo data — this page is being rebuilt",
+    "body": "The numbers and lists on this page are placeholders, not real data."
+  },
+  "comingSoon": {
+    "title": "Coming soon",
+    "body": "This feature is being built. It will use real data when it is ready.",
+    "weatherTitle": "Weather forecast",
+    "weatherBody": "Forecasts for your farm's location are being built. Until then, please check the India Meteorological Department (IMD) forecast.",
+    "back": "Back to my dashboard"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "The page you are looking for does not exist or has moved.",
+    "home": "Go to the home page"
+  },
+  "unauthorized": {
+    "title": "No access to this page",
+    "body": "Your account type cannot open this page.",
+    "dashboard": "Go to my dashboard",
+    "home": "Go to the home page"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "network_error": "Cannot reach the server. Check your connection and try again.",
+    "invalid_credentials": "Wrong mobile number/email or password.",
+    "account_pending": "Your account is awaiting admin approval. You can sign in once it is approved.",
+    "account_rejected": "Your registration was not approved. Please contact support.",
+    "account_suspended": "Your account has been suspended. Please contact support.",
+    "phone_taken": "This mobile number is already registered.",
+    "email_taken": "This email is already registered.",
+    "role_not_allowed": "This account type cannot be registered here.",
+    "validation_error": "Some fields are invalid. Please check and try again.",
+    "forbidden": "You do not have access to this action.",
+    "not_authenticated": "Please sign in.",
+    "invalid_token": "Your session has expired. Please sign in again.",
+    "being_rebuilt": "This feature is being rebuilt and is not available yet.",
+    "payload_too_large": "The file is too large.",
+    "unsupported_media_type": "Only JPEG, PNG or WebP images are allowed.",
+    "invalid_image": "The file is not a valid image.",
+    "invalid_transition": "This action is not possible for the user's current status.",
+    "cannot_modify_admin": "Admin accounts cannot be changed here.",
+    "not_found": "Not found.",
+    "internal_error": "Server error. Please try again later."
+  }
+}

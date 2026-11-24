@@ -118,7 +118,7 @@ const GovernmentSchemes: React.FC = () => {
       <div className="flex">
         <Sidebar />
         
-        <main className="flex-1 p-6">
+        <main className="flex-1 min-w-0 p-4 md:p-6">
           <div className="container mx-auto px-4 py-8">
             <div className="mb-8">
               <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">

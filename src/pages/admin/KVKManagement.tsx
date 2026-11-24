@@ -175,7 +175,7 @@ const KVKManagement: React.FC = () => {
       <div className="flex">
         <Sidebar />
         
-        <main className="flex-1 p-6">
+        <main className="flex-1 min-w-0 p-4 md:p-6">
           <div className="mb-8">
             <div className="flex justify-between items-center">
               <div>
