@@ -1,1 +1,112 @@
-{}
+{
+  "title": "Community forum",
+  "subtitle": "Ask other farmers and experts, and share what worked for you.",
+  "newPost": "New post",
+  "searchPlaceholder": "Search posts",
+  "allCategories": "All categories",
+  "myPosts": "Only my posts",
+  "count_one": "{{count}} post",
+  "count_other": "{{count}} posts",
+  "empty": "No posts yet",
+  "emptyBody": "Start the first discussion.",
+  "emptyFiltered": "No posts match these filters.",
+  "replies_one": "{{count}} reply",
+  "replies_other": "{{count}} replies",
+  "byAuthor": "by {{name}}",
+  "categories": {
+    "general": "General",
+    "crops": "Crops",
+    "pests_diseases": "Pests and diseases",
+    "soil_water": "Soil and water",
+    "market": "Market and prices",
+    "equipment": "Equipment",
+    "schemes": "Government schemes",
+    "other": "Other"
+  },
+  "moderation": {
+    "published": "Published",
+    "hidden": "Hidden",
+    "removed": "Removed"
+  },
+  "form": {
+    "dialogTitle": "Start a discussion",
+    "dialogBody": "Be specific: the crop, the place and what you have already tried.",
+    "title": "Title",
+    "titleHint": "5 to 200 characters",
+    "body": "Details",
+    "category": "Category",
+    "crop": "Crop (optional)",
+    "cropPlaceholder": "e.g. Onion",
+    "photo": "Photo (optional)",
+    "submit": "Publish",
+    "created": "Your post is published.",
+    "titleInvalid": "The title must be 5 to 200 characters.",
+    "bodyRequired": "Write some details."
+  },
+  "post": {
+    "back": "Back to the forum",
+    "notAvailable": "This post is not available",
+    "notAvailableBody": "It may have been deleted, or hidden by a moderator.",
+    "replies": "Replies",
+    "noReplies": "No replies yet. Be the first to answer.",
+    "replyLabel": "Your reply",
+    "replyPlaceholder": "Write a reply",
+    "send": "Reply",
+    "replied": "Reply posted.",
+    "photoAlt": "Photo attached to the post",
+    "closedForReplies": "Replies are closed while this post is hidden.",
+    "you": "You"
+  },
+  "report": {
+    "action": "Report",
+    "title": "Report this content",
+    "body": "Tell the moderators what is wrong. Only admins see your report.",
+    "reason": "Reason",
+    "reasonPlaceholder": "e.g. advertisement, abusive language, wrong information",
+    "reasonInvalid": "Write at least 3 characters.",
+    "submit": "Send report",
+    "done": "Thank you. A moderator will review it."
+  },
+  "delete": {
+    "action": "Delete",
+    "postTitle": "Delete this post?",
+    "replyTitle": "Delete this reply?",
+    "body": "It will no longer be visible to anyone.",
+    "done": "Deleted."
+  },
+  "admin": {
+    "hide": "Hide",
+    "restore": "Restore",
+    "hidden": "Hidden by a moderator.",
+    "restored": "Restored.",
+    "hideTitle": "Hide this content?",
+    "hideBody": "Only admins will see it. Open reports about it are marked resolved and the author is notified.",
+    "reasonLabel": "Reason (optional, sent to the author)",
+    "reasonPlaceholder": "e.g. advertisement"
+  },
+  "moderationPage": {
+    "title": "Content moderation",
+    "subtitle": "Reports from forum members. Hide content that breaks the rules, or dismiss the report.",
+    "statusFilter": "Report status",
+    "statuses": {
+      "open": "Open",
+      "resolved": "Resolved",
+      "dismissed": "Dismissed"
+    },
+    "empty": "No reports with this status.",
+    "count_one": "{{count}} report",
+    "count_other": "{{count}} reports",
+    "reportedBy": "Reported by {{name}}",
+    "reason": "Reason",
+    "target": {
+      "post": "Post",
+      "reply": "Reply"
+    },
+    "author": "Author",
+    "contentStatus": "Content status",
+    "openPost": "Open the post",
+    "dismiss": "Dismiss report",
+    "dismissed": "Report dismissed.",
+    "reportedOn": "Reported on {{date}}"
+  }
+}

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { LogOut, Menu, Sprout } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { Bell, LogOut, Menu, Sprout } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/context/AuthContext';
+import { notificationsApi } from '@/lib/api';
 import { getDashboardRoute } from '@/utils/routeUtils';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import ThemeToggle from './ThemeToggle';
@@ -28,7 +30,16 @@ const Header: React.FC = () => {
 
   const role = user?.role;
   const showMarketplace = role === 'farmer' || role === 'vendor';
-  const showForums = role === 'farmer' || role === 'expert';
+  const showForums = role === 'farmer' || role === 'expert' || role === 'admin';
+
+  // Unread badge: a cheap count endpoint, refreshed every minute and after marking read.
+  const { data: unreadData } = useQuery({
+    queryKey: ['notifications', 'unread'],
+    queryFn: () => notificationsApi.unreadCount(),
+    enabled: isAuthenticated,
+    refetchInterval: 60_000,
+  });
+  const unread = isAuthenticated ? unreadData?.unread ?? 0 : 0;
 
   return (
     <header className="sticky top-0 z-40 bg-white dark:bg-gray-900 shadow-lg border-b border-green-100 dark:border-green-800">
@@ -70,6 +81,23 @@ const Header: React.FC = () => {
           <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             <LanguageSwitcher />
             <ThemeToggle />
+            {isAuthenticated && (
+              <Link
+                to="/notifications"
+                className="relative p-2 rounded-lg text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800"
+                aria-label={unread > 0 ? t('notificationsBadge', { count: unread }) : t('sidebar.notifications')}
+              >
+                <Bell className="h-5 w-5" aria-hidden="true" />
+                {unread > 0 && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute -top-0.5 -right-0.5 min-w-[1.25rem] h-5 px-1 rounded-full bg-red-600 text-white text-xs font-semibold leading-5 text-center"
+                  >
+                    {unread > 99 ? '99+' : unread}
+                  </span>
+                )}
+              </Link>
+            )}
             {isAuthenticated ? (
               <div className="hidden md:flex items-center gap-3">
                 <span className="text-sm text-gray-700 dark:text-gray-300 max-w-[12rem] truncate">
