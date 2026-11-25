@@ -3,7 +3,11 @@
 The file is a JSON array of objects (or ``{"kvks": [...]}``) with the fields ``name``,
 ``district``, ``state`` (required) and optionally ``host_organisation``, ``address``,
 ``pincode``, ``phone``, ``email``, ``website``, ``lat``, ``lon``, ``source_url`` and
-``verified_on`` (YYYY-MM-DD). Rows are matched on name + district + state (case-insensitive):
+``verified_on`` (YYYY-MM-DD). The research-file shape (``{"meta": ..., "kvks": [...]}`` with lists
+of phones, emails and source URLs, ``taluka`` and ``coords_precision``) is accepted too: lists are
+joined, the first source URL is kept as ``source_url`` and all of them in ``sources``. When rows
+have no ``state`` and the file describes a Maharashtra-only directory (or ``--state`` is given),
+the state is filled in. Rows are matched on name + district + state (case-insensitive):
 existing rows are updated, new ones created. Invalid rows are skipped and reported. Every run
 is logged and shown to admins on the KVK import status page.
 """
@@ -24,6 +28,7 @@ from sqlalchemy.orm import Session
 from terrabyte.config import get_settings
 from terrabyte.db import Database
 from terrabyte.models import KVK, DataImport
+from terrabyte.reference import REFERENCE_DIR
 from terrabyte.schemas.advisory import KVKIn
 
 
@@ -35,6 +40,9 @@ class ImportResult:
     errors: list[str] = field(default_factory=list)
 
 
+BUNDLED_FILE = REFERENCE_DIR / "kvk_maharashtra.json"
+
+
 def load_rows(raw: Any) -> list[Any]:
     if isinstance(raw, dict) and isinstance(raw.get("kvks"), list):
         return raw["kvks"]
@@ -43,10 +51,27 @@ def load_rows(raw: Any) -> list[Any]:
     raise ValueError('Expected a JSON array of KVK objects (or {"kvks": [...]}).')
 
 
-def import_kvks(db: Session, rows: list[Any], source: str, dry_run: bool = False) -> ImportResult:
+def default_state(raw: Any) -> str | None:
+    """'Maharashtra' when the file's meta describes a directory of KVKs in Maharashtra only."""
+    if isinstance(raw, dict) and isinstance(raw.get("meta"), dict):
+        description = str(raw["meta"].get("description", "")).lower()
+        if "in maharashtra" in description:
+            return "Maharashtra"
+    return None
+
+
+def import_kvks(
+    db: Session,
+    rows: list[Any],
+    source: str,
+    dry_run: bool = False,
+    state: str | None = None,
+) -> ImportResult:
     result = ImportResult()
     seen: set[tuple[str, str, str]] = set()
     for index, row in enumerate(rows, start=1):
+        if state and isinstance(row, dict) and not row.get("state"):
+            row = {**row, "state": state}
         try:
             data = KVKIn.model_validate(row)
         except ValidationError as exc:
@@ -100,10 +125,12 @@ def main(argv: list[str] | None = None) -> None:
     )
     parser.add_argument("file", type=Path, help="JSON file (array of KVK objects)")
     parser.add_argument("--dry-run", action="store_true", help="validate only, write nothing")
+    parser.add_argument("--state", help="state for rows without one (default: from the file)")
     args = parser.parse_args(argv)
 
     try:
-        rows = load_rows(json.loads(args.file.read_text(encoding="utf-8")))
+        raw = json.loads(args.file.read_text(encoding="utf-8"))
+        rows = load_rows(raw)
     except (OSError, ValueError) as exc:
         print(f"Cannot read {args.file}: {exc}", file=sys.stderr)
         raise SystemExit(2) from exc
@@ -111,12 +138,21 @@ def main(argv: list[str] | None = None) -> None:
     database = Database(get_settings().database_url)
     database.create_all()
     with database.session_factory() as db:
-        result = import_kvks(db, rows, args.file.name, dry_run=args.dry_run)
+        result = import_kvks(
+            db, rows, args.file.name, dry_run=args.dry_run, state=args.state or default_state(raw)
+        )
     prefix = "Dry run: would create" if args.dry_run else "Created"
     print(f"{prefix} {result.created}, updated {result.updated}, skipped {result.skipped}.")
     for error in result.errors:
         print(f"  - {error}", file=sys.stderr)
     raise SystemExit(1 if result.skipped and not (result.created or result.updated) else 0)
+
+
+def import_bundled(db: Session) -> ImportResult:
+    """Import the bundled, verified Maharashtra KVK directory (used by ``terrabyte-seed``)."""
+    raw = json.loads(BUNDLED_FILE.read_text(encoding="utf-8"))
+    source = f"{BUNDLED_FILE.name} (bundled)"
+    return import_kvks(db, load_rows(raw), source, state=default_state(raw))
 
 
 if __name__ == "__main__":  # pragma: no cover

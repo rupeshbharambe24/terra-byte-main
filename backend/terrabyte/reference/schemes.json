@@ -1,0 +1,771 @@
+{
+  "meta": {
+    "title": "Farmer schemes - Government of India and Government of Maharashtra",
+    "generated_on": "2026-11-24",
+    "last_verified": "2026-11-24",
+    "status_values": {
+      "active": "verified as operating on/near the verification date",
+      "changed": "operating, but terms recently changed or an announced change is not yet confirmed - read status_note",
+      "closed": "no longer accepting applications",
+      "unverified": "current status could not be confirmed from an official source - do not show to farmers as available"
+    },
+    "notes": [
+      "Amounts are as stated in the cited official source on the verification date; schemes change by GR/notification - re-verify before each season.",
+      "Where an official page did not state a figure, the figure is either omitted or explicitly attributed to its (non-official) source in status_note.",
+      "Hindi/Marathi names: official Marathi names used where the scheme is a Maharashtra scheme; other translations are descriptive renderings and should be reviewed by a native speaker before display.",
+      "Maharashtra: MahaDBT states that a Farmer ID registered through AgriStack is mandatory to avail benefits of agriculture schemes; farmers without one should visit a Common Service Centre with Aadhaar and the Aadhaar-linked mobile number."
+    ]
+  },
+  "schemes": [
+    {
+      "id": "pm_kisan",
+      "name_en": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+      "name_hi": "प्रधानमंत्री किसान सम्मान निधि (पीएम-किसान)",
+      "name_mr": "प्रधानमंत्री किसान सन्मान निधी (पीएम-किसान)",
+      "level": "central",
+      "ministry_or_department": "Ministry of Agriculture & Farmers Welfare, Department of Agriculture & Farmers Welfare",
+      "benefit": "Rs 6,000 per year per eligible farmer family, paid in three equal instalments of Rs 2,000 by DBT into the Aadhaar-seeded bank account. Latest: 24th instalment released 30 Oct 2026 (over Rs 18,690 crore to 9.34 crore farmers). Cabinet (31 Jul 2026) approved continuation from 2026-27 to 2030-31 with outlay Rs 3.15 lakh crore; the amount stays Rs 6,000/year.",
+      "eligibility": "Landholding farmer families (husband, wife and minor children) with cultivable land in their name as per state land records; land records must be seeded on the PM-KISAN portal, bank account Aadhaar-seeded, and e-KYC completed (e-KYC is mandatory).",
+      "exclusions": [
+        "All institutional landholders",
+        "Former and present holders of constitutional posts; former/present Ministers, MPs, MLAs, MLCs, Mayors of Municipal Corporations, Chairpersons of District Panchayats",
+        "Serving or retired officers/employees of Central/State Government, PSEs, autonomous bodies and regular employees of local bodies (excluding Multi Tasking Staff / Class IV / Group D)",
+        "Retired pensioners with monthly pension of Rs 10,000 or more (excluding MTS / Class IV / Group D)",
+        "Persons who paid income tax in the last assessment year",
+        "Registered professionals (doctors, engineers, lawyers, chartered accountants, architects) practising their profession",
+        "Portal notice: suspected cases such as land acquired after 01-02-2019 or more than one family member receiving benefit are withheld pending physical verification"
+      ],
+      "documents_required": [
+        "Aadhaar",
+        "Land record (7/12 extract and 8-A in Maharashtra)",
+        "Aadhaar-seeded bank account",
+        "Mobile number linked to Aadhaar (for e-KYC OTP)"
+      ],
+      "how_to_apply": "Self-registration on pmkisan.gov.in ('New Farmer Registration') or PM-KISAN mobile app, via Common Service Centre (CSC), or through the state agriculture/revenue nodal officer. Complete e-KYC (OTP, biometric at CSC, or face authentication on app). Check 'Know Your Status' on the portal.",
+      "official_url": "https://pmkisan.gov.in/",
+      "status": "active",
+      "status_note": "Continued to 2030-31 (Cabinet 31 Jul 2026). 24th instalment paid 30 Oct 2026; next (25th) instalment date not announced as of 2026-11-24.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://pmkisan.gov.in/",
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2292460",
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2330414",
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2330171"
+      ],
+      "notes": "Maharashtra: MahaDBT states that a Farmer ID registered through AgriStack is mandatory to avail benefits of agriculture schemes; farmers without one should visit a Common Service Centre with Aadhaar and the Aadhaar-linked mobile number."
+    },
+    {
+      "id": "pmfby",
+      "name_en": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+      "name_hi": "प्रधानमंत्री फसल बीमा योजना",
+      "name_mr": "प्रधानमंत्री पीक विमा योजना",
+      "level": "central",
+      "ministry_or_department": "Ministry of Agriculture & Farmers Welfare (implemented by States through empanelled insurance companies)",
+      "benefit": "Crop insurance against prevented/failed sowing, mid-season adversity, standing-crop loss (drought, flood, pests, diseases etc.), localised calamities (hailstorm, inundation, landslide, etc.) and specified post-harvest losses (cyclone, unseasonal rain). Maximum farmer premium: 2% of sum insured for Kharif food & oilseed crops, 1.5% for Rabi food & oilseed crops, 5% for commercial/horticultural crops; balance premium shared 50:50 by Centre and State (90:10 in NE states).",
+      "eligibility": "All farmers including sharecroppers and tenant farmers growing notified crops in notified areas, with insurable interest (land records / tenancy agreement / sowing certificate as per state rules). Loanee farmers (standard KCC/crop loan) are enrolled through banks with premium deducted; non-loanee farmers enrol voluntarily before the seasonal cut-off date.",
+      "exclusions": [
+        "Crops/areas not notified by the State for the season",
+        "Applications after the notified cut-off date"
+      ],
+      "documents_required": [
+        "Aadhaar",
+        "Land record (7/12) or tenancy/sowing certificate",
+        "Bank account details",
+        "Sowing declaration / e-Peek Pahani (Maharashtra crop survey) as required by state",
+        "Maharashtra: AgriStack Farmer ID (reported as mandatory by districts for 2025 seasons; confirm with state notification)"
+      ],
+      "how_to_apply": "Through bank branch (loanee), CSC, insurance company agent, or online at pmfby.gov.in / Crop Insurance app. Report localised crop loss promptly (PMFBY operational guidelines specify 72 hours; not re-verified here) via the Crop Insurance app, the insurer, or the Krishi Rakshak Portal & Helpline toll-free 14447.",
+      "official_url": "https://pmfby.gov.in/",
+      "status": "active",
+      "status_note": "Being implemented by 25 States/UTs in Kharif 2026 (PIB, 29 Aug 2026); Rs 12,200 crore allocated in Budget 2026-27. Maharashtra: the state's 'Re 1 crop insurance' (100% premium paid by state) was discontinued in 2025; from Kharif 2025 farmers pay the normal PMFBY farmer share. Maharashtra Kharif 2026 enrolment: 42.55 lakh farmers till 28 Aug 2026. The Cabinet approval covering the scheme period after 2025-26 was not located; PIB confirms operation in Kharif 2026.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://pmfby.gov.in/",
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2304549",
+        "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/aug/doc_9735_20260829_18493301.pdf"
+      ],
+      "notes": null
+    },
+    {
+      "id": "kcc_miss",
+      "name_en": "Kisan Credit Card (KCC) with Modified Interest Subvention Scheme (MISS)",
+      "name_hi": "किसान क्रेडिट कार्ड (केसीसी) एवं संशोधित ब्याज अनुदान योजना",
+      "name_mr": "किसान क्रेडिट कार्ड (केसीसी) व सुधारित व्याज सवलत योजना",
+      "level": "central",
+      "ministry_or_department": "Ministry of Agriculture & Farmers Welfare / Department of Financial Services; implemented by banks per RBI & NABARD",
+      "benefit": "Short-term crop loans and allied-activity loans (animal husbandry, dairy, fisheries, bee keeping) through KCC at 7% interest; additional 3% prompt repayment incentive makes the effective rate 4% per annum if repaid within due date (max one year). FY 2025-26 (RBI circular 13 Jan 2026): interest subvention applies on an overall limit of Rs 3 lakh per farmer per year, with a sub-limit of Rs 2 lakh for farmers engaged only in allied activities. Collateral-free agricultural loans: up to Rs 2 lakh per borrower (RBI, from 1 Jan 2025).",
+      "eligibility": "Owner cultivators, tenant farmers, oral lessees, sharecroppers, SHGs and JLGs of farmers; fishers and animal-husbandry farmers (KCC for allied activities).",
+      "exclusions": [
+        "Interest subvention/prompt repayment incentive not available for loans repaid after one year",
+        "Amount above the MISS limit carries the bank's normal rate"
+      ],
+      "documents_required": [
+        "Application form",
+        "Identity and address proof (Aadhaar)",
+        "Land records (7/12, 8-A) or tenancy proof",
+        "Cropping pattern details",
+        "Passport photo"
+      ],
+      "how_to_apply": "Apply at any commercial bank, RRB, cooperative bank / PACS branch; KCC campaigns and PM-KISAN-linked simplified one-page form are used by banks.",
+      "official_url": "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=13270",
+      "status": "changed",
+      "status_note": "LIMIT CHANGE NOT CONFIRMED AS OPERATIONAL: Union Budget 2025-26 announced raising the MISS loan limit from Rs 3 lakh to Rs 5 lakh, and a PIB backgrounder (16 Jul 2026) describes the limit as enhanced to Rs 5 lakh. However the Cabinet decision of 28 May 2025 continued MISS for 2025-26 'with existing' terms, and RBI's circular of 13 Jan 2026 for FY 2025-26 still states an overall limit of Rs 3 lakh. No MISS circular for FY 2026-27 was found. Show Rs 3 lakh as the confirmed subvention limit and the Rs 5 lakh as 'announced'.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=13270",
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2132139",
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2285236",
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2106230"
+      ],
+      "notes": null
+    },
+    {
+      "id": "soil_health_card",
+      "name_en": "Soil Health Card (now 'Soil Health & Fertility' component of RKVY)",
+      "name_hi": "मृदा स्वास्थ्य कार्ड",
+      "name_mr": "मृदा आरोग्य पत्रिका (सॉईल हेल्थ कार्ड)",
+      "level": "central",
+      "ministry_or_department": "Ministry of Agriculture & Farmers Welfare (INM Division); implemented by State agriculture departments",
+      "benefit": "Soil sample testing and a Soil Health Card with nutrient status (macro & micro nutrients, pH, EC, OC) and crop-wise fertiliser recommendations. The Centre funds Rs 190 per sample for collection, testing, card generation and distribution. 26.09 crore cards issued as of July 2026.",
+      "eligibility": "All farmers (cards are generated per farm/grid sample under state soil-sampling programmes).",
+      "exclusions": null,
+      "documents_required": [
+        "Farmer name, mobile, land/survey number (provided at sampling)"
+      ],
+      "how_to_apply": "Contact the Taluka Agriculture Officer / Krishi Sahayak or district soil testing laboratory; cards and reports are available on soilhealth.dac.gov.in.",
+      "official_url": "https://soilhealth.dac.gov.in/",
+      "status": "active",
+      "status_note": "Merged into Rashtriya Krishi Vikas Yojana from 2022-23 as 'Soil Health & Fertility'. Issue cycle: PIB material variously states every 2 years (stated objective) and once every 3 years (newer issuance cycle); whether farmers are charged is not stated explicitly in the sources used.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://www.pib.gov.in/PressNoteDetails.aspx?NoteId=155036&ModuleId=3&reg=48&lang=2",
+        "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/aug/doc2026812952301.pdf"
+      ],
+      "notes": null
+    },
+    {
+      "id": "pmksy_pdmc",
+      "name_en": "PM Krishi Sinchayee Yojana - Per Drop More Crop (micro-irrigation: drip & sprinkler)",
+      "name_hi": "प्रधानमंत्री कृषि सिंचाई योजना - प्रति बूंद अधिक फसल (सूक्ष्म सिंचाई)",
+      "name_mr": "प्रधानमंत्री कृषी सिंचाई योजना - प्रति थेंब अधिक पीक (सूक्ष्म सिंचन)",
+      "level": "central",
+      "ministry_or_department": "Ministry of Agriculture & Farmers Welfare; Maharashtra Agriculture Department via MahaDBT",
+      "benefit": "Subsidy on drip/sprinkler systems: 55% of cost for small & marginal farmers, 45% for other farmers (as listed on MahaDBT for Maharashtra), up to 5 ha per farmer.",
+      "eligibility": [
+        "Aadhaar; 7/12 and 8-A land records",
+        "Permanent electricity connection for pump (recent electricity bill)",
+        "A survey number that received micro-irrigation subsidy is eligible again only after 7 years (10 years for subsidy taken up to 2016-17)",
+        "System designed by company representative; purchase from authorised dealer after pre-sanction; upload invoice within 30 days of pre-sanction",
+        "SC/ST farmers: caste certificate"
+      ],
+      "exclusions": [
+        "Area above 5 ha",
+        "Same survey number within the 7-year (or 10-year) repeat window"
+      ],
+      "documents_required": [
+        "Aadhaar",
+        "7/12 extract",
+        "8-A extract",
+        "Electricity bill",
+        "Purchase invoice",
+        "Pre-sanction letter",
+        "Caste certificate (SC/ST)"
+      ],
+      "how_to_apply": "Apply online on MahaDBT farmer portal (selection by first-come-first-served from 2025-26); after pre-sanction buy and install, then upload invoice for subsidy. MahaDBT helpline 022-61316429 (per MahaDBT farmer portal)",
+      "official_url": "https://mahadbt.maharashtra.gov.in/Farmer/SchemeData/SchemeData?str=E9DDFA703C38E51AC7B56240D6D84F28",
+      "status": "active",
+      "status_note": "Listed as an open farmer scheme on MahaDBT (checked 2026-11-24). Maharashtra may add state top-up subsidy under its own schemes; the top-up percentage was not verified here.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://mahadbt.maharashtra.gov.in/Farmer/SchemeData/SchemeData?str=E9DDFA703C38E51AC7B56240D6D84F28",
+        "https://pmksy.gov.in/"
+      ],
+      "notes": "Maharashtra: MahaDBT states that a Farmer ID registered through AgriStack is mandatory to avail benefits of agriculture schemes; farmers without one should visit a Common Service Centre with Aadhaar and the Aadhaar-linked mobile number."
+    },
+    {
+      "id": "pm_kusum",
+      "name_en": "PM Kisan Urja Suraksha evam Utthaan Mahabhiyan (PM-KUSUM)",
+      "name_hi": "प्रधानमंत्री किसान ऊर्जा सुरक्षा एवं उत्थान महाभियान (पीएम-कुसुम)",
+      "name_mr": "प्रधानमंत्री किसान ऊर्जा सुरक्षा एवं उत्थान महाअभियान (पीएम-कुसुम)",
+      "level": "central",
+      "ministry_or_department": "Ministry of New and Renewable Energy (MNRE); in Maharashtra implemented via MSEDCL (Mahavitaran)",
+      "benefit": "Component A: 0.5-2 MW grid-connected renewable plants on farmers' land; Component B: standalone off-grid solar pumps; Component C: solarisation of grid-connected pumps (individual or feeder-level). Central financial assistance (CFA) for Component B and individual pump solarisation: 30% of benchmark/tender cost (50% in NE, hilly states and island UTs); remaining share by State and farmer per state scheme.",
+      "eligibility": "Individual farmers, Water User Associations, PACS, community/cluster irrigation systems (Components B/C).",
+      "exclusions": null,
+      "documents_required": null,
+      "how_to_apply": "Through the State implementing agency. In Maharashtra, standalone solar pumps are delivered under 'Magel Tyala Saur Krushi Pump Yojana' (see that entry).",
+      "official_url": "https://pmkusum.mnre.gov.in/",
+      "status": "unverified",
+      "status_note": "The scheme was last officially extended to 31 Mar 2026 (PIB). Secondary reports (not an MNRE notice) say new applications closed after 31 Mar 2026, pipeline projects may finish by 31 Mar 2027, and a successor 'PM-KUSUM 2.0' was not yet approved by Cabinet as of early Nov 2026. PIB (12 Aug 2026) still reports progress: ~11.49 lakh off-grid pumps installed. Verify on mnre.gov.in before telling farmers they can apply.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://pmkusum.mnre.gov.in/",
+        "https://www.pib.gov.in/FactsheetDetails.aspx?Id=148576&reg=48&lang=2",
+        "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/aug/doc2026812952301.pdf"
+      ],
+      "notes": null
+    },
+    {
+      "id": "aif",
+      "name_en": "Agriculture Infrastructure Fund (AIF)",
+      "name_hi": "कृषि अवसंरचना कोष",
+      "name_mr": "कृषी पायाभूत सुविधा निधी",
+      "level": "central",
+      "ministry_or_department": "Ministry of Agriculture & Farmers Welfare",
+      "benefit": "Medium/long-term bank loans for post-harvest and community farm assets (warehouses, cold storage, primary processing, sorting/grading, etc.) with 3% per annum interest subvention on loans up to Rs 2 crore per project for up to 7 years; lending rate capped at 9%; credit guarantee under CGTMSE for loans up to Rs 2 crore with guarantee fee paid by Government (up to 7 years).",
+      "eligibility": "Farmers, FPOs, PACS, SHGs, JLGs, marketing cooperatives, agri-entrepreneurs, start-ups, APMCs, state agencies and PPP projects. Private entities (incl. farmers) can get benefit for up to 25 projects in different locations.",
+      "exclusions": null,
+      "documents_required": [
+        "Detailed project report",
+        "KYC",
+        "Land/lease documents for project site",
+        "Bank-required documents"
+      ],
+      "how_to_apply": "Apply online on agriinfra.dac.gov.in and through a participating lending institution.",
+      "official_url": "https://agriinfra.dac.gov.in/",
+      "status": "active",
+      "status_note": "Scheme period per official portal runs to 2032-33. PIB (Oct 2026): 521 AIF units dedicated on 30 Oct 2026; ~2.28 lakh projects, ~Rs 1.75 lakh crore investment.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://agriinfra.dac.gov.in/",
+        "https://agriinfra.dac.gov.in/Home/FAQs",
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2099753",
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2330171"
+      ],
+      "notes": null
+    },
+    {
+      "id": "enam",
+      "name_en": "National Agriculture Market (e-NAM)",
+      "name_hi": "राष्ट्रीय कृषि बाजार (ई-नाम)",
+      "name_mr": "राष्ट्रीय कृषी बाजार (ई-नाम)",
+      "level": "central",
+      "ministry_or_department": "Ministry of Agriculture & Farmers Welfare; implemented by Small Farmers' Agribusiness Consortium (SFAC)",
+      "benefit": "Online trading platform linking APMC mandis: transparent e-auction price discovery, online payment to farmers, quality assaying; 1,656 mandis integrated and 1.89 crore farmers registered (June 2026).",
+      "eligibility": "Farmers selling in e-NAM-integrated APMC mandis (registration with Aadhaar and bank account).",
+      "exclusions": null,
+      "documents_required": [
+        "Aadhaar / ID proof",
+        "Bank account details",
+        "Mobile number"
+      ],
+      "how_to_apply": "Register on enam.gov.in or the e-NAM mobile app, or at the gate of an e-NAM-integrated APMC.",
+      "official_url": "https://enam.gov.in/",
+      "status": "active",
+      "status_note": null,
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://enam.gov.in/",
+        "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/aug/doc2026812952301.pdf"
+      ],
+      "notes": null
+    },
+    {
+      "id": "pkvy",
+      "name_en": "Paramparagat Krishi Vikas Yojana (PKVY) - organic farming",
+      "name_hi": "परंपरागत कृषि विकास योजना",
+      "name_mr": "परंपरागत कृषी विकास योजना",
+      "level": "central",
+      "ministry_or_department": "Ministry of Agriculture & Farmers Welfare (component of Rashtriya Krishi Vikas Yojana)",
+      "benefit": "Rs 31,500 per hectare over 3 years for cluster-based organic farming, of which Rs 15,000/ha goes directly to farmers by DBT for on-farm/off-farm organic inputs; remainder for marketing & branding (Rs 4,500/ha), certification & residue analysis (Rs 3,000/ha), training & capacity building (Rs 9,000/ha).",
+      "eligibility": "Farmers in organic clusters formed by the State; maximum landholding of 2 hectares per farmer for assistance.",
+      "exclusions": null,
+      "documents_required": [
+        "Aadhaar",
+        "Land records",
+        "Bank account"
+      ],
+      "how_to_apply": "Through the district agriculture office / ATMA forming organic clusters; certification via PGS-India.",
+      "official_url": "https://pgsindia-ncof.gov.in/",
+      "status": "active",
+      "status_note": "PIB (Aug 2026): 18.93 lakh ha covered, 33.63 lakh farmers since inception (as of June 2026).",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2099756",
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2175205",
+        "https://www.pib.gov.in/FaqDetails.aspx?id=155374&NoteId=155374&ModuleId=4"
+      ],
+      "notes": null
+    },
+    {
+      "id": "nmnf",
+      "name_en": "National Mission on Natural Farming (NMNF)",
+      "name_hi": "राष्ट्रीय प्राकृतिक खेती मिशन",
+      "name_mr": "राष्ट्रीय नैसर्गिक शेती अभियान",
+      "level": "central",
+      "ministry_or_department": "Ministry of Agriculture & Farmers Welfare",
+      "benefit": "Output-based incentive of Rs 4,000 per acre per year for 2 years, for up to 1 acre per farmer, for adopting natural farming (practice, training, livestock upkeep, on-farm input preparation). Clusters of ~50 ha (~125 farmers) supported by Krishi Sakhis/Community Resource Persons; Bio-input Resource Centres; certification under Natural Farming Certification System.",
+      "eligibility": "Farmers in NMNF clusters selected by the State.",
+      "exclusions": null,
+      "documents_required": null,
+      "how_to_apply": "Through the State agriculture department / ATMA cluster mobilisation; portal naturalfarming.dac.gov.in.",
+      "official_url": "https://naturalfarming.dac.gov.in/",
+      "status": "active",
+      "status_note": "Approved by Cabinet 25 Nov 2024 (central outlay Rs 2,481 crore). FY 2025-26: 18,893 clusters, 10.32 lakh ha, 20.93 lakh farmers.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2146937",
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2289030",
+        "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/aug/doc2026812952301.pdf"
+      ],
+      "notes": null
+    },
+    {
+      "id": "smam",
+      "name_en": "Sub-Mission on Agricultural Mechanization (SMAM)",
+      "name_hi": "कृषि यंत्रीकरण उप-मिशन",
+      "name_mr": "कृषी यांत्रिकीकरण उप-अभियान",
+      "level": "central",
+      "ministry_or_department": "Ministry of Agriculture & Farmers Welfare; Maharashtra Agriculture Department via MahaDBT",
+      "benefit": "Subsidy (DBT) on individual purchase of farm machinery: 40% of machine cost for general beneficiaries; 50% for SC/ST, small & marginal farmers and NE states (subject to per-machine caps in guidelines). Custom Hiring Centres: 40% of project cost (projects up to Rs 250 lakh); Farm Machinery Banks: 80% (up to Rs 30 lakh). Kisan drones: 50% up to Rs 5 lakh for small/marginal/SC/ST/women farmers; small & marginal farmers get Rs 2,000/ha for mechanised services incl. drones through CHCs/SHGs/FPOs.",
+      "eligibility": [
+        "Aadhaar; 7/12 and 8-A",
+        "Subsidy for only one component (tractor or one implement) per application; same component not again for 10 years (MahaDBT rule)",
+        "Implement must have test certificate from a Central Government approved agency"
+      ],
+      "exclusions": [
+        "Same component availed in the last 10 years"
+      ],
+      "documents_required": [
+        "Aadhaar",
+        "7/12",
+        "8-A",
+        "Quotation and test certificate of the machine",
+        "Caste certificate (SC/ST)",
+        "Self declaration",
+        "Pre-sanction letter"
+      ],
+      "how_to_apply": "Maharashtra: apply on MahaDBT farmer portal ('Sub-mission on Farm Mechanization'); first-come-first-served selection from 2025-26. MahaDBT helpline 022-61316429 (per MahaDBT farmer portal)",
+      "official_url": "https://mahadbt.maharashtra.gov.in/Farmer/SchemeData/SchemeData?str=E9DDFA703C38E51A23C0254248DAFF28",
+      "status": "active",
+      "status_note": "SMAM guidelines revised August 2026 (agrimachinery.nic.in/Files/Guidelines/SMAM_2026.pdf); rates above from PIB backgrounder 9 Jul 2026.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2282697",
+        "https://agrimachinery.nic.in/Files/Guidelines/SMAM_2026.pdf",
+        "https://mahadbt.maharashtra.gov.in/Farmer/SchemeData/SchemeData?str=E9DDFA703C38E51A23C0254248DAFF28"
+      ],
+      "notes": "Maharashtra also runs a 'State Agriculture Mechanization Scheme' on MahaDBT with the same eligibility rules."
+    },
+    {
+      "id": "midh",
+      "name_en": "Mission for Integrated Development of Horticulture (MIDH)",
+      "name_hi": "एकीकृत बागवानी विकास मिशन",
+      "name_mr": "एकात्मिक फलोत्पादन विकास अभियान",
+      "level": "central",
+      "ministry_or_department": "Ministry of Agriculture & Farmers Welfare; Maharashtra State Horticulture Mission via MahaDBT",
+      "benefit": "Assistance for new orchards/plantations, protected cultivation (polyhouse/shade net), mechanisation, post-harvest management, etc. as per cost norms (revised 2025). Example (PIB 2026): citrus area expansion 40% subsidy in general areas, 50% in NE/hilly areas, up to 4 ha per beneficiary; post-harvest projects 35% (general) / 50% (hilly & scheduled areas), credit-linked back-ended. Centre:State share 60:40.",
+      "eligibility": "All categories of farmers; at least 30% of State Horticulture Mission budget earmarked for women. Maharashtra: Aadhaar, 7/12, 8-A; caste certificate for SC/ST.",
+      "exclusions": null,
+      "documents_required": [
+        "Aadhaar",
+        "7/12",
+        "8-A",
+        "Quotation/test certificate where applicable",
+        "Caste certificate (SC/ST)",
+        "Pre-sanction letter"
+      ],
+      "how_to_apply": "Maharashtra: MahaDBT farmer portal ('Mission for Integrated Development of Horticulture'). MahaDBT helpline 022-61316429 (per MahaDBT farmer portal)",
+      "official_url": "https://midh.gov.in/",
+      "status": "active",
+      "status_note": "Listed on MahaDBT; component-wise subsidy is in the 'View Benefits' document there. A 2026-specific continuation notice was not located.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2290635",
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2148521",
+        "https://midh.gov.in/FAQ.html",
+        "https://mahadbt.maharashtra.gov.in/Farmer/SchemeData/SchemeData?str=E9DDFA703C38E51AF823840F3424F82E"
+      ],
+      "notes": null
+    },
+    {
+      "id": "pm_dhan_dhaanya",
+      "name_en": "Prime Minister Dhan-Dhaanya Krishi Yojana (PMDDKY)",
+      "name_hi": "प्रधानमंत्री धन-धान्य कृषि योजना",
+      "name_mr": "प्रधानमंत्री धन-धान्य कृषी योजना",
+      "level": "central",
+      "ministry_or_department": "Ministry of Agriculture & Farmers Welfare with NITI Aayog (convergence of 36 schemes across 11 Departments)",
+      "benefit": "Not an individual cash benefit: district-level convergence programme in 100 low-productivity districts to raise productivity, crop diversification, panchayat/block-level storage, irrigation and credit access. Outlay Rs 24,000 crore per year for 6 years from 2025-26. Farmers benefit through the converged schemes in selected districts.",
+      "eligibility": "Farmers in the 100 selected districts (selected on low productivity, low cropping intensity, low credit disbursement).",
+      "exclusions": null,
+      "documents_required": null,
+      "how_to_apply": "No separate application; benefits flow through the converged schemes and the District Dhan-Dhaanya Samiti plan.",
+      "official_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2145147",
+      "status": "active",
+      "status_note": "Cabinet approval 16 Jul 2025; launched 11 Oct 2025. Maharashtra districts as reported by press (official list not located): Palghar, Raigad, Dhule, Chhatrapati Sambhajinagar, Beed, Nanded, Yavatmal, Chandrapur, Gadchiroli.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2145147",
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2177772",
+        "https://www.freepressjournal.in/mumbai/nine-maharashtra-districts-included-in-pm-dhan-dhanya-krishi-yojana-to-boost-farmer-income-and-self-reliance"
+      ],
+      "notes": null
+    },
+    {
+      "id": "pulses_mission",
+      "name_en": "Mission for Aatmanirbharta in Pulses (assured MSP procurement of tur, urad, masoor)",
+      "name_hi": "दलहन में आत्मनिर्भरता मिशन",
+      "name_mr": "कडधान्य आत्मनिर्भरता अभियान",
+      "level": "central",
+      "ministry_or_department": "Ministry of Agriculture & Farmers Welfare; procurement by NAFED and NCCF under PM-AASHA Price Support Scheme",
+      "benefit": "100% procurement of Tur (Arhar), Urad and Masoor at MSP by NAFED and NCCF in participating states for 4 years (2025-26 to 2028-29) from farmers who register with these agencies and sign agreements; 88 lakh free pulse seed kits; certified seed distribution. Mission period 2025-26 to 2030-31, outlay Rs 11,440 crore.",
+      "eligibility": "Pulse farmers in participating states who register with NAFED (e-Samridhi) / NCCF (e-Samyukti) portals.",
+      "exclusions": [
+        "Produce not meeting Fair Average Quality (FAQ) norms"
+      ],
+      "documents_required": [
+        "Aadhaar",
+        "Land record / crop sowing details",
+        "Bank account"
+      ],
+      "how_to_apply": "Register on the NAFED/NCCF procurement portals or at designated procurement centres/PACS/FPOs.",
+      "official_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2173547",
+      "status": "active",
+      "status_note": "Cabinet approval 1 Oct 2025; launched 11 Oct 2025. Current MSPs: Tur Rs 8,450/qtl and Urad Rs 8,200/qtl (KMS 2026-27); Masur Rs 7,390/qtl (RMS 2027-28).",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2173547",
+        "https://www.pib.gov.in/FactsheetDetails.aspx?id=151113&NoteId=151113&ModuleId=16&reg=6&lang=1"
+      ],
+      "notes": null
+    },
+    {
+      "id": "pm_kmy",
+      "name_en": "Pradhan Mantri Kisan Maandhan Yojana (PM-KMY) - farmer pension",
+      "name_hi": "प्रधानमंत्री किसान मानधन योजना",
+      "name_mr": "प्रधानमंत्री किसान मानधन योजना",
+      "level": "central",
+      "ministry_or_department": "Ministry of Agriculture & Farmers Welfare; fund manager LIC",
+      "benefit": "Assured pension of Rs 3,000 per month from age 60; family pension to spouse of 50% (Rs 1,500/month) if the subscriber dies. Farmer contributes Rs 55-200 per month depending on entry age; Centre contributes an equal amount.",
+      "eligibility": "Small and marginal farmers aged 18-40 years with cultivable land up to 2 hectares as per land records (as on 1 Aug 2019 per PIB).",
+      "exclusions": [
+        "Exclusion categories are defined in the scheme guidelines on pmkmy.gov.in (e.g. persons covered by other statutory social-security schemes); not verified in this dataset - check before display"
+      ],
+      "documents_required": [
+        "Aadhaar",
+        "Savings bank account / IFSC",
+        "Land records"
+      ],
+      "how_to_apply": "Enrol at a Common Service Centre (CSC) or on maandhan.in; contributions are auto-debited from the bank account.",
+      "official_url": "https://pmkmy.gov.in/",
+      "status": "active",
+      "status_note": "~24.96 lakh farmers enrolled as of Feb 2026 (PIB). Exit allowed after 5 years with refund plus savings-bank interest.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://pmkmy.gov.in/scheme/pmkmy",
+        "https://pmkmy.gov.in/page/faq",
+        "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2053142"
+      ],
+      "notes": null
+    },
+    {
+      "id": "agristack_farmer_id",
+      "name_en": "AgriStack Farmer ID (Digital Agriculture Mission farmer registry)",
+      "name_hi": "किसान पहचान पत्र (एग्रीस्टैक फार्मर आईडी)",
+      "name_mr": "शेतकरी ओळख क्रमांक (ॲग्रीस्टॅक फार्मर आयडी)",
+      "level": "central",
+      "ministry_or_department": "Ministry of Agriculture & Farmers Welfare (Digital Agriculture Mission); Maharashtra Agriculture & Revenue Departments",
+      "benefit": "Not a cash scheme: a unique Aadhaar-linked farmer ID linked to land records; used for faster access to PM-KISAN, crop insurance, MahaDBT schemes and procurement. Over 10.31 crore Farmer IDs created nationally (Aug 2026).",
+      "eligibility": "Landholding farmers.",
+      "exclusions": null,
+      "documents_required": [
+        "Aadhaar",
+        "Aadhaar-linked mobile number",
+        "Land details (7/12) for all villages where land is held"
+      ],
+      "how_to_apply": "Visit a Common Service Centre (CSC) with Aadhaar and linked mobile; the first village's Farmer ID is used and land in other villages is linked to it.",
+      "official_url": "https://mahadbt.maharashtra.gov.in/Farmer/Login/Login",
+      "status": "active",
+      "status_note": "MahaDBT (checked 2026-11-24): 'Farmer ID registered through AgriStack is made mandatory to avail benefits of agriculture schemes.'",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://mahadbt.maharashtra.gov.in/Farmer/Login/Login",
+        "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/aug/doc2026812952301.pdf"
+      ],
+      "notes": null
+    },
+    {
+      "id": "mh_namo_shetkari",
+      "name_en": "Namo Shetkari Mahasanman Nidhi Yojana (NSMNY)",
+      "name_hi": "नमो शेतकरी महासम्मान निधि योजना",
+      "name_mr": "नमो शेतकरी महासन्मान निधी योजना",
+      "level": "maharashtra",
+      "ministry_or_department": "Agriculture Department, Government of Maharashtra (Commissionerate of Agriculture, Pune)",
+      "benefit": "Rs 6,000 per year from the State (three instalments of Rs 2,000), in addition to PM-KISAN's Rs 6,000 - i.e. Rs 12,000 per year combined for eligible farmers.",
+      "eligibility": "Maharashtra farmers who are eligible PM-KISAN beneficiaries (same land-record, Aadhaar-seeded bank account and e-KYC requirements as PM-KISAN).",
+      "exclusions": [
+        "Same exclusion categories as PM-KISAN"
+      ],
+      "documents_required": [
+        "No separate application; uses PM-KISAN registration data"
+      ],
+      "how_to_apply": "No separate application for PM-KISAN beneficiaries in Maharashtra. Check status / payment errors at nsmny.mahait.org (Beneficiary Status). Contact: Commissionerate of Agriculture, Pune, 020-25538755, pmkisan-mh@gov.in.",
+      "official_url": "https://nsmny.mahait.org/",
+      "status": "active",
+      "status_note": "Guidelines approved 15 Jun 2023. The official portal lists GRs for instalments 1-7. Press reports (Nov 2026, not official) say three instalments are pending, with the Agriculture Department seeking Rs 5,425 crore from Finance; an increase to Rs 9,000/year was announced politically by the CM (reported by Deccan Herald) but no GR implementing it was found. Show Rs 6,000/year; do not promise payment dates.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://nsmny.mahait.org/",
+        "https://krishi.maharashtra.gov.in/"
+      ],
+      "notes": null
+    },
+    {
+      "id": "mh_baliraja_free_power",
+      "name_en": "Mukhyamantri Baliraja Mofat Veej Yojana - 2024 (free electricity for agricultural pumps)",
+      "name_hi": "मुख्यमंत्री बलिराजा मुफ्त बिजली योजना - 2024",
+      "name_mr": "मुख्यमंत्री बळीराजा मोफत वीज योजना - २०२४",
+      "level": "maharashtra",
+      "ministry_or_department": "Energy Department, Government of Maharashtra; implemented by MSEDCL (Mahavitaran)",
+      "benefit": "Completely free electricity for agricultural pumps up to 7.5 HP (State bears the bill); about 44.06 lakh farmers covered. Period April 2024 to March 2029 (5 years, review after 3 years).",
+      "eligibility": "MSEDCL agricultural pump consumers with sanctioned load up to 7.5 HP.",
+      "exclusions": [
+        "Agricultural pumps above 7.5 HP"
+      ],
+      "documents_required": [
+        "None (applied automatically to eligible MSEDCL agricultural connections)"
+      ],
+      "how_to_apply": "Automatic for eligible MSEDCL agricultural consumers; contact MSEDCL (toll free 1912 / 19120, 1800-212-3435, 1800-233-3435).",
+      "official_url": "https://energy.maharashtra.gov.in/en/scheme/mukhyamantri-baliraja-mofat-veej-yojana-2024/",
+      "status": "active",
+      "status_note": "GR dated 25 Jul 2024 (per Mahasamvad). Separately, in July 2026 the CM announced waiver of ~Rs 48,000 crore old electricity arrears of agricultural pumps up to 7.5 HP (Mahasamvad, 20 Jul 2026); implementing order not located.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://energy.maharashtra.gov.in/en/scheme/mukhyamantri-baliraja-mofat-veej-yojana-2024/",
+        "https://cdnbbsr.s3waas.gov.in/s3c0af6df3a5a0ba53004ab39704a9a7f6/uploads/2025/04/202504011816582228.pdf",
+        "https://mahasamvad.in/136148/",
+        "https://www.mahasamvad.in/207924/"
+      ],
+      "notes": null
+    },
+    {
+      "id": "mh_magel_tyala_saur_pump",
+      "name_en": "Magel Tyala Saur Krushi Pump Yojana (solar pump on demand)",
+      "name_hi": "मागेल त्याला सौर कृषि पंप योजना",
+      "name_mr": "मागेल त्याला सौर कृषी पंप योजना",
+      "level": "maharashtra",
+      "ministry_or_department": "Energy Department / MSEDCL (Mahavitaran); uses PM-KUSUM Component B central assistance",
+      "benefit": "Off-grid solar panels + complete agricultural pump set for 10% of the cost (general category) or 5% (SC/ST); balance subsidised by Central and State Governments. Pump size by land: up to 2.5 acres - 3 HP; 2.51-5 acres - 5 HP; above 5 acres - 7.5 HP (lower capacity allowed on request). 5-year repair guarantee incl. insurance; no electricity bill.",
+      "eligibility": [
+        "Farmer with assured water source: own/community farm pond, well, borewell, or land adjacent to perennial river/stream",
+        "Not a beneficiary of Atal Saur Krushi Pump Yojana-1/-2 or Mukhyamantri Saur Krushi Pump Yojana"
+      ],
+      "exclusions": [
+        "Pumps cannot draw water from reservoirs of water-conservation works",
+        "Earlier solar pump scheme beneficiaries"
+      ],
+      "documents_required": [
+        "7/12 extract (land and water source)",
+        "Aadhaar",
+        "Bank details",
+        "Caste certificate (SC/ST)"
+      ],
+      "how_to_apply": "Apply online on the MSEDCL portal (Apply -> pay beneficiary share after approval -> choose vendor). Toll free 1800-212-3435 / 1800-233-3435.",
+      "official_url": "https://www.mahadiscom.in/solar_MTSKPY/scheme_info.php",
+      "status": "active",
+      "status_note": "Scheme page live (checked 2026-11-24); MSEDCL issued an MTSKPY 2026-27 e-tender in Aug 2026. Because central PM-KUSUM's sanctioned period ended 31 Mar 2026, confirm that new applications are open before advising farmers.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://www.mahadiscom.in/solar_MTSKPY/scheme_info.php",
+        "https://www.mahadiscom.in/wp-content/uploads/2026/08/E-Tender-Notice-MTSKPY-2026-27-T-07-17.08.2026.pdf"
+      ],
+      "notes": null
+    },
+    {
+      "id": "mh_magel_tyala_shettale",
+      "name_en": "Chief Minister Sustainable Agriculture Irrigation Scheme - Individual Farm Pond ('Magel Tyala Shettale')",
+      "name_hi": "मुख्यमंत्री शाश्वत कृषि सिंचाई योजना - व्यक्तिगत खेत तालाब (मागेल त्याला शेततळे)",
+      "name_mr": "मुख्यमंत्री शाश्वत कृषी सिंचन योजना - वैयक्तिक शेततळे (मागेल त्याला शेततळे)",
+      "level": "maharashtra",
+      "ministry_or_department": "Agriculture Department, Government of Maharashtra",
+      "benefit": "Subsidy for an individual farm pond, varying with pond size; maximum Rs 75,000 (per myScheme listing of the 29 Jun 2022 GR). Paid by DBT after the completed pond is measured.",
+      "eligibility": "Minimum landholding 0.20 ha in Konkan, 0.40 ha elsewhere in Maharashtra (per myScheme listing); 7/12, 8-A, Aadhaar-linked bank account.",
+      "exclusions": null,
+      "documents_required": [
+        "7/12",
+        "8-A",
+        "Aadhaar",
+        "Bank passbook"
+      ],
+      "how_to_apply": "MahaDBT farmer portal ('Chief Minister Sustainable Agriculture Irrigation Scheme - Individual Farm Pond'). MahaDBT helpline 022-61316429 (per MahaDBT farmer portal)",
+      "official_url": "https://mahadbt.maharashtra.gov.in/Farmer/Login/Login",
+      "status": "active",
+      "status_note": "Listed on MahaDBT and the Agriculture Department publishes 'CMSKSY Farm Pond 2025-26' beneficiary data. Subsidy amount not shown on MahaDBT page; the Rs 75,000 cap is from myScheme (GoI portal), and one other source cites Rs 50,000 - verify GR before display.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://mahadbt.maharashtra.gov.in/Farmer/Login/Login",
+        "https://krishi.maharashtra.gov.in/Site/Upload/Pdf/CMSKSY%20Farm%20Pond%202025-26.pdf",
+        "https://www.myscheme.gov.in/schemes/chief-minister-sustainable-agriculture-irrigation-scheme"
+      ],
+      "notes": null
+    },
+    {
+      "id": "mh_ndksp_pocra2",
+      "name_en": "Nanaji Deshmukh Krishi Sanjivani Prakalp 2.0 (PoCRA phase 2, World Bank-assisted)",
+      "name_hi": "नानाजी देशमुख कृषि संजीवनी परियोजना 2.0 (पोकरा)",
+      "name_mr": "नानाजी देशमुख कृषी संजीवनी प्रकल्प २.० (पोकरा)",
+      "level": "maharashtra",
+      "ministry_or_department": "Agriculture Department, Government of Maharashtra (PMU, Mumbai) with World Bank",
+      "benefit": "Climate-resilient agriculture project in 7,196 selected villages of 21 districts (11 Vidarbha, 8 Marathwada, 2 North Maharashtra). Supports micro-irrigation, farm ponds, horticulture plantation, soil health, conservation agriculture, bio-inputs, low-methane rice, solar, agroforestry, millets, and for landless households goat rearing, backyard poultry, fisheries; FPO/SHG value chains. Cost ~Rs 6,000 crore (USD 700 m) incl. World Bank USD 490 m; 6 years from 2025. Individual subsidy rates are in component guidelines on mahapocra.gov.in.",
+      "eligibility": "Farmers (individual components: landholding below 5 ha per MahaDBT notice) and landless households in project villages; check village list on mahapocra.gov.in ('गावाची माहिती').",
+      "exclusions": [
+        "Villages not in the project list",
+        "Applicants with 5 ha or more (for migrated individual components)"
+      ],
+      "documents_required": [
+        "AgriStack Farmer ID / Aadhaar",
+        "7/12 and 8-A",
+        "Bank account"
+      ],
+      "how_to_apply": "Apply on the NDKSP DBT portal https://dbt-ndksp.mahapocra.gov.in (pending MahaDBT applications from project villages were migrated there). Helpline 7900164314; 022-22163352; pmu@mahapocra.gov.in. Vasudha digital advisory: 155313.",
+      "official_url": "https://mahapocra.gov.in/en",
+      "status": "active",
+      "status_note": "Phase 2.0 active per official site and MahaDBT notice (checked 2026-11-24).",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://mahapocra.gov.in/en",
+        "https://mahapocra.gov.in/about_ndksp",
+        "https://dbt-ndksp.mahapocra.gov.in",
+        "https://mahadbt.maharashtra.gov.in/Farmer/Login/Login"
+      ],
+      "notes": null
+    },
+    {
+      "id": "mh_bhausaheb_fundkar",
+      "name_en": "Bhausaheb Fundkar Phalbaag Lagvad Yojana (orchard plantation scheme)",
+      "name_hi": "भाऊसाहेब फुंडकर फलबाग रोपण योजना",
+      "name_mr": "भाऊसाहेब फुंडकर फळबाग लागवड योजना",
+      "level": "maharashtra",
+      "ministry_or_department": "Agriculture Department, Government of Maharashtra",
+      "benefit": "Subsidy for planting perennial fruit crops (16 crops per myScheme listing), paid over three years by DBT subject to plant survival of at least 80% in year 1 and 90% in year 2. Exact per-hectare amounts/percentages were not verifiable from an official page on 2026-11-24 - see GR on MahaDBT.",
+      "eligibility": "Maharashtra farmers with 7/12 and 8-A; area limits 0.20-6.00 ha (0.10-10.00 ha in Konkan) per myScheme listing; institutional beneficiaries not eligible. Farmers who used MGNREGA horticulture for up to 2 ha may claim the remaining area.",
+      "exclusions": [
+        "Institutional beneficiaries"
+      ],
+      "documents_required": [
+        "Aadhaar",
+        "7/12",
+        "8-A",
+        "Bank account"
+      ],
+      "how_to_apply": "MahaDBT farmer portal ('Bhausaheb Fundkar Phalbaag Lagvad Yojana'). MahaDBT helpline 022-61316429 (per MahaDBT farmer portal)",
+      "official_url": "https://mahadbt.maharashtra.gov.in/Farmer/SchemeData/SchemeData?str=E9DDFA703C38E51AD8FABF0B538FA508",
+      "status": "active",
+      "status_note": "Listed as a farmer scheme on MahaDBT (checked 2026-11-24); the MahaDBT detail page is blank for benefit/eligibility. Secondary sources cite 40-60% subsidy - unverified; do not display amounts until GR is checked.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://mahadbt.maharashtra.gov.in/Farmer/SchemeData/SchemeData?str=E9DDFA703C38E51AD8FABF0B538FA508",
+        "https://www.myscheme.gov.in/schemes/bhausaheb-fundkar-horticulture-plantataion-scheme"
+      ],
+      "notes": null
+    },
+    {
+      "id": "mh_loan_waiver_2026",
+      "name_en": "Punyashlok Ahilyadevi Holkar Shetkari Karjmukti Yojana - 2026 (crop loan waiver)",
+      "name_hi": "पुण्यश्लोक अहिल्यादेवी होलकर किसान कर्जमुक्ति योजना - 2026",
+      "name_mr": "पुण्यश्लोक अहिल्यादेवी होळकर शेतकरी कर्जमुक्ती योजना - २०२६",
+      "level": "maharashtra",
+      "ministry_or_department": "Co-operation Department, Government of Maharashtra (Commissioner of Co-operation); implemented by banks via MahaIT system",
+      "benefit": "Waiver of crop loan dues up to Rs 2 lakh per farmer. Covers crop loans (incl. restructured) disbursed 1 Apr 2019 - 31 Mar 2025, overdue as on 30 Sep 2025 and unpaid on 31 Mar 2026. GR (2 Jun 2026) also provided: OTS for dues above Rs 2 lakh (pay excess by 31 Mar 2027, then Rs 2 lakh waived) and up to Rs 50,000 incentive for regular repayers (repaid within due date in any two of 2022-23, 2023-24, 2024-25 and repaying 2025-26 loan on time). Banks told not to charge interest on eligible accounts from 1 Apr 2026. Total ~Rs 36,585 crore for ~56 lakh farmers.",
+      "eligibility": "Farmers with eligible crop loan accounts in nationalised, private, commercial banks or District Central Co-operative Banks meeting the date conditions; Aadhaar authentication of the listed account required.",
+      "exclusions": [
+        "Elected representatives",
+        "Government employees",
+        "Income-tax payers",
+        "Officers/employees of co-operative societies earning more than Rs 25,000/month (per Scroll report of the Cabinet decision; confirm in GR)"
+      ],
+      "documents_required": [
+        "Aadhaar (biometric/OTP authentication at Aaple Sarkar Seva Kendra or bank)",
+        "Loan account number"
+      ],
+      "how_to_apply": "No application: banks upload loan data; lists are published on the scheme system, at bank branches, with District Deputy Registrar, and at village level (gram panchayat/chavdi). Listed farmers must complete Aadhaar authentication confirming account and amount.",
+      "official_url": "https://sahakarayukta.maharashtra.gov.in/site/upload/documents/Press%20Note%202026.pdf",
+      "status": "changed",
+      "status_note": "Active; terms amended. Press note (28 Jul 2026): first list of 16.96 lakh accounts (up to Rs 2 lakh) published 25 Jul 2026 for Aadhaar authentication; more lists to follow. Mahasamvad (20 Jul 2026): CM announced in the legislature that (a) the Rs 50,000 cap for earlier 2019-scheme beneficiaries is removed (full Rs 2 lakh), (b) the condition to take and repay a new 2026-27 loan for regular repayers is dropped, and (c) farmers with dues above Rs 2 lakh need not pay the excess - Rs 2 lakh will be waived anyway. Confirm the amending GR on gr.maharashtra.gov.in before displaying OTS terms.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://sahakarayukta.maharashtra.gov.in/site/upload/documents/Press%20Note%202026.pdf",
+        "https://www.mahasamvad.in/207924/",
+        "https://scroll.in/latest/1093323/scroll_in"
+      ],
+      "notes": null
+    },
+    {
+      "id": "mh_gopinath_munde",
+      "name_en": "Gopinath Munde Shetkari Apghat Suraksha Sanugrah Anudan Yojana (farmer accident grant; formerly Gopinath Munde Shetkari Apghat Vima Yojana)",
+      "name_hi": "गोपीनाथ मुंडे किसान दुर्घटना सुरक्षा सानुग्रह अनुदान योजना",
+      "name_mr": "गोपीनाथ मुंडे शेतकरी अपघात सुरक्षा सानुग्रह अनुदान योजना",
+      "level": "maharashtra",
+      "ministry_or_department": "Agriculture Department, Government of Maharashtra",
+      "benefit": "Accidental death: Rs 2 lakh. Disability: loss of one limb or one eye Rs 1 lakh; loss of two limbs or two eyes Rs 2 lakh; loss of one limb and one eye Rs 2 lakh. Paid as a direct State grant (no insurance premium).",
+      "eligibility": "7/12-holder registered farmer aged 10-75 years in Maharashtra, plus one family member as defined in the GR. Covered accidents include road/rail accidents, drowning, pesticide poisoning, electric shock, lightning, murder, fall from height, snake/scorpion bite, Naxal violence, animal bite (rabies), death during delivery, riots and other accidents while farming. Claim by legal heirs in order: spouse, unmarried daughter, mother, sons, daughter-in-law, married daughter, other legal heirs.",
+      "exclusions": null,
+      "documents_required": [
+        "7/12 extract showing applicant as farmer",
+        "Death certificate",
+        "Village form 6-C (mutation/heirship)",
+        "Age proof (birth certificate / school leaving certificate / Aadhaar / voter ID)",
+        "FIR, spot panchnama, police patil certificate",
+        "Disability certificate (for disability claims)"
+      ],
+      "how_to_apply": "Apply through the Taluka Agriculture Officer / MahaDBT ('Gopinath Munde Shetkari Apghat Suraksha Sanugrah Anudan Yojana'). MahaDBT helpline 022-61316429 (per MahaDBT farmer portal)",
+      "official_url": "https://mahadbt.maharashtra.gov.in/Farmer/SchemeData/SchemeData?str=E9DDFA703C38E51A41E9076B9F87E641",
+      "status": "active",
+      "status_note": "Listed on MahaDBT with benefit details (checked 2026-11-24). Claim filing deadline after accident is set in the GR (not captured here).",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://mahadbt.maharashtra.gov.in/Farmer/SchemeData/SchemeData?str=E9DDFA703C38E51A41E9076B9F87E641",
+        "https://krishi.maharashtra.gov.in/Site/Common/ViewGr.aspx?Doctype=e2e11ed5-3d93-4e5b-9560-0124f4324636?MenuID=2912"
+      ],
+      "notes": null
+    },
+    {
+      "id": "mh_mahadbt_portal",
+      "name_en": "MahaDBT Farmer Portal (single window for Maharashtra agriculture subsidies)",
+      "name_hi": "महाडीबीटी किसान पोर्टल",
+      "name_mr": "महाडीबीटी शेतकरी पोर्टल",
+      "level": "maharashtra",
+      "ministry_or_department": "Agriculture Department, Government of Maharashtra",
+      "benefit": "Single online application for: PMKSY-Per Drop More Crop; Sub-mission on Farm Mechanization; National Food Security Mission; Birsa Munda Krishi Kranti Yojana (tribal); Dr. Babasaheb Ambedkar Krushi Swavalamban Yojana (SC/neo-Buddhist); MIDH; Rainfed Area Development; Bhausaheb Fundkar Phalbaag Lagvad Yojana; RKVY-RAFTAAR; State Agriculture Mechanization; CM Sustainable Agriculture Irrigation Scheme (incl. individual farm pond); RKVY plastic lining to farm pond; Dr. Shyamaprasad Mukherjee Jan-Van Vikas; PMRKVY-Rainfed Area Development; Gopinath Munde accident grant; Kaju Kalam Vatap (cashew grafts).",
+      "eligibility": "Maharashtra farmers; AgriStack Farmer ID mandatory for most components (Aadhaar-based login only for listed exceptions: solar fencing, sugarcane mechanisation, Jivati taluka farmers, Forest Rights Act holders).",
+      "exclusions": null,
+      "documents_required": [
+        "Farmer ID / Aadhaar",
+        "7/12",
+        "8-A",
+        "Bank account",
+        "Component-specific documents"
+      ],
+      "how_to_apply": "Login with Farmer ID + OTP at mahadbt.maharashtra.gov.in/Farmer; selection is first-come-first-served from 2025-26 (earlier lottery). Track status, FCFS selection and waiting lists on the portal. Helpline 022-61316429.",
+      "official_url": "https://mahadbt.maharashtra.gov.in/Farmer/Login/Login",
+      "status": "active",
+      "status_note": "Portal notice says it will 'soon be reopened' for fresh registration; FCFS approach from 2025-26.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://mahadbt.maharashtra.gov.in/Farmer/Login/Login"
+      ],
+      "notes": null
+    },
+    {
+      "id": "mh_krishi_samruddhi",
+      "name_en": "Krishi Samruddhi Yojana (Maharashtra agricultural capital investment scheme)",
+      "name_hi": "कृषि समृद्धि योजना (महाराष्ट्र)",
+      "name_mr": "कृषी समृद्धी योजना",
+      "level": "maharashtra",
+      "ministry_or_department": "Agriculture Department, Government of Maharashtra",
+      "benefit": "Reported (Lokmat, Jul 2025): Rs 5,000 crore per year for 5 years from 2025-26 for capital investment in agriculture (infrastructure, input-cost reduction). Component-level farmer benefits not verified.",
+      "eligibility": null,
+      "exclusions": null,
+      "documents_required": null,
+      "how_to_apply": null,
+      "official_url": null,
+      "status": "unverified",
+      "status_note": "Only press sources found; reports conflict on whether Rs 5,000 crore is annual or total. No GR or official page located. Do not show to farmers until verified.",
+      "last_verified": "2026-11-24",
+      "source_urls": [
+        "https://www.lokmattimes.com/national/maha-govt-announces-krishi-samruddhi-yojana-for-empowerment-of-farmers"
+      ],
+      "notes": null
+    }
+  ]
+}

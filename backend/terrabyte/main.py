@@ -15,9 +15,11 @@ from terrabyte.config import Settings, get_settings
 from terrabyte.db import Database
 from terrabyte.errors import install_error_handlers
 from terrabyte.middleware import BodySizeLimitMiddleware
+from terrabyte.reference import load_all
 from terrabyte.routers import (
     admin,
     advisory,
+    agro,
     auth,
     dashboard,
     farm,
@@ -27,15 +29,18 @@ from terrabyte.routers import (
     me,
     notifications,
     rebuilding,
+    reference,
     rentals,
     uploads,
 )
+from terrabyte.services.weather import WeatherService
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
     settings = settings or get_settings()
     settings.resolved_jwt_secret()  # fail fast if missing in production
     database = Database(settings.database_url)
+    load_all()  # fail fast if a bundled reference file is broken
 
     @asynccontextmanager
     async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
@@ -56,6 +61,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     )
     app.state.settings = settings
     app.state.db = database
+    app.state.weather = WeatherService()
 
     install_error_handlers(app)
     app.add_middleware(
@@ -80,6 +86,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         forum,
         dashboard,
         uploads,
+        agro,
+        reference,
         rebuilding,
     ):
         app.include_router(module.router, prefix="/api")

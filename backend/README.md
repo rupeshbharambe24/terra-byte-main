@@ -19,7 +19,19 @@ A JSON array of objects (or `{"kvks": [...]}`). `name`, `district` and `state` a
 `host_organisation`, `address`, `pincode` (6 digits), `phone`, `email`, `website`, `lat`, `lon`,
 `source_url` and `verified_on` (`YYYY-MM-DD`) are optional. Rows are matched on name + district + state
 (case-insensitive): existing rows are updated, new ones created, invalid rows skipped and reported. Each run
-is logged and shown on *Admin → KVK import status*.
+is logged and shown on *Admin → KVK import status*. The research-file shape
+(`{"meta": ..., "kvks": [...]}` with lists of phones/emails/source URLs, `taluka`, `coords_precision`) is
+accepted: lists are joined, the first source URL is kept plus all of them in `sources`, and rows without a
+`state` get "Maharashtra" when the file describes a Maharashtra-only directory (or `--state <name>`).
+`terrabyte-seed` imports the bundled `terrabyte/reference/kvk_maharashtra.json` (50 KVKs) when the table is empty.
+
+## Reference data
+
+`terrabyte/reference/` holds the official reference files (MSP, schemes, KVKs, soil-test ratings,
+fertilizer RDF and products, FAO-56 crop parameters, crop calendar), each record with its source URL,
+checked on 2026-11-24. Read `README_general.md` and `README_agronomy.md` there for sources, caveats and gaps.
+They are parsed at startup; flagged rows (`conflict_flagged`, per-plant doses, `unverified` schemes) are
+returned with their flag and never used as certain values.
 
 ## Conventions
 
@@ -40,6 +52,11 @@ is logged and shown on *Admin → KVK import status*.
 | Forum | `GET/POST /forum/posts`, `POST /forum/posts/{id}/replies`, `POST /forum/{posts,replies}/{id}/report`, `GET /admin/forum/reports`, `POST /admin/forum/{posts,replies}/{id}/{hide,restore}`, `POST /admin/forum/reports/{id}/dismiss` |
 | Farm | `GET/POST/PATCH/DELETE /fields`, `GET/POST/PATCH/DELETE /ledger`, `GET /ledger/summary`, `GET /ledger/export.csv` |
 | Dashboards | `GET /dashboard/{farmer,vendor,hardware,expert}`, `GET /admin/analytics`, `GET /admin/model-evaluations` |
+| Weather | `GET /weather[?lat&lon|field_id]` (Open-Meteo, no key; 30 min cache, 8 s timeout; `503 weather_unavailable`) |
+| Irrigation | `GET /fields/{id}/irrigation[?soil_texture&awc_mm_per_m&last_irrigated]`, `GET /irrigation/meta` (FAO-56 Kc × ET0, root-zone water balance) |
+| Soil & fertilizer | `GET /soil-tests`, `POST /fields/{id}/soil-tests`, `DELETE /soil-tests/{id}`, `GET /fertilizer/crops`, `GET /fertilizer/options?crop=`, `POST /fertilizer/dose` |
+| Crop planning | `GET /crop-calendar[?district=]`, `GET /regions` (per-field plan = `PATCH /fields/{id}` with `current_crop`, `season`, `sowing_date`) |
+| Schemes and MSP | `GET /schemes[?level&status&q]`, `GET /schemes/{id}`, `GET /msp`, `GET /kvks/nearest[?lat&lon&limit]` |
 | Notifications | `GET /notifications`, `GET /notifications/unread-count`, `POST /notifications/{id}/read`, `POST /notifications/read-all` |
 
 State machines (invalid transitions answer `409 invalid_transition`):

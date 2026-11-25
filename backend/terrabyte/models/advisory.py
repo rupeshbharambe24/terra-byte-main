@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import date, datetime
 
-from sqlalchemy import Boolean, Date, Float, ForeignKey, String, Text
+from sqlalchemy import JSON, Boolean, Date, Float, ForeignKey, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from terrabyte.db import Base, TimestampMixin, UTCDateTime, utcnow
@@ -21,12 +21,17 @@ class KVK(TimestampMixin, Base):
     host_organisation: Mapped[str | None] = mapped_column(String(200))
     address: Mapped[str | None] = mapped_column(Text)
     pincode: Mapped[str | None] = mapped_column(String(6))
-    phone: Mapped[str | None] = mapped_column(String(80))
-    email: Mapped[str | None] = mapped_column(String(254))
+    taluka: Mapped[str | None] = mapped_column(String(120))
+    # Several numbers / addresses are joined with ", ".
+    phone: Mapped[str | None] = mapped_column(String(200))
+    email: Mapped[str | None] = mapped_column(String(500))
     website: Mapped[str | None] = mapped_column(String(255))
     lat: Mapped[float | None] = mapped_column(Float)
     lon: Mapped[float | None] = mapped_column(Float)
+    # How exact lat/lon is, e.g. "village-level (...); not the KVK campus". Null = unknown.
+    coords_precision: Mapped[str | None] = mapped_column(String(300))
     source_url: Mapped[str | None] = mapped_column(String(500))
+    sources: Mapped[list[str] | None] = mapped_column(JSON)
     verified_on: Mapped[date | None] = mapped_column(Date)
 
 

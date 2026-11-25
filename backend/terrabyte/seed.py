@@ -4,9 +4,9 @@ Only the *users* are fake. Products and equipment are clearly labelled as listin
 demo vendors; their prices are vendor-set listing prices, not market data. A small walkthrough
 (orders in different states, bookings, a consultation thread, forum posts, an expert article) is
 created once, through the same service functions the API uses, and is authored by the demo users
-and labelled "(demo)". No agronomic numbers (soil tests, yields, mandi prices, doses) are seeded,
-and the KVK directory is left empty until the verified list is imported
-(``terrabyte-import-kvk``).
+and labelled "(demo)". No agronomic numbers (soil tests, yields, mandi prices, doses) are seeded.
+The verified Maharashtra KVK directory bundled in ``terrabyte/reference/kvk_maharashtra.json``
+(official sources, verified 2026-11-24) is imported automatically when the KVK table is empty.
 """
 
 from __future__ import annotations
@@ -18,12 +18,14 @@ from datetime import date, datetime, time, timedelta
 from decimal import Decimal
 from pathlib import Path
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from terrabyte.config import BACKEND_DIR, get_settings
 from terrabyte.db import Base, Database, utcnow
+from terrabyte.kvk_import import import_bundled
 from terrabyte.models import (
+    KVK,
     Booking,
     BookingStatus,
     Equipment,
@@ -103,7 +105,8 @@ DEMO_USERS: list[DemoUser] = [
                 "area_acres": 2.5,
                 "soil_type": "Medium black",
                 "irrigation_source": "Open well",
-                "current_crop": "Onion",
+                "current_crop": "onion",
+                "season": "rabi",
                 "sowing_date": date(2026, 11, 10),
                 "lat": 19.1172,
                 "lon": 73.9651,
@@ -113,7 +116,8 @@ DEMO_USERS: list[DemoUser] = [
                 "area_acres": 1.5,
                 "soil_type": "Medium black",
                 "irrigation_source": "Drip (well)",
-                "current_crop": "Tomato",
+                "current_crop": "tomato",
+                "season": "rabi",
                 "sowing_date": date(2026, 10, 20),
                 "lat": 19.1150,
                 "lon": 73.9702,
@@ -138,7 +142,7 @@ DEMO_USERS: list[DemoUser] = [
                 "area_acres": 3.0,
                 "soil_type": "Medium black",
                 "irrigation_source": "Drip (canal + farm pond)",
-                "current_crop": "Grape",
+                "current_crop": "grapes",
                 "sowing_date": None,
                 "lat": 20.0812,
                 "lon": 74.1085,
@@ -354,6 +358,9 @@ def seed(db: Session, reset: bool = False) -> dict[str, int]:
 
     db.commit()
     counts["walkthrough"] = int(seed_walkthrough(db, users))
+    counts["kvks"] = 0
+    if db.scalar(select(func.count()).select_from(KVK)) == 0:
+        counts["kvks"] = import_bundled(db).created
     return counts
 
 
@@ -590,14 +597,15 @@ def demo_accounts_markdown() -> str:
         "- The pending vendor (`9000000023`) cannot log in until an admin approves it on",
         "  *Admin → Vendor approvals*; use it to try the approval flow.",
         "- `uv run terrabyte-seed --reset` **wipes the development database** and recreates it",
-        "  with these accounts and the demo walkthrough (re-run `terrabyte-import-kvk` after it).",
+        "  with these accounts, the demo walkthrough and the bundled KVK directory.",
         "- Starter products and equipment belong to the demo vendors. They are labelled as demo",
         "  listings; prices are vendor-entered listing prices, not market data.",
         "- The walkthrough (created once): orders in every state (delivered, shipped, placed,",
         "  accepted, rejected), an accepted and a requested equipment booking, one completed",
         "  rental, a consultation thread, an open question, an expert article, forum posts and",
         '  one open report. All of it is authored by the demo users and marked "(demo)".',
-        "- The KVK directory is empty until the verified list is imported with",
+        "- The 50 Maharashtra KVKs (official sources, verified 2026-11-24) are imported from",
+        "  `terrabyte/reference/kvk_maharashtra.json`; update them with",
         "  `uv run terrabyte-import-kvk <file.json>`.",
         "- Create a real admin with `uv run terrabyte-admin create-admin` (admins cannot",
         "  self-register).",

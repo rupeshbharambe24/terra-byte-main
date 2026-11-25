@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, Query, status
@@ -29,6 +30,7 @@ from terrabyte.schemas.advisory import (
     ConsultationOut,
     DataImportOut,
     KVKIn,
+    KVKNearest,
     KVKOut,
     KVKStatus,
     KVKUpdate,
@@ -36,6 +38,7 @@ from terrabyte.schemas.advisory import (
     StatusIn,
 )
 from terrabyte.schemas.common import Page
+from terrabyte.schemas.users import Lat, Lon
 from terrabyte.security import AdminUser, CurrentUser, DbSession, SettingsDep, require_role
 from terrabyte.services import consultations as svc
 from terrabyte.services.common import apply_patch
@@ -159,6 +162,43 @@ def list_kvks(
         limit=paging.limit,
         offset=paging.offset,
     )
+
+
+def haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+    """Great-circle distance on a sphere of radius 6371 km."""
+    p1, p2 = math.radians(lat1), math.radians(lat2)
+    dp, dl = p2 - p1, math.radians(lon2 - lon1)
+    a = math.sin(dp / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2
+    return 2 * 6371.0 * math.asin(math.sqrt(a))
+
+
+@router.get("/kvks/nearest", response_model=list[KVKNearest])
+def nearest_kvks(
+    user: CurrentUser,
+    db: DbSession,
+    lat: Lat = None,
+    lon: Lon = None,
+    limit: Annotated[int, Query(ge=1, le=20)] = 5,
+) -> list[KVKNearest]:
+    """KVKs with coordinates, nearest first (straight-line distance). Defaults to the user's
+    profile location. Most KVK points are village or town centres, not the campus."""
+    if (lat is None) != (lon is None):
+        raise ApiError(422, "validation_error", "Give both lat and lon.")
+    if lat is None or lon is None:
+        lat, lon = user.lat, user.lon
+    if lat is None or lon is None:
+        raise ApiError(422, "no_location", "Add your location in Settings to find nearby KVKs.")
+    rows = db.scalars(select(KVK).where(KVK.lat.is_not(None), KVK.lon.is_not(None))).all()
+    ranked = sorted(
+        ((haversine_km(lat, lon, k.lat, k.lon), k) for k in rows),  # type: ignore[arg-type]
+        key=lambda pair: pair[0],
+    )[:limit]
+    return [
+        KVKNearest.model_validate(
+            {**KVKOut.model_validate(k).model_dump(), "distance_km": round(d, 1)}
+        )
+        for d, k in ranked
+    ]
 
 
 @router.get("/kvks/{kvk_id}", response_model=KVKOut)

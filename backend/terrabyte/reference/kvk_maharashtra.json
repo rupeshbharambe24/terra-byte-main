@@ -1,0 +1,1781 @@
+{
+  "meta": {
+    "generated_on": "2026-11-24",
+    "description": "Directory of the 50 ICAR Krishi Vigyan Kendras (KVKs) in Maharashtra (ICAR-ATARI Zone VIII, Pune), for the TerraByte farmer app. Fields are filled only from credible sources; anything not found is null.",
+    "count": 50,
+    "sources": [
+      {
+        "name": "ICAR Maharashtra KVK list (49 rows; backbone for address, host, year of sanction)",
+        "url": "https://icar.org.in/en/node/15040"
+      },
+      {
+        "name": "ICAR KVK overview (Maharashtra = 50 KVKs)",
+        "url": "https://icar.org.in/en/krishi-vigyan-kendras"
+      },
+      {
+        "name": "ICAR-ATARI Pune: Contact details of KVKs (Zone VIII), PDF created 2023-04-13, lists all 50 Maharashtra KVKs",
+        "url": "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf",
+        "accessed_via": "http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf"
+      },
+      {
+        "name": "ICAR-ATARI Pune: KVKs of ATARI page (50 in Maharashtra)",
+        "url": "https://ataripune.icar.gov.in/kvks-of-icar-atari.php",
+        "accessed_via": "http://web.archive.org/web/20250210224956/https://ataripune.icar.gov.in/kvks-of-icar-atari.php"
+      },
+      {
+        "name": "ICAR-ATARI Pune: Land holding of KVKs (50 Maharashtra KVKs incl. Thane and Palghar)",
+        "url": "https://ataripune.icar.gov.in/PDF/Land%20holding%20of%20KVKs.pdf",
+        "accessed_via": "http://web.archive.org/web/20241108112754/https://ataripune.icar.gov.in/PDF/Land%20holding%20of%20KVKs.pdf"
+      },
+      {
+        "name": "ICAR-ATARI Pune: NGO-KVK chairpersons contact details (19.6.24)",
+        "url": "https://ataripune.icar.gov.in/PDF/Contact%20Details%20of%20Chairpersons_Secretaries_Presidents%20of%20NGO-KVKs%2019.6.24.pdf",
+        "accessed_via": "http://web.archive.org/web/20241015162655/"
+      },
+      {
+        "name": "MPKV Rahuri KVK page (17 KVKs in western Maharashtra)",
+        "url": "https://mpkv.ac.in/Extension/ExtensionKVK"
+      },
+      {
+        "name": "Dr. PDKV Akola KVK page (Vidarbha KVKs, establishment dates, websites)",
+        "url": "https://www.pdkv.ac.in/?page_id=2217"
+      },
+      {
+        "name": "VNMKV Parbhani KVK pages",
+        "url": [
+          "https://vnmkv.ac.in/extension_KVKBadnapur.php",
+          "https://vnmkv.ac.in/extension_KVKKhamgaon.php",
+          "https://vnmkv.ac.in/extension_KVKSambhajiNagar.php",
+          "https://vnmkv.ac.in/extension_KVKTuljapur.php"
+        ]
+      },
+      {
+        "name": "Dr. BSKKV Dapoli KVK profiles (Lanja, Roha)",
+        "url": [
+          "https://www.dbskkv.org/assets/pdf/extension-education/KVK-Lanja_2%20_2_0.pdf",
+          "https://www.dbskkv.org/assets/pdf/kvk/KVK%20Raigad-updated.pdf",
+          "https://www.dbskkv.org/kvk"
+        ]
+      },
+      {
+        "name": "MAFSU Nagpur homepage (links KVK sites thane/nagpur2/sangli2.kvk8.in) and 14th ECEC minutes",
+        "url": [
+          "https://mafsu.ac.in/",
+          "https://mafsu.ac.in/wp-content/uploads/2025/04/14th-ECEC-minutes.pdf"
+        ]
+      },
+      {
+        "name": "Individual KVK websites (as cited per record)",
+        "url": null
+      },
+      {
+        "name": "OpenStreetMap Nominatim (geocoding of village/town names)",
+        "url": "https://nominatim.openstreetmap.org/"
+      },
+      {
+        "name": "India Post pincode data via api.postalpincode.in (used only to choose between two conflicting official pincodes)",
+        "url": "https://api.postalpincode.in/pincode/"
+      }
+    ],
+    "notes": [
+      "ICAR node/15040 lists 49 Maharashtra KVKs. The 50th is KVK Thane at Nagaon, Tal. Murbad, hosted by MAFSU Nagpur. It is confirmed by the ATARI Pune contact list (#50), ATARI land-holding table, MAFSU minutes and the KVK website. Its sanction year was not found.",
+      "ataripune.icar.gov.in and kvk.icar.gov.in did not resolve on 2026-11-24. ATARI documents were read from Internet Archive snapshots (2024), so phone/email from them may be up to ~3 years old.",
+      "phone holds office numbers published for the KVK: office lines from the ATARI list, numbers in the ATARI \"Office\" column, or contact numbers on host-university or KVK pages. Personal mobile numbers that ATARI lists separately for named Programme Coordinators were deliberately left out. Where sources disagree, current host or KVK pages are preferred, and the difference is recorded in notes.",
+      "icar_sno is the serial number in ICAR node/15040; atari_label is the ATARI designation (e.g. Pune-I). Two KVKs have moved from the address ICAR still shows: Raigad (ICAR: Karjat; now Killa-Dhatav, Roha) and Ratnagiri (ICAR: Shirgaon; now Deodhe, Lanja).",
+      "District names are current: Ahilyanagar (formerly Ahmednagar), Chhatrapati Sambhajinagar (formerly Aurangabad), Dharashiv (formerly Osmanabad), and Palghar (carved from Thane in 2014). VNMKV Parbhani was formerly Marathwada Agricultural University.",
+      "Coordinates: only 2 are published by the KVK itself (Wardha, Nagpur-I) and 1 is an OSM-mapped KVK feature (Sagroli). The rest are OSM centroids of the village, town or city named in the address, NOT the KVK campus; coords_precision says which. Use them for \"near X\" display, not navigation. Ambiguous geocodes (same-named village elsewhere, post-office village only, dam or railway station) were rejected and left null.",
+      "host_type: SAU = state agricultural/veterinary university (incl. MAFSU); NGO; ICAR = ICAR institute; OEI = other educational institution (YCMOU)."
+    ]
+  },
+  "kvks": [
+    {
+      "id": "kvk-buldhana-ii",
+      "name": "KVK Buldhana",
+      "atari_label": "Buldhana-II",
+      "icar_sno": 1,
+      "district": "Buldhana",
+      "district_former_name": null,
+      "taluka": "Buldhana",
+      "village": "Buldhana (Ajintha Road)",
+      "host_organisation": "Dr. Panjabrao Deshmukh Krishi Vidyapeeth (Dr. PDKV), Akola",
+      "host_type": "SAU",
+      "year_of_sanction": 2010,
+      "address": "Krishi Vigyan Kendra, Ajintha Road, Buldhana, Maharashtra",
+      "pincode": "443001",
+      "phone": null,
+      "email": null,
+      "website": "https://kvkbuldhana.pdkv.ac.in",
+      "lat": null,
+      "lon": null,
+      "coords_source": null,
+      "coords_precision": null,
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://www.pdkv.ac.in/?page_id=2217"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "PDKV gives establishment date 21.10.2010. ATARI 2023 list gives email kvkbhandara@gmail.com for this KVK, which is the Bhandara KVK address (apparent copy error), so email is left null. ATARI lists only the Programme Coordinator's personal mobiles, not an office line, so phone is null. No reliable geocode for the Ajintha Road site."
+    },
+    {
+      "id": "kvk-beed-ii-khamgaon",
+      "name": "KVK Khamgaon (Beed-II)",
+      "atari_label": "Beed-II",
+      "icar_sno": 2,
+      "district": "Beed",
+      "district_former_name": null,
+      "taluka": "Georai",
+      "village": "Khamgaon (Post Bagpimpalgaon)",
+      "host_organisation": "Vasantrao Naik Marathwada Krishi Vidyapeeth (VNMKV), Parbhani",
+      "host_type": "SAU",
+      "year_of_sanction": 2010,
+      "address": "Krishi Vigyan Kendra, Khamgaon (Beed-II), Post Bagpimpalgaon, Tal. Georai, Dist. Beed (MS)",
+      "pincode": "431127",
+      "phone": [
+        "7588677583"
+      ],
+      "email": [
+        "kvkmkv@rediffmail.com"
+      ],
+      "website": "https://vnmkv.ac.in/extension_KVKKhamgaon.php",
+      "lat": 19.352408,
+      "lon": 75.707388,
+      "coords_source": "geocoded:nominatim:Khamgaon, Georai, Beed, Maharashtra, India",
+      "coords_precision": "village-level (OSM village node for Khamgaon, Georai taluka); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://vnmkv.ac.in/extension_KVKKhamgaon.php",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "ICAR list (host named as Marathwada Agricultural University, now VNMKV) gives sanction year 2010; VNMKV page says functioning since 2011. Phone is a mobile that VNMKV lists as the KVK contact (Programme Coordinator/Head). ATARI 2023 list gives pincode 444303 (a Buldhana pincode), so VNMKV's 431127 is used; India Post data (via api.postalpincode.in) lists Bagpimpalgaon under 431127."
+    },
+    {
+      "id": "kvk-akola-sisa",
+      "name": "KVK Akola (Sisa-Udegaon)",
+      "atari_label": "Akola",
+      "icar_sno": 3,
+      "district": "Akola",
+      "district_former_name": null,
+      "taluka": "Akola",
+      "village": "Sisa (Udegaon), Post Dongargaon",
+      "host_organisation": "Rural Development & Research Foundation (RDRF), Akola",
+      "host_type": "NGO",
+      "year_of_sanction": 2010,
+      "address": "RDRF's Krishi Vigyan Kendra, At: Sisa (Udegaon), Post: Dongargaon, Tq. & Dist. Akola, Maharashtra",
+      "pincode": "444104",
+      "phone": [
+        "7038055655"
+      ],
+      "email": [
+        "pc@kvkakola.org",
+        "info@kvkakola.org"
+      ],
+      "website": "https://www.kvkakola.org",
+      "lat": 20.719564,
+      "lon": 77.109569,
+      "coords_source": "geocoded:nominatim:Sisa, Akola, Maharashtra, India",
+      "coords_precision": "village-level (OSM boundary of Sisa village); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "http://www.kvkakola.org/contact.html",
+        "https://www.pdkv.ac.in/?page_id=2217"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "Phone 7038055655 is published as the KVK phone on kvkakola.org and in the ATARI office column. PDKV gives establishment date 24.08.2010."
+    },
+    {
+      "id": "kvk-pune-ii-narayangaon",
+      "name": "KVK Narayangaon (Pune-II)",
+      "atari_label": "Pune-II",
+      "icar_sno": 4,
+      "district": "Pune",
+      "district_former_name": null,
+      "taluka": "Junnar",
+      "village": "Narayangaon",
+      "host_organisation": "Gramonnati Mandal, Narayangaon",
+      "host_type": "NGO",
+      "year_of_sanction": 2010,
+      "address": "Krishi Vigyan Kendra, Pune-Nashik Highway, Narayangaon, Tal. Junnar, Dist. Pune, Maharashtra",
+      "pincode": "410504",
+      "phone": [
+        "02132-297018"
+      ],
+      "email": [
+        "gmnkvk@rediffmail.com"
+      ],
+      "website": null,
+      "lat": 19.120289,
+      "lon": 73.973288,
+      "coords_source": "geocoded:nominatim:Narayangaon, Junnar, Pune, Maharashtra, India",
+      "coords_precision": "town-level (OSM place node for Narayangaon); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://mpkv.ac.in/Extension/ExtensionKVK",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "No official website found (kvknarayangaon.org is not a KVK site)."
+    },
+    {
+      "id": "kvk-satara-ii-borgaon",
+      "name": "KVK Borgaon (Satara-II)",
+      "atari_label": "Satara-II",
+      "icar_sno": 5,
+      "district": "Satara",
+      "district_former_name": null,
+      "taluka": "Satara",
+      "village": "Borgaon",
+      "host_organisation": "Mahatma Phule Krishi Vidyapeeth (MPKV), Rahuri",
+      "host_type": "SAU",
+      "year_of_sanction": 2010,
+      "address": "Krishi Vigyan Kendra, Borgaon, Agril. Tech. School campus, Tal. & Dist. Satara, Maharashtra",
+      "pincode": "415519",
+      "phone": [
+        "02162-295625"
+      ],
+      "email": [
+        "kvkborgaon_satara@yahoo.com"
+      ],
+      "website": null,
+      "lat": null,
+      "lon": null,
+      "coords_source": null,
+      "coords_precision": null,
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://mpkv.ac.in/Extension/ExtensionKVK",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "Borgaon could not be geocoded unambiguously."
+    },
+    {
+      "id": "kvk-jalgaon-ii-mamurabad",
+      "name": "KVK Mamurabad (Jalgaon-II)",
+      "atari_label": "Jalgaon-II",
+      "icar_sno": 6,
+      "district": "Jalgaon",
+      "district_former_name": null,
+      "taluka": "Jalgaon",
+      "village": "Mamurabad",
+      "host_organisation": "Mahatma Phule Krishi Vidyapeeth (MPKV), Rahuri",
+      "host_type": "SAU",
+      "year_of_sanction": 2010,
+      "address": "Krishi Vigyan Kendra, Mamurabad Farm, Jalgaon, Maharashtra",
+      "pincode": "425001",
+      "phone": [
+        "0257-2020510"
+      ],
+      "email": [
+        "pckvkjalgaon@gmail.com",
+        "kvkjalgaon@rediffmail.com",
+        "kvk.jalgaon2@icar.gov.in"
+      ],
+      "website": null,
+      "lat": 21.06689,
+      "lon": 75.568771,
+      "coords_source": "geocoded:nominatim:Mamurabad, Jalgaon, Maharashtra, India",
+      "coords_precision": "village-level (OSM village node for Mamurabad); not the KVK farm",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://mpkv.ac.in/Extension/ExtensionKVK",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "First two emails are from the MPKV page; kvk.jalgaon2@icar.gov.in is from the ATARI 2023 list. Pincode 425001 is from the ATARI list (OSM puts Mamurabad in 425002); treat as low-confidence."
+    },
+    {
+      "id": "kvk-latur",
+      "name": "KVK Latur",
+      "atari_label": "Latur",
+      "icar_sno": 7,
+      "district": "Latur",
+      "district_former_name": null,
+      "taluka": "Latur",
+      "village": "Additional MIDC, Latur (Chincholirao Wadi per ICAR)",
+      "host_organisation": "Manjara Charitable Trust, Latur",
+      "host_type": "NGO",
+      "year_of_sanction": 2005,
+      "address": "Krishi Vigyan Kendra, Plot No. P-160, Additional MIDC, Post Gangapur, Tq. & Dist. Latur",
+      "pincode": "413531",
+      "phone": [
+        "02382-267411"
+      ],
+      "email": [
+        "kvklaturms@gmail.com"
+      ],
+      "website": null,
+      "lat": null,
+      "lon": null,
+      "coords_source": null,
+      "coords_precision": null,
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://ataripune.icar.gov.in/PDF/Contact%20Details%20of%20Chairpersons_Secretaries_Presidents%20of%20NGO-KVKs%2019.6.24.pdf (via Wayback 20241015162655)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "ICAR list gives the older address \"Chincholirao Wadi, C/o Abhinav College, MIDC, Latur-413512\"; the ATARI 2023 address is used. Not geocoded (MIDC plot could not be located reliably)."
+    },
+    {
+      "id": "kvk-yavatmal-i",
+      "name": "KVK Yavatmal",
+      "atari_label": "Yavatmal-I",
+      "icar_sno": 8,
+      "district": "Yavatmal",
+      "district_former_name": null,
+      "taluka": "Yavatmal",
+      "village": "Yavatmal (Waghapur Road)",
+      "host_organisation": "Dr. Panjabrao Deshmukh Krishi Vidyapeeth (Dr. PDKV), Akola",
+      "host_type": "SAU",
+      "year_of_sanction": 2004,
+      "address": "Krishi Vigyan Kendra, Waghapur Road, Yavatmal, Dist. Yavatmal, Maharashtra",
+      "pincode": "445001",
+      "phone": [
+        "07232-248235"
+      ],
+      "email": [
+        "pckvkytl@yahoo.co.in",
+        "kvkyavatmal@pdkv.ac.in"
+      ],
+      "website": "https://kvkyavatmal.pdkv.ac.in",
+      "lat": 20.390344,
+      "lon": 78.132852,
+      "coords_source": "geocoded:nominatim:Yavatmal city, Maharashtra, India",
+      "coords_precision": "city-level (OSM centroid of Yavatmal city); KVK is on Waghapur Road, not at this point",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://kvkyavatmal.pdkv.ac.in/?page_id=333",
+        "https://www.pdkv.ac.in/?page_id=2217"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "Office phone from ATARI 2023 list; the KVK contact page lists only the Head's mobile. PDKV gives establishment date 01.04.2004."
+    },
+    {
+      "id": "kvk-gondia-hiwara",
+      "name": "KVK Gondia (Hiwara)",
+      "atari_label": "Gondia",
+      "icar_sno": 9,
+      "district": "Gondia",
+      "district_former_name": null,
+      "taluka": "Gondia",
+      "village": "Hiwara (Post Ratnara)",
+      "host_organisation": "Dr. Panjabrao Deshmukh Krishi Vidyapeeth (Dr. PDKV), Akola",
+      "host_type": "SAU",
+      "year_of_sanction": 2004,
+      "address": "Krishi Vigyan Kendra, At Hiwara, Post Ratnara, Tal. & Dist. Gondia (M.S.)",
+      "pincode": "441614",
+      "phone": [
+        "07182-298181",
+        "07182-280180"
+      ],
+      "email": [
+        "kvk_gondia@rediffmail.com",
+        "kvkhiwra@pdkv.ac.in"
+      ],
+      "website": "http://kvkhiwra.pdkv.ac.in",
+      "lat": null,
+      "lon": null,
+      "coords_source": null,
+      "coords_precision": null,
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "http://kvkhiwra.pdkv.ac.in/?page_id=300",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "07182-298181 from the KVK contact page; 07182-280180 from ATARI 2023 list. Hiwara village not found in OSM; not geocoded."
+    },
+    {
+      "id": "kvk-gadchiroli-sonapur",
+      "name": "KVK Gadchiroli (Sonapur)",
+      "atari_label": "Gadchiroli",
+      "icar_sno": 10,
+      "district": "Gadchiroli",
+      "district_former_name": null,
+      "taluka": "Gadchiroli",
+      "village": "Sonapur (Mul Road)",
+      "host_organisation": "Dr. Panjabrao Deshmukh Krishi Vidyapeeth (Dr. PDKV), Akola",
+      "host_type": "SAU",
+      "year_of_sanction": 2004,
+      "address": "Krishi Vigyan Kendra, Mul Road, Sonapur, Gadchiroli, Maharashtra",
+      "pincode": "442605",
+      "phone": [
+        "07132-223017"
+      ],
+      "email": [
+        "kvksonapur@gmail.com",
+        "kvkgadchiroli@rediffmail.com"
+      ],
+      "website": "https://kvksonapur.pdkv.ac.in",
+      "lat": null,
+      "lon": null,
+      "coords_source": null,
+      "coords_precision": null,
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://kvksonapur.pdkv.ac.in/?page_id=198"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "Office phone from ATARI 2023 list. OSM \"Sonapur\" match is in Chamorshi taluka (different place), so not geocoded."
+    },
+    {
+      "id": "kvk-dharashiv-tuljapur",
+      "name": "KVK Tuljapur",
+      "atari_label": "Osmanabad",
+      "icar_sno": 11,
+      "district": "Dharashiv",
+      "district_former_name": "Osmanabad",
+      "taluka": "Tuljapur",
+      "village": "Tuljapur",
+      "host_organisation": "Vasantrao Naik Marathwada Krishi Vidyapeeth (VNMKV), Parbhani",
+      "host_type": "SAU",
+      "year_of_sanction": 2004,
+      "address": "Krishi Vigyan Kendra, Latur Road, In front of Trimurti Mangal Karyalaya, Tuljapur, Dist. Dharashiv (MS)",
+      "pincode": "413601",
+      "phone": [
+        "02471-295548",
+        "7507321406"
+      ],
+      "email": [
+        "kvktuljapur@gmail.com"
+      ],
+      "website": "https://vnmkv.ac.in/extension_KVKTuljapur.php",
+      "lat": 18.008662,
+      "lon": 76.070792,
+      "coords_source": "geocoded:nominatim:Tuljapur, Maharashtra, India",
+      "coords_precision": "town-level (OSM place node for Tuljapur); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://vnmkv.ac.in/extension_KVKTuljapur.php",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "02471-295548 is the office line from the ATARI 2023 list; 7507321406 is the contact number (Administrative Officer) on the VNMKV page. ICAR lists the host as Marathwada Agricultural University (now VNMKV)."
+    },
+    {
+      "id": "kvk-raigad-roha",
+      "name": "KVK Raigad (Roha)",
+      "atari_label": "Raigad",
+      "icar_sno": 12,
+      "district": "Raigad",
+      "district_former_name": null,
+      "taluka": "Roha",
+      "village": "Killa-Dhatav",
+      "host_organisation": "Dr. Balasaheb Sawant Konkan Krishi Vidyapeeth (Dr. BSKKV), Dapoli",
+      "host_type": "SAU",
+      "year_of_sanction": 2004,
+      "address": "Krishi Vigyan Kendra, At Post Killa-Dhatav, Tal. Roha, Dist. Raigad, Maharashtra",
+      "pincode": "402116",
+      "phone": [
+        "02194-203108"
+      ],
+      "email": [
+        "kvk_roha@rediffmail.com"
+      ],
+      "website": "https://www.dbskkv.org/kvk",
+      "lat": null,
+      "lon": null,
+      "coords_source": null,
+      "coords_precision": null,
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://www.dbskkv.org/assets/pdf/kvk/KVK%20Raigad-updated.pdf"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "ICAR list still gives the address as \"PO Karjat-410201, Distt. Raigarh\"; DBSKKV says the Roha KVK was sanctioned by order dated 5 Feb 2004 and ATARI gives the Killa-Dhatav, Roha address, so they are taken to be the same KVK. A search-snippet of an old DBSKKV page (no longer online) gave phone 02194-263008 and email kvk_roha@yahoo.co.in; ATARI 2023 values used instead. Not geocoded."
+    },
+    {
+      "id": "kvk-bhandara-sakoli",
+      "name": "KVK Bhandara (Sakoli)",
+      "atari_label": "Bhandara",
+      "icar_sno": 13,
+      "district": "Bhandara",
+      "district_former_name": null,
+      "taluka": "Sakoli",
+      "village": "Sakoli",
+      "host_organisation": "Dr. Panjabrao Deshmukh Krishi Vidyapeeth (Dr. PDKV), Akola",
+      "host_type": "SAU",
+      "year_of_sanction": 2002,
+      "address": "Krishi Vigyan Kendra Sakoli, Lakhandur Road, Tahsil Sakoli, District Bhandara",
+      "pincode": "441802",
+      "phone": [
+        "07186-295018",
+        "07186-236805"
+      ],
+      "email": [
+        "kvkbhandara@gmail.com",
+        "kvkbhandara1@gmail.com"
+      ],
+      "website": "http://kvksakoli.pdkv.ac.in",
+      "lat": 21.087443,
+      "lon": 79.997425,
+      "coords_source": "geocoded:nominatim:Sakoli, Bhandara, Maharashtra, India",
+      "coords_precision": "town-level (OSM boundary of Sakoli city); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "http://kvksakoli.pdkv.ac.in/?page_id=219",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "07186-295018 from the KVK contact page; 07186-236805 from ATARI 2023 list."
+    },
+    {
+      "id": "kvk-hingoli-tondapur",
+      "name": "KVK Hingoli (Tondapur)",
+      "atari_label": "Hingoli",
+      "icar_sno": 14,
+      "district": "Hingoli",
+      "district_former_name": null,
+      "taluka": "Kalamnuri",
+      "village": "Tondapur (Post Warange)",
+      "host_organisation": "Saint Namdev Sevabhavi Sanstha, Hingoli",
+      "host_type": "NGO",
+      "year_of_sanction": 2002,
+      "address": "Krishi Vigyan Kendra, Tondapur, Post Warange, Taluka Kalamnuri, Dist. Hingoli, Maharashtra",
+      "pincode": "431701",
+      "phone": [
+        "7588153193",
+        "7588153311",
+        "7588153955"
+      ],
+      "email": [
+        "kvkhingoli@gmail.com"
+      ],
+      "website": "http://kvkhingoli.org",
+      "lat": 19.447415,
+      "lon": 77.394232,
+      "coords_source": "geocoded:nominatim:Tondapur, Hingoli, Maharashtra, India",
+      "coords_precision": "village-level (OSM village node for Tondapur, Kalamnuri); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "http://kvkhingoli.org"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "Phones are the numbers in the ATARI 2023 \"Office\" column (mobile-format numbers). kvkhingoli.org also lists cell 9765390976 and info@kvkhingoli.com."
+    },
+    {
+      "id": "kvk-nandurbar-kolde",
+      "name": "KVK Nandurbar (Kolde)",
+      "atari_label": "Nandurbar",
+      "icar_sno": 15,
+      "district": "Nandurbar",
+      "district_former_name": null,
+      "taluka": "Nandurbar",
+      "village": "Kolde",
+      "host_organisation": "Dr. Hedgewar Seva Samiti, Nandurbar",
+      "host_type": "NGO",
+      "year_of_sanction": 2002,
+      "address": "Krishi Vigyan Kendra, A/P Kolde, Tal. & Dist. Nandurbar, Maharashtra",
+      "pincode": "425412",
+      "phone": [
+        "02564-240544"
+      ],
+      "email": [
+        "kvk_ndb@yahoo.com"
+      ],
+      "website": null,
+      "lat": 21.4394,
+      "lon": 74.282973,
+      "coords_source": "geocoded:nominatim:Kolde, Nandurbar, Maharashtra, India",
+      "coords_precision": "village-level (OSM village node for Kolde); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://mpkv.ac.in/Extension/ExtensionKVK",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": null
+    },
+    {
+      "id": "kvk-chandrapur-sindewahi",
+      "name": "KVK Chandrapur (Sindewahi)",
+      "atari_label": "Chandrapur",
+      "icar_sno": 16,
+      "district": "Chandrapur",
+      "district_former_name": null,
+      "taluka": "Sindewahi",
+      "village": "Sindewahi",
+      "host_organisation": "Dr. Panjabrao Deshmukh Krishi Vidyapeeth (Dr. PDKV), Akola",
+      "host_type": "SAU",
+      "year_of_sanction": 1999,
+      "address": "Krishi Vigyan Kendra, Pathari Road, Sindewahi, Dist. Chandrapur, Maharashtra",
+      "pincode": "441222",
+      "phone": [
+        "07178-288737"
+      ],
+      "email": [
+        "pckvksindewahi@gmail.com"
+      ],
+      "website": "https://kvksindewahi.pdkv.ac.in",
+      "lat": 20.29223,
+      "lon": 79.656654,
+      "coords_source": "geocoded:nominatim:Sindewahi, Chandrapur, Maharashtra, India",
+      "coords_precision": "town-level (OSM place node for Sindewahi); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://kvksindewahi.pdkv.ac.in/?page_id=108",
+        "https://www.pdkv.ac.in/?page_id=2217"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "ICAR gives sanction year 1999; PDKV gives establishment date 01.04.2004. The KVK contact page lists 0724-2258174 as office/fax (an Akola-code number that ATARI lists as fax), so the ATARI office line is used."
+    },
+    {
+      "id": "kvk-amravati-i-ghatkhed",
+      "name": "KVK Amravati-I (Ghatkhed)",
+      "atari_label": "Amravati-I",
+      "icar_sno": 17,
+      "district": "Amravati",
+      "district_former_name": null,
+      "taluka": "Chandur Railway",
+      "village": "Ghatkhed (Post Pohara)",
+      "host_organisation": "Shram Safalya Foundation, Amravati",
+      "host_type": "NGO",
+      "year_of_sanction": 1995,
+      "address": "Krishi Vigyan Kendra, Ghatkhed, Near Taponeshwar Temple, Bodna Phata, Amravati–Chandur Railway Road, Post Pohara, District Amravati, Maharashtra",
+      "pincode": "444904",
+      "phone": [
+        "0721-2950342"
+      ],
+      "email": [
+        "kvkamravati@gmail.com"
+      ],
+      "website": null,
+      "lat": null,
+      "lon": null,
+      "coords_source": null,
+      "coords_precision": null,
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://ataripune.icar.gov.in/PDF/Contact%20Details%20of%20Chairpersons_Secretaries_Presidents%20of%20NGO-KVKs%2019.6.24.pdf (via Wayback 20241015162655)",
+        "https://www.pdkv.ac.in/?page_id=2217"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "ICAR lists the host office address (\"Chirantan\", Madhuban Colony, Camp, Amravati-444602) rather than the KVK site. PDKV gives establishment date 24.08.1995 and links www.kvkamravati.org, which did not resolve on 2026-11-24. Not geocoded (only a dam reservoir named Ghatkhed found in OSM)."
+    },
+    {
+      "id": "kvk-amravati-ii-durgapur",
+      "name": "KVK Amravati-II (Durgapur, Badnera)",
+      "atari_label": "Amravati-II",
+      "icar_sno": 18,
+      "district": "Amravati",
+      "district_former_name": null,
+      "taluka": "Amravati",
+      "village": "Durgapur (Badnera)",
+      "host_organisation": "Shram Sadhana Trust, Amravati",
+      "host_type": "NGO",
+      "year_of_sanction": 1995,
+      "address": "Krishi Vigyan Kendra, Durgapur (Badnera), Dist. Amravati, Maharashtra",
+      "pincode": "444701",
+      "phone": [
+        "0721-2580174",
+        "0721-2580606",
+        "0721-2992244"
+      ],
+      "email": [
+        "pckvkda2015@gmail.com",
+        "kkad_11@rediffmail.com"
+      ],
+      "website": null,
+      "lat": null,
+      "lon": null,
+      "coords_source": null,
+      "coords_precision": null,
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://www.pdkv.ac.in/?page_id=2217"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "ATARI 2023 list gives pincode 441614 (a Gondia pincode, apparent copy error); ICAR's 444701 (Badnera) is used. PDKV links kvkdurgapur.org, which did not resolve on 2026-11-24. OSM \"Durgapur\" match is in Nandgaon-Khandeshwar taluka (different place), so not geocoded."
+    },
+    {
+      "id": "kvk-sindhudurg-kirlos",
+      "name": "KVK Sindhudurg (Kirlos)",
+      "atari_label": "Sindhudurg",
+      "icar_sno": 19,
+      "district": "Sindhudurg",
+      "district_former_name": null,
+      "taluka": "Malvan",
+      "village": "Kirlos",
+      "host_organisation": "Sindhudurg Zilla Krishi Pratishthan",
+      "host_type": "NGO",
+      "year_of_sanction": 1995,
+      "address": "Krishi Vigyan Kendra, At/P Kirlos, Tal. Malvan, Dist. Sindhudurg, Maharashtra",
+      "pincode": "416616",
+      "phone": [
+        "02365-280262",
+        "02365-280157"
+      ],
+      "email": [
+        "kvksin@rediffmail.com"
+      ],
+      "website": null,
+      "lat": null,
+      "lon": null,
+      "coords_source": null,
+      "coords_precision": null,
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "DBSKKV's KVK page links kvksinfarmsciencecenter.org for this KVK, but it did not resolve on 2026-11-24. Kirlos not found in OSM; not geocoded."
+    },
+    {
+      "id": "kvk-nagpur-i-cicr",
+      "name": "KVK Nagpur-I (ICAR-CICR)",
+      "atari_label": "Nagpur-I",
+      "icar_sno": 20,
+      "district": "Nagpur",
+      "district_former_name": null,
+      "taluka": "Nagpur (Rural)",
+      "village": "Panjri Farm, Wardha Road",
+      "host_organisation": "ICAR-Central Institute for Cotton Research (CICR), Nagpur",
+      "host_type": "ICAR",
+      "year_of_sanction": 1994,
+      "address": "Krishi Vigyan Kendra, ICAR-CICR, Panjri Farm, Wardha Road, Nagpur. Postal: Post Bag No. 2, Shankar Nagar Post Office, Nagpur-440010",
+      "pincode": "440010",
+      "phone": [
+        "07103-275536",
+        "07103-275537",
+        "07103-275549"
+      ],
+      "email": [
+        "kvkcicrnagpur@gmail.com",
+        "kvk.Nagpur@icar.gov.in"
+      ],
+      "website": "http://www.kvknagpur.org.in",
+      "lat": 21.049419,
+      "lon": 79.058132,
+      "coords_source": "published:http://www.kvknagpur.org.in/Contact.html",
+      "coords_precision": "site-level (Google Maps embed on the KVK's own contact page)",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "http://www.kvknagpur.org.in/Contact.html",
+        "https://www.pdkv.ac.in/?page_id=2217"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "KVK home page also gives a street pincode 441108 for Panjri Farm; 440010 is the postal (Post Bag) pincode used by ICAR and ATARI."
+    },
+    {
+      "id": "kvk-nashik-i-ycmou",
+      "name": "KVK Nashik-I (YCMOU)",
+      "atari_label": "Nashik-I",
+      "icar_sno": 21,
+      "district": "Nashik",
+      "district_former_name": null,
+      "taluka": "Nashik",
+      "village": "Near Gangapur Dam, Gowardhan area",
+      "host_organisation": "Yashwantrao Chavan Maharashtra Open University (YCMOU), Nashik",
+      "host_type": "OEI",
+      "year_of_sanction": 1994,
+      "address": "Krishi Vigyan Kendra, Yashwantrao Chavan Maharashtra Open University, Dnyangangotri, Near Gangapur Dam, Gowardhan Area, Nashik, Maharashtra",
+      "pincode": "422222",
+      "phone": [
+        "0253-2230698",
+        "0253-2230459"
+      ],
+      "email": [
+        "kvknashik@rediffmail.com"
+      ],
+      "website": "https://ycmou.ac.in/about_school/index/10",
+      "lat": null,
+      "lon": null,
+      "coords_source": null,
+      "coords_precision": null,
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://mpkv.ac.in/Extension/ExtensionKVK",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "Website is YCMOU's KVK page (found via search; it returned HTTP 403 to automated fetches on 2026-11-24, so its content was not checked). Not geocoded (OSM has only the dam, not the campus)."
+    },
+    {
+      "id": "kvk-parbhani",
+      "name": "KVK Parbhani",
+      "atari_label": "Parbhani",
+      "icar_sno": 22,
+      "district": "Parbhani",
+      "district_former_name": null,
+      "taluka": "Parbhani",
+      "village": "Parbhani (Jintur Road)",
+      "host_organisation": "Jeevan Jyoti Charitable Trust, Parbhani",
+      "host_type": "NGO",
+      "year_of_sanction": 1994,
+      "address": "Krishi Vigyan Kendra, P.B. No. 33, Jintur Road, Parbhani, Maharashtra",
+      "pincode": "431401",
+      "phone": [
+        "02452-223045"
+      ],
+      "email": [
+        "kvkpbn94@yahoo.co.in"
+      ],
+      "website": null,
+      "lat": 19.259986,
+      "lon": 76.776085,
+      "coords_source": "geocoded:nominatim:Parbhani city, Maharashtra, India",
+      "coords_precision": "city-level (OSM point for Parbhani City Municipal Corporation); KVK is on Jintur Road, not at this point",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://ataripune.icar.gov.in/PDF/Contact%20Details%20of%20Chairpersons_Secretaries_Presidents%20of%20NGO-KVKs%2019.6.24.pdf (via Wayback 20241015162655)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": null
+    },
+    {
+      "id": "kvk-kolhapur-i-talsande",
+      "name": "KVK Kolhapur-I (Talsande)",
+      "atari_label": "Kolhapur-I",
+      "icar_sno": 23,
+      "district": "Kolhapur",
+      "district_former_name": null,
+      "taluka": "Hatkanangale",
+      "village": "Talsande",
+      "host_organisation": "D. Y. Patil Education Society, Kolhapur",
+      "host_type": "NGO",
+      "year_of_sanction": 1994,
+      "address": "Krishi Vigyan Kendra, At Post Talsande, Tal. Hatkanangale, Dist. Kolhapur, Maharashtra",
+      "pincode": "416112",
+      "phone": [
+        "0230-2479099"
+      ],
+      "email": [
+        "kvkkolhapur@gmail.com"
+      ],
+      "website": null,
+      "lat": 16.864677,
+      "lon": 74.254403,
+      "coords_source": "geocoded:nominatim:Talsande, Kolhapur, Maharashtra, India",
+      "coords_precision": "village-level (OSM village node for Talsande); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://mpkv.ac.in/Extension/ExtensionKVK",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": null
+    },
+    {
+      "id": "kvk-buldhana-i-jalgaon-jamod",
+      "name": "KVK Buldhana-I (Jalgaon Jamod)",
+      "atari_label": "Buldhana-I",
+      "icar_sno": 24,
+      "district": "Buldhana",
+      "district_former_name": null,
+      "taluka": "Jalgaon Jamod",
+      "village": "Jalgaon Jamod (Satpuda campus, Warwat Bakal Road)",
+      "host_organisation": "Satpuda Education Society, Jalgaon Jamod",
+      "host_type": "NGO",
+      "year_of_sanction": 1994,
+      "address": "Krishi Vigyan Kendra, Satpuda campus, Warwat Bakal Road, Jalgaon Jamod, Dist. Buldhana, Maharashtra",
+      "pincode": "443402",
+      "phone": [
+        "07266-221620"
+      ],
+      "email": [
+        "kvkbuldana@gmail.com"
+      ],
+      "website": null,
+      "lat": 21.047944,
+      "lon": 76.53176,
+      "coords_source": "geocoded:nominatim:Jalgaon Jamod, Buldhana, Maharashtra, India",
+      "coords_precision": "town-level (OSM place node for Jalgaon Jamod); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://ataripune.icar.gov.in/PDF/Contact%20Details%20of%20Chairpersons_Secretaries_Presidents%20of%20NGO-KVKs%2019.6.24.pdf (via Wayback 20241015162655)",
+        "https://www.pdkv.ac.in/?page_id=2217"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "PDKV gives establishment date 19.10.1994."
+    },
+    {
+      "id": "kvk-nanded-i-pokharni",
+      "name": "KVK Nanded-I (Pokharni)",
+      "atari_label": "Nanded-I",
+      "icar_sno": 25,
+      "district": "Nanded",
+      "district_former_name": null,
+      "taluka": "Nanded",
+      "village": "Pokharni (Post Limbgaon)",
+      "host_organisation": "Jawaharlal Nehru Institute of Education, Science & Technological Research, Nanded",
+      "host_type": "NGO",
+      "year_of_sanction": 1994,
+      "address": "Krishi Vigyan Kendra, At Pokharni, Post Limbgaon, Purna Road, Tq. & Dist. Nanded, Maharashtra",
+      "pincode": "431602",
+      "phone": [
+        "9423140598"
+      ],
+      "email": [
+        "kvk_nanded@yahoo.co.in"
+      ],
+      "website": null,
+      "lat": 19.181099,
+      "lon": 77.222552,
+      "coords_source": "geocoded:nominatim:Pokharni, Maharashtra (result: Pokharni, Sayal, Nanded, 431602)",
+      "coords_precision": "hamlet-level (OSM hamlet node for Pokharni near Limbgaon, Nanded taluka); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "ATARI 2023 list gives pincode 431735, which India Post data (via api.postalpincode.in) does not recognise; ICAR's 431602 (covers Limbgaon) is used. Phone is the number in the ATARI \"Office\" column (mobile-format)."
+    },
+    {
+      "id": "kvk-solapur-i-kegaon",
+      "name": "KVK Solapur-I (Kegaon)",
+      "atari_label": "Solapur-I",
+      "icar_sno": 26,
+      "district": "Solapur",
+      "district_former_name": null,
+      "taluka": "North Solapur",
+      "village": "Khed (Post Kegaon)",
+      "host_organisation": "Shabari Krishi Pratishthan, Solapur",
+      "host_type": "NGO",
+      "year_of_sanction": 1994,
+      "address": "Krishi Vigyan Kendra, Gat No. 22/1 B, Solapur-Barshi Road, At: Khed, Post: Kegaon, Tal: North Solapur, Dist: Solapur",
+      "pincode": "413255",
+      "phone": [
+        "0217-2990563",
+        "0217-2990564"
+      ],
+      "email": [
+        "kvksolapur@gmail.com",
+        "kvksolapur@rediffmail.com",
+        "kvksolapur@yahoo.co.in"
+      ],
+      "website": "https://kvksolapur.org",
+      "lat": 17.716551,
+      "lon": 75.849255,
+      "coords_source": "geocoded:nominatim:Kegaon, North Solapur, Maharashtra, India",
+      "coords_precision": "village-level (OSM village node for Kegaon; KVK is at Khed, Post Kegaon)",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://kvksolapur.org/contact",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://mpkv.ac.in/Extension/ExtensionKVK"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "Address/phones/rediffmail+yahoo emails from the KVK's own contact page; kvksolapur@gmail.com from ATARI 2023 list."
+    },
+    {
+      "id": "kvk-washim-karda",
+      "name": "KVK Washim (Karda)",
+      "atari_label": "Washim",
+      "icar_sno": 27,
+      "district": "Washim",
+      "district_former_name": null,
+      "taluka": "Risod",
+      "village": "Karda",
+      "host_organisation": "SUVIDE Foundation, Risod",
+      "host_type": "NGO",
+      "year_of_sanction": 1994,
+      "address": "Krishi Vigyan Kendra, Loni Road, Karda, Tq. Risod, Dist. Washim, Maharashtra",
+      "pincode": "444506",
+      "phone": [
+        "07251-222260"
+      ],
+      "email": [
+        "kvk.washim@yahoo.com",
+        "info@kvkwashim.com"
+      ],
+      "website": "http://www.kvkwashim.com",
+      "lat": 20.033234,
+      "lon": 76.771259,
+      "coords_source": "geocoded:nominatim:Karda, Risod, Maharashtra, India",
+      "coords_precision": "village-level (OSM village node for Karda, Risod); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "http://www.kvkwashim.com",
+        "https://www.pdkv.ac.in/?page_id=2217"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "PDKV gives establishment date 16.09.1994."
+    },
+    {
+      "id": "kvk-beed-i-ambajogai",
+      "name": "KVK Beed-I (Ambajogai)",
+      "atari_label": "Beed-I",
+      "icar_sno": 28,
+      "district": "Beed",
+      "district_former_name": null,
+      "taluka": "Ambajogai",
+      "village": "Ambajogai",
+      "host_organisation": "Deendayal Research Institute (DRI), New Delhi",
+      "host_type": "NGO",
+      "year_of_sanction": 1992,
+      "address": "Krishi Vigyan Kendra, PB No. 28, Ambajogai, Dist. Beed, Maharashtra",
+      "pincode": "431517",
+      "phone": [
+        "02446-258557"
+      ],
+      "email": [
+        "kvkbeed@rediffmail.com"
+      ],
+      "website": null,
+      "lat": 18.731823,
+      "lon": 76.385484,
+      "coords_source": "geocoded:nominatim:Ambajogai, Beed, Maharashtra, India",
+      "coords_precision": "town-level (OSM place node for Ambajogai); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://ataripune.icar.gov.in/PDF/Contact%20Details%20of%20Chairpersons_Secretaries_Presidents%20of%20NGO-KVKs%2019.6.24.pdf (via Wayback 20241015162655)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "Search results indicate the KVK site drikvkbeed.org (with email kvkbeed@gmail.com, campus at Digholamba, Ambajogai), but on 2026-11-24 the domain served only a hosting placeholder, so website is null and the ATARI email is used."
+    },
+    {
+      "id": "kvk-satara-i-kalwade",
+      "name": "KVK Satara-I (Kalwade)",
+      "atari_label": "Satara-I",
+      "icar_sno": 29,
+      "district": "Satara",
+      "district_former_name": null,
+      "taluka": "Karad",
+      "village": "Kalwade",
+      "host_organisation": "Kalyani Gorakshan Trust, Pune",
+      "host_type": "NGO",
+      "year_of_sanction": 1992,
+      "address": "Krishi Vigyan Kendra, At Post Kalwade, Tal. Karad, Dist. Satara, Maharashtra",
+      "pincode": "415539",
+      "phone": [
+        "02164-288070"
+      ],
+      "email": [
+        "pckvkkarad@gmail.com"
+      ],
+      "website": null,
+      "lat": null,
+      "lon": null,
+      "coords_source": null,
+      "coords_precision": null,
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://mpkv.ac.in/Extension/ExtensionKVK",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "ICAR gives pincode 415110 (Karad city); ATARI's 415539 is used because India Post data (via api.postalpincode.in) lists Kalawade under 415539. Not found in OSM; not geocoded."
+    },
+    {
+      "id": "kvk-pune-i-baramati",
+      "name": "KVK Baramati (Pune-I)",
+      "atari_label": "Pune-I",
+      "icar_sno": 30,
+      "district": "Pune",
+      "district_former_name": null,
+      "taluka": "Baramati",
+      "village": "Malegaon Khurd (Sharadanagar)",
+      "host_organisation": "Agricultural Development Trust (ADT), Baramati",
+      "host_type": "NGO",
+      "year_of_sanction": 1992,
+      "address": "Krishi Vigyan Kendra, Sharadanagar, At Post Malegaon Khurd, Tal. Baramati, Dist. Pune, Maharashtra",
+      "pincode": "413115",
+      "phone": [
+        "02112-255227",
+        "02112-255327"
+      ],
+      "email": [
+        "kvkbmt@yahoo.com"
+      ],
+      "website": "https://kvkbaramati.com",
+      "lat": 18.13222,
+      "lon": 74.536463,
+      "coords_source": "geocoded:nominatim:Sharadanagar, Baramati, Maharashtra, India",
+      "coords_precision": "village-level (OSM village node for Sharadanagar, Baramati); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://kvkbaramati.com",
+        "https://mpkv.ac.in/Extension/ExtensionKVK",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "kvkbaramati.com lists 02112-255227 as office and 02112-255327 as fax; MPKV/ATARI list 255327 as phone."
+    },
+    {
+      "id": "kvk-ahilyanagar-i-babhaleshwar",
+      "name": "KVK Ahilyanagar-I (Babhaleshwar)",
+      "atari_label": "Ahmednagar-I",
+      "icar_sno": 31,
+      "district": "Ahilyanagar",
+      "district_former_name": "Ahmednagar",
+      "taluka": "Rahata",
+      "village": "Babhaleshwar",
+      "host_organisation": "Pravara Institute of Research & Education in Natural and Social Sciences (PIRENS), Loni",
+      "host_type": "NGO",
+      "year_of_sanction": 1992,
+      "address": "Krishi Vigyan Kendra (PIRENS), Babhaleshwar, Tal. Rahata, Dist. Ahilyanagar, Maharashtra",
+      "pincode": "413737",
+      "phone": [
+        "02422-252414",
+        "02422-253612"
+      ],
+      "email": [
+        "kvkahmednagar@yahoo.com"
+      ],
+      "website": "https://www.kvkpravara.com",
+      "lat": 19.595193,
+      "lon": 74.50739,
+      "coords_source": "geocoded:nominatim:Babhaleshwar, Maharashtra, India",
+      "coords_precision": "village-level (OSM point for the Babhaleshwar health sub-centre); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://mpkv.ac.in/Extension/ExtensionKVK",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://www.kvkpravara.com"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "MPKV lists www.kvkpravara.com for this KVK; the site has leftover template text, but its contact block matches. MPKV page gives 02422-252612; ATARI and the KVK site give 252414/253612."
+    },
+    {
+      "id": "kvk-sangli-i-kanchanpur",
+      "name": "KVK Sangli-I (Kanchanpur)",
+      "atari_label": "Sangli-I",
+      "icar_sno": 32,
+      "district": "Sangli",
+      "district_former_name": null,
+      "taluka": "Miraj",
+      "village": "Kanchanpur",
+      "host_organisation": "Vasant Prakash Vikas Pratishthan, Sangli",
+      "host_type": "NGO",
+      "year_of_sanction": 1992,
+      "address": "Krishi Vigyan Kendra, A/p Kanchanpur, Taluka Miraj, Dist. Sangli, Maharashtra",
+      "pincode": "416306",
+      "phone": [
+        "0233-2256925",
+        "0233-2256725"
+      ],
+      "email": [
+        "kvksangli@rediffmail.com"
+      ],
+      "website": null,
+      "lat": 16.921734,
+      "lon": 74.664953,
+      "coords_source": "geocoded:nominatim:Kanchanpur, Miraj, Maharashtra, India",
+      "coords_precision": "village-level (OSM village node for Kanchanpur, Miraj); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://mpkv.ac.in/Extension/ExtensionKVK",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "MPKV calls it \"KVK, Prakash Nagar, Dist. Sangli\". kvksangli.org carries spam links and is not used."
+    },
+    {
+      "id": "kvk-jalna-i-kharpudi",
+      "name": "KVK Jalna-I (Kharpudi)",
+      "atari_label": "Jalna-I",
+      "icar_sno": 33,
+      "district": "Jalna",
+      "district_former_name": null,
+      "taluka": "Jalna",
+      "village": "Kharpudi",
+      "host_organisation": "Marathwada Sheti Sahayya Mandal, Jalna",
+      "host_type": "NGO",
+      "year_of_sanction": 1992,
+      "address": "Krishi Vigyan Kendra, Marathwada Sheti Sahayya Mandal, Post Box No. 45, Kharpudi, Jalna, Maharashtra",
+      "pincode": "431203",
+      "phone": [
+        "02482-235586"
+      ],
+      "email": [
+        "pckvkjalna@gmail.com"
+      ],
+      "website": null,
+      "lat": 19.825516,
+      "lon": 75.938133,
+      "coords_source": "geocoded:nominatim:Kharpudi, Jalna, Maharashtra, India",
+      "coords_precision": "village-level (OSM village node for Kharpudi); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://ataripune.icar.gov.in/PDF/Contact%20Details%20of%20Chairpersons_Secretaries_Presidents%20of%20NGO-KVKs%2019.6.24.pdf (via Wayback 20241015162655)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "ATARI prints the phone as \"2482235586\"; normalised to 02482-235586."
+    },
+    {
+      "id": "kvk-jalgaon-i-pal",
+      "name": "KVK Jalgaon-I (Pal)",
+      "atari_label": "Jalgaon-I",
+      "icar_sno": 34,
+      "district": "Jalgaon",
+      "district_former_name": null,
+      "taluka": "Raver",
+      "village": "Pal",
+      "host_organisation": "Satpuda Vikas Mandal, Pal",
+      "host_type": "NGO",
+      "year_of_sanction": 1984,
+      "address": "Krishi Vigyan Kendra, At & Post Pal, Tahsil Raver, District Jalgaon, Maharashtra",
+      "pincode": "425504",
+      "phone": [
+        "02584-288525",
+        "02584-288439"
+      ],
+      "email": [
+        "kvk_pal@yahoo.co.in"
+      ],
+      "website": null,
+      "lat": 21.361393,
+      "lon": 75.902521,
+      "coords_source": "geocoded:nominatim:Pal, Raver, Maharashtra, India",
+      "coords_precision": "village-level (OSM village node for Pal, Raver); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://mpkv.ac.in/Extension/ExtensionKVK",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "ICAR gives pincode 425508; ATARI's 425504 is used because India Post data (via api.postalpincode.in) lists the Pal post office under 425504. MPKV also lists kvk_pal@gmail.com."
+    },
+    {
+      "id": "kvk-chhatrapati-sambhajinagar-i",
+      "name": "KVK Chhatrapati Sambhajinagar-I (Paithan Road)",
+      "atari_label": "Aurangabad-I",
+      "icar_sno": 35,
+      "district": "Chhatrapati Sambhajinagar",
+      "district_former_name": "Aurangabad",
+      "taluka": "Chhatrapati Sambhajinagar",
+      "village": "Paithan Road",
+      "host_organisation": "Vasantrao Naik Marathwada Krishi Vidyapeeth (VNMKV), Parbhani",
+      "host_type": "SAU",
+      "year_of_sanction": 1983,
+      "address": "Krishi Vigyan Kendra, Paithan Road, In front of Best Price Mall, Chhatrapati Sambhajinagar (MS)",
+      "pincode": "431010",
+      "phone": [
+        "0240-2376558",
+        "8999236684"
+      ],
+      "email": [
+        "pckvkvnmkv@gmail.com"
+      ],
+      "website": "https://vnmkv.ac.in/extension_KVKSambhajiNagar.php",
+      "lat": null,
+      "lon": null,
+      "coords_source": null,
+      "coords_precision": null,
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://vnmkv.ac.in/extension_KVKSambhajiNagar.php",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "0240-2376558 is the office line in ATARI 2023 list; 8999236684 is the Programme Coordinator contact on the VNMKV page. ICAR/ATARI give pincode 431005 and ATARI gives email pckvkmau@gmail.com; current VNMKV page values used. Not geocoded (street-level match failed)."
+    },
+    {
+      "id": "kvk-ratnagiri-lanja",
+      "name": "KVK Ratnagiri (Lanja)",
+      "atari_label": "Ratnagiri",
+      "icar_sno": 36,
+      "district": "Ratnagiri",
+      "district_former_name": null,
+      "taluka": "Lanja",
+      "village": "Deodhe",
+      "host_organisation": "Dr. Balasaheb Sawant Konkan Krishi Vidyapeeth (Dr. BSKKV), Dapoli",
+      "host_type": "SAU",
+      "year_of_sanction": 1983,
+      "address": "Krishi Vigyan Kendra, At Post Deodhe, Tal. Lanja, District Ratnagiri, Maharashtra",
+      "pincode": "416712",
+      "phone": [
+        "02351-230361"
+      ],
+      "email": [
+        "kvkratnagiri@rediffmail.com"
+      ],
+      "website": "https://www.dbskkv.org/kvk",
+      "lat": null,
+      "lon": null,
+      "coords_source": null,
+      "coords_precision": null,
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://www.dbskkv.org/assets/pdf/extension-education/KVK-Lanja_2%20_2_0.pdf"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "ICAR list still gives the address as \"PO Shirgaon, Distt. Ratnagiri-415629\". DBSKKV says KVK Lanja was sanctioned in June 1983 and ATARI lists the Ratnagiri KVK at Deodhe, Lanja, so they are taken to be the same KVK. Not geocoded (Deodhe not found in OSM)."
+    },
+    {
+      "id": "kvk-dhule",
+      "name": "KVK Dhule",
+      "atari_label": "Dhule",
+      "icar_sno": 37,
+      "district": "Dhule",
+      "district_former_name": null,
+      "taluka": "Dhule",
+      "village": "Dhule (College of Agriculture campus, Parola Road)",
+      "host_organisation": "Mahatma Phule Krishi Vidyapeeth (MPKV), Rahuri",
+      "host_type": "SAU",
+      "year_of_sanction": 1983,
+      "address": "Krishi Vigyan Kendra, Agriculture College Campus, Parola Chaufuli, NH-3, Dhule, Maharashtra",
+      "pincode": "424004",
+      "phone": [
+        "02562-299165",
+        "02562-299265"
+      ],
+      "email": [
+        "pckvkdhule@gmail.com",
+        "kvkdhule.mpkv@gov.in"
+      ],
+      "website": "https://kvkdhule.org",
+      "lat": 20.898,
+      "lon": 74.7732,
+      "coords_source": "geocoded:nominatim:Dhule city, Maharashtra, India",
+      "coords_precision": "city-level (OSM place node for Dhule city); KVK is at the College of Agriculture campus, not at this point",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://kvkdhule.org",
+        "https://mpkv.ac.in/Extension/ExtensionKVK"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "MPKV page gives 02562-230362; ATARI and the KVK site give 299165/299265."
+    },
+    {
+      "id": "kvk-wardha-selsura",
+      "name": "KVK Wardha (Selsura)",
+      "atari_label": "Wardha",
+      "icar_sno": 38,
+      "district": "Wardha",
+      "district_former_name": null,
+      "taluka": "Deoli",
+      "village": "Selsura",
+      "host_organisation": "Dr. Panjabrao Deshmukh Krishi Vidyapeeth (Dr. PDKV), Akola",
+      "host_type": "SAU",
+      "year_of_sanction": 1976,
+      "address": "Krishi Vigyan Kendra, Deoli Road, Selsura, Dist. Wardha, Maharashtra",
+      "pincode": "442101",
+      "phone": [
+        "07152-287085"
+      ],
+      "email": [
+        "kvk.wardha@gmail.com",
+        "kvkselsura@pdkv.ac.in"
+      ],
+      "website": "https://kvkselsura.pdkv.ac.in",
+      "lat": 20.67515,
+      "lon": 78.53082,
+      "coords_source": "published:https://kvkselsura.pdkv.ac.in/?page_id=39",
+      "coords_precision": "as published on the KVK contact page (\"Geographical Location\"); 5 decimal places",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://kvkselsura.pdkv.ac.in/?page_id=39",
+        "https://www.pdkv.ac.in/?page_id=2217"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "ICAR gives sanction year 1976 and pincode 422001 (apparent typo); PDKV gives establishment date 27.12.1979; ATARI pincode 442101 used. KVK contact page also lists 9970070944 and 9970073165."
+    },
+    {
+      "id": "kvk-palghar-kosbad",
+      "name": "KVK Palghar (Kosbad Hill)",
+      "atari_label": "Palghar",
+      "icar_sno": 39,
+      "district": "Palghar",
+      "district_former_name": "Thane",
+      "taluka": "Dahanu",
+      "village": "Kosbad Hill",
+      "host_organisation": "Gokhale Education Society",
+      "host_type": "NGO",
+      "year_of_sanction": 1976,
+      "address": "Krishi Vigyan Kendra, At & Post Kosbad Hill, Tal. Dahanu, Dist. Palghar, Maharashtra",
+      "pincode": "401703",
+      "phone": null,
+      "email": [
+        "kvkkosbad439@gmail.com"
+      ],
+      "website": null,
+      "lat": null,
+      "lon": null,
+      "coords_source": null,
+      "coords_precision": null,
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "ICAR still lists it under Thane district (Palghar district was carved out of Thane in 2014). ATARI 2023 office number is printed as \"9185528827\", which looks garbled, so phone is null. DBSKKV's KVK page links a third-party-hosted page for it; not used. Not geocoded."
+    },
+    {
+      "id": "kvk-nashik-ii-malegaon",
+      "name": "KVK Nashik-II (Malegaon, Vadel)",
+      "atari_label": "Nashik-II",
+      "icar_sno": 40,
+      "district": "Nashik",
+      "district_former_name": null,
+      "taluka": "Malegaon",
+      "village": "Vadel",
+      "host_organisation": "Richfield Agro e-Research & Development Centre, Nashik",
+      "host_type": "NGO",
+      "year_of_sanction": 2011,
+      "address": "Krishi Vigyan Kendra, Malegaon, At Post Vadel, Tal. Malegaon, Dist. Nashik, Maharashtra",
+      "pincode": "423206",
+      "phone": [
+        "02554-280642",
+        "0253-2577666"
+      ],
+      "email": [
+        "kvkmalegaon@gmail.com"
+      ],
+      "website": null,
+      "lat": 20.638909,
+      "lon": 74.456998,
+      "coords_source": "geocoded:nominatim:Vadel, Malegaon, Maharashtra, India",
+      "coords_precision": "village-level (OSM village node for Vadel, Malegaon taluka); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://mpkv.ac.in/Extension/ExtensionKVK"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "02554-280642 from ATARI 2023 list; 0253-2577666 from MPKV page. kvkmalegaon.org was not used (identity unclear, suspicious content)."
+    },
+    {
+      "id": "kvk-solapur-ii-mohol",
+      "name": "KVK Solapur-II (Mohol)",
+      "atari_label": "Solapur-II",
+      "icar_sno": 41,
+      "district": "Solapur",
+      "district_former_name": null,
+      "taluka": "Mohol",
+      "village": "Mohol (Agricultural Research Station)",
+      "host_organisation": "Mahatma Phule Krishi Vidyapeeth (MPKV), Rahuri",
+      "host_type": "SAU",
+      "year_of_sanction": 2011,
+      "address": "Krishi Vigyan Kendra, Agricultural Research Station, Mohol, Dist. Solapur, Maharashtra",
+      "pincode": "413213",
+      "phone": [
+        "02189-233001"
+      ],
+      "email": [
+        "kvkmohol@yahoo.com",
+        "kvkmohol@rediffmail.com"
+      ],
+      "website": null,
+      "lat": 17.809157,
+      "lon": 75.644385,
+      "coords_source": "geocoded:nominatim:Mohol, Solapur, Maharashtra, India",
+      "coords_precision": "town-level (OSM place node for Mohol); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://mpkv.ac.in/Extension/ExtensionKVK",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": null
+    },
+    {
+      "id": "kvk-chhatrapati-sambhajinagar-ii-gandheli",
+      "name": "MGM KVK Chhatrapati Sambhajinagar-II (Gandheli)",
+      "atari_label": "Aurangabad-II",
+      "icar_sno": 42,
+      "district": "Chhatrapati Sambhajinagar",
+      "district_former_name": "Aurangabad",
+      "taluka": "Chhatrapati Sambhajinagar",
+      "village": "Gandheli (Post Adgaon)",
+      "host_organisation": "Mahatma Gandhi Mission (MGM), Chhatrapati Sambhajinagar",
+      "host_type": "NGO",
+      "year_of_sanction": 2011,
+      "address": "MGM Krishi Vigyan Kendra, Gandheli, Post Adgaon, Tq. & Dist. Chhatrapati Sambhajinagar, Maharashtra",
+      "pincode": "431007",
+      "phone": [
+        "0240-6482000"
+      ],
+      "email": [
+        "mgmkvk@gmail.com"
+      ],
+      "website": null,
+      "lat": 19.825975,
+      "lon": 75.391416,
+      "coords_source": "geocoded:nominatim:Gandheli, Chhatrapati Sambhajinagar, Maharashtra, India",
+      "coords_precision": "village-level (OSM village node for Gandheli); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://ataripune.icar.gov.in/PDF/Contact%20Details%20of%20Chairpersons_Secretaries_Presidents%20of%20NGO-KVKs%2019.6.24.pdf (via Wayback 20241015162655)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": null
+    },
+    {
+      "id": "kvk-nanded-ii-sagroli",
+      "name": "KVK Nanded-II (Sagroli)",
+      "atari_label": "Nanded-II",
+      "icar_sno": 43,
+      "district": "Nanded",
+      "district_former_name": null,
+      "taluka": "Biloli",
+      "village": "Sagroli (Sharadanagar)",
+      "host_organisation": "Sanskriti Samvardhan Mandal, Sagroli",
+      "host_type": "NGO",
+      "year_of_sanction": 2011,
+      "address": "Krishi Vigyan Kendra, Sharadanagar, Sagroli, Tq. Biloli, Dist. Nanded, Maharashtra",
+      "pincode": "431731",
+      "phone": [
+        "02465-227757",
+        "8668581462"
+      ],
+      "email": [
+        "kvksagroli@gmail.com"
+      ],
+      "website": null,
+      "lat": 18.690354,
+      "lon": 77.732531,
+      "coords_source": "geocoded:nominatim:Krishi Vigyan Kendra Sagroli, Maharashtra, India",
+      "coords_precision": "site-level approximation (OSM-mapped \"Krishi Vigyan Kendra Sagroli Demo Plots\" farmland; office building may be nearby)",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://ataripune.icar.gov.in/PDF/Contact%20Details%20of%20Chairpersons_Secretaries_Presidents%20of%20NGO-KVKs%2019.6.24.pdf (via Wayback 20241015162655)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "Phones are both in the ATARI 2023 \"Office\" column. Several domains (kvksagroli.com/.co.in) appear in third-party listings; none confirmed, so website is null."
+    },
+    {
+      "id": "kvk-ahilyanagar-ii-dahigaon-ne",
+      "name": "KVK Ahilyanagar-II (Dahigaon-Ne)",
+      "atari_label": "Ahmednagar-II",
+      "icar_sno": 44,
+      "district": "Ahilyanagar",
+      "district_former_name": "Ahmednagar",
+      "taluka": "Shevgaon",
+      "village": "Dahigaon-Ne",
+      "host_organisation": "Shri Marutrao Ghule Patil Shikshan Sanstha (SMGPSS), Bhende",
+      "host_type": "NGO",
+      "year_of_sanction": 2011,
+      "address": "Krishi Vigyan Kendra, Dahigaon-Ne, Taluka Shevgaon, District Ahilyanagar, Maharashtra",
+      "pincode": "414502",
+      "phone": [
+        "02429-272030",
+        "02429-272020"
+      ],
+      "email": [
+        "kvkdahigaon@gmail.com"
+      ],
+      "website": "https://kvkdahigaon.org",
+      "lat": 19.502426,
+      "lon": 75.181732,
+      "coords_source": "geocoded:nominatim:Dahigaon Ne, Shevgaon, Maharashtra, India",
+      "coords_precision": "village-level (OSM village node for Dahigaon Ne); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://mpkv.ac.in/Extension/ExtensionKVK",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://kvkdahigaon.org"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "MPKV gives 02429-272030; ATARI gives \"02429-272020, 30\"."
+    },
+    {
+      "id": "kvk-yavatmal-ii-sangvi",
+      "name": "KVK Yavatmal-II (Sangvi Railway)",
+      "atari_label": "Yavatmal-II",
+      "icar_sno": 45,
+      "district": "Yavatmal",
+      "district_former_name": null,
+      "taluka": "Darwha",
+      "village": "Sangvi (Railway), Post Hatola",
+      "host_organisation": "Navsanjivan Shikshan Prasarak Mandal, Darwha",
+      "host_type": "NGO",
+      "year_of_sanction": 2016,
+      "address": "Krishi Vigyan Kendra, Sangvi (Rly.), Post Hatola, Ta. Darwha, Dist. Yavatmal, Maharashtra",
+      "pincode": "445202",
+      "phone": [
+        "07238-255030"
+      ],
+      "email": [
+        "nspmkvk@gmail.com"
+      ],
+      "website": null,
+      "lat": 20.417491,
+      "lon": 77.607186,
+      "coords_source": "geocoded:nominatim:Sangvi, Darwha, Maharashtra, India",
+      "coords_precision": "village-level (OSM village node for Sangvi, Darwha taluka); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://www.pdkv.ac.in/?page_id=2217"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": null
+    },
+    {
+      "id": "kvk-jalna-ii-badnapur",
+      "name": "KVK Jalna-II (Badnapur)",
+      "atari_label": "Jalna-II",
+      "icar_sno": 46,
+      "district": "Jalna",
+      "district_former_name": null,
+      "taluka": "Badnapur",
+      "village": "Badnapur (Agricultural Research Station campus)",
+      "host_organisation": "Vasantrao Naik Marathwada Krishi Vidyapeeth (VNMKV), Parbhani",
+      "host_type": "SAU",
+      "year_of_sanction": 2016,
+      "address": "Krishi Vigyan Kendra, Jalna II (Badnapur), Agricultural Research Station Campus, Badnapur, Tq. Badnapur, Dist. Jalna",
+      "pincode": "431202",
+      "phone": [
+        "02482-261021"
+      ],
+      "email": [
+        "kvk.jalna2@gmail.com"
+      ],
+      "website": "https://vnmkv.ac.in/extension_KVKBadnapur.php",
+      "lat": 19.867443,
+      "lon": 75.726229,
+      "coords_source": "geocoded:nominatim:Badnapur, Jalna, Maharashtra, India",
+      "coords_precision": "village-level (OSM place node for Badnapur); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://vnmkv.ac.in/extension_KVKBadnapur.php",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "ICAR gives sanction year 2016; VNMKV says ICAR sanctioned it on 17 March 2018 and staff joined 18 September 2019."
+    },
+    {
+      "id": "kvk-kolhapur-ii-kaneri",
+      "name": "KVK Kolhapur-II (Kaneri Math)",
+      "atari_label": "Kolhapur-II",
+      "icar_sno": 47,
+      "district": "Kolhapur",
+      "district_former_name": null,
+      "taluka": "Karvir",
+      "village": "Kaneri",
+      "host_organisation": "Shri Kshetra Siddhagiri Mahasansthan (Siddhagiri Math), Kaneri",
+      "host_type": "NGO",
+      "year_of_sanction": 2018,
+      "address": "Krishi Vigyan Kendra, Shri Siddhagiri Math, Kaneri, Dist. Kolhapur, Maharashtra",
+      "pincode": "416234",
+      "phone": [
+        "0231-2980001"
+      ],
+      "email": [
+        "kvkkolhapur2@gmail.com"
+      ],
+      "website": null,
+      "lat": 16.61962,
+      "lon": 74.272031,
+      "coords_source": "geocoded:nominatim:Kaneri, Karvir, Maharashtra, India",
+      "coords_precision": "village-level (OSM village node for Kaneri); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://mpkv.ac.in/Extension/ExtensionKVK",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "Email from MPKV page (ATARI lists only a personal email)."
+    },
+    {
+      "id": "kvk-sangli-ii-tadsar",
+      "name": "KVK Sangli-II (Tadsar)",
+      "atari_label": "Sangli-II",
+      "icar_sno": 48,
+      "district": "Sangli",
+      "district_former_name": null,
+      "taluka": "Kadegaon",
+      "village": "Tadsar",
+      "host_organisation": "Maharashtra Animal and Fishery Sciences University (MAFSU), Nagpur",
+      "host_type": "SAU",
+      "year_of_sanction": 2019,
+      "address": "Krishi Vigyan Kendra, Village Tadsar, Taluka Kadegaon, District Sangli, Maharashtra",
+      "pincode": null,
+      "phone": null,
+      "email": [
+        "kvksangli2@gmail.com"
+      ],
+      "website": "https://www.sangli2.kvk8.in",
+      "lat": 17.250663,
+      "lon": 74.358065,
+      "coords_source": "geocoded:nominatim:Tadsar, Kadegaon, Maharashtra, India",
+      "coords_precision": "village-level (OSM village node for Tadsar); not the KVK campus",
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://www.sangli2.kvk8.in/contact-us.php",
+        "https://mafsu.ac.in/"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "MAFSU is a state veterinary/fishery university (counted by ICAR as SAU). The KVK site says it was established in 2020 (ICAR sanction year 2019). No office phone or pincode published (the site footer number \"+91 1840 222 1454\" is a template placeholder shared by other kvk8.in sites)."
+    },
+    {
+      "id": "kvk-nagpur-ii-dudhbardi",
+      "name": "KVK Nagpur-II (Dudhbardi)",
+      "atari_label": "Nagpur-II",
+      "icar_sno": 49,
+      "district": "Nagpur",
+      "district_former_name": null,
+      "taluka": "Kalmeshwar",
+      "village": "Dudhbardi",
+      "host_organisation": "Maharashtra Animal and Fishery Sciences University (MAFSU), Nagpur",
+      "host_type": "SAU",
+      "year_of_sanction": 2019,
+      "address": "Krishi Vigyan Kendra, At Village Dudhbardi, Taluka Kalmeshwar, District Nagpur, Maharashtra",
+      "pincode": null,
+      "phone": null,
+      "email": [
+        "kvknagpur2@gmail.com",
+        "kvknagpur@mafsu.in"
+      ],
+      "website": "https://www.nagpur2.kvk8.in",
+      "lat": null,
+      "lon": null,
+      "coords_source": null,
+      "coords_precision": null,
+      "source_url": [
+        "https://icar.org.in/en/node/15040",
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://www.nagpur2.kvk8.in/",
+        "https://mafsu.ac.in/"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "kvknagpur2@gmail.com from ATARI 2023 list; kvknagpur@mafsu.in from the KVK site. Only staff mobiles published; no office phone or pincode. OSM \"Dudhbardi\" match is in Wardha district (different place), so not geocoded."
+    },
+    {
+      "id": "kvk-thane-nagaon",
+      "name": "KVK Thane (Nagaon, Murbad)",
+      "atari_label": "Thane",
+      "icar_sno": null,
+      "district": "Thane",
+      "district_former_name": null,
+      "taluka": "Murbad",
+      "village": "Nagaon (Post Majgaon)",
+      "host_organisation": "Maharashtra Animal and Fishery Sciences University (MAFSU), Nagpur",
+      "host_type": "SAU",
+      "year_of_sanction": null,
+      "address": "Krishi Vigyan Kendra, At Nagaon, Post Majgaon, Tal. Murbad, Dist. Thane, Maharashtra",
+      "pincode": "421401",
+      "phone": null,
+      "email": [
+        "kvkthane@mafsu.in"
+      ],
+      "website": "https://www.thane.kvk8.in",
+      "lat": null,
+      "lon": null,
+      "coords_source": null,
+      "coords_precision": null,
+      "source_url": [
+        "https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf (read via Wayback snapshot http://web.archive.org/web/20240305162150/https://ataripune.icar.gov.in/PDF/KVK%20Telephone%20list%20new.pdf)",
+        "https://www.thane.kvk8.in/contact-us.php",
+        "https://mafsu.ac.in/wp-content/uploads/2025/04/14th-ECEC-minutes.pdf",
+        "https://mafsu.ac.in/",
+        "https://ataripune.icar.gov.in/PDF/Land%20holding%20of%20KVKs.pdf (via Wayback 20241108112754)"
+      ],
+      "verified_on": "2026-11-24",
+      "notes": "The 50th KVK, missing from ICAR node/15040 (which lists 49). It is #50 in the ATARI Pune contact list and appears as \"Thane\" (separate from \"Palghar\") in ATARI's land-holding table; MAFSU minutes (calendar year 2021) list KVKs under MAFSU at Dudhbardi, Tadsar and Nagaon (Thane), and the KVK site says ICAR sanctioned it at Nagaon, Tal. Murbad under MAFSU. Sanction year not found. Only the Programme Coordinator's mobile is published (and is shown truncated on the KVK site), so phone is null. Not geocoded (Nagaon not found in OSM)."
+    }
+  ]
+}

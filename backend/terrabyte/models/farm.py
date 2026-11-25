@@ -19,7 +19,10 @@ class Field(TimestampMixin, Base):
     area_acres: Mapped[float] = mapped_column(Float)
     soil_type: Mapped[str | None] = mapped_column(String(60))
     irrigation_source: Mapped[str | None] = mapped_column(String(60))
+    # Crop key (see terrabyte.agro.crops) or free text from older entries.
     current_crop: Mapped[str | None] = mapped_column(String(80))
+    # Crop-calendar season key (e.g. "kharif", "rabi", "suru"); picks FAO-56 stage rows.
+    season: Mapped[str | None] = mapped_column(String(40))
     sowing_date: Mapped[date | None] = mapped_column(Date)
     lat: Mapped[float | None] = mapped_column(Float)
     lon: Mapped[float | None] = mapped_column(Float)
@@ -30,7 +33,11 @@ class Field(TimestampMixin, Base):
 
 
 class SoilTest(TimestampMixin, Base):
-    """Soil Health Card style lab result. Macro-nutrients in kg/ha, micro-nutrients in ppm."""
+    """Soil Health Card style lab result. Macro-nutrients in kg/ha, micro-nutrients in ppm.
+
+    P and K are stored as printed on the card; ``p_basis`` / ``k_basis`` say whether the card
+    reports elemental P/K or the oxides P2O5/K2O (converted when rating).
+    """
 
     __tablename__ = "soil_tests"
 
@@ -44,6 +51,8 @@ class SoilTest(TimestampMixin, Base):
     n_kg_ha: Mapped[float | None] = mapped_column(Float)
     p_kg_ha: Mapped[float | None] = mapped_column(Float)
     k_kg_ha: Mapped[float | None] = mapped_column(Float)
+    p_basis: Mapped[str] = mapped_column(String(5), default="P")
+    k_basis: Mapped[str] = mapped_column(String(5), default="K")
     s_ppm: Mapped[float | None] = mapped_column(Float)
     zn_ppm: Mapped[float | None] = mapped_column(Float)
     fe_ppm: Mapped[float | None] = mapped_column(Float)

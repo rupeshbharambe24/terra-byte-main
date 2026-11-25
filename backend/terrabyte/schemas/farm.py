@@ -41,6 +41,7 @@ LedgerCategory = Literal[
 
 OptStr60 = Annotated[str | None, Field(max_length=60), BlankToNone]
 OptStr80 = Annotated[str | None, Field(max_length=80), BlankToNone]
+OptSeason = Annotated[str | None, Field(max_length=40, pattern=r"^[a-z_]+$"), BlankToNone]
 
 
 def check_category(type_: LedgerType | None, category: str | None) -> None:
@@ -57,6 +58,7 @@ class FieldIn(BaseModel):
     soil_type: OptStr60 = None
     irrigation_source: OptStr60 = None
     current_crop: OptStr80 = None
+    season: OptSeason = None
     sowing_date: date | None = None
     lat: Lat = None
     lon: Lon = None
@@ -68,6 +70,7 @@ class FieldUpdate(BaseModel):
     soil_type: OptStr60 = None
     irrigation_source: OptStr60 = None
     current_crop: OptStr80 = None
+    season: OptSeason = None
     sowing_date: date | None = None
     lat: Lat = None
     lon: Lon = None
@@ -82,6 +85,7 @@ class FieldOut(BaseModel):
     soil_type: str | None
     irrigation_source: str | None
     current_crop: str | None
+    season: str | None = None
     sowing_date: date | None
     lat: float | None
     lon: float | None

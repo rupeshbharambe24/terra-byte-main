@@ -4,7 +4,15 @@ import re
 from datetime import date, datetime
 from typing import Annotated, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, HttpUrl, field_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    HttpUrl,
+    computed_field,
+    field_validator,
+    model_validator,
+)
 
 from terrabyte.models import ConsultationStatus, UserRole
 from terrabyte.schemas.common import BlankToNone
@@ -97,6 +105,36 @@ class AssignIn(BaseModel):
 _PINCODE = re.compile(r"^[1-9]\d{5}$")
 
 
+def _first_token(value: str) -> str:
+    """'https://x (read via Wayback ...)' -> 'https://x'."""
+    return value.strip().split()[0] if value.strip() else ""
+
+
+def _join(value: object) -> object:
+    """Lists of phones / emails (research files) -> one comma-separated string."""
+    if isinstance(value, list):
+        items = [str(v).strip() for v in value if v is not None and str(v).strip()]
+        return ", ".join(items) or None
+    return value
+
+
+def _first_url(value: object) -> object:
+    if isinstance(value, list):
+        urls = [_first_token(str(v)) for v in value if v]
+        return next((u for u in urls if u.startswith(("http://", "https://"))), None)
+    if isinstance(value, str):
+        return _first_token(value) or None
+    return value
+
+
+def coords_approximate(precision: str | None) -> bool:
+    """True unless the source says the point is the KVK site itself."""
+    if not precision:
+        return True
+    p = precision.lower()
+    return not (p.startswith("site-level") or p.startswith("as published"))
+
+
 class KVKIn(BaseModel):
     """One KVK directory row (also the format of ``terrabyte-import-kvk`` JSON files)."""
 
@@ -106,15 +144,36 @@ class KVKIn(BaseModel):
     district: Annotated[str, Field(min_length=2, max_length=80)]
     state: Annotated[str, Field(min_length=2, max_length=80)]
     host_organisation: OptStr = None
+    taluka: Annotated[str | None, Field(max_length=120), BlankToNone] = None
     address: Annotated[str | None, Field(max_length=1000), BlankToNone] = None
     pincode: Annotated[str | None, Field(max_length=6), BlankToNone] = None
-    phone: Annotated[str | None, Field(max_length=80), BlankToNone] = None
-    email: Annotated[str | None, Field(max_length=254), BlankToNone] = None
+    phone: Annotated[str | None, Field(max_length=200), BlankToNone] = None
+    email: Annotated[str | None, Field(max_length=500), BlankToNone] = None
     website: Annotated[HttpUrl | None, BlankToNone] = None
     lat: Annotated[float | None, Field(ge=6.0, le=38.0)] = None
     lon: Annotated[float | None, Field(ge=68.0, le=98.0)] = None
+    coords_precision: Annotated[str | None, Field(max_length=300), BlankToNone] = None
     source_url: Annotated[HttpUrl | None, BlankToNone] = None
+    sources: list[str] | None = None
     verified_on: date | None = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def _research_shape(cls, data: object) -> object:
+        """Accept the research-file shape: lists of phones/emails/URLs."""
+        if not isinstance(data, dict):
+            return data
+        data = dict(data)
+        raw_sources = data.get("source_url")
+        if data.get("sources") is None and isinstance(raw_sources, list):
+            data["sources"] = [
+                u for u in (_first_token(str(v)) for v in raw_sources if v) if u.startswith("http")
+            ][:20]
+        data["source_url"] = _first_url(raw_sources)
+        data["website"] = _first_url(data.get("website"))
+        data["phone"] = _join(data.get("phone"))
+        data["email"] = _join(data.get("email"))
+        return data
 
     @field_validator("name", "district", "state")
     @classmethod
@@ -135,9 +194,12 @@ class KVKIn(BaseModel):
     @field_validator("email")
     @classmethod
     def _email(cls, v: str | None) -> str | None:
-        if v and "@" not in v:
+        if not v:
+            return v
+        parts = [p.strip().lower() for p in v.split(",") if p.strip()]
+        if any("@" not in p or " " in p for p in parts):
             raise ValueError("Not an email address")
-        return v.lower() if v else v
+        return ", ".join(parts)
 
     def to_columns(self) -> dict[str, object]:
         data = self.model_dump()
@@ -153,11 +215,12 @@ class KVKUpdate(BaseModel):
     host_organisation: OptStr = None
     address: Annotated[str | None, Field(max_length=1000), BlankToNone] = None
     pincode: Annotated[str | None, Field(pattern=r"^[1-9]\d{5}$"), BlankToNone] = None
-    phone: Annotated[str | None, Field(max_length=80), BlankToNone] = None
-    email: Annotated[str | None, Field(max_length=254), BlankToNone] = None
+    phone: Annotated[str | None, Field(max_length=200), BlankToNone] = None
+    email: Annotated[str | None, Field(max_length=500), BlankToNone] = None
     website: Annotated[HttpUrl | None, BlankToNone] = None
     lat: Annotated[float | None, Field(ge=6.0, le=38.0)] = None
     lon: Annotated[float | None, Field(ge=68.0, le=98.0)] = None
+    coords_precision: Annotated[str | None, Field(max_length=300), BlankToNone] = None
     source_url: Annotated[HttpUrl | None, BlankToNone] = None
     verified_on: date | None = None
 
@@ -170,6 +233,7 @@ class KVKOut(BaseModel):
     district: str
     state: str
     host_organisation: str | None
+    taluka: str | None = None
     address: str | None
     pincode: str | None
     phone: str | None
@@ -177,9 +241,20 @@ class KVKOut(BaseModel):
     website: str | None
     lat: float | None
     lon: float | None
+    coords_precision: str | None = None
     source_url: str | None
+    sources: list[str] | None = None
     verified_on: date | None
     created_at: datetime
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def coords_approximate(self) -> bool:
+        return self.lat is not None and coords_approximate(self.coords_precision)
+
+
+class KVKNearest(KVKOut):
+    distance_km: float
 
 
 class DataImportOut(BaseModel):

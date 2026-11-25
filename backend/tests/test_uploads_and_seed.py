@@ -49,7 +49,15 @@ def test_seed_is_idempotent(client):
         second = seed(db)
         assert first["users"] == len(DEMO_USERS)
         assert first["walkthrough"] == 1
-        assert second == {"users": 0, "fields": 0, "products": 0, "equipment": 0, "walkthrough": 0}
+        assert first["kvks"] == 50
+        assert second == {
+            "users": 0,
+            "fields": 0,
+            "products": 0,
+            "equipment": 0,
+            "walkthrough": 0,
+            "kvks": 0,
+        }
         assert db.query(User).filter(User.status == UserStatus.pending).count() == 1
         assert db.query(Product).count() == first["products"] > 0
 
@@ -87,4 +95,6 @@ def test_seed_walkthrough_covers_every_workflow(client):
         assert db.query(ForumPost).count() == 3 and db.query(ForumReport).count() == 1
         assert db.query(KnowledgeArticle).filter_by(published=True).count() == 1
         assert db.query(Notification).count() > 0
-        assert db.query(KVK).count() == 0  # filled only by the verified import
+        # The bundled, verified directory (official sources) is imported by the seed.
+        assert db.query(KVK).count() == 50
+        assert db.query(KVK).filter(KVK.state == "Maharashtra").count() == 50

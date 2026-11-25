@@ -1,0 +1,547 @@
+{
+ "meta": {
+  "title": "Soil test rating limits and fertilizer-adjustment rules (India / Maharashtra)",
+  "compiled": "2026-11-24",
+  "note": "Units: available N, P, K in kg/ha (0-15 cm). P basis stated per table - national SHC/Methods-Manual P is elemental P (Olsen); Maharashtra 6-class table in the 2011 manual is P2O5; MPKV 2026 table does not state P vs P2O5. Conversion: P2O5 = P x 2.291; K2O = K x 1.2046.",
+  "shc_portal_classes": "Current SHC portal (soilhealth.dac.gov.in, JS bundle inspected 2026-11-24) classifies N, P, K, OC as Low/Medium/High; pH as Acidic/Neutral/Alkaline; EC as NonSaline/Saline; S, Fe, Zn, Cu, B, Mn as Sufficient/Deficient. Threshold values are computed server-side and were not retrievable (portal GraphQL API not queried)."
+ },
+ "national_3class": {
+  "source_name": "Methods Manual: Soil Testing in India, Dept. of Agriculture & Cooperation, GoI, Jan 2011 (hosted on Soil Health Card portal)",
+  "source_url": "https://soilhealth.dac.gov.in/files/portal/Book%20Methods%20manual%20(Soil%20Testing%20In%20India)001.pdf",
+  "source_locator": "Table 1, printed p36 (PDF p40)",
+  "organic_carbon_pct": {
+   "low": "<0.5",
+   "medium": "0.5-0.75",
+   "high": ">0.75"
+  },
+  "available_N_kg_ha": {
+   "method": "alkaline permanganate",
+   "low": "<280",
+   "medium": "280-560",
+   "high": ">560"
+  },
+  "available_P_kg_ha": {
+   "basis": "P (elemental), Olsen method, alkaline soils",
+   "low": "<10",
+   "medium": "10-24.6",
+   "high": ">24.6",
+   "P2O5_equivalent": {
+    "low": "<22.9",
+    "medium": "22.9-56.4",
+    "high": ">56.4"
+   }
+  },
+  "available_K_kg_ha": {
+   "basis": "K (as printed 'Available K'; commonly reported as K2O in SHC practice - ambiguity noted)",
+   "method": "neutral normal ammonium acetate",
+   "low": "<108",
+   "medium": "108-280",
+   "high": ">280"
+  }
+ },
+ "shc_school_manual_2023": {
+  "source_name": "Soil Sampling & Testing Manual for Class XI-XII Students (MoA&FW / MoE / CBSE, 2023, School Soil Health Programme; hosted on Soil Health Card portal)",
+  "source_url": "https://soilhealth.dac.gov.in/files/Manual/140723_ManualClass11_12.pdf",
+  "source_locator": "Chapter 5 nutrient classes, printed p26-30",
+  "note": "Classes 'used in Digital Soil Testing Mini Lab for 12 soil health parameters'. Differs slightly from 2011 manual (K low <120; adds Very High class).",
+  "organic_carbon_pct": {
+   "low": "<0.5",
+   "medium": "0.5-0.75",
+   "high": ">0.75"
+  },
+  "available_N_kg_ha": {
+   "low": "<280",
+   "medium": "280-560",
+   "high": ">560"
+  },
+  "available_P_kg_ha": {
+   "basis": "not stated (values match elemental P)",
+   "low": "<10",
+   "medium": "10-25",
+   "high": ">25-50",
+   "very_high": ">50"
+  },
+  "available_K_kg_ha": {
+   "basis": "not stated",
+   "low": "<120",
+   "medium": "120-280",
+   "high": ">280-600",
+   "very_high": ">600"
+  },
+  "sulphur_ppm": {
+   "deficient": "<10",
+   "sufficient": ">10",
+   "extractant": "0.15% CaCl2"
+  },
+  "micronutrients_ppm": {
+   "Zn": {
+    "deficient": "<0.6",
+    "sufficient": ">0.6"
+   },
+   "Fe": {
+    "deficient": "<4.5",
+    "sufficient": ">4.5"
+   },
+   "Cu": {
+    "deficient": "<0.2",
+    "sufficient": ">0.2"
+   },
+   "Mn": {
+    "deficient": "<2.0",
+    "sufficient": ">2.0",
+    "note": "critical-limit table on next page lists Mn 2.5 mg/kg for STL"
+   },
+   "B": {
+    "deficient": "<0.5",
+    "sufficient": ">0.5",
+    "extractant": "hot water"
+   },
+   "extractant": "DTPA (Zn, Fe, Cu, Mn)"
+  },
+  "pH_classes": [
+   {
+    "range": "<4",
+    "class": "extremely acid"
+   },
+   {
+    "range": "4-5",
+    "class": "strongly acid"
+   },
+   {
+    "range": "5-6",
+    "class": "moderately acid"
+   },
+   {
+    "range": "6-7",
+    "class": "slightly acid"
+   },
+   {
+    "range": "7",
+    "class": "neutral"
+   },
+   {
+    "range": "7-8",
+    "class": "moderately alkaline"
+   },
+   {
+    "range": ">8.5",
+    "class": "strongly alkaline"
+   }
+  ],
+  "pH_note": "Source table leaves 8.0-8.5 unclassified (gap in source).",
+  "EC_classes_dS_m": [
+   {
+    "range": "0-0.4",
+    "salt_pct": "0-0.05",
+    "class": "non saline"
+   },
+   {
+    "range": "0.4-0.8",
+    "salt_pct": "0.05-0.1",
+    "class": "very slightly saline"
+   },
+   {
+    "range": "0.8-1.6",
+    "salt_pct": "0.1-0.2",
+    "class": "moderately saline"
+   },
+   {
+    "range": ">1.6",
+    "salt_pct": ">0.2",
+    "class": "strongly saline"
+   }
+  ],
+  "EC_note": "1:2 soil:water for alluvial (silt loam), 1:5 for black (clay loam) soils - i.e. NOT saturation-extract ECe.",
+  "adjustment_rule": {
+   "low": "apply RDF +25%",
+   "medium": "apply RDF",
+   "high": "apply RDF -25%",
+   "very_high": "do not apply that nutrient",
+   "basis": "per nutrient (N, P, K separately)",
+   "source_locator": "printed p30 'Recommended Dose of Fertilizers (RDF)' table"
+  }
+ },
+ "maharashtra_6class": [
+  {
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p32 (printed p13), table 'jaminitil upalabdha annadravyanchya pramanavarun khatancha vapar'",
+   "year": 2026,
+   "P_basis": "not stated (column 'sphurad', kg/ha); values are close to an elemental-P scale - verify against MPKV soil lab reports",
+   "classes": [
+    {
+     "class": "very_low",
+     "marathi": "atyant kami",
+     "OC_pct": "<0.20",
+     "N_kg_ha": "<140",
+     "P_kg_ha": "<7",
+     "K_kg_ha": "<100",
+     "fertilizer": "RDF +50%"
+    },
+    {
+     "class": "low",
+     "marathi": "kami",
+     "OC_pct": "0.21-0.40",
+     "N_kg_ha": "141-280",
+     "P_kg_ha": "8-14",
+     "K_kg_ha": "101-150",
+     "fertilizer": "RDF +25%"
+    },
+    {
+     "class": "medium",
+     "marathi": "madhyam",
+     "OC_pct": "0.41-0.60",
+     "N_kg_ha": "281-420",
+     "P_kg_ha": "15-21",
+     "K_kg_ha": "151-200",
+     "fertilizer": "RDF"
+    },
+    {
+     "class": "moderately_high",
+     "marathi": "thode jast",
+     "OC_pct": "0.61-0.80",
+     "N_kg_ha": "421-560",
+     "P_kg_ha": "22-28",
+     "K_kg_ha": "201-250",
+     "fertilizer": "RDF"
+    },
+    {
+     "class": "high",
+     "marathi": "jast",
+     "OC_pct": "0.81-1.0",
+     "N_kg_ha": "561-700",
+     "P_kg_ha": "29-35",
+     "K_kg_ha": "251-300",
+     "fertilizer": "RDF -25%"
+    },
+    {
+     "class": "very_high",
+     "marathi": "atyant jast",
+     "OC_pct": ">1.0",
+     "N_kg_ha": ">700",
+     "P_kg_ha": ">35",
+     "K_kg_ha": ">300",
+     "fertilizer": "RDF -50%"
+    }
+   ],
+   "note": "Instruction under table: classify each nutrient from the soil test report using this table and apply fertilizer accordingly. RECOMMENDED for TerraByte Maharashtra users."
+  },
+  {
+   "source_name": "Methods Manual: Soil Testing in India, Dept. of Agriculture & Cooperation, GoI, Jan 2011 (hosted on Soil Health Card portal) - Table 3 'Maharashtra' (citing Tandon H.L.S. 2005)",
+   "source_url": "https://soilhealth.dac.gov.in/files/portal/Book%20Methods%20manual%20(Soil%20Testing%20In%20India)001.pdf",
+   "source_locator": "printed p37 (PDF p41)",
+   "year": 2011,
+   "P_basis": "P2O5 kg/ha; K basis K2O kg/ha",
+   "classes": [
+    {
+     "class": "very_low",
+     "OC_pct": "<0.20",
+     "N_kg_ha": "<140",
+     "P2O5_kg_ha": "<16.0",
+     "K2O_kg_ha": "<120"
+    },
+    {
+     "class": "low",
+     "OC_pct": "0.21-0.40",
+     "N_kg_ha": "141-280",
+     "P2O5_kg_ha": "16-32",
+     "K2O_kg_ha": "121-180"
+    },
+    {
+     "class": "medium_low",
+     "OC_pct": "0.41-0.60",
+     "N_kg_ha": "281-420",
+     "P2O5_kg_ha": "32-48",
+     "K2O_kg_ha": "181-240"
+    },
+    {
+     "class": "medium",
+     "OC_pct": "0.61-0.80",
+     "N_kg_ha": "421-560",
+     "P2O5_kg_ha": "48-64",
+     "K2O_kg_ha": "241-300"
+    },
+    {
+     "class": "high",
+     "OC_pct": "0.81-1.00",
+     "N_kg_ha": "561-700",
+     "P2O5_kg_ha": "64-80",
+     "K2O_kg_ha": "301-360"
+    },
+    {
+     "class": "very_high",
+     "OC_pct": ">1.00",
+     "N_kg_ha": ">700",
+     "P2O5_kg_ha": ">80.0",
+     "K2O_kg_ha": ">360"
+    }
+   ],
+   "note": "No adjustment percentages given with this table. Class names differ from MPKV 2026 (here 'medium' = 421-560 N)."
+  },
+  {
+   "source_name": "Sharma R.P. et al. (ICAR-NBSS&LUP Nagpur), Indian Farming 70(03):25-28, Mar 2020 - ratings 'suggested by PDKV, Akola' used for SHCs in Kelapur block, Yavatmal",
+   "source_url": "https://epubs.icar.org.in/index.php/IndFarm/article/download/105425/41279/273023",
+   "source_locator": "Table 1 & 2",
+   "year": 2020,
+   "source_type": "secondary (ICAR journal citing PDKV)",
+   "P_basis": "'Olsen P (kg/ha)' as printed - P vs P2O5 not explicit",
+   "classes": [
+    {
+     "class": "very_low",
+     "OC_pct": "<=0.20",
+     "N_kg_ha": "<=140",
+     "P_kg_ha": "<=15",
+     "K_kg_ha": "<=120"
+    },
+    {
+     "class": "low",
+     "OC_pct": "0.21-0.40",
+     "N_kg_ha": "141-280",
+     "P_kg_ha": "16-30",
+     "K_kg_ha": "121-180",
+     "S_ppm": "<6.0"
+    },
+    {
+     "class": "medium",
+     "OC_pct": "0.41-0.60",
+     "N_kg_ha": "281-420",
+     "P_kg_ha": "31-50",
+     "K_kg_ha": "181-240",
+     "S_ppm": "6.0-12.0"
+    },
+    {
+     "class": "slightly_high",
+     "OC_pct": "0.61-0.80",
+     "N_kg_ha": "421-560",
+     "P_kg_ha": "51-65",
+     "K_kg_ha": "241-300"
+    },
+    {
+     "class": "high",
+     "OC_pct": "0.81-1.00",
+     "N_kg_ha": "561-700",
+     "P_kg_ha": "66-80",
+     "K_kg_ha": "301-360",
+     "S_ppm": ">12.0"
+    },
+    {
+     "class": "very_high",
+     "OC_pct": ">1.00",
+     "N_kg_ha": ">700",
+     "P_kg_ha": ">80",
+     "K_kg_ha": ">360"
+    }
+   ],
+   "micronutrients_ppm": {
+    "Fe": {
+     "deficient": "<4.5",
+     "marginal": "4.5-7.5",
+     "sufficient": ">7.5"
+    },
+    "Mn": {
+     "deficient": "<2.0",
+     "marginal": "2.0-4.0",
+     "sufficient": ">4.0"
+    },
+    "Zn": {
+     "deficient": "<0.6",
+     "marginal": "0.6-1.2",
+     "sufficient": ">1.2"
+    },
+    "Cu": {
+     "deficient": "<0.2",
+     "marginal": "0.2-0.5",
+     "sufficient": ">0.5"
+    }
+   }
+  }
+ ],
+ "micronutrient_critical_limits": [
+  {
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p42 (printed p23)",
+   "unit": "mg/kg",
+   "values": {
+    "Fe": 4.5,
+    "Mn": 2.0,
+    "Zn": 0.6,
+    "Cu": 0.2,
+    "B": 0.5,
+    "Mo": 0.05
+   },
+   "remedy": "Deficient soils: MPKV micronutrient Grade I (Fe 2%, Zn 5%, Mn 1%, Cu 0.5%, B 1%) 25 kg/ha mixed with 100 kg FYM, incubated ~1 week, soil-applied; or foliar Phule liquid Grade II 50 ml then 100 ml per 10 L."
+  },
+  {
+   "source_name": "Methods Manual: Soil Testing in India, Dept. of Agriculture & Cooperation, GoI, Jan 2011 (hosted on Soil Health Card portal)",
+   "source_url": "https://soilhealth.dac.gov.in/files/portal/Book%20Methods%20manual%20(Soil%20Testing%20In%20India)001.pdf",
+   "source_locator": "Table 6, printed p42 (PDF p46)",
+   "unit": "ppm (mg/kg)",
+   "values": {
+    "S": "10 (usual range 8-30; hot water/CaCl2/phosphate)",
+    "Zn": "0.6 (0.4-1.2) DTPA",
+    "Mn": "2 DTPA",
+    "Cu": "0.2 DTPA/NH4OAc",
+    "Fe": "2.5-4.5 DTPA",
+    "B": "0.5 hot water",
+    "Mo": "0.2 ammonium oxalate",
+    "Ca": "<25% of CEC or <1.5 meq/100 g",
+    "Mg": "<4% of CEC or <1 meq/100 g"
+   }
+  },
+  {
+   "source_name": "Soil Sampling & Testing Manual for Class XI-XII Students (MoA&FW / MoE / CBSE, 2023, School Soil Health Programme; hosted on Soil Health Card portal)",
+   "source_url": "https://soilhealth.dac.gov.in/files/Manual/140723_ManualClass11_12.pdf",
+   "source_locator": "printed p30 conversion table",
+   "unit": "mg/kg (STL critical limit)",
+   "values": {
+    "S": 10,
+    "Zn": 0.6,
+    "Fe": 4.5,
+    "Cu": 0.2,
+    "Mn": 2.5,
+    "B": 0.5
+   }
+  }
+ ],
+ "EC_saturation_extract_general": {
+  "source_name": "Methods Manual: Soil Testing in India, Dept. of Agriculture & Cooperation, GoI, Jan 2011 (hosted on Soil Health Card portal)",
+  "source_url": "https://soilhealth.dac.gov.in/files/portal/Book%20Methods%20manual%20(Soil%20Testing%20In%20India)001.pdf",
+  "source_locator": "Table 18, printed p90 (PDF p92)",
+  "unit": "mS/cm (= dS/m), saturation extract",
+  "classes": [
+   {
+    "class": "salt free",
+    "EC": "0-2",
+    "salt_pct": "<0.15"
+   },
+   {
+    "class": "slightly saline",
+    "EC": "4-8",
+    "salt_pct": "0.15-0.35"
+   },
+   {
+    "class": "moderately saline",
+    "EC": "8-15",
+    "salt_pct": "0.35-0.65"
+   },
+   {
+    "class": "highly saline",
+    "EC": ">15",
+    "salt_pct": ">0.65"
+   }
+  ],
+  "note": "Source table skips 2-4 mS/cm. Salt-affected classes (Richards 1954, Table 17): saline ECe>4, ESP<15, pH<8.5; sodic ECe<4, ESP>15, pH>8.5; saline-sodic ECe>4, ESP>15."
+ },
+ "pH_methods_manual_partial": {
+  "source_name": "Methods Manual: Soil Testing in India, Dept. of Agriculture & Cooperation, GoI, Jan 2011 (hosted on Soil Health Card portal)",
+  "source_url": "https://soilhealth.dac.gov.in/files/portal/Book%20Methods%20manual%20(Soil%20Testing%20In%20India)001.pdf",
+  "source_locator": "Table 14, printed p85",
+  "classes": [
+   {
+    "range": "<4.6",
+    "class": "extremely acid"
+   },
+   {
+    "range": "4.6-5.5",
+    "class": "strongly acid"
+   },
+   {
+    "range": "5.6-6.5",
+    "class": "moderately acid"
+   }
+  ],
+  "note": "Remainder of Table 14 is on printed pages 86-87, which are missing from the scanned PDF on the SHC portal."
+ },
+ "secondary_tnau": {
+  "source_name": "TNAU Agritech portal, Soil rating chart (secondary; Tamil Nadu)",
+  "source_url": "https://agritech.tnau.ac.in/agriculture/agri_soil_rating.html",
+  "pH": {
+   "acid": "<6.0",
+   "normal_to_saline": "6.0-8.5",
+   "tending_alkaline": "8.6-9.0 (page prints 8.9-9.0)",
+   "alkaline": ">9.0"
+  },
+  "EC_mmhos_cm": {
+   "normal": "<1",
+   "critical_for_germination": "1-2",
+   "critical_for_sensitive_crops": "2-4"
+  },
+  "N_kg_ha": {
+   "low": "<240",
+   "medium": "240-480",
+   "high": ">480"
+  },
+  "P_kg_ha": {
+   "low": "<11",
+   "medium": "11-22",
+   "high": ">22"
+  },
+  "K_kg_ha": {
+   "low": "<110",
+   "medium": "110-280",
+   "high": ">280"
+  }
+ },
+ "adjustment_rules": [
+  {
+   "id": "mpkv_6class_2026",
+   "applies_to": "Maharashtra (MPKV jurisdiction); recommended default",
+   "rule": {
+    "very_low": 1.5,
+    "low": 1.25,
+    "medium": 1.0,
+    "moderately_high": 1.0,
+    "high": 0.75,
+    "very_high": 0.5
+   },
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p32"
+  },
+  {
+   "id": "shc_school_manual_2023",
+   "applies_to": "national SHC 3/4-class scheme",
+   "rule": {
+    "low": 1.25,
+    "medium": 1.0,
+    "high": 0.75,
+    "very_high": 0.0
+   },
+   "source_url": "https://soilhealth.dac.gov.in/files/Manual/140723_ManualClass11_12.pdf",
+   "source_locator": "printed p30"
+  },
+  {
+   "id": "methods_manual_2011",
+   "applies_to": "national guidance (text)",
+   "rule_text": "General fertilizer dose is reduced or increased by 30 to 50% in case of high or low fertility status soil sample.",
+   "source_url": "https://soilhealth.dac.gov.in/files/portal/Book%20Methods%20manual%20(Soil%20Testing%20In%20India)001.pdf",
+   "source_locator": "printed p135 (PDF p139), 'Soil Test Rating and Fertilizer Adjustment'"
+  },
+  {
+   "id": "shc_colour_code_secondary",
+   "applies_to": "SHC colour coding as summarised by Arthapedia (Indian Economic Service) from the SHC Operational Guidelines",
+   "rule": {
+    "red_deficient": 1.3,
+    "yellow_moderate": 1.0,
+    "green_sufficient": 0.7
+   },
+   "source_url": "https://ies.gov.in/arthapedia/concept/soil-health-card-shc",
+   "source_type": "secondary",
+   "note": "Primary operational guidelines PDF (agricoop.nic.in/imagedefault/GSHC3.pdf) not reachable."
+  },
+  {
+   "id": "pdkv_banana_dris_2025",
+   "applies_to": "banana, Vidarbha (PDKV) - crop-specific",
+   "rule": {
+    "very_low": 1.5,
+    "low": 1.25,
+    "optimum": 1.0,
+    "high": 0.75,
+    "very_high": 0.5
+   },
+   "source_url": "https://www.pdkv.ac.in/Circulars/Recom-2025English.pdf",
+   "source_locator": "Soil Science rec 13"
+  }
+ ],
+ "stcr_note": "MPKV Krishi Darshani 2026 (PDF p44-50) and MPKV research sheets give STCR targeted-yield equations (e.g. Western Maharashtra wheat with FYM: FN = 7.42T - 0.88SN - 2.45FYM; FP2O5 = 1.59T - 1.47SP - 0.33FYM; FK2O = 4.77T - 0.47SK - 0.65FYM, T in q/ha; KD PDF p67). These were not systematically extracted; see README."
+}
