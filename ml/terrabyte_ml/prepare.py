@@ -186,7 +186,8 @@ def _process(args: tuple[Item, Path]) -> tuple[str, str] | None:
             img = img.resize((max(1, round(w * scale)), max(1, round(h * scale))), Image.BILINEAR)
         out.parent.mkdir(parents=True, exist_ok=True)
         img.save(out, "JPEG", quality=90)
-        return str(out), str(imagehash.phash(img))
+        with Image.open(out) as saved:  # hash the stored file, so re-runs give the same hash
+            return str(out), str(imagehash.phash(saved))
     except Exception as exc:  # noqa: BLE001 - corrupt files are skipped and reported
         print(f"  skip {item.src}: {exc}")
         return None
@@ -198,7 +199,7 @@ def _out_path(item: Item) -> Path:
     return PREPARED / item.source / item.label / f"{name}.jpg"
 
 
-def main() -> None:
+def main(rebuild: bool = False) -> None:
     rng = random.Random(SEED)
     items = collect(rng)
     # Cap large pool classes per source.
@@ -237,11 +238,27 @@ def main() -> None:
                 "phash": phash,
             }
         )
+    # Keep an existing training split: re-running prepare (e.g. after adding test-only sources)
+    # must never move images between train, val and test of an already trained model.
+    previous = PREPARED / "index.csv"
+    if previous.exists() and not rebuild:
+        with open(previous, newline="") as fh:
+            kept = [r for r in csv.DictReader(fh) if r["split"] in ("train", "val", "test")]
+        if kept:
+            print(
+                f"Keeping the existing train/val/test split ({len(kept)} rows); --rebuild to redo"
+            )
+            rows = [r for r in rows if r["role"] != "pool"]
+            for r in rows:
+                r["split"] = r["role"]
+            rows = [{**r, "role": "pool"} for r in kept] + rows
     # Stratified split of the pool.
     by_label: dict[str, list[dict]] = defaultdict(list)
     for row in rows:
-        if row["role"] == "pool":
+        if row["role"] == "pool" and not row.get("split"):
             by_label[row["label"]].append(row)
+        elif row["role"] == "pool":
+            continue
         else:
             row["split"] = row["role"]
     for group in by_label.values():

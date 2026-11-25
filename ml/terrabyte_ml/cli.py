@@ -10,7 +10,8 @@ def main() -> None:
     sub = parser.add_subparsers(dest="cmd", required=True)
     d = sub.add_parser("download", help="download and extract the image sources")
     d.add_argument("keys", nargs="*")
-    sub.add_parser("prepare", help="build the class taxonomy, resize, dedupe and split")
+    pr = sub.add_parser("prepare", help="build the class taxonomy, resize, dedupe and split")
+    pr.add_argument("--rebuild", action="store_true", help="redo the train/val/test split")
     t = sub.add_parser("train", help="train the disease model")
     t.add_argument("--epochs", type=int, default=12)
     t.add_argument("--batch-size", type=int, default=64)
@@ -26,7 +27,7 @@ def main() -> None:
     elif args.cmd == "prepare":
         from .prepare import main as run
 
-        run()
+        run(rebuild=args.rebuild)
     elif args.cmd == "train":
         from .train import main as run
 

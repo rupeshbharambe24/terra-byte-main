@@ -58,7 +58,7 @@ def predict_logits(
     model.eval()
     out, ys = [], []
     for x, y in loader:
-        out.append(model(x.to(dev, memory_format=torch.channels_last)).float().cpu())
+        out.append(model(x.to(dev)).float().cpu())
         ys.append(y)
     return torch.cat(out).numpy(), torch.cat(ys).numpy()
 
@@ -89,7 +89,7 @@ def main(epochs: int = 12, batch_size: int = 64, limit_minutes: float = 75.0) ->
         persistent_workers=True,
     )
     dev = device()
-    model = build_model(len(classes)).to(dev, memory_format=torch.channels_last)
+    model = build_model(len(classes)).to(dev)  # channels_last is ~2x slower on MPS
     criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
     head = list(model.get_classifier().parameters())
     head_ids = {id(p) for p in head}
@@ -115,7 +115,7 @@ def main(epochs: int = 12, batch_size: int = 64, limit_minutes: float = 75.0) ->
         model.train()
         t0, seen, loss_sum = time.time(), 0, 0.0
         for x, y in train_dl:
-            x = x.to(dev, memory_format=torch.channels_last)
+            x = x.to(dev)
             y = y.to(dev)
             loss = criterion(model(x), y)
             opt.zero_grad(set_to_none=True)

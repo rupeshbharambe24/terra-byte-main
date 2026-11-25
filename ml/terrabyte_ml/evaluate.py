@@ -99,7 +99,7 @@ def main() -> None:
     dev = device()
     model = build_model(len(classes), pretrained=False)
     model.load_state_dict(ckpt["model"])
-    model = model.to(dev, memory_format=torch.channels_last).eval()
+    model = model.to(dev).eval()
 
     rows = load_index()
     by_split = defaultdict(list)
