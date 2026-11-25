@@ -28,6 +28,7 @@ from terrabyte.routers import (
     market,
     me,
     notifications,
+    prices,
     rebuilding,
     reference,
     rentals,
@@ -88,6 +89,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         uploads,
         agro,
         reference,
+        prices,
         rebuilding,
     ):
         app.include_router(module.router, prefix="/api")

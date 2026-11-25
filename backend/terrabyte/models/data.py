@@ -56,8 +56,9 @@ class MandiPrice(Base):
     variety: Mapped[str] = mapped_column(String(120), default="")
     grade: Mapped[str] = mapped_column(String(60), default="")
     arrival_date: Mapped[date] = mapped_column(Date, index=True)
-    min_price: Mapped[Decimal] = mapped_column(Numeric(12, 2))
-    max_price: Mapped[Decimal] = mapped_column(Numeric(12, 2))
+    # Some historical sources only give the modal price.
+    min_price: Mapped[Decimal | None] = mapped_column(Numeric(12, 2))
+    max_price: Mapped[Decimal | None] = mapped_column(Numeric(12, 2))
     modal_price: Mapped[Decimal] = mapped_column(Numeric(12, 2))
     source: Mapped[str] = mapped_column(String(120))
     fetched_at: Mapped[datetime] = mapped_column(UTCDateTime(), default=utcnow)

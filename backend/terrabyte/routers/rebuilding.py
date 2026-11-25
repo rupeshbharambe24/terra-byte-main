@@ -12,10 +12,6 @@ router = APIRouter(tags=["being rebuilt"])
 
 _PATHS = [
     "/disease/{rest:path}",
-    "/price-forecast",
-    "/price-forecast/{rest:path}",
-    "/market-prices",
-    "/commodity-details",
 ]
 
 

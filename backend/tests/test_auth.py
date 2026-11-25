@@ -105,7 +105,7 @@ def test_patch_me_and_password(client):
 
 
 def test_ml_placeholders_return_503(client):
-    for path in ("/api/disease/detect", "/api/price-forecast"):
+    for path in ("/api/disease/detect",):
         res = client.post(path)
         assert res.status_code == 503
         assert res.json()["detail"] == "being rebuilt"
