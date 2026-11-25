@@ -1,0 +1,67 @@
+{
+  "title": "Mandi prices",
+  "subtitle": "Daily APMC prices from Agmarknet (data.gov.in), in ₹ per quintal.",
+  "attribution": "Source: Agmarknet via data.gov.in (GODL-India). Older Pune data: imported from the 2025 prototype's Agmarknet files.",
+  "filters": {
+    "commodity": "Commodity",
+    "allCommodities": "All commodities",
+    "district": "District",
+    "districtPlaceholder": "e.g. Pune"
+  },
+  "latest": {
+    "title": "Latest prices",
+    "asOf": "Data as of {{date}}",
+    "staleWarning": "Some prices are more than {{days}} days old. Newer data has not been imported yet.",
+    "market": "Market",
+    "variety": "Variety",
+    "date": "Date",
+    "min": "Min",
+    "max": "Max",
+    "modal": "Modal",
+    "old": "{{days}} days old",
+    "empty": "No prices yet",
+    "emptyBody": "Prices appear here after they are imported from data.gov.in.",
+    "chart": "Chart"
+  },
+  "history": {
+    "title": "Price history and outlook",
+    "choose": "Market and commodity",
+    "chooseHint": "Choose a market",
+    "modal": "Modal price",
+    "forecast": "Forecast",
+    "band": "80% range",
+    "variety": "Variety used: {{variety}}",
+    "points": "{{count}} trading days shown"
+  },
+  "forecast": {
+    "title": "Short-term outlook",
+    "stale": "Forecast unavailable: data not current. The latest price is from {{date}} ({{days}} days old); we only forecast from data at most 14 days old.",
+    "notEvaluated": "Forecast unavailable: this market has not been backtested yet.",
+    "noData": "No price data for this market.",
+    "methodEts": "Model: exponential smoothing. In the backtest it was {{pct}}% more accurate than repeating the last price.",
+    "methodNaive": "Naive forecast (the last price), because no model beat it in the backtest for this market.",
+    "date": "Date",
+    "expected": "Expected",
+    "range": "80% range",
+    "weeksTitle": "2–4 weeks: range only",
+    "inDays": "Around {{date}} ({{days}} days)",
+    "coverage": "In the backtest the 80% range contained the real price {{pct}}% of the time ({{n}} forecast dates).",
+    "disclaimer": "Prices can move sharply (gluts, export rules, weather). This is a statistical estimate from past prices, not advice on when to sell."
+  },
+  "msp": {
+    "title": "Minimum Support Price (MSP)",
+    "none": "No MSP is announced for {{commodity}}; its price is set by the market.",
+    "season": "{{season}} {{year}}",
+    "perQuintal": "{{price}} / quintal",
+    "source": "PIB release",
+    "note": "MSP is the price at which government agencies procure fair-average-quality produce. It is not a guaranteed market price."
+  },
+  "card": {
+    "title": "Mandi prices for your crops",
+    "noCrops": "Add the crop you grow to a field to see its prices here.",
+    "none": "No prices for your crops yet.",
+    "viewAll": "All prices",
+    "asOf": "as of {{date}}",
+    "stale": "old data"
+  }
+}

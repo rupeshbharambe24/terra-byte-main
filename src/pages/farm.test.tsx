@@ -121,14 +121,28 @@ describe('farm pages', () => {
       ],
       attribution: { text: 'Weather data by Open-Meteo.com', url: '', license: 'CC BY 4.0', license_url: '' },
     };
-    fetchMock.mockImplementation(route({ '/api/dashboard/farmer': data, '/api/weather': weather, '/api/fields': [] }));
+    const mine = {
+      crops: ['onion'],
+      district: 'Pune',
+      items: [
+        {
+          market: 'Pune(Manjri)', district: 'Pune', state: 'Maharashtra', commodity: 'Onion', variety: 'Local', grade: 'FAQ',
+          arrival_date: '2026-11-24', min_price: 2000, max_price: 4000, modal_price: 3000, source: 'data.gov.in', days_old: 1, stale: false,
+        },
+      ],
+      as_of: '2026-11-24',
+    };
+    fetchMock.mockImplementation(
+      route({ '/api/dashboard/farmer': data, '/api/weather': weather, '/api/fields': [], '/api/prices/mine': mine })
+    );
     renderWithProviders(<FarmerDashboard />, { route: '/farmer-dashboard' });
     await waitFor(() => expect(screen.getByText('Orders in progress', { selector: 'p' })).toBeInTheDocument());
     expect(screen.getByText('4 acres (160 guntha)')).toBeInTheDocument();
     expect(screen.getByText('₹2,700')).toBeInTheDocument();
     expect(screen.getByText('Order #12 · Shivneri Krishi Kendra')).toBeInTheDocument();
     expect(screen.getByText('Shipped')).toBeInTheDocument();
-    expect(screen.getByText('Mandi prices — coming next')).toBeInTheDocument();
+    expect(await screen.findByText('Mandi prices for your crops')).toBeInTheDocument();
+    expect(await screen.findByText('Onion')).toBeInTheDocument();
     await waitFor(() => expect(screen.getByText(/Clear, 15.2–29.4 °C, rain 0 mm/)).toBeInTheDocument());
     expect(screen.getByText(/Only 0 mm of rain expected this week/)).toBeInTheDocument();
     expect(screen.getByText('Weather data by Open-Meteo.com')).toBeInTheDocument();

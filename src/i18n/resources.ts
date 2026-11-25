@@ -9,6 +9,8 @@ import enForum from '@/locales/en/forum.json';
 import enFarm from '@/locales/en/farm.json';
 import enDashboard from '@/locales/en/dashboard.json';
 import enAgro from '@/locales/en/agro.json';
+import enPrices from '@/locales/en/prices.json';
+import enDisease from '@/locales/en/disease.json';
 import hiCommon from '@/locales/hi/common.json';
 import hiAuth from '@/locales/hi/auth.json';
 import hiLanding from '@/locales/hi/landing.json';
@@ -20,6 +22,8 @@ import hiForum from '@/locales/hi/forum.json';
 import hiFarm from '@/locales/hi/farm.json';
 import hiDashboard from '@/locales/hi/dashboard.json';
 import hiAgro from '@/locales/hi/agro.json';
+import hiPrices from '@/locales/hi/prices.json';
+import hiDisease from '@/locales/hi/disease.json';
 import mrCommon from '@/locales/mr/common.json';
 import mrAuth from '@/locales/mr/auth.json';
 import mrLanding from '@/locales/mr/landing.json';
@@ -31,10 +35,12 @@ import mrForum from '@/locales/mr/forum.json';
 import mrFarm from '@/locales/mr/farm.json';
 import mrDashboard from '@/locales/mr/dashboard.json';
 import mrAgro from '@/locales/mr/agro.json';
+import mrPrices from '@/locales/mr/prices.json';
+import mrDisease from '@/locales/mr/disease.json';
 
 export const LANGUAGES = ['en', 'hi', 'mr'] as const;
 export type AppLanguage = (typeof LANGUAGES)[number];
-export const NAMESPACES = ['common', 'auth', 'landing', 'admin', 'market', 'rentals', 'advice', 'forum', 'farm', 'dashboard', 'agro'] as const;
+export const NAMESPACES = ['common', 'auth', 'landing', 'admin', 'market', 'rentals', 'advice', 'forum', 'farm', 'dashboard', 'agro', 'prices', 'disease'] as const;
 
 export const resources = {
   en: {
@@ -49,6 +55,8 @@ export const resources = {
     farm: enFarm,
     dashboard: enDashboard,
     agro: enAgro,
+    prices: enPrices,
+    disease: enDisease,
   },
   hi: {
     common: hiCommon,
@@ -62,6 +70,8 @@ export const resources = {
     farm: hiFarm,
     dashboard: hiDashboard,
     agro: hiAgro,
+    prices: hiPrices,
+    disease: hiDisease,
   },
   mr: {
     common: mrCommon,
@@ -75,6 +85,8 @@ export const resources = {
     farm: mrFarm,
     dashboard: mrDashboard,
     agro: mrAgro,
+    prices: mrPrices,
+    disease: mrDisease,
   },
 } as const;
 

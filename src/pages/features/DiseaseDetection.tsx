@@ -1,352 +1,318 @@
-import React, { useState } from 'react';
-import { apiUrl } from '@/lib/api';
-import Header from '../../components/common/Header';
-import Sidebar from '../../components/common/Sidebar';
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
-import { Button } from '../../components/ui/button';
-import { Alert, AlertDescription } from '../../components/ui/alert';
-import { useAuth } from '../../context/AuthContext';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { Camera, CheckCircle2, HelpCircle, Leaf, Loader2, XCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import AppShell from '@/components/common/AppShell';
+import PageHeader from '@/components/common/PageHeader';
+import PageSpinner from '@/components/common/PageSpinner';
+import Pager from '@/components/common/Pager';
+import { EmptyState, ErrorAlert } from '@/components/common/QueryState';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Textarea } from '@/components/ui/textarea';
+import { API_BASE_URL } from '@/lib/api';
+import { MAX_UPLOAD_MB, checkImageSrc, diseaseApi, diseaseName, percent, type Candidate, type DiseaseCheck } from '@/lib/disease';
+import { errorMessage } from '@/lib/errors';
+import { formatDateTime } from '@/lib/format';
 
-interface Detection {
-  id: number;
-  crop: string;
-  disease: string;
-  confidence: number;
-  severity: string;
-  date: string;
-  status: string;
-  image: string;
-}
+const PAGE = 10;
 
-interface AnalysisResult {
-  disease: string;
-  confidence: number;
-  severity: string;
-  crop?: string;
-  treatment: string[];
-  prevention: string[];
-}
+const StatusBadge: React.FC<{ status: DiseaseCheck['status'] }> = ({ status }) => {
+  const { t } = useTranslation('disease');
+  const styles = {
+    confident: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+    uncertain: 'bg-amber-100 text-amber-900 dark:bg-amber-900 dark:text-amber-100',
+    rejected: 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-100',
+  }[status];
+  const Icon = status === 'confident' ? CheckCircle2 : status === 'uncertain' ? HelpCircle : XCircle;
+  return (
+    <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${styles}`}>
+      <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+      {t(`status.${status}`)}
+    </span>
+  );
+};
+
+const CandidateDetails: React.FC<{ c: Candidate; open: boolean }> = ({ c, open }) => {
+  const { t, i18n } = useTranslation('disease');
+  const info = c.info;
+  return (
+    <details open={open} className="rounded-md border p-3 dark:border-gray-700">
+      <summary className="cursor-pointer">
+        <span className="font-medium">{diseaseName(c, i18n.resolvedLanguage)}</span>{' '}
+        <span className="text-sm text-gray-600 dark:text-gray-400">{t('result.match', { pct: percent(c.probability) })}</span>
+      </summary>
+      {info && (
+        <div className="mt-2 space-y-2 text-sm">
+          {i18n.resolvedLanguage !== 'en' && <p className="text-xs text-gray-500">{t('result.englishOnly')}</p>}
+          <p>{info.description}</p>
+          {info.pathogen && <p className="text-xs text-gray-500">{t('result.pathogen', { pathogen: info.pathogen })}</p>}
+          {info.symptoms.length > 0 && (
+            <div>
+              <h4 className="font-medium">{t('result.symptoms')}</h4>
+              <ul className="list-disc pl-5">{info.symptoms.map((s) => <li key={s}>{s}</li>)}</ul>
+            </div>
+          )}
+          {info.cultural.length > 0 && (
+            <div>
+              <h4 className="font-medium">{t('result.cultural')}</h4>
+              <ul className="list-disc pl-5">{info.cultural.map((s) => <li key={s}>{s}</li>)}</ul>
+            </div>
+          )}
+          {info.chemical.length > 0 ? (
+            <div>
+              <h4 className="font-medium">{t('result.chemical')}</h4>
+              <ul className="list-disc pl-5">
+                {info.chemical.map((ch) => (
+                  <li key={`${ch.active_ingredient}-${ch.formulation}`}>
+                    {ch.active_ingredient} {ch.formulation}: {ch.dose}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-1 rounded bg-amber-50 p-2 text-xs text-amber-900 dark:bg-amber-950 dark:text-amber-100">{info.chemical_note}</p>
+            </div>
+          ) : info.chemical_withheld ? (
+            <p className="text-xs text-gray-600 dark:text-gray-400">{t('result.chemicalWithheld')}</p>
+          ) : (
+            <p className="text-xs text-gray-600 dark:text-gray-400">{info.chemical_note}</p>
+          )}
+          <p className="text-xs">
+            {t('result.sources')}:{' '}
+            {info.sources.map((s, i) => (
+              <React.Fragment key={s.url}>
+                {i > 0 && ', '}
+                <a href={s.url} target="_blank" rel="noreferrer" className="text-green-700 underline dark:text-green-400">
+                  {s.title}
+                </a>
+              </React.Fragment>
+            ))}
+          </p>
+        </div>
+      )}
+    </details>
+  );
+};
+
+const AskExpert: React.FC<{ check: DiseaseCheck; onDone: (c: DiseaseCheck) => void }> = ({ check, onDone }) => {
+  const { t } = useTranslation('disease');
+  const [open, setOpen] = useState(false);
+  const [note, setNote] = useState('');
+  const ask = useMutation({ mutationFn: () => diseaseApi.askExpert(check.id, note.trim()), onSuccess: onDone });
+  if (check.consultation_id) {
+    return (
+      <p className="text-sm text-green-800 dark:text-green-300">
+        {t('ask.sent')}{' '}
+        <Link to={`/consultations/${check.consultation_id}`} className="underline">
+          {t('ask.open')}
+        </Link>
+      </p>
+    );
+  }
+  return open ? (
+    <div className="space-y-2">
+      <label className="block text-sm font-medium" htmlFor={`note-${check.id}`}>
+        {t('ask.note')}
+      </label>
+      <Textarea id={`note-${check.id}`} value={note} maxLength={2000} onChange={(e) => setNote(e.target.value)} />
+      {ask.isError && <ErrorAlert error={ask.error} />}
+      <Button onClick={() => ask.mutate()} disabled={ask.isPending}>
+        {ask.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />}
+        {t('ask.send')}
+      </Button>
+    </div>
+  ) : (
+    <Button variant={check.status === 'confident' ? 'outline' : 'default'} onClick={() => setOpen(true)}>
+      {t('ask.button')}
+    </Button>
+  );
+};
+
+const ResultCard: React.FC<{ check: DiseaseCheck; onUpdate: (c: DiseaseCheck) => void }> = ({ check, onUpdate }) => {
+  const { t } = useTranslation('disease');
+  return (
+    <Card>
+      <CardHeader className="pb-2">
+        <CardTitle className="flex flex-wrap items-center gap-2 text-base">
+          {t('result.title')} <StatusBadge status={check.status} />
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <img src={checkImageSrc(check.image_url, API_BASE_URL)} alt="" className="h-40 w-full rounded-md border object-cover sm:w-48" />
+          <div className="min-w-0 flex-1 space-y-2">
+            {check.reason && <p className="text-sm">{t(`reason.${check.reason}`, { defaultValue: check.reason })}</p>}
+            {check.top3.length > 0 && (
+              <div className="space-y-2">
+                <h3 className="text-sm font-medium">{t('result.possibilities')}</h3>
+                {check.top3.map((c, i) => (
+                  <CandidateDetails key={c.class_id} c={c} open={i === 0 && check.status === 'confident'} />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        <AskExpert check={check} onDone={onUpdate} />
+      </CardContent>
+    </Card>
+  );
+};
 
 const DiseaseDetection: React.FC = () => {
-  const { user } = useAuth();
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const { t, i18n } = useTranslation(['disease', 'common']);
+  const lng = i18n.resolvedLanguage;
+  const qc = useQueryClient();
+  const [crop, setCrop] = useState('');
+  const [file, setFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
+  const [result, setResult] = useState<DiseaseCheck | null>(null);
+  const [page, setPage] = useState(0);
+  const input = useRef<HTMLInputElement>(null);
 
-  // Mock recent detections data
-  const recentDetections: Detection[] = [
-    {
-      id: 1,
-      crop: 'Tomato',
-      disease: 'Early Blight',
-      confidence: 92,
-      severity: 'Medium',
-      date: '2024-01-15',
-      status: 'Treated',
-      image: '/api/placeholder/150/150'
+  const model = useQuery({ queryKey: ['disease', 'model'], queryFn: diseaseApi.model });
+  const historyQuery = { limit: PAGE, offset: page * PAGE };
+  const history = useQuery({
+    queryKey: ['disease', 'checks', historyQuery],
+    queryFn: () => diseaseApi.history(historyQuery),
+    placeholderData: keepPreviousData,
+  });
+  const check = useMutation({
+    mutationFn: () => diseaseApi.check(file as File, crop),
+    onSuccess: (data) => {
+      setResult(data);
+      void qc.invalidateQueries({ queryKey: ['disease', 'checks'] });
     },
-    {
-      id: 2,
-      crop: 'Wheat',
-      disease: 'Rust',
-      confidence: 87,
-      severity: 'High',
-      date: '2024-01-14',
-      status: 'Under Treatment',
-      image: '/api/placeholder/150/150'
-    },
-    {
-      id: 3,
-      crop: 'Rice',
-      disease: 'Bacterial Leaf Blight',
-      confidence: 94,
-      severity: 'Low',
-      date: '2024-01-13',
-      status: 'Monitoring',
-      image: '/api/placeholder/150/150'
-    }
-  ];
+  });
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setSelectedImage(e.target?.result as string);
-        setImageFile(file);
-      };
-      reader.readAsDataURL(file);
+  useEffect(() => {
+    if (!file) {
+      setPreview(null);
+      return;
     }
+    const url = URL.createObjectURL(file);
+    setPreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [file]);
+
+  const pick = (f: File | undefined) => {
+    setFileError(null);
+    if (!f) return;
+    if (f.size > MAX_UPLOAD_MB * 1024 * 1024) {
+      setFileError(t('form.tooLarge', { mb: MAX_UPLOAD_MB }));
+      return;
+    }
+    setFile(f);
+    setResult(null);
   };
 
-  const analyzeImage = async () => {
-    if (!imageFile) return;
-    
-    setIsAnalyzing(true);
-    setError(null);
-    
-    try {
-      const formData = new FormData();
-      formData.append('image', imageFile);
-      
-      const response = await fetch(apiUrl('/disease/detect'), {
-        method: 'POST',
-        body: formData
-      });
-      
-      if (!response.ok) {
-        throw new Error(await response.text());
-      }
-      
-      const result = await response.json();
-      setAnalysisResult(result);
-      
-    } catch (err) {
-      console.error('Analysis failed:', err);
-      setError(err instanceof Error && err.message ? err.message : 'Failed to analyze image');
-    } finally {
-      setIsAnalyzing(false);
-    }
-  };
-
-  const getSeverityColor = (severity: string) => {
-    switch (severity) {
-      case 'High': return 'bg-red-100 dark:bg-red-800 text-red-700 dark:text-red-300';
-      case 'Medium': return 'bg-yellow-100 dark:bg-yellow-800 text-yellow-700 dark:text-yellow-300';
-      case 'Low': return 'bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-300';
-      default: return 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300';
-    }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Treated': return 'bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-300';
-      case 'Under Treatment': return 'bg-yellow-100 dark:bg-yellow-800 text-yellow-700 dark:text-yellow-300';
-      case 'Monitoring': return 'bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-300';
-      default: return 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300';
-    }
+  const updated = (c: DiseaseCheck) => {
+    setResult(c);
+    void qc.invalidateQueries({ queryKey: ['disease', 'checks'] });
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header />
-      
-      <div className="flex">
-        <Sidebar />
-        
-        <main className="flex-1 min-w-0 p-4 md:p-6">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Disease Detection</h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              Upload plant images for AI-powered disease detection and treatment recommendations.
-            </p>
-          </div>
-
-          {error && (
-            <Alert variant="destructive" className="mb-6">
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Upload Section */}
+    <AppShell>
+      <PageHeader title={t('title')} subtitle={t('subtitle')} />
+      {model.isLoading ? (
+        <PageSpinner />
+      ) : model.isError || !model.data ? (
+        <ErrorAlert error={model.error} />
+      ) : !model.data.available ? (
+        <EmptyState icon={Leaf} title={t('unavailable')} />
+      ) : (
+        <div className="grid gap-6 lg:grid-cols-2">
+          <div className="space-y-4">
             <Card>
-              <CardHeader>
-                <CardTitle>Upload Plant Image</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center">
-                    {selectedImage ? (
-                      <div className="space-y-4">
-                        <img
-                          src={selectedImage}
-                          alt="Selected plant"
-                          className="mx-auto max-h-64 rounded-lg"
-                        />
-                        <Button
-                          onClick={() => {
-                            setSelectedImage(null);
-                            setImageFile(null);
-                          }}
-                          variant="outline"
-                          size="sm"
-                        >
-                          Remove Image
-                        </Button>
-                      </div>
-                    ) : (
-                      <div>
-                        <div className="text-6xl mb-4">📸</div>
-                        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                          Upload Plant Image
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-400 mb-4">
-                          Take a clear photo of the affected plant parts
-                        </p>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={handleImageUpload}
-                          className="hidden"
-                          id="image-upload"
-                        />
-                        <label
-                          htmlFor="image-upload"
-                          className="cursor-pointer inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700"
-                        >
-                          Choose File
-                        </label>
-                      </div>
-                    )}
-                  </div>
-
-                  {selectedImage && (
-                    <Button
-                      onClick={analyzeImage}
-                      disabled={isAnalyzing}
-                      className="w-full"
-                    >
-                      {isAnalyzing ? (
-                        <>
-                          <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"></div>
-                          Analyzing...
-                        </>
-                      ) : (
-                        'Analyze for Diseases'
-                      )}
-                    </Button>
-                  )}
-
-                  {isAnalyzing && (
-                    <Alert>
-                      <AlertDescription>
-                        🔬 AI is analyzing your image for potential diseases. This may take a few moments...
-                      </AlertDescription>
-                    </Alert>
-                  )}
+              <CardContent className="space-y-4 p-4">
+                <label className="block space-y-1 text-sm font-medium">
+                  <span>{t('form.crop')}</span>
+                  <select
+                    className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
+                    value={crop}
+                    onChange={(e) => setCrop(e.target.value)}
+                  >
+                    <option value="">{t('form.chooseCrop')}</option>
+                    {model.data.crops.map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {t(`crops.${c.id}`, { defaultValue: c.name })}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <div className="space-y-2">
+                  <span className="text-sm font-medium">{t('form.photo')}</span>
+                  {preview && <img src={preview} alt="" className="h-48 w-full rounded-md border object-cover" />}
+                  <input
+                    ref={input}
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    capture="environment"
+                    className="sr-only"
+                    aria-label={t('form.photo')}
+                    onChange={(e) => pick(e.target.files?.[0])}
+                  />
+                  <Button type="button" variant="outline" onClick={() => input.current?.click()}>
+                    <Camera className="mr-2 h-4 w-4" aria-hidden="true" />
+                    {file ? t('form.change') : t('form.choose')}
+                  </Button>
+                  {fileError && <p role="alert" className="text-sm text-red-600">{fileError}</p>}
+                  <p className="text-xs text-gray-500">{t('form.tips')}</p>
                 </div>
+                {check.isError && <ErrorAlert error={check.error} />}
+                <Button className="w-full" disabled={!crop || !file || check.isPending} onClick={() => check.mutate()}>
+                  {check.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />}
+                  {check.isPending ? t('form.checking') : t('form.submit')}
+                </Button>
+                <p className="text-xs text-gray-500">{t('model', { version: model.data.version })}</p>
               </CardContent>
             </Card>
-
-            {/* Analysis Results */}
-            {analysisResult && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Analysis Results</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-6">
-                    <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                      <div className="flex justify-between items-start mb-4">
-                        <div>
-                          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                            {analysisResult.disease}
-                          </h3>
-                          <p className="text-gray-600 dark:text-gray-400">
-                            {analysisResult.crop ? `Detected in ${analysisResult.crop}` : 'Plant disease detected'}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-2xl font-bold text-green-600 dark:text-green-400">
-                            {analysisResult.confidence}%
-                          </p>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">Confidence</p>
-                        </div>
-                      </div>
-                      <span className={`px-3 py-1 rounded-full text-sm ${getSeverityColor(analysisResult.severity)}`}>
-                        {analysisResult.severity} Severity
-                      </span>
-                    </div>
-
-                    <div>
-                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3">
-                        Immediate Treatment
-                      </h4>
-                      <ul className="space-y-2">
-                        {analysisResult.treatment.map((step, index) => (
-                          <li key={index} className="flex items-start">
-                            <span className="text-green-600 dark:text-green-400 mr-2">•</span>
-                            <span className="text-gray-700 dark:text-gray-300">{step}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3">
-                        Prevention Tips
-                      </h4>
-                      <ul className="space-y-2">
-                        {analysisResult.prevention.map((tip, index) => (
-                          <li key={index} className="flex items-start">
-                            <span className="text-blue-600 dark:text-blue-400 mr-2">•</span>
-                            <span className="text-gray-700 dark:text-gray-300">{tip}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <Button className="w-full">
-                      Save Analysis & Create Treatment Plan
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
+            {result && <ResultCard check={result} onUpdate={updated} />}
           </div>
 
-          {/* Recent Detections */}
-          <Card className="mt-8">
-            <CardHeader>
-              <CardTitle>Recent Disease Detections</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {recentDetections.map((detection) => (
-                  <div key={detection.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white">{detection.disease}</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">{detection.crop}</p>
-                      </div>
-                      <span className="text-sm font-medium text-green-600 dark:text-green-400">
-                        {detection.confidence}%
-                      </span>
-                    </div>
-                    
-                    <div className="space-y-2 mb-4">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-600 dark:text-gray-400">Severity:</span>
-                        <span className={`px-2 py-1 rounded-full text-xs ${getSeverityColor(detection.severity)}`}>
-                          {detection.severity}
+          <section aria-labelledby="disease-history">
+            <h2 id="disease-history" className="mb-3 text-lg font-semibold">
+              {t('history.title')}
+            </h2>
+            {history.isError ? (
+              <p className="text-sm text-red-600">{errorMessage(t, history.error)}</p>
+            ) : !history.data ? (
+              <PageSpinner />
+            ) : history.data.total === 0 ? (
+              <p className="text-sm text-gray-500">{t('history.empty')}</p>
+            ) : (
+              <>
+                <ul className="space-y-2">
+                  {history.data.items.map((h) => (
+                    <li key={h.id}>
+                      <button
+                        type="button"
+                        onClick={() => setResult(h)}
+                        className="flex w-full items-center gap-3 rounded-md border bg-white p-2 text-left hover:bg-green-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+                      >
+                        <img src={checkImageSrc(h.image_url, API_BASE_URL)} alt="" className="h-14 w-14 shrink-0 rounded object-cover" />
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-sm font-medium">
+                            {t(`crops.${h.crop}`, { defaultValue: h.crop })}
+                            {h.top3[0] && h.status !== 'rejected' ? ` · ${diseaseName(h.top3[0], lng)}` : ''}
+                          </span>
+                          <span className="block text-xs text-gray-500">{formatDateTime(h.created_at, lng)}</span>
                         </span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-600 dark:text-gray-400">Status:</span>
-                        <span className={`px-2 py-1 rounded-full text-xs ${getStatusColor(detection.status)}`}>
-                          {detection.status}
+                        <span className="flex flex-col items-end gap-1">
+                          <StatusBadge status={h.status} />
+                          {h.consultation_id && <span className="text-xs text-green-700">{t('history.asked')}</span>}
                         </span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-600 dark:text-gray-400">Date:</span>
-                        <span className="text-sm text-gray-900 dark:text-white">{detection.date}</span>
-                      </div>
-                    </div>
-                    
-                    <Button variant="outline" size="sm" className="w-full">
-                      View Details
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </main>
-      </div>
-    </div>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+                <Pager page={page} total={history.data.total} pageSize={PAGE} onPage={setPage} />
+              </>
+            )}
+          </section>
+        </div>
+      )}
+    </AppShell>
   );
 };
 

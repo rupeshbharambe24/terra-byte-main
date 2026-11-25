@@ -1,505 +1,329 @@
-import React, { useState, useEffect } from 'react';
-import { apiUrl } from '@/lib/api';
-import Header from '../../components/common/Header';
-import Sidebar from '../../components/common/Sidebar';
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
-import { Button } from '../../components/ui/button';
-import { Input } from '../../components/ui/input';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { AlertTriangle, LineChart as LineChartIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Area, CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import AppShell from '@/components/common/AppShell';
+import PageHeader from '@/components/common/PageHeader';
+import PageSpinner from '@/components/common/PageSpinner';
+import { EmptyState, ErrorAlert } from '@/components/common/QueryState';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { formatDate, formatMoney, formatNumber } from '@/lib/format';
+import {
+  PRICE_STALE_DAYS,
+  chartRows,
+  groupByCommodity,
+  parseSeriesKey,
+  pricesApi,
+  seriesKey,
+  shortCommodity,
+  skillVsNaive,
+  type MspRow,
+  type PriceForecast as Forecast,
+} from '@/lib/prices';
 
-interface MarketPrice {
-  crop: string;
-  currentPrice: number;
-  msp?: number;
-  change: string;
-  trend: string;
-  market: string;
-}
+const selectClass =
+  'h-10 w-full rounded-md border border-input bg-background px-3 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-green-600';
 
-interface ForecastData {
-  predicted: number;
-  confidence: number;
-  factors: string[];
-}
+const ForecastPanel: React.FC<{ forecast: Forecast }> = ({ forecast }) => {
+  const { t, i18n } = useTranslation('prices');
+  const lng = i18n.resolvedLanguage;
+  if (forecast.status === 'stale') {
+    return (
+      <p role="status" className="rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-700 dark:bg-amber-950 dark:text-amber-100">
+        {t('forecast.stale', { date: formatDate(forecast.last_date, lng), days: forecast.days_old ?? 0 })}
+      </p>
+    );
+  }
+  if (forecast.status !== 'ok' || !forecast.skill || !forecast.method) {
+    return <p className="text-sm text-gray-600 dark:text-gray-400">{t(forecast.status === 'no_data' ? 'forecast.noData' : 'forecast.notEvaluated')}</p>;
+  }
+  const skill = forecast.skill;
+  return (
+    <div className="space-y-3">
+      <p className="text-sm text-gray-700 dark:text-gray-300">
+        {forecast.method === 'ets'
+          ? t('forecast.methodEts', { pct: skillVsNaive(skill, 'ets') })
+          : t('forecast.methodNaive')}
+      </p>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>{t('forecast.date')}</TableHead>
+            <TableHead className="text-right">{t('forecast.expected')}</TableHead>
+            <TableHead className="text-right">{t('forecast.range')}</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {forecast.points.map((p) => (
+            <TableRow key={p.date}>
+              <TableCell>{formatDate(p.date, lng)}</TableCell>
+              <TableCell className="text-right tabular-nums">{formatMoney(p.point, lng)}</TableCell>
+              <TableCell className="text-right tabular-nums">
+                {formatMoney(p.low, lng)} – {formatMoney(p.high, lng)}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      {forecast.ranges.length > 0 && (
+        <div>
+          <h4 className="text-sm font-medium">{t('forecast.weeksTitle')}</h4>
+          <ul className="mt-1 space-y-1 text-sm">
+            {forecast.ranges.map((r) => (
+              <li key={r.date} className="flex flex-wrap justify-between gap-2">
+                <span>{t('forecast.inDays', { date: formatDate(r.date, lng), days: r.horizon_days })}</span>
+                <span className="tabular-nums">
+                  {formatMoney(r.low, lng)} – {formatMoney(r.high, lng)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {skill.coverage_80 !== null && (
+        <p className="text-xs text-gray-500">
+          {t('forecast.coverage', { pct: Math.round(skill.coverage_80 * 100), n: skill.n_origins })}
+        </p>
+      )}
+      <p className="text-xs text-gray-500">{t('forecast.disclaimer')}</p>
+    </div>
+  );
+};
 
-interface PriceHistory {
-  month: string;
-  price: number;
-}
-
-interface CurrentPrice {
-  crop: string;
-  currentPrice: number;
-  msp?: number;
-  change: string;
-  trend: string;
-  market: string;
-}
-
-interface ApiPrediction {
-  commodity: string;
-  start_date: string;
-  predictions: {
-    date: string;
-    price: number;
-  }[];
-}
+const MspPanel: React.FC<{ commodity: string }> = ({ commodity }) => {
+  const { t, i18n } = useTranslation('prices');
+  const lng = i18n.resolvedLanguage;
+  const { data } = useQuery({ queryKey: ['prices', 'msp', commodity], queryFn: () => pricesApi.msp(commodity) });
+  if (!data) return null;
+  const cropName = (r: MspRow) => (lng === 'hi' ? r.crop_hi : lng === 'mr' ? r.crop_mr : null) || r.crop;
+  return (
+    <Card>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-base">{t('msp.title')}</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-2 text-sm">
+        {data.has_msp ? (
+          <ul className="space-y-1">
+            {data.rows.map((r) => (
+              <li key={`${r.crop}-${r.marketing_year}`} className="flex flex-wrap justify-between gap-2">
+                <span>
+                  {cropName(r)} · {t('msp.season', { season: r.season, year: r.marketing_year })}
+                </span>
+                <span className="font-semibold tabular-nums">
+                  {t('msp.perQuintal', { price: formatMoney(r.msp_inr_per_quintal, lng) })}{' '}
+                  <a href={r.source_url} target="_blank" rel="noreferrer" className="text-xs font-normal text-green-700 underline dark:text-green-400">
+                    {t('msp.source')}
+                  </a>
+                </span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>{t('msp.none', { commodity: shortCommodity(commodity) })}</p>
+        )}
+        <p className="text-xs text-gray-500">{t('msp.note')}</p>
+      </CardContent>
+    </Card>
+  );
+};
 
 const PriceForecast: React.FC = () => {
-  const [selectedCrop, setSelectedCrop] = useState('Rice');
-  const [selectedPeriod, setSelectedPeriod] = useState('3 months');
-  const [selectedVegetable, setSelectedVegetable] = useState('tomato');
-  const [forecastDate, setForecastDate] = useState<string>('');
-  const [apiForecast, setApiForecast] = useState<ApiPrediction | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [availableCommodities, setAvailableCommodities] = useState<string[]>([]);
-  const [marketInput, setMarketInput] = useState('');
-  const [currentMarketPrices, setCurrentMarketPrices] = useState<MarketPrice[]>([]);
-  const [marketLoading, setMarketLoading] = useState(false);
-  const [marketError, setMarketError] = useState('');
+  const { t, i18n } = useTranslation(['prices', 'common']);
+  const lng = i18n.resolvedLanguage;
+  const [commodity, setCommodity] = useState('');
+  const [district, setDistrict] = useState('');
+  const [selected, setSelected] = useState('');
 
-  // Fetch available commodities on component mount
+  const commodities = useQuery({ queryKey: ['prices', 'commodities'], queryFn: pricesApi.commodities });
+  const latest = useQuery({
+    queryKey: ['prices', 'latest', commodity, district],
+    queryFn: () => pricesApi.latest({ commodity: commodity || undefined, district: district.trim() || undefined }),
+  });
+  const series = useQuery({
+    queryKey: ['prices', 'series', commodity],
+    queryFn: () => pricesApi.series(commodity || undefined),
+  });
+
+  // Default chart: the most recently updated series for the current filter.
   useEffect(() => {
-    const fetchAvailableCommodities = async () => {
-      try {
-        const response = await fetch(apiUrl('/price-forecast/health'));
-        if (!response.ok) {
-          throw new Error('Failed to fetch available commodities');
-        }
-        const data = await response.json();
-        setAvailableCommodities(data.loaded_models || []);
-      } catch (err) {
-        console.error('Error fetching available commodities:', err);
-      }
-    };
+    const list = series.data ?? [];
+    if (!list.length) return;
+    if (selected && list.some((s) => seriesKey(s.market, s.commodity) === selected)) return;
+    const best = [...list].sort((a, b) => b.last_date.localeCompare(a.last_date) || b.rows - a.rows)[0];
+    setSelected(seriesKey(best.market, best.commodity));
+  }, [series.data, selected]);
 
-    fetchAvailableCommodities();
-  }, []);
-
-  const crops = ['Bhindi', 'Onion', 'Potato', 'Tomato'];
-  const periods = ['1 month', '3 months', '6 months', '1 year'];
-  const vegetables = ['bhindi', 'onion', 'potato', 'tomato'].filter(v => 
-    availableCommodities.includes(v)
+  const choice = parseSeriesKey(selected);
+  const history = useQuery({
+    queryKey: ['prices', 'history', selected],
+    queryFn: () => pricesApi.history(choice!.market, choice!.commodity, 365),
+    enabled: !!choice,
+  });
+  const forecast = useQuery({
+    queryKey: ['prices', 'forecast', selected],
+    queryFn: () => pricesApi.forecast(choice!.market, choice!.commodity),
+    enabled: !!choice,
+  });
+  const rows = useMemo(
+    () => chartRows(history.data?.points ?? [], forecast.data?.status === 'ok' ? forecast.data.points : undefined),
+    [history.data, forecast.data]
   );
+  const grouped = useMemo(() => groupByCommodity(latest.data?.items ?? []), [latest.data]);
+  const anyStale = (latest.data?.items ?? []).some((r) => r.stale);
 
-  const currentPrices = [
-    { crop: 'Rice', currentPrice: 2050, msp: 2040, change: '+2.3%', trend: 'up', market: 'Mumbai APMC' },
-    { crop: 'Wheat', currentPrice: 2125, msp: 2125, change: '0%', trend: 'stable', market: 'Delhi APMC' },
-    { crop: 'Cotton', currentPrice: 5800, msp: 5835, change: '-0.6%', trend: 'down', market: 'Ahmedabad APMC' },
-    { crop: 'Sugarcane', currentPrice: 315, msp: 310, change: '+1.6%', trend: 'up', market: 'UP Sugar Mills' },
-    { crop: 'Maize', currentPrice: 1870, msp: 1870, change: '0%', trend: 'stable', market: 'Hyderabad APMC' },
-    { crop: 'Soybeans', currentPrice: 4200, msp: 4300, change: '-2.3%', trend: 'down', market: 'Indore APMC' }
-  ];
-
-  const priceHistory = {
-    'Rice': [
-      { month: 'Oct 2023', price: 1980 },
-      { month: 'Nov 2023', price: 2010 },
-      { month: 'Dec 2023', price: 2025 },
-      { month: 'Jan 2024', price: 2050 }
-    ],
-    'Wheat': [
-      { month: 'Oct 2023', price: 2100 },
-      { month: 'Nov 2023', price: 2110 },
-      { month: 'Dec 2023', price: 2120 },
-      { month: 'Jan 2024', price: 2125 }
-    ],
-    'Cotton': [
-      { month: 'Oct 2023', price: 5900 },
-      { month: 'Nov 2023', price: 5850 },
-      { month: 'Dec 2023', price: 5820 },
-      { month: 'Jan 2024', price: 5800 }
-    ]
-  };
-
-  const forecasts = {
-    'Rice': {
-      '1 month': { predicted: 2080, confidence: 92, factors: ['Monsoon season', 'Export demand', 'Government procurement'] },
-      '3 months': { predicted: 2150, confidence: 87, factors: ['Festival season demand', 'Storage costs', 'International prices'] },
-      '6 months': { predicted: 2200, confidence: 78, factors: ['New harvest season', 'Policy changes', 'Global trade'] },
-      '1 year': { predicted: 2250, confidence: 65, factors: ['Climate change effects', 'Technology adoption', 'Market dynamics'] }
-    },
-    'Wheat': {
-      '1 month': { predicted: 2140, confidence: 89, factors: ['Winter harvest', 'Storage availability', 'Transport costs'] },
-      '3 months': { predicted: 2180, confidence: 84, factors: ['Quality grades', 'Export policies', 'Substitute crops'] },
-      '6 months': { predicted: 2220, confidence: 76, factors: ['Monsoon impact', 'Input costs', 'Government schemes'] },
-      '1 year': { predicted: 2280, confidence: 68, factors: ['Production trends', 'Consumer preferences', 'Technology'] }
-    },
-    'Cotton': {
-      '1 month': { predicted: 5750, confidence: 85, factors: ['Textile demand', 'International prices', 'Quality factors'] },
-      '3 months': { predicted: 5900, confidence: 80, factors: ['Export opportunities', 'Synthetic alternatives', 'Weather'] },
-      '6 months': { predicted: 6000, confidence: 72, factors: ['Global cotton stocks', 'Trade policies', 'Currency rates'] },
-      '1 year': { predicted: 6200, confidence: 60, factors: ['Climate patterns', 'Technology adoption', 'Market shifts'] }
-    }
-  };
-
-  const getTrendIcon = (trend: string) => {
-    switch (trend) {
-      case 'up': return '📈';
-      case 'down': return '📉';
-      case 'stable': return '➡️';
-      default: return '➡️';
-    }
-  };
-
-  const getTrendColor = (trend: string) => {
-    switch (trend) {
-      case 'up': return 'text-green-600 dark:text-green-400';
-      case 'down': return 'text-red-600 dark:text-red-400';
-      case 'stable': return 'text-gray-600 dark:text-gray-400';
-      default: return 'text-gray-600 dark:text-gray-400';
-    }
-  };
-
-  const getConfidenceColor = (confidence: number) => {
-    if (confidence >= 85) return 'text-green-600 dark:text-green-400';
-    if (confidence >= 70) return 'text-yellow-600 dark:text-yellow-400';
-    return 'text-red-600 dark:text-red-400';
-  };
-
-  const fetchVegetableForecast = async () => {
-    if (!forecastDate || !selectedVegetable) {
-      setError('Please select both vegetable and date');
-      return;
-    }
-
-    try {
-      setLoading(true);
-      setError('');
-      
-      const response = await fetch(apiUrl('/price-forecast'), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          commodity: selectedVegetable.toLowerCase(),
-          date: forecastDate
-        })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to fetch forecast');
-      }
-
-    const data = await response.json();
-      setApiForecast(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch forecast');
-      console.error('Error fetching vegetable forecast:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const currentForecast = forecasts[selectedCrop]?.[selectedPeriod];
-
-    const fetchMarketPrices = async (market: string) => {
-      setMarketLoading(true);
-      setMarketError('');
-      try {
-        const response = await fetch(apiUrl(`/market-prices?market=${encodeURIComponent(market)}`));
-        if (!response.ok) {
-          throw new Error('Market not found');
-        }
-        const data = await response.json();
-        setCurrentMarketPrices(data);
-      } catch (err) {
-        setMarketError(err instanceof Error ? err.message : 'Failed to fetch market data');
-        setCurrentMarketPrices([]);
-      } finally {
-        setMarketLoading(false);
-      }
-    };
-
-    const handleMarketSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
-      if (marketInput.trim()) {
-        fetchMarketPrices(marketInput.trim());
-      }
-    };
-    
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header />
-      
-      <div className="flex">
-        <Sidebar />
-        
-        <main className="flex-1 min-w-0 p-4 md:p-6">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Price Forecast</h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              Market prices, MSP trends, and AI-powered price predictions for agricultural commodities.
-            </p>
-          </div>
-
-          {/* Current Market Prices */}
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>Current Market Prices</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleMarketSubmit} className="mb-6">
-                <div className="flex gap-4">
-                  <Input
-                    type="text"
-                    value={marketInput}
-                    onChange={(e) => setMarketInput(e.target.value)}
-                    placeholder="Enter market name (e.g., Mumbai, Delhi)"
-                    className="w-[280px]"
-                  />
-                  <Button type="submit" disabled={marketLoading}>
-                    {marketLoading ? 'Loading...' : 'Get Prices'}
-                  </Button>
-                </div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                  Enter a market name to see available commodities and their current prices
-                </p>
-              </form>
-
-              {marketError && <p className="text-red-600 dark:text-red-400 mb-4">{marketError}</p>}
-
-              {marketLoading && (
-                <div className="flex justify-center py-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
-                </div>
-              )}
-
-              {!marketLoading && currentMarketPrices.length > 0 && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {currentMarketPrices.map((item, index) => (
-                    <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                      <div className="flex justify-between items-start mb-3">
-                        <div>
-                          <h3 className="font-semibold text-gray-900 dark:text-white">{item.crop}</h3>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">{item.market}</p>
-                        </div>
-                        <span className={`text-xl ${getTrendColor(item.trend)}`}>
-                          {getTrendIcon(item.trend)}
-                        </span>
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <div className="flex justify-between">
-                          <span className="text-sm text-gray-600 dark:text-gray-400">Current Price:</span>
-                          <span className="font-semibold text-gray-900 dark:text-white">₹{item.currentPrice}/quintal</span>
-                        </div>
-                        {item.msp && (
-                          <div className="flex justify-between">
-                            <span className="text-sm text-gray-600 dark:text-gray-400">MSP:</span>
-                            <span className="font-semibold text-gray-900 dark:text-white">₹{item.msp}/quintal</span>
-                          </div>
-                        )}
-                        <div className="flex justify-between">
-                          <span className="text-sm text-gray-600 dark:text-gray-400">Change:</span>
-                          <span className={`font-semibold ${getTrendColor(item.trend)}`}>
-                            {item.change}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {!marketLoading && !currentMarketPrices.length && !marketInput && (
-                <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                  <p>Enter a market name to view current commodity prices</p>
-                </div>
-              )}
-
-              {!marketLoading && !currentMarketPrices.length && marketInput && (
-                <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                  <p>No price data found for {marketInput}</p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Price Forecast Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Forecast Controls */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Price Forecast</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Select Crop
-                    </label>
-                    <div className="grid grid-cols-2 gap-2">
-                      {crops.map((crop) => (
-                        <Button
-                          key={crop}
-                          onClick={() => setSelectedVegetable(crop)}
-                          variant={selectedVegetable === crop ? "default" : "outline"}
-                          size="sm"
-                        >
-                          {crop}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-            
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Select Base Date (YYYY-MM-DD)
-                    </label>
-                    <div className="flex gap-2">
-                      <Input
-                        type="date"
-                        value={forecastDate}
-                        onChange={(e) => setForecastDate(e.target.value)}
-                        placeholder="Select a date"
-                      />
-                      <Button onClick={fetchVegetableForecast} disabled={loading}>
-                        {loading ? 'Loading...' : 'Get Forecast'}
-                      </Button>
-                    </div>
-                    {error && <p className="text-sm text-red-600 dark:text-red-400 mt-2">{error}</p>}
-                  </div>   
-
-
-                  
-
-                  {apiForecast && (
-                    <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                      <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
-                        {apiForecast.commodity.charAt(0).toUpperCase() + apiForecast.commodity.slice(1)} - 15 Day Forecast
-                      </h3>
-                      
-                      <div className="space-y-4">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                          {apiForecast.predictions.slice(0, 3).map((pred, index) => (
-                            <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg p-3">
-                              <div className="text-sm text-gray-600 dark:text-gray-400">{pred.date}</div>
-                              <div className="text-xl font-bold text-green-600 dark:text-green-400 mt-1">
-                                ₹{pred.price.toFixed(2)}/quintal
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                        
-                        <div className="overflow-x-auto">
-                          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                            <thead className="bg-gray-50 dark:bg-gray-800">
-                              <tr>
-                                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                  Date
-                                </th>
-                                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                  Predicted Price (₹/Quintal)
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-                              {apiForecast.predictions.map((pred, index) => (
-                                <tr key={index}>
-                                  <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
-                                    {pred.date}
-                                  </td>
-                                  <td className="px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                                    {pred.price.toFixed(2)}
-                                  </td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Price History */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Price History - {selectedCrop}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {priceHistory[selectedCrop]?.map((entry, index) => (
-                    <div key={index} className="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700 last:border-b-0">
-                      <span className="text-gray-600 dark:text-gray-400">{entry.month}</span>
-                      <span className="font-semibold text-gray-900 dark:text-white">
-                        ₹{entry.price}/quintal
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900 rounded-lg">
-                  <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">
-                    Price Trend Analysis
-                  </h4>
-                  <p className="text-sm text-blue-800 dark:text-blue-200">
-                    {selectedCrop} prices have shown a {selectedCrop === 'Rice' ? 'steady upward' : selectedCrop === 'Cotton' ? 'declining' : 'stable'} trend over the past 4 months.
-                    {selectedCrop === 'Rice' && ' This is attributed to strong export demand and reduced production in key growing regions.'}
-                    {selectedCrop === 'Cotton' && ' This decline is due to increased global supply and reduced textile demand.'}
-                    {selectedCrop === 'Wheat' && ' Prices remain stable due to adequate government procurement and steady demand.'}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Market Insights */}
-          <Card className="mt-8">
-            <CardHeader>
-              <CardTitle>Market Insights & Recommendations</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h3 className="font-semibold text-gray-900 dark:text-white">Best Time to Sell</h3>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-900 rounded-lg">
-                      <span className="text-green-800 dark:text-green-200">Rice</span>
-                      <span className="font-semibold text-green-900 dark:text-green-100">Next 2-3 weeks</span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-yellow-50 dark:bg-yellow-900 rounded-lg">
-                      <span className="text-yellow-800 dark:text-yellow-200">Cotton</span>
-                      <span className="font-semibold text-yellow-900 dark:text-yellow-100">Wait 2-3 months</span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-900 rounded-lg">
-                      <span className="text-blue-800 dark:text-blue-200">Wheat</span>
-                      <span className="font-semibold text-blue-900 dark:text-blue-100">Current prices good</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <h3 className="font-semibold text-gray-900 dark:text-white">Market Alerts</h3>
-                  <div className="space-y-3">
-                    <div className="p-3 border-l-4 border-green-500 bg-green-50 dark:bg-green-900">
-                      <p className="text-sm text-green-800 dark:text-green-200">
-                        🎯 Rice prices expected to rise 3-4% in next month due to export contracts
-                      </p>
-                    </div>
-                    <div className="p-3 border-l-4 border-yellow-500 bg-yellow-50 dark:bg-yellow-900">
-                      <p className="text-sm text-yellow-800 dark:text-yellow-200">
-                        ⚠️ Cotton market volatility expected due to international trade policies
-                      </p>
-                    </div>
-                    <div className="p-3 border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-900">
-                      <p className="text-sm text-blue-800 dark:text-blue-200">
-                        📊 Government procurement for wheat starts next week - good selling opportunity
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </main>
+    <AppShell>
+      <PageHeader title={t('title')} subtitle={t('subtitle')} />
+      <div className="mb-4 grid gap-3 sm:grid-cols-2">
+        <label className="space-y-1 text-sm font-medium">
+          <span>{t('filters.commodity')}</span>
+          <select className={selectClass} value={commodity} onChange={(e) => { setCommodity(e.target.value); setSelected(''); }}>
+            <option value="">{t('filters.allCommodities')}</option>
+            {(commodities.data ?? []).map((c) => (
+              <option key={c.commodity} value={c.commodity}>
+                {shortCommodity(c.commodity)}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="space-y-1 text-sm font-medium">
+          <span>{t('filters.district')}</span>
+          <Input value={district} onChange={(e) => setDistrict(e.target.value)} placeholder={t('filters.districtPlaceholder')} />
+        </label>
       </div>
-    </div>
+
+      {latest.isLoading ? (
+        <PageSpinner />
+      ) : latest.isError || !latest.data ? (
+        <ErrorAlert error={latest.error} />
+      ) : latest.data.items.length === 0 ? (
+        <EmptyState icon={LineChartIcon} title={t('latest.empty')} body={t('latest.emptyBody')} />
+      ) : (
+        <div className="space-y-6">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base">{t('latest.title')}</CardTitle>
+              {latest.data.as_of && <p className="text-sm text-gray-600 dark:text-gray-400">{t('latest.asOf', { date: formatDate(latest.data.as_of, lng) })}</p>}
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {anyStale && (
+                <p role="status" className="flex items-start gap-2 rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-700 dark:bg-amber-950 dark:text-amber-100">
+                  <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+                  {t('latest.staleWarning', { days: PRICE_STALE_DAYS })}
+                </p>
+              )}
+              {grouped.map(([name, items]) => (
+                <section key={name}>
+                  <h3 className="mb-1 font-semibold text-gray-900 dark:text-gray-100">{shortCommodity(name)}</h3>
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>{t('latest.market')}</TableHead>
+                          <TableHead className="hidden sm:table-cell">{t('latest.variety')}</TableHead>
+                          <TableHead>{t('latest.date')}</TableHead>
+                          <TableHead className="hidden md:table-cell text-right">{t('latest.min')}</TableHead>
+                          <TableHead className="hidden md:table-cell text-right">{t('latest.max')}</TableHead>
+                          <TableHead className="text-right">{t('latest.modal')}</TableHead>
+                          <TableHead />
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {items.map((r) => (
+                          <TableRow key={`${r.market}|${r.variety}|${r.grade}`}>
+                            <TableCell>
+                              <div>{r.market}</div>
+                              <div className="text-xs text-gray-500">{r.district}</div>
+                            </TableCell>
+                            <TableCell className="hidden sm:table-cell">{r.variety || '—'}</TableCell>
+                            <TableCell className="whitespace-nowrap">
+                              {formatDate(r.arrival_date, lng)}
+                              {r.stale && <div className="text-xs text-amber-700 dark:text-amber-400">{t('latest.old', { days: r.days_old })}</div>}
+                            </TableCell>
+                            <TableCell className="hidden md:table-cell text-right tabular-nums">{formatMoney(r.min_price, lng)}</TableCell>
+                            <TableCell className="hidden md:table-cell text-right tabular-nums">{formatMoney(r.max_price, lng)}</TableCell>
+                            <TableCell className="text-right font-semibold tabular-nums">{formatMoney(r.modal_price, lng)}</TableCell>
+                            <TableCell className="text-right">
+                              <Button size="sm" variant="ghost" onClick={() => setSelected(seriesKey(r.market, r.commodity))}>
+                                {t('latest.chart')}
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </section>
+              ))}
+              <p className="text-xs text-gray-500">{t('attribution')}</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base">{t('history.title')}</CardTitle>
+              <label className="mt-2 block space-y-1 text-sm font-medium">
+                <span>{t('history.choose')}</span>
+                <select className={selectClass} value={selected} onChange={(e) => setSelected(e.target.value)}>
+                  {!selected && <option value="">{t('history.chooseHint')}</option>}
+                  {(series.data ?? []).map((s) => (
+                    <option key={seriesKey(s.market, s.commodity)} value={seriesKey(s.market, s.commodity)}>
+                      {shortCommodity(s.commodity)} · {s.market} ({formatDate(s.last_date, lng)})
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {history.isError ? (
+                <ErrorAlert error={history.error} />
+              ) : history.data ? (
+                <>
+                  <p className="text-xs text-gray-500">
+                    {history.data.variety && t('history.variety', { variety: history.data.variety })}{' '}
+                    {t('history.points', { count: Math.min(history.data.points.length, 120) })}
+                  </p>
+                  <div className="h-72 w-full" aria-label={t('history.title')}>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <ComposedChart data={rows} margin={{ left: 8, right: 8, top: 8, bottom: 8 }}>
+                        <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+                        <XAxis dataKey="date" tickFormatter={(d: string) => formatDate(d, lng)} minTickGap={40} fontSize={12} />
+                        <YAxis width={64} fontSize={12} tickFormatter={(v: number) => formatNumber(v, lng, 0)} domain={['auto', 'auto']} />
+                        <Tooltip
+                          labelFormatter={(d) => formatDate(String(d), lng)}
+                          formatter={(v: number | [number, number]) =>
+                            Array.isArray(v) ? `${formatMoney(v[0], lng)} – ${formatMoney(v[1], lng)}` : formatMoney(v, lng)
+                          }
+                        />
+                        <Legend />
+                        <Area dataKey="band" name={t('history.band')} stroke="none" fill="#16a34a" fillOpacity={0.15} isAnimationActive={false} />
+                        <Line dataKey="modal" name={t('history.modal')} stroke="#15803d" dot={false} strokeWidth={2} isAnimationActive={false} />
+                        <Line dataKey="forecast" name={t('history.forecast')} stroke="#ca8a04" strokeDasharray="5 4" dot={false} strokeWidth={2} isAnimationActive={false} />
+                      </ComposedChart>
+                    </ResponsiveContainer>
+                  </div>
+                </>
+              ) : choice ? (
+                <PageSpinner />
+              ) : null}
+
+              {forecast.data && (
+                <section>
+                  <h3 className="mb-2 font-semibold">{t('forecast.title')}</h3>
+                  <ForecastPanel forecast={forecast.data} />
+                </section>
+              )}
+            </CardContent>
+          </Card>
+
+          {choice && <MspPanel commodity={choice.commodity} />}
+        </div>
+      )}
+    </AppShell>
   );
 };
 

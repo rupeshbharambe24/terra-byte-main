@@ -458,8 +458,6 @@
     "irrigationTitle": "Irrigation status",
     "details": "Details",
     "noCropFields": "No field has a crop yet.",
-    "planCrop": "Plan a crop",
-    "pricesTitle": "Mandi prices — coming next",
-    "pricesBody": "Daily mandi prices from Agmarknet will appear here once they are connected. No prices are shown until then."
+    "planCrop": "Plan a crop"
   }
 }
