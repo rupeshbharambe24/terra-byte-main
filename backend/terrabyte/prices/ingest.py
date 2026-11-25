@@ -176,11 +176,12 @@ def ingest_history(
     since: date,
     max_rows: int,
 ) -> UpsertResult:
-    filters = {"State": state, "Commodity": commodity}
+    base = {"State": state, "Commodity": commodity}
     if district:
-        filters["District"] = district
-    if market:
-        filters["Market"] = market
+        base["District"] = district
+    # Filters are exact matches and Agmarknet 2.0 (2025-) stores many market names with a
+    # trailing space, so a market is queried in both spellings and merged by normalisation.
+    variants = [market, market + " "] if market else [None]
     records: list[dict[str, Any]] = []
     result = UpsertResult()
 
@@ -188,17 +189,21 @@ def ingest_history(
         rows, _ = _rows(page)
         return bool(rows) and min(r.arrival_date for r in rows) < since
 
-    try:
-        for page in client.records(
-            HISTORY_RESOURCE,
-            filters,
-            sort={"Arrival_Date": "desc"},
-            max_rows=max_rows,
-            stop=older_than_since,
-        ):
-            records.extend(page)
-    except FetchError as exc:
-        result.errors.append(f"history {commodity} {market or district or ''}: {exc}")
+    for variant in variants:
+        filters = dict(base)
+        if variant:
+            filters["Market"] = variant
+        try:
+            for page in client.records(
+                HISTORY_RESOURCE,
+                filters,
+                sort={"Arrival_Date": "desc"},
+                max_rows=max_rows,
+                stop=older_than_since,
+            ):
+                records.extend(page)
+        except FetchError as exc:
+            result.errors.append(f"history {commodity} {variant or district or ''}: {exc}")
     rows, bad = _rows(records)
     rows = [r for r in rows if r.arrival_date >= since]
     upserted = upsert_rows(db, rows, "data.gov.in variety-wise daily prices")
