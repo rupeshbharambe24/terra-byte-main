@@ -1,10 +1,11 @@
 """Calibrate, choose thresholds on the validation split, then evaluate honestly.
 
-* Temperature scaling (Guo et al. 2017) fitted on the validation split.
+* Temperature scaling (Guo et al. 2017) and both thresholds are fitted on a calibration half of the
+  cross-source images (the in-domain validation split is too easy to calibrate on).
 * Rejection: probability of the ``other`` class (full softmax, temperature-scaled). The threshold
-  lets 95 % of validation leaf images through.
+  lets 90 % of calibration leaf images through.
 * Confidence: top-1 probability after masking the logits to the crop the farmer selected. The
-  threshold is the lowest value whose confident validation predictions are >= 95 % correct.
+  threshold is the lowest value whose confident calibration predictions are >= 90 % correct.
 * Reported: in-domain test (same sources, held-out images), cross-source test (sources never
   trained on), out-of-distribution rejection (banana leaves, unsupported crops in field photos,
   Imagenette photos, synthetic blank/noise images, plus pure white and black images), ECE.
@@ -14,6 +15,7 @@ Writes ``runs/disease_v1/metrics.json`` and ``reports/disease_model_v1.md``.
 
 from __future__ import annotations
 
+import hashlib
 import json
 from collections import defaultdict
 from datetime import date
@@ -26,12 +28,12 @@ from torch.utils.data import DataLoader
 from . import taxonomy as tx
 from .data import ImageDataset, eval_transform, load_index
 from .paths import REPORTS
-from .sources import SOURCES
+from .sources import SOURCES, use_of
 from .train import RUN, build_model, device, predict_logits, single_thread
 
 VERSION = "disease-mnv3l-v1"
-TPR_TARGET = 0.95
-CONF_PRECISION = 0.95
+TPR_TARGET = 0.90
+CONF_PRECISION = 0.90
 
 
 def softmax(z: np.ndarray, t: float = 1.0) -> np.ndarray:
@@ -105,10 +107,27 @@ def main() -> None:
     by_split = defaultdict(list)
     for r in rows:
         by_split[r.split].append(r)
-    logits = {}
-    for split in ("val", "test", "xtest", "ood"):
-        logits[split], _ = run_logits(by_split[split], classes, model, dev)
-        print(f"{split}: {len(by_split[split])} images", flush=True)
+    cache = RUN / "logits.npz"
+    if cache.exists() and cache.stat().st_mtime > (RUN / "best.pt").stat().st_mtime:
+        logits = dict(np.load(cache))
+    else:
+        logits = {}
+        for split in ("val", "test", "xtest", "ood"):
+            logits[split], _ = run_logits(by_split[split], classes, model, dev)
+            print(f"{split}: {len(by_split[split])} images", flush=True)
+        np.savez(cache, **logits)
+
+    # The in-domain validation split is nearly perfect, so thresholds tuned on it are degenerate
+    # (it pushed the rejection threshold to ~0 and rejected most field photos). Calibrate instead
+    # on half of the cross-source images (chosen by a hash of the path) and report on the other
+    # half, which is never used for any choice.
+    cal_mask = np.array(
+        [int(hashlib.sha1(r.path.encode()).hexdigest(), 16) % 2 == 0 for r in by_split["xtest"]]
+    )
+    by_split["xcal"] = [r for r, m in zip(by_split["xtest"], cal_mask, strict=True) if m]
+    by_split["xtest"] = [r for r, m in zip(by_split["xtest"], cal_mask, strict=True) if not m]
+    logits["xcal"] = logits["xtest"][cal_mask]
+    logits["xtest"] = logits["xtest"][~cal_mask]
 
     # Plain white / black / grey images (the old model called a white page "99 % diseased").
     plain = {}
@@ -124,19 +143,20 @@ def main() -> None:
 
     cls_index = {c: i for i, c in enumerate(classes)}
     val_rows = by_split["val"]
-    val_y = np.array([cls_index[r.label] for r in val_rows])
-    t = fit_temperature(logits["val"], val_y)
+    cal_rows = by_split["xcal"]
+    cal_y = np.array([cls_index[r.label] for r in cal_rows])
+    t = fit_temperature(logits["xcal"], cal_y)
     sc = Scorer(classes, t)
 
-    # Thresholds from validation leaf images.
-    val_leaf = np.array([r.label != tx.OTHER for r in val_rows])
-    rs_val = sc.reject_score(logits["val"])
-    tau_reject = float(np.quantile(rs_val[val_leaf], TPR_TARGET))
+    # Thresholds from the calibration half of the cross-source leaf photos.
+    cal_leaf = np.array([r.label != tx.OTHER for r in cal_rows])
+    rs_cal = sc.reject_score(logits["xcal"])
+    tau_reject = float(np.quantile(rs_cal[cal_leaf], TPR_TARGET))
     confs, oks = [], []
-    for i, r in enumerate(val_rows):
-        if r.label == tx.OTHER or rs_val[i] > tau_reject:
+    for i, r in enumerate(cal_rows):
+        if r.label == tx.OTHER or rs_cal[i] > tau_reject:
             continue
-        p, idx = sc.masked(logits["val"][i : i + 1], tx.crop_of(r.label))
+        p, idx = sc.masked(logits["xcal"][i : i + 1], tx.crop_of(r.label))
         confs.append(p.max())
         oks.append(idx[int(p.argmax())] == cls_index[r.label])
     confs, oks = np.array(confs), np.array(oks)
@@ -232,6 +252,7 @@ def main() -> None:
         "classes": classes,
         "n_train": len(by_split["train"]),
         "n_val": len(val_rows),
+        "n_calibration": len(cal_rows),
         "in_domain_test": leaf_metrics("test", by_crop),
         "cross_source_test": leaf_metrics("xtest", by_source_crop),
         "ood": ood_metrics(),
@@ -259,8 +280,7 @@ def _table(section: dict, first: str) -> list[str]:
 
 def render_report(m: dict) -> str:
     src_lines = [
-        f"| {s.key} | [{s.title}]({s.url}) | {s.licence} | {s.origin} | "
-        f"{'evaluation only' if s.eval_only else 'training'} |"
+        f"| {s.key} | [{s.title}]({s.url}) | {s.licence} | {s.origin} | {use_of(s)} |"
         for s in SOURCES
     ]
     ood_lines = [
@@ -291,11 +311,16 @@ def render_report(m: dict) -> str:
                 "performance.",
                 '- The app masks the logits to the crop the farmer selected ("top-1"); the unmasked '
                 "column shows what happens without that.",
-                f"- Temperature scaling T = {m['temperature']} (fitted on validation). Rejection "
-                f"threshold on P(other) = {m['tau_reject']} (95 % of validation leaf photos pass). "
-                f"A result is **confident** when the crop-masked top-1 probability is >= "
-                f"{m['tau_confident']} (>= 95 % precision on validation); otherwise **uncertain** "
-                "(top-3 shown, expert advice suggested).",
+                "- **Calibration**: the in-domain validation split is nearly perfect, so thresholds "
+                "tuned on it were degenerate (a first run rejected 60-94 % of the cross-source leaf "
+                "photos). Temperature and thresholds are therefore fitted on a *calibration half* of "
+                f"the cross-source photos (n={m['n_calibration']}, chosen by a hash of the file path); "
+                "the cross-source table below uses only the *other* half.",
+                f"- Temperature T = {m['temperature']}. Rejection threshold on P(other) = "
+                f"{m['tau_reject']} (90 % of calibration leaf photos pass). A result is **confident** "
+                f"when the crop-masked top-1 probability is >= {m['tau_confident']} (>= 90 % "
+                "precision on calibration); otherwise **uncertain** (top-3 shown, expert advice "
+                "suggested, no chemical options).",
                 "",
                 "## In-domain test (held-out images, same sources)",
                 "",
@@ -325,8 +350,11 @@ def render_report(m: dict) -> str:
                 "- Most training datasets come from one place and season; accuracy on a farmer's photo "
                 "will be lower than the in-domain numbers. Several crops have no cross-source test.",
                 "- Onion, okra, brinjal, pomegranate, banana, wheat and chickpea are not supported yet.",
-                "- The rejection gate was tuned for 95 % of real leaf photos to pass, so about 1 in 20 "
-                "real photos is asked to be retaken.",
+                "- The rejection gate lets about 90 % of field leaf photos through, and it does not "
+                "reliably reject leaves of unsupported crops (see banana): the farmer's crop choice "
+                "and the 'uncertain' band carry much of the safety.",
+                "- Cross-source accuracy is far below in-domain accuracy; quote the cross-source "
+                "numbers, not the in-domain ones.",
             ]
         )
         + "\n"

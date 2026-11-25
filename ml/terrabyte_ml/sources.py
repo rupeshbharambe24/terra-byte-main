@@ -23,6 +23,7 @@ class Source:
     github_repo: str = ""
     github_path: str = ""
     eval_only: bool = False
+    unused: bool = False  # downloaded but not usable (e.g. no disease labels)
     notes: str = ""
     extra: dict = field(default_factory=dict)
 
@@ -68,6 +69,7 @@ SOURCES: list[Source] = [
         kind="mendeley_files",
         mendeley_id="9twjtv92vk",
         files=("Diseases.zip", "Healthy Leaves.zip"),
+        eval_only=True,
         notes="Used as the cross-source test set for sugarcane (classes shared with sugarcane_mh).",
     ),
     Source(
@@ -99,6 +101,8 @@ SOURCES: list[Source] = [
         kind="mendeley_files",
         mendeley_id="74jsdxtmx2",
         files=("Cotton-Original.zip",),
+        eval_only=True,
+        notes="Cross-source test set for cotton (curl virus is not a training class).",
     ),
     Source(
         key="rice_sethy",
@@ -128,6 +132,8 @@ SOURCES: list[Source] = [
         kind="mendeley_files",
         mendeley_id="7nxxn4gj5s",
         files=("resized_onion_raw.rar",),
+        unused=True,
+        notes="Not used: the raw images are a per-plant time series without disease labels.",
     ),
     Source(
         key="chilli_krishna",
@@ -176,3 +182,9 @@ SOURCES: list[Source] = [
 ]
 
 BY_KEY = {s.key: s for s in SOURCES}
+
+
+def use_of(s: Source) -> str:
+    if s.unused:
+        return "not used (no disease labels)"
+    return "evaluation only" if s.eval_only else "training"

@@ -19,17 +19,14 @@ from . import taxonomy as tx
 from .data import IMG_SIZE, MEAN, RESIZE, STD
 from .evaluate import VERSION
 from .paths import EXPORT, ML_ROOT, REPORTS
-from .sources import SOURCES
+from .sources import SOURCES, use_of
 from .train import BACKBONE, RUN, build_model
 
 BACKEND_MODEL_DIR = ML_ROOT.parent / "backend" / "models" / "disease"
 
 
 def model_card(meta: dict) -> str:
-    rows = [
-        f"| {s.title} | {s.url} | {s.licence} | {'evaluation only' if s.eval_only else 'training'} |"
-        for s in SOURCES
-    ]
+    rows = [f"| {s.title} | {s.url} | {s.licence} | {use_of(s)} |" for s in SOURCES]
     return (
         "\n".join(
             [
