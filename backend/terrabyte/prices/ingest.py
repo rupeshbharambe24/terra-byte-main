@@ -44,7 +44,7 @@ API_BASE = "https://api.data.gov.in/resource/"
 CURRENT_RESOURCE = "9ef84268-d588-465a-a308-a864a43d0070"
 HISTORY_RESOURCE = "35985678-0d79-46b4-9ed6-6f13308a1d24"
 # Public sample key published on data.gov.in (10 rows per call, heavily rate limited).
-SAMPLE_KEY = "579b464db66ec23bdd000001cdd3946e44ce4aad7209ff7b23ac571b"  # noqa: S105
+SAMPLE_KEY = "579b464db66ec23bdd000001cdd3946e44ce4aad7209ff7b23ac571b"  # noqa: S105  # gitleaks:allow
 SERIES_FILE = Path(__file__).resolve().parent.parent / "reference" / "price_series.json"
 
 Fetcher = Callable[[str], dict[str, Any]]
