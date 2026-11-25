@@ -35,6 +35,9 @@ def clean_text(value: object) -> str:
 
 def market_name(value: object) -> str:
     name = clean_text(value)
+    # Agmarknet 2.0 spells the same yard both "Ausa APMC" and "APMC Ausa": use "APMC <name>".
+    if name.endswith(" APMC") and not name.startswith("APMC "):
+        name = "APMC " + name.removesuffix(" APMC")
     return MARKET_ALIASES.get(name, name)
 
 

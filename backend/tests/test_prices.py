@@ -33,6 +33,7 @@ def test_normalise_names_prices_and_dates():
     assert norm.market_name("Pune(Manjri) ") == "Pune(Manjri)"
     assert norm.market_name("Chakan") == "Khed(Chakan)"
     assert norm.market_name("  APMC   Junnar ") == "APMC Junnar"
+    assert norm.market_name("Ausa APMC ") == "APMC Ausa"
     assert norm.commodity_name("Bhendi") == "Bhindi(Ladies Finger)"
     assert norm.price("1,250") == Decimal("1250.00")
     assert norm.price(1100) == Decimal("1100.00")
