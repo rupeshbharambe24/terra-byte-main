@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Building2, ExternalLink, Mail, MapPin, MessageSquare, Phone, Search } from 'lucide-react';
+import { Building2, ExternalLink, Mail, MapPin, MessageSquare, Navigation, Phone, Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import AppShell from '@/components/common/AppShell';
@@ -24,10 +24,17 @@ import { blankToNull } from '@/lib/advice';
 import { adviceApi } from '@/lib/api';
 import { MAHARASHTRA_DISTRICTS, PAGE_SIZE } from '@/lib/constants';
 import { errorMessage } from '@/lib/errors';
-import { formatDate } from '@/lib/format';
+import { formatDate, formatNumber } from '@/lib/format';
+import { agroApi, directionsUrl, splitList } from '@/lib/agro';
 import { CONSULTATION_CATEGORIES, type ConsultationCategory, type KVK } from '@/lib/types';
 
 const NONE = 'none';
+
+function groupByDistrict(items: KVK[]): [string, KVK[]][] {
+  const groups = new Map<string, KVK[]>();
+  for (const k of items) groups.set(k.district, [...(groups.get(k.district) ?? []), k]);
+  return [...groups.entries()];
+}
 const ALL = 'all';
 const MIN_QUESTION = 10;
 const MAX_QUESTION = 4000;
@@ -200,14 +207,21 @@ const MyQuestions: React.FC<{ onAsk: () => void }> = ({ onAsk }) => {
 
 // ---- KVK directory ------------------------------------------------------------------------------
 
-const KVKCard: React.FC<{ kvk: KVK }> = ({ kvk: k }) => {
+const KVKCard: React.FC<{ kvk: KVK; distanceKm?: number }> = ({ kvk: k, distanceKm }) => {
   const { t, i18n } = useTranslation(['advice', 'common']);
+  const lng = i18n.resolvedLanguage;
+  const directions = directionsUrl(k);
   return (
     <Card>
       <CardHeader className="pb-2">
         <CardTitle className="text-base break-words">{k.name}</CardTitle>
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          {k.district}, {k.state}
+          {[k.taluka, k.district, k.state].filter(Boolean).join(', ')}
+          {distanceKm !== undefined && (
+            <span className="ml-2 font-medium text-gray-900 dark:text-gray-100">
+              {t('kvk.distance', { km: formatNumber(distanceKm, lng, 0) })}
+            </span>
+          )}
         </p>
       </CardHeader>
       <CardContent className="space-y-2 text-sm">
@@ -226,32 +240,48 @@ const KVKCard: React.FC<{ kvk: KVK }> = ({ kvk: k }) => {
             </span>
           </p>
         )}
-        {k.phone && (
-          <p className="flex gap-2">
+        {splitList(k.phone).map((phone) => (
+          <p key={phone} className="flex gap-2">
             <Phone className="mt-0.5 h-4 w-4 shrink-0 text-gray-500" aria-hidden="true" />
-            <a href={`tel:${k.phone.replace(/[^\d+]/g, '')}`} className="text-green-700 hover:underline dark:text-green-400">
-              {k.phone}
+            <a href={`tel:${phone.replace(/[^\d+]/g, '')}`} className="text-green-700 hover:underline dark:text-green-400">
+              {phone}
             </a>
           </p>
-        )}
-        {k.email && (
-          <p className="flex gap-2">
+        ))}
+        {splitList(k.email).map((email) => (
+          <p key={email} className="flex gap-2">
             <Mail className="mt-0.5 h-4 w-4 shrink-0 text-gray-500" aria-hidden="true" />
-            <a href={`mailto:${k.email}`} className="break-all text-green-700 hover:underline dark:text-green-400">
-              {k.email}
+            <a href={`mailto:${email}`} className="break-all text-green-700 hover:underline dark:text-green-400">
+              {email}
             </a>
           </p>
-        )}
-        {k.website && (
-          <p className="flex gap-2">
-            <ExternalLink className="mt-0.5 h-4 w-4 shrink-0 text-gray-500" aria-hidden="true" />
-            <a href={k.website} target="_blank" rel="noreferrer noopener" className="break-all text-green-700 hover:underline dark:text-green-400">
+        ))}
+        <div className="flex flex-wrap gap-x-4 gap-y-1">
+          {k.website && (
+            <a href={k.website} target="_blank" rel="noreferrer noopener" className="inline-flex items-center gap-1 text-green-700 hover:underline dark:text-green-400">
+              <ExternalLink className="h-4 w-4" aria-hidden="true" />
               {t('kvk.website')}
             </a>
+          )}
+          {directions && (
+            <a href={directions} target="_blank" rel="noreferrer noopener" className="inline-flex items-center gap-1 text-green-700 hover:underline dark:text-green-400">
+              <Navigation className="h-4 w-4" aria-hidden="true" />
+              {t('kvk.directions')}
+            </a>
+          )}
+        </div>
+        {k.lat !== null && k.coords_approximate && (
+          <p className="text-xs text-amber-700 dark:text-amber-300">
+            {t('kvk.approxLocation')}
+            {k.coords_precision && (
+              <span className="block text-gray-500" lang="en">
+                {k.coords_precision}
+              </span>
+            )}
           </p>
         )}
         <p className="pt-1 text-xs text-gray-500">
-          {k.verified_on ? t('kvk.verifiedOn', { date: formatDate(k.verified_on, i18n.resolvedLanguage) }) : t('kvk.notVerified')}
+          {k.verified_on ? t('kvk.verifiedOn', { date: formatDate(k.verified_on, lng) }) : t('kvk.notVerified')}
           {k.source_url && (
             <>
               {' · '}
@@ -263,6 +293,34 @@ const KVKCard: React.FC<{ kvk: KVK }> = ({ kvk: k }) => {
         </p>
       </CardContent>
     </Card>
+  );
+};
+
+const NearestKVKs: React.FC = () => {
+  const { t } = useTranslation(['advice', 'common']);
+  const { user } = useAuth();
+  const hasLocation = user?.lat != null && user?.lon != null;
+  const query = useQuery({
+    queryKey: ['kvks', 'nearest', user?.lat, user?.lon],
+    queryFn: () => agroApi.nearestKvks({ limit: 3 }),
+    enabled: hasLocation,
+  });
+  if (!hasLocation) return <p className="text-sm text-gray-600 dark:text-gray-400">{t('kvk.nearestNoLocation')}</p>;
+  if (query.isLoading) return <PageSpinner />;
+  if (query.isError) return <ErrorAlert error={query.error} />;
+  if (!query.data || query.data.length === 0) return null;
+  return (
+    <section aria-labelledby="kvk-nearest" className="space-y-2">
+      <h2 id="kvk-nearest" className="text-lg font-semibold text-gray-900 dark:text-white">
+        {t('kvk.nearestTitle')}
+      </h2>
+      <p className="text-xs text-gray-500">{t('kvk.nearestHint')}</p>
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {query.data.map((k) => (
+          <KVKCard key={k.id} kvk={k} distanceKm={k.distance_km} />
+        ))}
+      </div>
+    </section>
   );
 };
 
@@ -288,6 +346,7 @@ const KVKDirectory: React.FC = () => {
 
   return (
     <div className="space-y-4">
+      {!filtered && !directoryEmpty && <NearestKVKs />}
       {!directoryEmpty && (
         <div className="flex flex-col gap-3 sm:flex-row">
           <div className="relative flex-1">
@@ -338,9 +397,16 @@ const KVKDirectory: React.FC = () => {
           <p className="text-sm text-gray-600 dark:text-gray-400" aria-live="polite">
             {t('kvk.count', { count: query.data?.total ?? 0 })}
           </p>
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {query.data?.items.map((k) => <KVKCard key={k.id} kvk={k} />)}
-          </div>
+          {groupByDistrict(query.data?.items ?? []).map(([d, rows]) => (
+            <section key={d} className="space-y-2">
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100">{d}</h3>
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {rows.map((k) => (
+                  <KVKCard key={k.id} kvk={k} />
+                ))}
+              </div>
+            </section>
+          ))}
           <Pager page={page} total={query.data?.total ?? 0} pageSize={PAGE_SIZE} onPage={setPage} />
         </>
       )}

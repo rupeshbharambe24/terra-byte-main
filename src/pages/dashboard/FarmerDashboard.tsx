@@ -4,8 +4,9 @@ import { useQuery } from '@tanstack/react-query';
 import {
   Bell,
   Building2,
-  CloudSun,
+  FlaskConical,
   IndianRupee,
+  Landmark,
   MapPin,
   MessageSquare,
   Package,
@@ -19,6 +20,9 @@ import PageHeader from '@/components/common/PageHeader';
 import PageSpinner from '@/components/common/PageSpinner';
 import { ErrorAlert } from '@/components/common/QueryState';
 import StatusPill from '@/components/common/StatusPill';
+import IrrigationCard from '@/components/dashboard/IrrigationCard';
+import PricesCard from '@/components/dashboard/PricesCard';
+import WeatherCard from '@/components/dashboard/WeatherCard';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/context/AuthContext';
 import { dashboardApi } from '@/lib/api';
@@ -61,6 +65,8 @@ const FarmerDashboard: React.FC = () => {
     { to: '/kvk-consultation', icon: Building2, key: 'kvk' },
     { to: '/forums', icon: MessageSquare, key: 'forums' },
     { to: '/financial-management', icon: IndianRupee, key: 'accounts' },
+    { to: '/soil-fertilizer', icon: FlaskConical, key: 'soil' },
+    { to: '/government-schemes', icon: Landmark, key: 'schemes' },
     { to: '/settings', icon: MapPin, key: 'fields' },
   ];
 
@@ -177,15 +183,11 @@ const FarmerDashboard: React.FC = () => {
             </Card>
           </div>
 
-          <Card className="border-dashed">
-            <CardContent className="flex items-start gap-3 p-4">
-              <CloudSun className="h-6 w-6 shrink-0 text-gray-400" aria-hidden="true" />
-              <div>
-                <p className="font-medium text-gray-900 dark:text-gray-100">{t('dashboard.comingTitle')}</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{t('dashboard.comingBody')}</p>
-              </div>
-            </CardContent>
-          </Card>
+          <div className="grid gap-4 lg:grid-cols-2">
+            <WeatherCard />
+            <IrrigationCard />
+          </div>
+          <PricesCard />
 
           <section aria-labelledby="quick-links">
             <h2 id="quick-links" className="mb-3 text-lg font-semibold text-gray-900 dark:text-white">

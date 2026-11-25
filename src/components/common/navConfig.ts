@@ -8,6 +8,7 @@ import {
   CalendarDays,
   Cloud,
   Droplets,
+  FlaskConical,
   Home,
   IndianRupee,
   Landmark,
@@ -38,8 +39,7 @@ const notifications: NavItem = { key: 'notifications', icon: Bell, path: '/notif
 export const NAV_ITEMS: Record<Role, NavItem[]> = {
   farmer: [
     { key: 'dashboard', icon: Home, path: '/farmer-dashboard' },
-    { key: 'soilMonitoring', icon: BarChart3, path: '/soil-monitoring' },
-    { key: 'precisionFertilizer', icon: Sprout, path: '/precision-fertilizer' },
+    { key: 'soilFertilizer', icon: FlaskConical, path: '/soil-fertilizer' },
     { key: 'smartIrrigation', icon: Droplets, path: '/smart-irrigation' },
     { key: 'weatherForecast', icon: Cloud, path: '/weather-forecast' },
     { key: 'cropPlanning', icon: Sprout, path: '/crop-planning' },

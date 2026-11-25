@@ -95,14 +95,44 @@ describe('farm pages', () => {
       month_income: 0,
       month_expense: 2700,
     };
-    fetchMock.mockImplementation(route({ '/api/dashboard/farmer': data }));
+    const weather = {
+      location: { lat: 19.12, lon: 73.97, source: 'profile', field_id: null, field_name: null },
+      fetched_at: '2026-11-25T04:00:00Z',
+      stale: false,
+      today: '2026-11-25',
+      daily: [
+        {
+          date: '2026-11-25',
+          weather_code: 0,
+          tmax_c: 29.4,
+          tmin_c: 15.2,
+          rain_mm: 0,
+          rain_probability_pct: 5,
+          et0_mm: 4.1,
+          wind_max_kmh: 9,
+          rh_max_pct: 80,
+          rh_min_pct: 35,
+        },
+      ],
+      past_daily: [],
+      hourly: [],
+      advisories: [
+        { id: 'dry_week', severity: 'info', values: { mm: 0 }, rule: 'r', basis: 'b', source_url: null },
+      ],
+      attribution: { text: 'Weather data by Open-Meteo.com', url: '', license: 'CC BY 4.0', license_url: '' },
+    };
+    fetchMock.mockImplementation(route({ '/api/dashboard/farmer': data, '/api/weather': weather, '/api/fields': [] }));
     renderWithProviders(<FarmerDashboard />, { route: '/farmer-dashboard' });
     await waitFor(() => expect(screen.getByText('Orders in progress', { selector: 'p' })).toBeInTheDocument());
     expect(screen.getByText('4 acres (160 guntha)')).toBeInTheDocument();
     expect(screen.getByText('₹2,700')).toBeInTheDocument();
     expect(screen.getByText('Order #12 · Shivneri Krishi Kendra')).toBeInTheDocument();
     expect(screen.getByText('Shipped')).toBeInTheDocument();
-    expect(screen.getByText(/coming in the next phase/)).toBeInTheDocument();
+    expect(screen.getByText('Mandi prices — coming next')).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByText(/Clear, 15.2–29.4 °C, rain 0 mm/)).toBeInTheDocument());
+    expect(screen.getByText(/Only 0 mm of rain expected this week/)).toBeInTheDocument();
+    expect(screen.getByText('Weather data by Open-Meteo.com')).toBeInTheDocument();
+    expect(screen.getByText('No field has a crop yet.')).toBeInTheDocument();
     for (const n of ['3', '4', '5']) expect(screen.getAllByText(n).length).toBeGreaterThan(0);
   });
 

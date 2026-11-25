@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from '@/components/common/ProtectedRoute';
 import DemoBanner from '@/components/common/DemoBanner';
 import PageSpinner from '@/components/common/PageSpinner';
@@ -11,7 +11,6 @@ const LoginPage = lazy(() => import('@/pages/LoginPage'));
 const RegisterPage = lazy(() => import('@/pages/RegisterPage'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 const Unauthorized = lazy(() => import('@/pages/Unauthorized'));
-const ComingSoon = lazy(() => import('@/pages/ComingSoon'));
 
 const FarmerDashboard = lazy(() => import('@/pages/dashboard/FarmerDashboard'));
 const VendorDashboard = lazy(() => import('@/pages/dashboard/VendorDashboard'));
@@ -19,7 +18,8 @@ const HardwareVendorDashboard = lazy(() => import('@/pages/dashboard/HardwareVen
 const AdminDashboard = lazy(() => import('@/pages/dashboard/AdminDashboard'));
 const ExpertDashboard = lazy(() => import('@/pages/dashboard/ExpertDashboard'));
 
-const SoilMonitoring = lazy(() => import('@/pages/features/SoilMonitoring'));
+const SoilFertilizer = lazy(() => import('@/pages/features/SoilFertilizer'));
+const WeatherForecast = lazy(() => import('@/pages/features/WeatherForecast'));
 const SmartIrrigation = lazy(() => import('@/pages/features/SmartIrrigation'));
 const CropPlanning = lazy(() => import('@/pages/features/CropPlanning'));
 const DiseaseDetection = lazy(() => import('@/pages/features/DiseaseDetection'));
@@ -29,7 +29,6 @@ const PriceForecast = lazy(() => import('@/pages/features/PriceForecast'));
 const GovernmentSchemes = lazy(() => import('@/pages/features/GovernmentSchemes'));
 const KVKConsultation = lazy(() => import('@/pages/features/KVKConsultation'));
 const Forums = lazy(() => import('@/pages/features/Forums'));
-const PrecisionFertilizer = lazy(() => import('@/pages/features/PrecisionFertilizer'));
 const FinancialManagement = lazy(() => import('@/pages/features/FinancialManagement'));
 const Notifications = lazy(() => import('@/pages/features/Notifications'));
 const Settings = lazy(() => import('@/pages/features/Settings'));
@@ -61,7 +60,7 @@ const ConsultationThread = lazy(() => import('@/pages/shared/ConsultationThread'
 const AdminConsultations = lazy(() => import('@/pages/admin/AdminConsultations'));
 const ForumPost = lazy(() => import('@/pages/features/ForumPost'));
 
-const WeatherComingSoon: React.FC = () => <ComingSoon titleKey="weatherTitle" bodyKey="weatherBody" />;
+const ToSoilFertilizer: React.FC = () => <Navigate to="/soil-fertilizer" replace />;
 
 interface AppRoute {
   path: string;
@@ -76,10 +75,13 @@ const ALL_ROLES: Role[] = ['farmer', 'vendor', 'hardware_vendor', 'admin', 'expe
 const PROTECTED_ROUTES: AppRoute[] = [
   // Farmer
   { path: '/farmer-dashboard', roles: ['farmer'], Component: FarmerDashboard },
-  { path: '/soil-monitoring', roles: ['farmer'], Component: SoilMonitoring, demo: true },
-  { path: '/smart-irrigation', roles: ['farmer'], Component: SmartIrrigation, demo: true },
-  { path: '/weather-forecast', roles: ['farmer'], Component: WeatherComingSoon },
-  { path: '/crop-planning', roles: ['farmer'], Component: CropPlanning, demo: true },
+  { path: '/soil-fertilizer', roles: ['farmer'], Component: SoilFertilizer },
+  // Old links: soil monitoring and precision fertilizer are now one real feature.
+  { path: '/soil-monitoring', roles: ['farmer'], Component: ToSoilFertilizer },
+  { path: '/precision-fertilizer', roles: ['farmer'], Component: ToSoilFertilizer },
+  { path: '/smart-irrigation', roles: ['farmer'], Component: SmartIrrigation },
+  { path: '/weather-forecast', roles: ['farmer'], Component: WeatherForecast },
+  { path: '/crop-planning', roles: ['farmer'], Component: CropPlanning },
   { path: '/disease-detection', roles: ['farmer'], Component: DiseaseDetection, demo: true },
   { path: '/equipment-rentals', roles: ['farmer'], Component: EquipmentRentals },
   { path: '/marketplace', roles: ['farmer', 'vendor'], Component: Marketplace },
@@ -87,14 +89,13 @@ const PROTECTED_ROUTES: AppRoute[] = [
   { path: '/orders/:orderId', roles: ['farmer'], Component: OrderDetail },
   { path: '/price-forecast', roles: ['farmer'], Component: PriceForecast, demo: true },
   { path: '/financial-management', roles: ['farmer'], Component: FinancialManagement },
-  { path: '/government-schemes', roles: ['farmer'], Component: GovernmentSchemes, demo: true },
+  { path: '/government-schemes', roles: ['farmer'], Component: GovernmentSchemes },
   { path: '/kvk-consultation', roles: ['farmer'], Component: KVKConsultation },
   { path: '/knowledge', roles: ['farmer', 'expert', 'admin'], Component: Knowledge },
   { path: '/knowledge/:articleId', roles: ['farmer', 'expert', 'admin'], Component: ArticleView },
   { path: '/consultations/:consultationId', roles: ['farmer', 'expert', 'admin'], Component: ConsultationThread },
   { path: '/forums', roles: ['farmer', 'expert', 'admin'], Component: Forums },
   { path: '/forums/:postId', roles: ['farmer', 'expert', 'admin'], Component: ForumPost },
-  { path: '/precision-fertilizer', roles: ['farmer'], Component: PrecisionFertilizer, demo: true },
   // Everyone
   { path: '/notifications', roles: ALL_ROLES, Component: Notifications },
   { path: '/settings', roles: ALL_ROLES, Component: Settings },
