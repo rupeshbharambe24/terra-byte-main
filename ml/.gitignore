@@ -1,0 +1,6 @@
+# Downloaded datasets, prepared images, checkpoints and exports never go into git.
+data/
+runs/
+*.pt
+*.pth
+*.onnx
