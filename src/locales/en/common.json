@@ -17,7 +17,7 @@
   },
   "sidebar": {
     "dashboard": "Dashboard",
-    "soilMonitoring": "Soil Monitoring",
+    "soilFertilizer": "Soil & Fertilizer",
     "smartIrrigation": "Smart Irrigation",
     "weatherForecast": "Weather Forecast",
     "cropPlanning": "Crop Planning",
@@ -29,7 +29,6 @@
     "governmentSchemes": "Government Schemes",
     "kvkConsultation": "KVK Consultation",
     "forums": "Forums",
-    "precisionFertilizer": "Precision Fertilizer",
     "notifications": "Notifications",
     "settings": "Settings",
     "products": "Products",

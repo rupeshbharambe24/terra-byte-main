@@ -8,6 +8,7 @@ import enAdvice from '@/locales/en/advice.json';
 import enForum from '@/locales/en/forum.json';
 import enFarm from '@/locales/en/farm.json';
 import enDashboard from '@/locales/en/dashboard.json';
+import enAgro from '@/locales/en/agro.json';
 import hiCommon from '@/locales/hi/common.json';
 import hiAuth from '@/locales/hi/auth.json';
 import hiLanding from '@/locales/hi/landing.json';
@@ -18,6 +19,7 @@ import hiAdvice from '@/locales/hi/advice.json';
 import hiForum from '@/locales/hi/forum.json';
 import hiFarm from '@/locales/hi/farm.json';
 import hiDashboard from '@/locales/hi/dashboard.json';
+import hiAgro from '@/locales/hi/agro.json';
 import mrCommon from '@/locales/mr/common.json';
 import mrAuth from '@/locales/mr/auth.json';
 import mrLanding from '@/locales/mr/landing.json';
@@ -28,10 +30,11 @@ import mrAdvice from '@/locales/mr/advice.json';
 import mrForum from '@/locales/mr/forum.json';
 import mrFarm from '@/locales/mr/farm.json';
 import mrDashboard from '@/locales/mr/dashboard.json';
+import mrAgro from '@/locales/mr/agro.json';
 
 export const LANGUAGES = ['en', 'hi', 'mr'] as const;
 export type AppLanguage = (typeof LANGUAGES)[number];
-export const NAMESPACES = ['common', 'auth', 'landing', 'admin', 'market', 'rentals', 'advice', 'forum', 'farm', 'dashboard'] as const;
+export const NAMESPACES = ['common', 'auth', 'landing', 'admin', 'market', 'rentals', 'advice', 'forum', 'farm', 'dashboard', 'agro'] as const;
 
 export const resources = {
   en: {
@@ -45,6 +48,7 @@ export const resources = {
     forum: enForum,
     farm: enFarm,
     dashboard: enDashboard,
+    agro: enAgro,
   },
   hi: {
     common: hiCommon,
@@ -57,6 +61,7 @@ export const resources = {
     forum: hiForum,
     farm: hiFarm,
     dashboard: hiDashboard,
+    agro: hiAgro,
   },
   mr: {
     common: mrCommon,
@@ -69,6 +74,7 @@ export const resources = {
     forum: mrForum,
     farm: mrFarm,
     dashboard: mrDashboard,
+    agro: mrAgro,
   },
 } as const;
 

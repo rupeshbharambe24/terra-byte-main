@@ -17,7 +17,7 @@
   },
   "sidebar": {
     "dashboard": "डॅशबोर्ड",
-    "soilMonitoring": "माती निरीक्षण",
+    "soilFertilizer": "माती व खत",
     "smartIrrigation": "स्मार्ट सिंचन",
     "weatherForecast": "हवामान अंदाज",
     "cropPlanning": "पीक नियोजन",
@@ -29,7 +29,6 @@
     "governmentSchemes": "सरकारी योजना",
     "kvkConsultation": "केव्हीके सल्ला",
     "forums": "चर्चा मंच",
-    "precisionFertilizer": "अचूक खत मात्रा",
     "notifications": "सूचना",
     "settings": "सेटिंग्ज",
     "products": "उत्पादने",

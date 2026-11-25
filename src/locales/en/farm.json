@@ -178,8 +178,6 @@
     "orderLine": "Order #{{id}} · {{vendor}}",
     "nextBookings": "Next bookings",
     "noBookings": "No upcoming bookings.",
-    "comingTitle": "Weather, mandi prices and crop advice — coming in the next phase",
-    "comingBody": "These will use real data for your fields' location once they are ready. Nothing is shown until then.",
     "quickLinks": "Quick links",
     "links": {
       "marketplace": "Buy inputs",
@@ -187,7 +185,9 @@
       "kvk": "Ask an expert",
       "forums": "Forum",
       "accounts": "Farm accounts",
-      "fields": "My fields"
+      "fields": "My fields",
+      "soil": "Soil & fertilizer",
+      "schemes": "Schemes & MSP"
     }
   }
 }

@@ -338,19 +338,31 @@ export interface KVK {
   district: string;
   state: string;
   host_organisation: string | null;
+  taluka?: string | null;
   address: string | null;
   pincode: string | null;
+  /** Several numbers / addresses are joined with ", ". */
   phone: string | null;
   email: string | null;
   website: string | null;
   lat: number | null;
   lon: number | null;
+  /** How exact lat/lon is, e.g. "village-level (...); not the KVK campus". */
+  coords_precision?: string | null;
+  /** True unless the point is the KVK site itself. */
+  coords_approximate?: boolean;
   source_url: string | null;
+  sources?: string[] | null;
   verified_on: string | null;
   created_at: string;
 }
 
-export type KVKInput = Partial<Omit<KVK, 'id' | 'created_at'>> & Pick<KVK, 'name' | 'district' | 'state'>;
+export interface KVKNearest extends KVK {
+  distance_km: number;
+}
+
+export type KVKInput = Partial<Omit<KVK, 'id' | 'created_at' | 'coords_approximate' | 'sources'>> &
+  Pick<KVK, 'name' | 'district' | 'state'>;
 
 export interface DataImport {
   id: number;
@@ -478,6 +490,8 @@ export interface FieldPlot {
   soil_type: string | null;
   irrigation_source: string | null;
   current_crop: string | null;
+  /** Crop-calendar season key, e.g. "kharif", "rabi", "suru". */
+  season?: string | null;
   sowing_date: string | null;
   lat: number | null;
   lon: number | null;

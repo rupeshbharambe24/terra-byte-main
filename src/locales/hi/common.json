@@ -17,7 +17,7 @@
   },
   "sidebar": {
     "dashboard": "डैशबोर्ड",
-    "soilMonitoring": "मिट्टी की निगरानी",
+    "soilFertilizer": "मिट्टी और उर्वरक",
     "smartIrrigation": "स्मार्ट सिंचाई",
     "weatherForecast": "मौसम पूर्वानुमान",
     "cropPlanning": "फ़सल योजना",
@@ -29,7 +29,6 @@
     "governmentSchemes": "सरकारी योजनाएँ",
     "kvkConsultation": "केवीके परामर्श",
     "forums": "चर्चा मंच",
-    "precisionFertilizer": "सटीक खाद मात्रा",
     "notifications": "सूचनाएँ",
     "settings": "सेटिंग्स",
     "products": "उत्पाद",

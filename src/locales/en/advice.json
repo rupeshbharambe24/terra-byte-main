@@ -57,7 +57,13 @@
     "website": "Website",
     "verifiedOn": "Details verified on {{date}}",
     "notVerified": "Not verified yet",
-    "source": "Source"
+    "source": "Source",
+    "nearestTitle": "KVKs nearest to you",
+    "nearestHint": "Straight-line distance from your profile location. Most KVK map points are the village or town centre, not the KVK campus.",
+    "nearestNoLocation": "Add your location in Settings to see the KVKs nearest to you.",
+    "distance": "≈ {{km}} km",
+    "directions": "Directions",
+    "approxLocation": "Map point is approximate (village or town centre, not the KVK campus). Call before visiting."
   },
   "thread": {
     "back": "Back to the list",
