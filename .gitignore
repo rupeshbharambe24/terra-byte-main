@@ -38,3 +38,6 @@ venv/
 # Secrets: never commit service-account keys
 backend/firebase-serviceAccountKey.json
 *serviceAccountKey*.json
+
+# Backend runtime data (SQLite database, uploads, generated JWT secret)
+backend/data/

@@ -1,0 +1,349 @@
+{
+ "meta": {
+  "title": "Nutrient content of common Indian fertilizers and government-controlled prices",
+  "compiled": "2026-11-24",
+  "note": "Nutrient % are FCO minimum guaranteed / nominal grade values. P as P2O5, K as K2O. NBS per-kg subsidy rates for Rabi 2026-27 were reported in news (N 94.21, P 66.11, K 2.38, S 10.42 Rs/kg) but the PIB factsheet could not be fetched (HTTP 403) - not included as verified data."
+ },
+ "products": [
+  {
+   "product": "Urea (neem coated)",
+   "grade": "46-0-0",
+   "N_pct": 46,
+   "P2O5_pct": 0,
+   "K2O_pct": 0,
+   "S_pct": null,
+   "other": {},
+   "fco_spec_note": "Total N min 46.0% (dry basis); biuret max 1.5%",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": null
+  },
+  {
+   "product": "Diammonium phosphate (DAP)",
+   "grade": "18-46-0",
+   "N_pct": 18,
+   "P2O5_pct": 46,
+   "K2O_pct": 0,
+   "S_pct": null,
+   "other": {},
+   "fco_spec_note": "Total N min 18.0; NAC-soluble P2O5 min 46.0; water-soluble P2O5 min 41.0",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": null
+  },
+  {
+   "product": "Muriate of potash (MOP, KCl)",
+   "grade": "0-0-60",
+   "N_pct": 0,
+   "P2O5_pct": 0,
+   "K2O_pct": 60,
+   "S_pct": null,
+   "other": {},
+   "fco_spec_note": "Water-soluble K2O min 60.0",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": null
+  },
+  {
+   "product": "Single superphosphate (SSP), powdered",
+   "grade": "0-16-0",
+   "N_pct": 0,
+   "P2O5_pct": 16,
+   "K2O_pct": 0,
+   "S_pct": 11,
+   "other": {},
+   "fco_spec_note": "Water-soluble P2O5 min 16.0; S min 11.0",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": "14% P2O5 grade also listed in FCO"
+  },
+  {
+   "product": "Triple superphosphate (TSP)",
+   "grade": "0-46-0",
+   "N_pct": 0,
+   "P2O5_pct": 46,
+   "K2O_pct": 0,
+   "S_pct": null,
+   "other": {},
+   "fco_spec_note": "Total P2O5 min 46.0",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": null
+  },
+  {
+   "product": "Ammonium sulphate",
+   "grade": "20.6-0-0",
+   "N_pct": 20.6,
+   "P2O5_pct": 0,
+   "K2O_pct": 0,
+   "S_pct": 23,
+   "other": {},
+   "fco_spec_note": "Ammoniacal N min 20.6; S min 23.0",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": null
+  },
+  {
+   "product": "NPK 10-26-26",
+   "grade": "10-26-26",
+   "N_pct": 10,
+   "P2O5_pct": 26,
+   "K2O_pct": 26,
+   "S_pct": null,
+   "other": {},
+   "fco_spec_note": "Total N min 10.0; NAC-soluble P2O5 min 26.0 (water-soluble min 22.1); K2O min 26.0",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": null
+  },
+  {
+   "product": "NPK 12-32-16",
+   "grade": "12-32-16",
+   "N_pct": 12,
+   "P2O5_pct": 32,
+   "K2O_pct": 16,
+   "S_pct": null,
+   "other": {},
+   "fco_spec_note": "Total N min 12.0; NAC-soluble P2O5 min 32.0; K2O nominal 16",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": "The consolidated copy prints K2O 27.2 and water-soluble P2O5 16.0 - appears transposed; nominal grade 12-32-16 used."
+  },
+  {
+   "product": "Ammonium phosphate sulphate (20-20-0-13)",
+   "grade": "20-20-0-13",
+   "N_pct": 20,
+   "P2O5_pct": 20,
+   "K2O_pct": 0,
+   "S_pct": 13,
+   "other": {},
+   "fco_spec_note": "Total N min 20.0; NAC-soluble P2O5 min 20.0 (water-soluble min 17.0); S min 13.0",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": null
+  },
+  {
+   "product": "Ammonium phosphate sulphate (16-20-0-13)",
+   "grade": "16-20-0-13",
+   "N_pct": 16,
+   "P2O5_pct": 20,
+   "K2O_pct": 0,
+   "S_pct": null,
+   "other": {},
+   "fco_spec_note": "Ammoniacal N min 16.0; NAC-soluble P2O5 min 20.0",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": "Copy read prints 'Sulphur (as S) min 11.0' under this grade with irregular numbering; commercial name implies 13 - S left null pending verification"
+  },
+  {
+   "product": "NPK 19-19-19 (100% water soluble)",
+   "grade": "19-19-19",
+   "N_pct": 19,
+   "P2O5_pct": 19,
+   "K2O_pct": 19,
+   "S_pct": null,
+   "other": {},
+   "fco_spec_note": "Listed in FCO Schedule I (water-soluble fertilisers); a separate granular 19-19-19 complex is also listed",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": null
+  },
+  {
+   "product": "NPK 15-15-15",
+   "grade": "15-15-15",
+   "N_pct": 15,
+   "P2O5_pct": 15,
+   "K2O_pct": 15,
+   "S_pct": null,
+   "other": {},
+   "fco_spec_note": "Total N min 15.0; K2O min 15.0",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": null
+  },
+  {
+   "product": "Mono ammonium phosphate 12-61-0 (100% water soluble)",
+   "grade": "12-61-0",
+   "N_pct": 12,
+   "P2O5_pct": 61,
+   "K2O_pct": 0,
+   "S_pct": null,
+   "other": {},
+   "fco_spec_note": null,
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": null
+  },
+  {
+   "product": "Potassium sulphate (SOP)",
+   "grade": "0-0-50",
+   "N_pct": 0,
+   "P2O5_pct": 0,
+   "K2O_pct": 50,
+   "S_pct": 17.5,
+   "other": {},
+   "fco_spec_note": "K2O min 50.0; S min 17.5",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": null
+  },
+  {
+   "product": "Sulphur 90% (powder / granular)",
+   "grade": "S 90",
+   "N_pct": 0,
+   "P2O5_pct": 0,
+   "K2O_pct": 0,
+   "S_pct": 90,
+   "other": {},
+   "fco_spec_note": "Total S min 90.0",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": null
+  },
+  {
+   "product": "Zinc sulphate heptahydrate",
+   "grade": "Zn 21",
+   "N_pct": 0,
+   "P2O5_pct": 0,
+   "K2O_pct": 0,
+   "S_pct": null,
+   "other": {
+    "Zn_pct": 21.0
+   },
+   "fco_spec_note": "Zn min 21.0",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": null
+  },
+  {
+   "product": "Zinc sulphate monohydrate",
+   "grade": "Zn 33",
+   "N_pct": 0,
+   "P2O5_pct": 0,
+   "K2O_pct": 0,
+   "S_pct": null,
+   "other": {
+    "Zn_pct": 33.0
+   },
+   "fco_spec_note": "Zn min 33.0",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": null
+  },
+  {
+   "product": "Ferrous sulphate heptahydrate",
+   "grade": "Fe 19",
+   "N_pct": 0,
+   "P2O5_pct": 0,
+   "K2O_pct": 0,
+   "S_pct": null,
+   "other": {
+    "Fe_pct": 19.0
+   },
+   "fco_spec_note": "Ferrous Fe min 19.0",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": null
+  },
+  {
+   "product": "Manganese sulphate",
+   "grade": "Mn 30.5",
+   "N_pct": 0,
+   "P2O5_pct": 0,
+   "K2O_pct": 0,
+   "S_pct": null,
+   "other": {
+    "Mn_pct": 30.5
+   },
+   "fco_spec_note": "Mn min 30.5",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": null
+  },
+  {
+   "product": "Copper sulphate pentahydrate",
+   "grade": "Cu 24",
+   "N_pct": 0,
+   "P2O5_pct": 0,
+   "K2O_pct": 0,
+   "S_pct": null,
+   "other": {
+    "Cu_pct": 24.0
+   },
+   "fco_spec_note": "Cu min 24.0",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": null
+  },
+  {
+   "product": "Borax (sodium tetraborate decahydrate), soil application",
+   "grade": "B 10.5",
+   "N_pct": 0,
+   "P2O5_pct": 0,
+   "K2O_pct": 0,
+   "S_pct": null,
+   "other": {
+    "B_pct": 10.5
+   },
+   "fco_spec_note": "B min 10.5",
+   "source_name": "Fertiliser (Control) Order 1985, Schedule I Part A (consolidated copy hosted by Odisha agri-licence portal; fert.nic.in not reachable)",
+   "source_url": "https://odishaagrilicense.nic.in/actsRules/Fertiliser_Control_Order_1985.pdf",
+   "notes": null
+  },
+  {
+   "product": "Gypsum (agricultural)",
+   "grade": null,
+   "N_pct": 0,
+   "P2O5_pct": 0,
+   "K2O_pct": 0,
+   "S_pct": null,
+   "other": {},
+   "fco_spec_note": null,
+   "source_name": null,
+   "source_url": null,
+   "notes": "Used for groundnut (Ca + S); nutrient content not extracted - gap."
+  }
+ ],
+ "prices": [
+  {
+   "product": "Urea (neem coated)",
+   "bag_kg": 45,
+   "mrp_inr_per_bag": 242,
+   "basis": "statutorily fixed MRP; exclusive of neem-coating charges and taxes as applicable (~Rs 538/quintal)",
+   "bag_size_since": "2018-03-01 (notification dated 2017-09-04; 50 kg -> 45 kg)",
+   "as_of": "2026-03 (reported Lok Sabha written reply, MoS Anupriya Patel)",
+   "source_name": "Indian Cooperative news report of Lok Sabha written reply, 22 Mar 2026",
+   "source_url": "https://www.indiancooperative.com/featured/no-urea-price-hike-balanced-fertiliser-use-with-smaller-bags-mooted/",
+   "corroboration": "Earlier Lok Sabha replies (eparlib.sansad.in AU4185, AU790) quote the same Rs 242/45 kg - not reachable from research machine",
+   "source_type": "secondary report of official statement"
+  },
+  {
+   "product": "Sulphur-coated urea (Urea Gold)",
+   "bag_kg": 40,
+   "mrp_inr_per_bag": 254,
+   "basis": "exclusive of levies and GST",
+   "as_of": "2026-03",
+   "source_url": "https://www.indiancooperative.com/featured/no-urea-price-hike-balanced-fertiliser-use-with-smaller-bags-mooted/",
+   "source_type": "secondary"
+  },
+  {
+   "product": "DAP",
+   "bag_kg": 50,
+   "mrp_inr_per_bag": 1350,
+   "basis": "MRP under NBS (decontrolled; companies fix MRP under government monitoring). Retail price kept unchanged for Rabi 2026-27 (1 Oct 2026 - 31 Mar 2027)",
+   "as_of": "2026-11-11 (Cabinet NBS decision)",
+   "source_name": "AgroSpectrum India, 12 Nov 2026, reporting Cabinet decision announced by Union I&B Minister",
+   "source_url": "https://agrospectrumindia.com/news/40/35135/cabinet-approves-rs-62370-crore-pk-fertiliser-subsidy-for-rabi-202627-keeps-dap-price-unchanged.html",
+   "official_context_url": "https://www.pmindia.gov.in/en/news_updates/cabinet-approves-nutrient-based-subsidy-nbs-rates-for-rabi-2026-27/",
+   "source_type": "secondary report; official PMIndia release confirms NBS Rabi 2026-27 approval (Rs 62,370.02 crore) but does not state the DAP price"
+  },
+  {
+   "product": "MOP, SSP, TSP, NPK/NPKS complexes, ammonium sulphate",
+   "bag_kg": null,
+   "mrp_inr_per_bag": null,
+   "basis": "Not statutorily fixed: 28 P&K grades are under the Nutrient Based Subsidy scheme (since 1 Apr 2010); companies set MRP, which must be printed on the bag with subsidy per bag/kg (PIB backgrounder, 5 Jan 2026).",
+   "source_url": "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/jan/doc202615751901.pdf",
+   "as_of": "2026-01-05"
+  }
+ ]
+}

@@ -1,0 +1,68 @@
+{
+  "title": "Crop disease check",
+  "subtitle": "Photograph one leaf. The model suggests possible problems; it is not a diagnosis.",
+  "unavailable": "The disease model is not installed on this server yet.",
+  "model": "Model {{version}}. Accuracy per crop is published in the evaluation report (admin: AI model performance).",
+  "form": {
+    "crop": "Crop",
+    "chooseCrop": "Choose your crop",
+    "photo": "Leaf photo",
+    "choose": "Choose or take a photo",
+    "change": "Change photo",
+    "submit": "Check photo",
+    "checking": "Checking…",
+    "tips": "For a good result: one leaf filling the frame, in daylight, in focus, on a plain background if possible.",
+    "tooLarge": "The photo is larger than {{mb}} MB."
+  },
+  "status": {
+    "confident": "Likely",
+    "uncertain": "Not sure",
+    "rejected": "Could not check"
+  },
+  "reason": {
+    "blank_image": "The photo looks blank. Please photograph a leaf.",
+    "too_dark": "The photo is too dark. Take it in daylight.",
+    "overexposed": "The photo is too bright. Avoid direct glare.",
+    "too_blurry": "The photo is blurry. Hold the phone steady and focus on the leaf.",
+    "not_a_supported_leaf": "This does not look like a leaf of a supported crop. Retake the photo, or ask an expert.",
+    "low_confidence": "The model is not sure. Compare the possibilities below, take another photo, or ask an expert.",
+    "looks_like_other_crop": "This leaf looks like a different crop from the one you chose. Check the crop, or ask an expert."
+  },
+  "result": {
+    "title": "Result",
+    "possibilities": "Possible causes",
+    "match": "{{pct}} match",
+    "symptoms": "Symptoms",
+    "cultural": "What you can do",
+    "chemical": "Chemical options listed in the official IPM package",
+    "chemicalWithheld": "Chemical options are shown only when the model is confident.",
+    "sources": "Sources",
+    "englishOnly": "Details are in English for now.",
+    "pathogen": "Cause: {{pathogen}}"
+  },
+  "ask": {
+    "button": "Ask an expert",
+    "note": "Note for the expert (optional)",
+    "send": "Send photo and result",
+    "sent": "Sent to an expert with the photo and the model's top 3.",
+    "open": "Open consultation"
+  },
+  "history": {
+    "title": "Your previous checks",
+    "empty": "No checks yet.",
+    "asked": "Expert asked"
+  },
+  "crops": {
+    "tomato": "Tomato",
+    "potato": "Potato",
+    "capsicum": "Capsicum (bell pepper)",
+    "maize": "Maize",
+    "grape": "Grape",
+    "soybean": "Soybean",
+    "cotton": "Cotton",
+    "sugarcane": "Sugarcane",
+    "rice": "Rice",
+    "pigeonpea": "Tur / pigeonpea",
+    "chilli": "Chilli"
+  }
+}

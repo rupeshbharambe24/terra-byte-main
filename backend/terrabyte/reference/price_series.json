@@ -1,0 +1,17 @@
+{
+  "note": "Maharashtra series fetched by `terrabyte-ingest-prices series`. Market names as on Agmarknet (data.gov.in); a district without a market fetches every market of that district.",
+  "series": [
+    {"commodity": "Onion", "district": "Pune", "market": "Pune(Manjri)"},
+    {"commodity": "Onion", "district": "Pune", "market": "Pune(Pimpri)"},
+    {"commodity": "Onion", "district": "Pune", "market": "Khed(Chakan)"},
+    {"commodity": "Onion", "district": "Nashik", "market": "Lasalgaon(Vinchur)"},
+    {"commodity": "Tomato", "district": "Pune", "market": "Pune(Manjri)"},
+    {"commodity": "Tomato", "district": "Pune", "market": "Pune(Pimpri)"},
+    {"commodity": "Potato", "district": "Pune", "market": "Pune(Manjri)"},
+    {"commodity": "Potato", "district": "Pune", "market": "Pune(Moshi)"},
+    {"commodity": "Soyabean", "district": "Latur"},
+    {"commodity": "Soyabean", "district": "Nashik", "market": "APMC Lasalgaon"},
+    {"commodity": "Arhar (Tur/Red Gram)(Whole)", "district": "Latur"},
+    {"commodity": "Cotton", "district": "Akola"}
+  ]
+}

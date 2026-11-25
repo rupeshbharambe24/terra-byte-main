@@ -1,212 +1,143 @@
-
 import React, { useState } from 'react';
-import Header from '../../components/common/Header';
-import Sidebar from '../../components/common/Sidebar';
-import { Button } from '../../components/ui/button';
-import { Input } from '../../components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table';
-import { Badge } from '../../components/ui/badge';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
-import { Search, UserPlus, Edit, Trash2, Ban, CheckCircle } from 'lucide-react';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { Search } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import AppShell from '@/components/common/AppShell';
+import PageSpinner from '@/components/common/PageSpinner';
+import { RoleBadge, StatusBadge } from '@/components/admin/badges';
+import StatusActionButton from '@/components/admin/StatusActionButton';
+import { availableActions } from '@/components/admin/userActions';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { useDebouncedValue } from '@/hooks/useDebouncedValue';
+import { adminApi } from '@/lib/api';
+import { errorMessage } from '@/lib/errors';
+import { formatDate, formatLocation } from '@/lib/format';
+import { ROLES, USER_STATUSES, type Role, type UserStatus } from '@/lib/types';
+
+const PAGE_SIZE = 20;
+const ALL = 'all';
 
 const UserManagement: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedRole, setSelectedRole] = useState('all');
+  const { t, i18n } = useTranslation(['admin', 'common']);
+  const [search, setSearch] = useState('');
+  const [role, setRole] = useState<Role | typeof ALL>(ALL);
+  const [status, setStatus] = useState<UserStatus | typeof ALL>(ALL);
+  const [page, setPage] = useState(0);
+  const q = useDebouncedValue(search.trim(), 300);
 
-  const users = [
-    {
-      id: 'U001',
-      name: 'Rajesh Kumar',
-      email: 'rajesh@farmer.com',
-      role: 'farmer',
-      status: 'active',
-      joinDate: '2024-01-15',
-      lastLogin: '2024-05-25',
-      location: 'Punjab, India'
-    },
-    {
-      id: 'U002',
-      name: 'Dr. Priya Sharma',
-      email: 'priya@expert.com',
-      role: 'expert',
-      status: 'active',
-      joinDate: '2024-02-20',
-      lastLogin: '2024-05-26',
-      location: 'Delhi, India'
-    },
-    {
-      id: 'U003',
-      name: 'AgriSeeds Co.',
-      email: 'info@agriseeds.com',
-      role: 'agri_vendor',
-      status: 'pending',
-      joinDate: '2024-05-20',
-      lastLogin: '2024-05-24',
-      location: 'Maharashtra, India'
-    },
-    {
-      id: 'U004',
-      name: 'TechFarm Equipment',
-      email: 'contact@techfarm.com',
-      role: 'hardware_vendor',
-      status: 'suspended',
-      joinDate: '2024-03-10',
-      lastLogin: '2024-05-15',
-      location: 'Gujarat, India'
-    }
-  ];
-
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'active':
-        return <Badge className="bg-green-100 text-green-800">Active</Badge>;
-      case 'pending':
-        return <Badge className="bg-yellow-100 text-yellow-800">Pending</Badge>;
-      case 'suspended':
-        return <Badge className="bg-red-100 text-red-800">Suspended</Badge>;
-      default:
-        return <Badge className="bg-gray-100 text-gray-800">{status}</Badge>;
-    }
+  const filters = {
+    q: q || undefined,
+    role: role === ALL ? undefined : role,
+    status: status === ALL ? undefined : status,
+    limit: PAGE_SIZE,
+    offset: page * PAGE_SIZE,
   };
-
-  const getRoleBadge = (role: string) => {
-    const roleColors = {
-      farmer: 'bg-blue-100 text-blue-800',
-      expert: 'bg-purple-100 text-purple-800',
-      agri_vendor: 'bg-orange-100 text-orange-800',
-      hardware_vendor: 'bg-teal-100 text-teal-800',
-      admin: 'bg-gray-100 text-gray-800'
-    };
-    return <Badge className={roleColors[role as keyof typeof roleColors]}>{role.replace('_', ' ')}</Badge>;
-  };
-
-  const filteredUsers = users.filter(user => {
-    const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         user.email.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesRole = selectedRole === 'all' || user.role === selectedRole;
-    return matchesSearch && matchesRole;
+  const { data, isLoading, isError, error, isFetching } = useQuery({
+    queryKey: ['admin', 'users', filters],
+    queryFn: ({ signal }) => adminApi.listUsers(filters, signal),
+    placeholderData: keepPreviousData,
   });
 
-  const stats = [
-    { label: 'Total Users', value: '1,245', change: '+12%', icon: '👥' },
-    { label: 'Active Users', value: '1,156', change: '+8%', icon: '✅' },
-    { label: 'Pending Approval', value: '23', change: '-5%', icon: '⏳' },
-    { label: 'Suspended', value: '66', change: '+2%', icon: '🚫' }
-  ];
+  const pages = data ? Math.max(1, Math.ceil(data.total / PAGE_SIZE)) : 1;
+  const resetPage = <T,>(setter: (v: T) => void) => (v: T) => {
+    setter(v);
+    setPage(0);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header />
-      
-      <div className="flex">
-        <Sidebar />
-        
-        <main className="flex-1 p-6">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              User Management
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              Manage all platform users and their permissions.
-            </p>
-          </div>
+    <AppShell>
+      <div className="mb-6">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">{t('users.title')}</h1>
+        <p className="text-gray-600 dark:text-gray-400 mt-2">{t('users.subtitle')}</p>
+      </div>
 
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            {stats.map((stat, index) => (
-              <Card key={index}>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">{stat.label}</p>
-                      <p className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
-                    </div>
-                    <div className="text-2xl">{stat.icon}</div>
-                  </div>
-                  <div className="mt-2 text-sm text-green-600 dark:text-green-400">
-                    {stat.change} from last month
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+      <div className="flex flex-col lg:flex-row gap-3 mb-4">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" aria-hidden="true" />
+          <Input
+            type="search"
+            aria-label={t('users.searchPlaceholder')}
+            placeholder={t('users.searchPlaceholder')}
+            value={search}
+            onChange={(e) => resetPage(setSearch)(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-3 lg:w-[26rem]">
+          <Select value={role} onValueChange={(v) => resetPage(setRole)(v as Role | typeof ALL)}>
+            <SelectTrigger aria-label={t('users.columns.role')}><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value={ALL}>{t('users.allRoles')}</SelectItem>
+              {ROLES.map((r) => (
+                <SelectItem key={r} value={r}>{t(`common:roles.${r}`)}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select value={status} onValueChange={(v) => resetPage(setStatus)(v as UserStatus | typeof ALL)}>
+            <SelectTrigger aria-label={t('users.columns.status')}><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value={ALL}>{t('users.allStatuses')}</SelectItem>
+              {USER_STATUSES.map((s) => (
+                <SelectItem key={s} value={s}>{t(`common:status.${s}`)}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
 
-          {/* Filters and Actions */}
-          <div className="flex justify-between items-center mb-6">
-            <div className="flex items-center space-x-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <Input
-                  placeholder="Search users..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 w-80"
-                />
-              </div>
-              <select
-                value={selectedRole}
-                onChange={(e) => setSelectedRole(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-md bg-white dark:bg-gray-800 dark:border-gray-600"
-              >
-                <option value="all">All Roles</option>
-                <option value="farmer">Farmer</option>
-                <option value="expert">Expert</option>
-                <option value="agri_vendor">Agri Vendor</option>
-                <option value="hardware_vendor">Hardware Vendor</option>
-              </select>
-            </div>
-            <Button className="bg-blue-600 hover:bg-blue-700">
-              <UserPlus className="w-4 h-4 mr-2" />
-              Add User
-            </Button>
-          </div>
-
-          {/* Users Table */}
-          <Card>
+      {isLoading ? (
+        <PageSpinner />
+      ) : isError ? (
+        <div role="alert" className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700 dark:bg-red-900 dark:text-red-200">
+          {errorMessage(t, error)}
+        </div>
+      ) : (
+        <>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2" aria-live="polite">
+            {t('users.total', { count: data?.total ?? 0 })}
+          </p>
+          <Card className={isFetching ? 'opacity-70 transition-opacity' : undefined}>
             <CardContent className="p-0">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>User</TableHead>
-                    <TableHead>Role</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Join Date</TableHead>
-                    <TableHead>Last Login</TableHead>
-                    <TableHead>Location</TableHead>
-                    <TableHead>Actions</TableHead>
+                    <TableHead>{t('users.columns.user')}</TableHead>
+                    <TableHead>{t('users.columns.role')}</TableHead>
+                    <TableHead>{t('users.columns.status')}</TableHead>
+                    <TableHead className="hidden md:table-cell">{t('users.columns.location')}</TableHead>
+                    <TableHead className="hidden md:table-cell">{t('users.columns.registered')}</TableHead>
+                    <TableHead>{t('users.columns.actions')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredUsers.map((user) => (
-                    <TableRow key={user.id}>
+                  {data && data.items.length === 0 && (
+                    <TableRow>
+                      <TableCell colSpan={6} className="text-center text-gray-500 py-8">{t('users.empty')}</TableCell>
+                    </TableRow>
+                  )}
+                  {data?.items.map((u) => (
+                    <TableRow key={u.id}>
                       <TableCell>
-                        <div>
-                          <div className="font-medium">{user.name}</div>
-                          <div className="text-sm text-gray-500">{user.email}</div>
-                        </div>
+                        <div className="font-medium text-gray-900 dark:text-white">{u.name}</div>
+                        <div className="text-sm text-gray-500">{u.phone}{u.email ? ` · ${u.email}` : ''}</div>
+                        {u.organization && <div className="text-sm text-gray-500">{u.organization}</div>}
                       </TableCell>
-                      <TableCell>{getRoleBadge(user.role)}</TableCell>
-                      <TableCell>{getStatusBadge(user.status)}</TableCell>
-                      <TableCell>{user.joinDate}</TableCell>
-                      <TableCell>{user.lastLogin}</TableCell>
-                      <TableCell>{user.location}</TableCell>
+                      <TableCell><RoleBadge role={u.role} /></TableCell>
                       <TableCell>
-                        <div className="flex items-center space-x-2">
-                          <Button variant="outline" size="sm">
-                            <Edit className="w-4 h-4" />
-                          </Button>
-                          {user.status === 'active' ? (
-                            <Button variant="outline" size="sm" className="text-red-600">
-                              <Ban className="w-4 h-4" />
-                            </Button>
-                          ) : (
-                            <Button variant="outline" size="sm" className="text-green-600">
-                              <CheckCircle className="w-4 h-4" />
-                            </Button>
-                          )}
-                          <Button variant="outline" size="sm" className="text-red-600">
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
+                        <StatusBadge status={u.status} />
+                        {u.status_reason && <div className="mt-1 text-xs text-gray-500 max-w-[14rem]">{u.status_reason}</div>}
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">{formatLocation([u.village, u.district, u.state])}</TableCell>
+                      <TableCell className="hidden md:table-cell whitespace-nowrap">{formatDate(u.created_at, i18n.resolvedLanguage)}</TableCell>
+                      <TableCell>
+                        <div className="flex flex-wrap gap-2">
+                          {availableActions(u).map((action) => (
+                            <StatusActionButton key={action} user={u} action={action} />
+                          ))}
                         </div>
                       </TableCell>
                     </TableRow>
@@ -215,9 +146,23 @@ const UserManagement: React.FC = () => {
               </Table>
             </CardContent>
           </Card>
-        </main>
-      </div>
-    </div>
+
+          {pages > 1 && (
+            <div className="mt-4 flex items-center justify-between gap-2">
+              <Button variant="outline" size="sm" disabled={page === 0} onClick={() => setPage((p) => p - 1)}>
+                {t('users.previous')}
+              </Button>
+              <span className="text-sm text-gray-600 dark:text-gray-400">
+                {t('users.page', { page: page + 1, pages })}
+              </span>
+              <Button variant="outline" size="sm" disabled={page + 1 >= pages} onClick={() => setPage((p) => p + 1)}>
+                {t('users.next')}
+              </Button>
+            </div>
+          )}
+        </>
+      )}
+    </AppShell>
   );
 };
 

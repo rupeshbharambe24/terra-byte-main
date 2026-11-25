@@ -1,0 +1,62 @@
+{
+  "hero": {
+    "title": "Farming tools and services in one place",
+    "subtitle": "TerraByte connects farmers in Maharashtra with input sellers, equipment owners and agriculture experts, in English, Hindi and Marathi.",
+    "getStarted": "Create an account",
+    "signIn": "Sign in"
+  },
+  "status": {
+    "title": "Project status",
+    "body": "TerraByte is being rebuilt so that every number it shows comes from real data or a tested model. Features marked \"In progress\" still show demo data, clearly labelled."
+  },
+  "features": {
+    "title": "What TerraByte offers",
+    "badge": {
+      "available": "Available",
+      "inProgress": "In progress"
+    },
+    "items": {
+      "accounts": {
+        "title": "Accounts for every role",
+        "description": "Farmers start immediately; vendors, equipment owners and experts are verified by an admin before they can sign in."
+      },
+      "languages": {
+        "title": "English, हिन्दी, मराठी",
+        "description": "Switch the language at any time from the top bar."
+      },
+      "marketplace": {
+        "title": "Input marketplace",
+        "description": "Order seeds, fertilizers and tools from local vendors and track delivery."
+      },
+      "rentals": {
+        "title": "Equipment rentals",
+        "description": "Book tractors, sprayers and harvesters from owners in your district."
+      },
+      "advice": {
+        "title": "Expert and KVK advice",
+        "description": "Ask agriculture experts and find your nearest Krishi Vigyan Kendra."
+      },
+      "fertilizer": {
+        "title": "Fertilizer dose from your soil test",
+        "description": "Nutrient doses based on your Soil Health Card and official crop recommendations, with sources."
+      },
+      "weather": {
+        "title": "Weather and irrigation",
+        "description": "Forecasts for your field's location and crop water needs."
+      },
+      "prices": {
+        "title": "Mandi prices",
+        "description": "Daily APMC prices from official data, with honest forecasts only where they beat simple baselines."
+      },
+      "disease": {
+        "title": "Crop disease check",
+        "description": "Photo-based leaf disease check that says \"not sure\" instead of guessing, with sourced treatment guidance."
+      }
+    }
+  },
+  "footer": {
+    "tagline": "An open-source agriculture platform.",
+    "license": "Released under the MIT licence.",
+    "source": "Source code"
+  }
+}

@@ -1,197 +1,224 @@
-
 import React, { useState } from 'react';
-import Header from '../../components/common/Header';
-import Sidebar from '../../components/common/Sidebar';
-import { Button } from '../../components/ui/button';
-import { Input } from '../../components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table';
-import { Badge } from '../../components/ui/badge';
-import { Search, Eye, Package, Truck } from 'lucide-react';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { Phone, ShoppingCart } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
+import AppShell from '@/components/common/AppShell';
+import PageHeader from '@/components/common/PageHeader';
+import PageSpinner from '@/components/common/PageSpinner';
+import Pager from '@/components/common/Pager';
+import { EmptyState, ErrorAlert } from '@/components/common/QueryState';
+import StatusPill from '@/components/common/StatusPill';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { marketApi } from '@/lib/api';
+import { PAGE_SIZE } from '@/lib/constants';
+import { errorMessage } from '@/lib/errors';
+import { formatDateTime, formatMoney } from '@/lib/format';
+import { vendorActions } from '@/lib/market';
+import type { Order, OrderStatus } from '@/lib/types';
 
-const VendorOrders: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+type VendorAction = 'accept' | 'reject' | 'ship' | 'deliver';
+type Filter = 'open' | 'all' | OrderStatus;
+const FILTERS: Filter[] = ['open', 'all', 'placed', 'accepted', 'shipped', 'delivered', 'rejected', 'cancelled'];
+const OPEN: OrderStatus[] = ['placed', 'accepted', 'shipped'];
 
-  const orders = [
-    {
-      id: 'ORD-001',
-      farmer: 'Rajesh Kumar',
-      product: 'Organic Fertilizer NPK 10-10-10',
-      quantity: 2,
-      amount: '₹5,000',
-      status: 'pending',
-      date: '2024-01-15',
-      address: 'Village Rampur, District Meerut, UP'
+function statusesFor(filter: Filter): OrderStatus[] | undefined {
+  if (filter === 'all') return undefined;
+  if (filter === 'open') return OPEN;
+  return [filter];
+}
+
+const ActionDialog: React.FC<{ order: Order; action: VendorAction; onClose: () => void }> = ({ order, action, onClose }) => {
+  const { t } = useTranslation(['market', 'common']);
+  const queryClient = useQueryClient();
+  const [reason, setReason] = useState('');
+  const mutation = useMutation({
+    mutationFn: () => marketApi.orderAction(order.id, action, action === 'reject' ? reason.trim() || undefined : undefined),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['orders'] });
+      void queryClient.invalidateQueries({ queryKey: ['vendor-products'] });
+      void queryClient.invalidateQueries({ queryKey: ['products'] });
+      toast.success(t(`vendorOrders.done.${action}`, { id: order.id }));
+      onClose();
     },
-    {
-      id: 'ORD-002',
-      farmer: 'Priya Sharma',
-      product: 'Wheat Seeds - Premium Quality',
-      quantity: 10,
-      amount: '₹1,200',
-      status: 'processing',
-      date: '2024-01-14',
-      address: 'Kisan Nagar, Ludhiana, Punjab'
+    onError: (err) => {
+      toast.error(errorMessage(t, err));
+      void queryClient.invalidateQueries({ queryKey: ['orders'] });
     },
-    {
-      id: 'ORD-003',
-      farmer: 'Suresh Patel',
-      product: 'Bio Pesticide - Neem Based',
-      quantity: 5,
-      amount: '₹4,250',
-      status: 'shipped',
-      date: '2024-01-13',
-      address: 'Gram Panchayat Kheda, Gujarat'
-    },
-    {
-      id: 'ORD-004',
-      farmer: 'Anita Devi',
-      product: 'Drip Irrigation Kit',
-      quantity: 1,
-      amount: '₹15,000',
-      status: 'delivered',
-      date: '2024-01-12',
-      address: 'Farmer Colony, Jaipur, Rajasthan'
-    }
-  ];
-
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'pending':
-        return <Badge className="bg-yellow-100 text-yellow-800">Pending</Badge>;
-      case 'processing':
-        return <Badge className="bg-blue-100 text-blue-800">Processing</Badge>;
-      case 'shipped':
-        return <Badge className="bg-purple-100 text-purple-800">Shipped</Badge>;
-      case 'delivered':
-        return <Badge className="bg-green-100 text-green-800">Delivered</Badge>;
-      default:
-        return <Badge className="bg-gray-100 text-gray-800">{status}</Badge>;
-    }
-  };
-
-  const getActionButton = (status: string, orderId: string) => {
-    switch (status) {
-      case 'pending':
-        return (
-          <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-            <Package className="w-4 h-4 mr-1" />
-            Process
+  });
+  return (
+    <Dialog open onOpenChange={(o) => !o && !mutation.isPending && onClose()}>
+      <DialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>{t(`vendorOrders.confirmTitle.${action}`, { id: order.id })}</DialogTitle>
+          <DialogDescription>{t(`vendorOrders.confirmBody.${action}`, { buyer: order.buyer_name })}</DialogDescription>
+        </DialogHeader>
+        {action === 'reject' && (
+          <div className="space-y-2">
+            <Label htmlFor="reject-reason">{t('vendorOrders.reasonLabel')}</Label>
+            <Textarea
+              id="reject-reason"
+              value={reason}
+              maxLength={500}
+              onChange={(e) => setReason(e.target.value)}
+              placeholder={t('vendorOrders.reasonPlaceholder')}
+            />
+          </div>
+        )}
+        <DialogFooter className="gap-2 sm:gap-0">
+          <Button variant="outline" onClick={onClose} disabled={mutation.isPending}>
+            {t('common:actions.cancel')}
           </Button>
-        );
-      case 'processing':
-        return (
-          <Button size="sm" className="bg-purple-600 hover:bg-purple-700">
-            <Truck className="w-4 h-4 mr-1" />
-            Ship
+          <Button
+            variant={action === 'reject' ? 'destructive' : 'default'}
+            className={action === 'reject' ? undefined : 'bg-green-600 hover:bg-green-700 text-white'}
+            onClick={() => mutation.mutate()}
+            disabled={mutation.isPending}
+          >
+            {t(`vendorOrders.actions.${action}`)}
           </Button>
-        );
-      default:
-        return (
-          <Button variant="outline" size="sm">
-            <Eye className="w-4 h-4 mr-1" />
-            View
-          </Button>
-        );
-    }
-  };
-
-  const filteredOrders = orders.filter(order =>
-    order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    order.farmer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    order.product.toLowerCase().includes(searchTerm.toLowerCase())
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
+};
+
+/** Orders placed with this vendor, with the fulfilment actions the server allows. */
+const VendorOrders: React.FC = () => {
+  const { t, i18n } = useTranslation(['market', 'common']);
+  const [filter, setFilter] = useState<Filter>('open');
+  const [page, setPage] = useState(0);
+  const [pending, setPending] = useState<{ order: Order; action: VendorAction } | null>(null);
+  const lng = i18n.resolvedLanguage;
+  const query = { status: statusesFor(filter), limit: PAGE_SIZE, offset: page * PAGE_SIZE };
+  const { data, isLoading, isError, error, isFetching } = useQuery({
+    queryKey: ['orders', 'vendor', query],
+    queryFn: () => marketApi.orders(query),
+    placeholderData: keepPreviousData,
+  });
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header />
-      
-      <div className="flex">
-        <Sidebar />
-        
-        <main className="flex-1 p-6">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              Order Management
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              Track and manage customer orders and dispatches.
-            </p>
-          </div>
-
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border">
-              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Orders</h3>
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">{orders.length}</p>
-            </div>
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border">
-              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Pending</h3>
-              <p className="text-2xl font-bold text-yellow-600">{orders.filter(o => o.status === 'pending').length}</p>
-            </div>
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border">
-              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Processing</h3>
-              <p className="text-2xl font-bold text-blue-600">{orders.filter(o => o.status === 'processing').length}</p>
-            </div>
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border">
-              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Delivered</h3>
-              <p className="text-2xl font-bold text-green-600">{orders.filter(o => o.status === 'delivered').length}</p>
-            </div>
-          </div>
-
-          {/* Search */}
-          <div className="mb-6">
-            <div className="relative w-80">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <Input
-                placeholder="Search orders..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-          </div>
-
-          {/* Orders Table */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Order ID</TableHead>
-                  <TableHead>Farmer</TableHead>
-                  <TableHead>Product</TableHead>
-                  <TableHead>Quantity</TableHead>
-                  <TableHead>Amount</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredOrders.map((order) => (
-                  <TableRow key={order.id}>
-                    <TableCell className="font-medium">{order.id}</TableCell>
-                    <TableCell>
-                      <div>
-                        <p className="font-medium">{order.farmer}</p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">{order.address}</p>
-                      </div>
-                    </TableCell>
-                    <TableCell>{order.product}</TableCell>
-                    <TableCell>{order.quantity}</TableCell>
-                    <TableCell className="font-medium">{order.amount}</TableCell>
-                    <TableCell>{getStatusBadge(order.status)}</TableCell>
-                    <TableCell>{order.date}</TableCell>
-                    <TableCell>
-                      {getActionButton(order.status, order.id)}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </main>
+    <AppShell>
+      <PageHeader title={t('vendorOrders.title')} subtitle={t('vendorOrders.subtitle')} />
+      <div className="mb-4 max-w-xs">
+        <Select
+          value={filter}
+          onValueChange={(v) => {
+            setFilter(v as Filter);
+            setPage(0);
+          }}
+        >
+          <SelectTrigger aria-label={t('orders.filterStatus')}><SelectValue /></SelectTrigger>
+          <SelectContent>
+            {FILTERS.map((f) => (
+              <SelectItem key={f} value={f}>
+                {f === 'open' ? t('vendorOrders.open') : f === 'all' ? t('orders.allStatuses') : t(`common:orderStatus.${f}`)}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
-    </div>
+
+      {isLoading ? (
+        <PageSpinner />
+      ) : isError ? (
+        <ErrorAlert error={error} />
+      ) : data && data.items.length === 0 ? (
+        <EmptyState icon={ShoppingCart} title={t('vendorOrders.empty')} body={t('vendorOrders.emptyBody')} />
+      ) : (
+        <>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-3" aria-live="polite">
+            {t('vendorOrders.count', { count: data?.total ?? 0 })}
+          </p>
+          <ul className={`grid gap-4 xl:grid-cols-2 ${isFetching ? 'opacity-70 transition-opacity' : ''}`}>
+            {data?.items.map((o) => (
+              <li key={o.id}>
+                <Card>
+                  <CardHeader className="pb-2">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="font-semibold">{t('orders.orderNo', { id: o.id })}</span>
+                      <StatusPill kind="order" status={o.status} />
+                    </div>
+                    <p className="text-sm text-gray-500">{formatDateTime(o.created_at, lng)}</p>
+                  </CardHeader>
+                  <CardContent className="space-y-3 text-sm">
+                    <dl className="grid grid-cols-1 gap-x-4 gap-y-1 sm:grid-cols-3">
+                      <dt className="text-gray-500">{t('vendorOrders.buyer')}</dt>
+                      <dd className="sm:col-span-2">
+                        {o.buyer_name}
+                        {o.buyer_phone && (
+                          <a href={`tel:+91${o.buyer_phone}`} className="ml-2 inline-flex items-center gap-1 text-green-700 hover:underline dark:text-green-400">
+                            <Phone className="h-3.5 w-3.5" aria-hidden="true" />
+                            {o.buyer_phone}
+                          </a>
+                        )}
+                      </dd>
+                      <dt className="text-gray-500">{t('detail.address')}</dt>
+                      <dd className="sm:col-span-2 whitespace-pre-line break-words">{o.delivery_address}</dd>
+                      <dt className="text-gray-500">{t('detail.payment')}</dt>
+                      <dd className="sm:col-span-2">{t(`payment.${o.payment_method}`)}</dd>
+                      {o.note && (
+                        <>
+                          <dt className="text-gray-500">{t('detail.note')}</dt>
+                          <dd className="sm:col-span-2 break-words">{o.note}</dd>
+                        </>
+                      )}
+                    </dl>
+                    <ul className="divide-y rounded-md border">
+                      {o.items.map((i) => (
+                        <li key={i.id} className="flex flex-wrap justify-between gap-2 px-3 py-2">
+                          <span className="min-w-0 break-words">
+                            {i.product_name}{' '}
+                            <span className="text-gray-500">
+                              {t('detail.qtyLine', { quantity: i.quantity, unit: i.unit, price: formatMoney(i.unit_price_inr, lng) })}
+                            </span>
+                          </span>
+                          <span>{formatMoney(i.line_total_inr, lng)}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="flex justify-between font-semibold">
+                      <span>{t('detail.total')}</span>
+                      <span>{formatMoney(o.total_inr, lng)}</span>
+                    </p>
+                    {o.status_reason && <p className="text-gray-600 dark:text-gray-400">{t('detail.reason', { reason: o.status_reason })}</p>}
+                    {vendorActions(o.status).length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {vendorActions(o.status).map((action) => (
+                          <Button
+                            key={action}
+                            size="sm"
+                            variant={action === 'reject' ? 'outline' : 'default'}
+                            className={action === 'reject' ? undefined : 'bg-green-600 hover:bg-green-700 text-white'}
+                            onClick={() => setPending({ order: o, action })}
+                          >
+                            {t(`vendorOrders.actions.${action}`)}
+                          </Button>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </li>
+            ))}
+          </ul>
+          <Pager page={page} total={data?.total ?? 0} pageSize={PAGE_SIZE} onPage={setPage} />
+        </>
+      )}
+      {pending && <ActionDialog order={pending.order} action={pending.action} onClose={() => setPending(null)} />}
+    </AppShell>
   );
 };
 

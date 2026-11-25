@@ -1,209 +1,152 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../../components/common/Header';
-import Sidebar from '../../components/common/Sidebar';
-import { useAuth } from '../../context/AuthContext';
+import { useQuery } from '@tanstack/react-query';
+import { BarChart3, Clock, IndianRupee, Tractor } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import AppShell from '@/components/common/AppShell';
+import PageHeader from '@/components/common/PageHeader';
+import PageSpinner from '@/components/common/PageSpinner';
+import { ErrorAlert } from '@/components/common/QueryState';
+import StatusPill from '@/components/common/StatusPill';
+import Breakdown from '@/components/dashboard/Breakdown';
+import DayChart from '@/components/dashboard/DayChart';
+import Section from '@/components/dashboard/Section';
+import StatCard from '@/components/dashboard/StatCard';
+import { useAuth } from '@/context/AuthContext';
+import { dashboardApi } from '@/lib/api';
+import { formatPercent, orderedCounts } from '@/lib/dashboard';
+import { formatDateTime, formatMoney, formatMonth, formatNumber } from '@/lib/format';
+import { BOOKING_STATUSES } from '@/lib/types';
 
 const HardwareVendorDashboard: React.FC = () => {
+  const { t, i18n } = useTranslation(['dashboard', 'common']);
+  const lng = i18n.resolvedLanguage;
   const { user } = useAuth();
-
-  const vendorCards = [
-    {
-      title: 'Equipment List',
-      description: 'Manage your equipment inventory',
-      icon: '🚜',
-      path: '/hardware-equipment',
-      count: '15 machines'
-    },
-    {
-      title: 'Rental Requests',
-      description: 'View and manage rental requests',
-      icon: '📋',
-      path: '/hardware-rentals',
-      count: '8 pending'
-    },
-    {
-      title: 'Calendar',
-      description: 'Schedule and bookings',
-      icon: '📅',
-      path: '/hardware-calendar',
-      count: '12 bookings'
-    },
-    {
-      title: 'Reviews',
-      description: 'Customer feedback and ratings',
-      icon: '⭐',
-      path: '/hardware-reviews',
-      count: '4.6 rating'
-    }
-  ];
-
-  const recentRentals = [
-    {
-      id: 'RNT-001',
-      farmer: 'Rajesh Kumar',
-      equipment: 'Tractor - John Deere 5075E',
-      duration: '3 days',
-      amount: '₹4,500',
-      status: 'active',
-      startDate: 'Today'
-    },
-    {
-      id: 'RNT-002',
-      farmer: 'Priya Sharma',
-      equipment: 'Harvester - Case IH 2000',
-      duration: '2 days',
-      amount: '₹8,000',
-      status: 'pending',
-      startDate: 'Tomorrow'
-    },
-    {
-      id: 'RNT-003',
-      farmer: 'Suresh Patel',
-      equipment: 'Sprayer - Field King',
-      duration: '1 day',
-      amount: '₹1,200',
-      status: 'completed',
-      startDate: '2 days ago'
-    }
-  ];
-
-  const stats = [
-    { label: 'Total Revenue', value: '₹1.8L', trend: '+22%' },
-    { label: 'Equipment Utilization', value: '78%', trend: '+8%' },
-    { label: 'Active Rentals', value: '12', trend: '+15%' },
-    { label: 'Customer Rating', value: '4.6', trend: '+0.3' }
-  ];
-
-  const equipmentStatus = [
-    { name: 'Tractor - JD 5075E', status: 'rented', nextAvailable: 'Dec 28' },
-    { name: 'Harvester - Case IH', status: 'available', nextAvailable: 'Available now' },
-    { name: 'Sprayer - Field King', status: 'maintenance', nextAvailable: 'Dec 30' },
-    { name: 'Plough - Lemken', status: 'available', nextAvailable: 'Available now' }
-  ];
+  const { data, isLoading, isError, error } = useQuery({ queryKey: ['dashboard', 'hardware'], queryFn: dashboardApi.hardware });
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header />
-      
-      <div className="flex">
-        <Sidebar />
-        
-        <main className="flex-1 p-6">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              Hardware Vendor Dashboard
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              Manage your agricultural equipment rentals.
-            </p>
+    <AppShell>
+      <PageHeader title={t('hardware.title')} subtitle={user ? t('shared.welcome', { name: user.name }) : undefined} />
+      {isLoading ? (
+        <PageSpinner />
+      ) : isError || !data ? (
+        <ErrorAlert error={error} />
+      ) : (
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <StatCard
+              icon={Tractor}
+              label={t('hardware.activeMachines')}
+              value={`${data.equipment_active} / ${data.equipment_total}`}
+              to="/hardware-equipment"
+            />
+            <StatCard
+              icon={Clock}
+              label={t('hardware.pendingRequests')}
+              value={data.pending_requests}
+              hint={t('hardware.pendingHint')}
+              to="/hardware-rentals"
+            />
+            <StatCard
+              icon={IndianRupee}
+              label={t('hardware.revenueMonth', { month: formatMonth(data.month, lng) })}
+              value={formatMoney(data.revenue_this_month, lng)}
+              hint={t('hardware.completedOnly')}
+            />
+            <StatCard
+              icon={BarChart3}
+              label={t('hardware.revenueTotal')}
+              value={formatMoney(data.revenue_total, lng)}
+              hint={t('hardware.completedOnly')}
+            />
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{stat.label}</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
-                  </div>
-                  <div className="text-green-600 dark:text-green-400 text-sm font-medium">
-                    {stat.trend}
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="grid gap-6 lg:grid-cols-2">
+            <Section
+              title={t('hardware.upcoming')}
+              link={{ to: '/hardware-calendar', label: t('common:sidebar.calendar') }}
+            >
+              {data.upcoming.length === 0 ? (
+                <p className="text-sm text-gray-500 dark:text-gray-400">{t('hardware.noUpcoming')}</p>
+              ) : (
+                <ul className="divide-y dark:divide-gray-700">
+                  {data.upcoming.map((b) => (
+                    <li key={b.id} className="flex flex-wrap items-center justify-between gap-2 py-2">
+                      <div className="min-w-0">
+                        <Link to="/hardware-rentals" className="font-medium text-gray-900 hover:underline dark:text-gray-100">
+                          {b.equipment_name}
+                        </Link>
+                        <p className="text-xs text-gray-500">
+                          {b.farmer_name} · {formatDateTime(b.start_at, lng)} · {formatMoney(b.amount_inr, lng)}
+                        </p>
+                      </div>
+                      <StatusPill kind="booking" status={b.status} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </Section>
+
+            <Section title={t('hardware.bookingsByStatus')}>
+              <Breakdown
+                ariaLabel={t('hardware.bookingsByStatus')}
+                emptyText={t('hardware.noBookings')}
+                rows={orderedCounts(data.bookings_by_status, BOOKING_STATUSES).map(({ key, count }) => ({
+                  key,
+                  label: t(`common:bookingStatus.${key}`),
+                  count,
+                }))}
+              />
+            </Section>
           </div>
 
-          {/* Vendor Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {vendorCards.map((card, index) => (
-              <Link
-                key={index}
-                to={card.path}
-                className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all transform hover:scale-105"
-              >
-                <div className="text-3xl mb-4">{card.icon}</div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                  {card.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
-                  {card.description}
+          <Section title={t('hardware.utilisation')} note={t('hardware.utilisationNote')}>
+            {data.utilisation.length === 0 ? (
+              <p className="text-sm text-gray-500 dark:text-gray-400">{t('hardware.noMachines')}</p>
+            ) : (
+              <>
+                <p className="mb-3 text-sm">
+                  {t('hardware.overall')}:{' '}
+                  <strong className="tabular-nums">{formatPercent(data.utilisation_overall, lng)}</strong>
                 </p>
-                <p className="text-purple-600 dark:text-purple-400 text-sm font-medium">
-                  {card.count}
-                </p>
-              </Link>
-            ))}
-          </div>
+                <ul className="space-y-3">
+                  {data.utilisation.map((u) => (
+                    <li key={u.equipment_id} className="text-sm">
+                      <div className="flex flex-wrap justify-between gap-2">
+                        <span className="min-w-0 truncate">{u.name}</span>
+                        <span className="tabular-nums text-gray-600 dark:text-gray-300">
+                          {t('hardware.bookedDays', { booked: u.booked_days, days: u.days })} · {formatPercent(u.share, lng)}
+                        </span>
+                      </div>
+                      <div
+                        className="mt-1 h-2.5 rounded-full bg-gray-100 dark:bg-gray-700"
+                        role="progressbar"
+                        aria-label={u.name}
+                        aria-valuemin={0}
+                        aria-valuemax={100}
+                        aria-valuenow={Math.round(u.share * 100)}
+                      >
+                        <div className="h-2.5 rounded-full bg-green-600 dark:bg-green-500" style={{ width: `${u.share * 100}%` }} />
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </Section>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Recent Rentals */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Recent Rentals</h2>
-                <Link
-                  to="/hardware-rentals"
-                  className="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 text-sm font-medium"
-                >
-                  View All
-                </Link>
-              </div>
-              <div className="space-y-4">
-                {recentRentals.map((rental, index) => (
-                  <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-medium text-gray-900 dark:text-white">#{rental.id}</span>
-                      <span className={`px-2 py-1 rounded-full text-xs ${
-                        rental.status === 'active' 
-                          ? 'bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-300'
-                          : rental.status === 'pending'
-                          ? 'bg-yellow-100 dark:bg-yellow-800 text-yellow-700 dark:text-yellow-300'
-                          : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
-                      }`}>
-                        {rental.status}
-                      </span>
-                    </div>
-                    <p className="font-medium text-gray-900 dark:text-white">{rental.farmer}</p>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm">{rental.equipment}</p>
-                    <div className="flex justify-between items-center mt-2">
-                      <span className="text-sm text-gray-500 dark:text-gray-400">{rental.duration} • {rental.startDate}</span>
-                      <span className="font-semibold text-gray-900 dark:text-white">{rental.amount}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Equipment Status */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Equipment Status</h2>
-              <div className="space-y-4">
-                {equipmentStatus.map((equipment, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
-                    <div>
-                      <p className="font-medium text-gray-900 dark:text-white">{equipment.name}</p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">{equipment.nextAvailable}</p>
-                    </div>
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      equipment.status === 'available' 
-                        ? 'bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-300'
-                        : equipment.status === 'rented'
-                        ? 'bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-300'
-                        : 'bg-orange-100 dark:bg-orange-800 text-orange-700 dark:text-orange-300'
-                    }`}>
-                      {equipment.status}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
-    </div>
+          <Section title={t('hardware.requestsPerDay')} note={t('hardware.requestsPerDayNote')}>
+            <DayChart
+              series={data.requests_last_30_days}
+              metric="count"
+              label={t('hardware.requests')}
+              emptyText={t('shared.noActivity')}
+              format={(n) => formatNumber(n, lng)}
+            />
+          </Section>
+        </div>
+      )}
+    </AppShell>
   );
 };
 

@@ -1,280 +1,284 @@
 import React, { useState } from 'react';
-import Header from '../../components/common/Header';
-import Sidebar from '../../components/common/Sidebar';
-import { Button } from '../../components/ui/button';
-import { Input } from '../../components/ui/input';
-import { Badge } from '../../components/ui/badge';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
-import { Search, ExternalLink, Filter, MapPin } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { Landmark, Search } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import AppShell from '@/components/common/AppShell';
+import PageHeader from '@/components/common/PageHeader';
+import PageSpinner from '@/components/common/PageSpinner';
+import { EmptyState, ErrorAlert } from '@/components/common/QueryState';
+import { Caution, ExtLink } from '@/components/agro/SourceNote';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useDebouncedValue } from '@/hooks/useDebouncedValue';
+import { agroApi, localName, type Scheme, type SchemeStatus } from '@/lib/agro';
+import { formatDate, formatMoney } from '@/lib/format';
 
-interface Scheme {
-  id: string;
-  name: string;
-  description: string;
-  eligibility: string;
-  benefits: string;
-  state: string;
-  cropType: string;
-  benefitType: 'subsidy' | 'insurance' | 'loan' | 'training' | 'technology';
-  applyUrl: string;
-  department: string;
-}
+const ALL = 'all';
 
-const mockSchemes: Scheme[] = [
-  {
-    id: '1',
-    name: 'PM-KISAN Samman Nidhi',
-    description: 'Direct income support to farmers with cultivable land holding',
-    eligibility: 'Small and marginal farmers with cultivable land',
-    benefits: '₹6,000 per year in three installments',
-    state: 'All States',
-    cropType: 'All Crops',
-    benefitType: 'subsidy',
-    applyUrl: 'https://pmkisan.gov.in',
-    department: 'Ministry of Agriculture'
-  },
-  {
-    id: '2',
-    name: 'Pradhan Mantri Fasal Bima Yojana',
-    description: 'Crop insurance scheme for farmers against crop loss',
-    eligibility: 'All farmers growing notified crops',
-    benefits: 'Insurance coverage for crop loss due to natural calamities',
-    state: 'All States',
-    cropType: 'Rice, Wheat, Cotton',
-    benefitType: 'insurance',
-    applyUrl: 'https://pmfby.gov.in',
-    department: 'Ministry of Agriculture'
-  },
-  {
-    id: '3',
-    name: 'Kisan Credit Card',
-    description: 'Credit facility for farmers to meet cultivation expenses',
-    eligibility: 'Farmers owning cultivable land',
-    benefits: 'Credit up to ₹3 lakh at 4% interest rate',
-    state: 'All States',
-    cropType: 'All Crops',
-    benefitType: 'loan',
-    applyUrl: 'https://kcc.gov.in',
-    department: 'Ministry of Agriculture'
-  },
-  {
-    id: '4',
-    name: 'Soil Health Management',
-    description: 'Scheme to promote soil testing and balanced fertilizer use',
-    eligibility: 'All farmers',
-    benefits: 'Free soil testing and nutrient management advice',
-    state: 'Maharashtra',
-    cropType: 'Cotton, Sugarcane',
-    benefitType: 'technology',
-    applyUrl: 'https://soilhealth.dac.gov.in',
-    department: 'Department of Agriculture'
-  },
-  {
-    id: '5',
-    name: 'Mission for Integrated Development of Horticulture',
-    description: 'Holistic development of horticulture sector',
-    eligibility: 'Horticulture farmers and entrepreneurs',
-    benefits: 'Subsidy for greenhouse, drip irrigation, cold storage',
-    state: 'Kerala',
-    cropType: 'Fruits, Vegetables',
-    benefitType: 'subsidy',
-    applyUrl: 'https://midh.gov.in',
-    department: 'Ministry of Agriculture'
-  }
-];
+const STATUS_STYLE: Record<SchemeStatus, string> = {
+  active: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+  changed: 'bg-amber-100 text-amber-900 dark:bg-amber-900 dark:text-amber-100',
+  unverified: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+  closed: 'bg-gray-200 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
+};
+
+const SchemeCard: React.FC<{ s: Scheme }> = ({ s }) => {
+  const { t, i18n } = useTranslation('agro');
+  const lng = i18n.resolvedLanguage;
+  const [open, setOpen] = useState(false);
+  return (
+    <Card>
+      <CardHeader className="pb-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${STATUS_STYLE[s.status]}`}>
+            {t(`schemes.status.${s.status}`)}
+          </span>
+          <Badge variant="outline">{t(`schemes.level.${s.level}`)}</Badge>
+        </div>
+        <CardTitle className="text-base break-words">{localName(s, lng)}</CardTitle>
+        {lng !== 'en' && <p className="text-xs text-gray-500">{s.name_en}</p>}
+      </CardHeader>
+      <CardContent className="space-y-2 text-sm">
+        {s.status !== 'active' && <Caution>{t(`schemes.statusHelp.${s.status}`)}</Caution>}
+        <div lang="en" className="space-y-2">
+          {s.benefit && (
+            <p>
+              <span className="font-medium">{t('schemes.benefit')}: </span>
+              {s.benefit}
+            </p>
+          )}
+          {open && (
+            <>
+              {s.eligibility && (
+                <p>
+                  <span className="font-medium">{t('schemes.eligibility')}: </span>
+                  {s.eligibility}
+                </p>
+              )}
+              {s.exclusions && s.exclusions.length > 0 && (
+                <div>
+                  <p className="font-medium">{t('schemes.exclusions')}:</p>
+                  <ul className="list-disc pl-5">
+                    {s.exclusions.map((x) => (
+                      <li key={x}>{x}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {s.documents_required && s.documents_required.length > 0 && (
+                <div>
+                  <p className="font-medium">{t('schemes.documents')}:</p>
+                  <ul className="list-disc pl-5">
+                    {s.documents_required.map((x) => (
+                      <li key={x}>{x}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {s.how_to_apply && (
+                <p>
+                  <span className="font-medium">{t('schemes.howToApply')}: </span>
+                  {s.how_to_apply}
+                </p>
+              )}
+              {s.status_note && (
+                <p className="text-xs text-gray-600 dark:text-gray-400">
+                  <span className="font-medium">{t('schemes.statusNote')}: </span>
+                  {s.status_note}
+                </p>
+              )}
+              {s.source_urls && s.source_urls.length > 0 && (
+                <p className="text-xs">
+                  <span className="font-medium">{t('common.sources')}: </span>
+                  {s.source_urls.map((u, i) => (
+                    <a key={u} href={u} target="_blank" rel="noreferrer noopener" className="mr-2 underline">
+                      [{i + 1}]
+                    </a>
+                  ))}
+                </p>
+              )}
+            </>
+          )}
+        </div>
+        <div className="flex flex-wrap items-center gap-3 pt-1">
+          <button type="button" className="text-sm text-green-700 hover:underline dark:text-green-400" onClick={() => setOpen((v) => !v)}>
+            {open ? t('schemes.less') : t('schemes.more')}
+          </button>
+          {s.official_url && <ExtLink href={s.official_url}>{t('schemes.official')}</ExtLink>}
+        </div>
+        <p className="text-xs text-gray-500">{t('common.lastVerified', { date: formatDate(s.last_verified, lng) })}</p>
+      </CardContent>
+    </Card>
+  );
+};
+
+const SchemesList: React.FC = () => {
+  const { t } = useTranslation('agro');
+  const [level, setLevel] = useState<string>(ALL);
+  const [search, setSearch] = useState('');
+  const q = useDebouncedValue(search.trim(), 300);
+  const filters = { level: level === ALL ? undefined : level, q: q || undefined };
+  const query = useQuery({ queryKey: ['schemes', filters], queryFn: () => agroApi.schemes(filters) });
+  return (
+    <div className="space-y-4">
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" aria-hidden="true" />
+          <Input
+            type="search"
+            className="pl-10"
+            value={search}
+            placeholder={t('schemes.search')}
+            aria-label={t('schemes.search')}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+        <Select value={level} onValueChange={setLevel}>
+          <SelectTrigger className="sm:w-56" aria-label={t('schemes.levelLabel')}>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={ALL}>{t('schemes.level.all')}</SelectItem>
+            <SelectItem value="central">{t('schemes.level.central')}</SelectItem>
+            <SelectItem value="maharashtra">{t('schemes.level.maharashtra')}</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <p className="text-xs text-gray-500">{t('schemes.englishNote')}</p>
+      {query.isLoading ? (
+        <PageSpinner />
+      ) : query.isError ? (
+        <ErrorAlert error={query.error} />
+      ) : query.data && query.data.total === 0 ? (
+        <EmptyState icon={Search} title={t('schemes.noMatch')} />
+      ) : query.data ? (
+        <>
+          <p className="text-sm text-gray-600 dark:text-gray-400" aria-live="polite">
+            {t('schemes.count', { count: query.data.total })}
+          </p>
+          <div className="grid gap-4 md:grid-cols-2">
+            {query.data.items.map((s) => (
+              <SchemeCard key={s.id} s={s} />
+            ))}
+          </div>
+        </>
+      ) : null}
+    </div>
+  );
+};
+
+const MSPTable: React.FC = () => {
+  const { t, i18n } = useTranslation('agro');
+  const lng = i18n.resolvedLanguage;
+  const query = useQuery({ queryKey: ['msp'], queryFn: agroApi.msp });
+  if (query.isLoading) return <PageSpinner />;
+  if (query.isError) return <ErrorAlert error={query.error} />;
+  if (!query.data) return null;
+  const latest = query.data.seasons.filter((s) => s.latest);
+  return (
+    <div className="space-y-4">
+      <Caution title={t('msp.notGuaranteedTitle')}>{t('msp.notGuaranteed')}</Caution>
+      {latest.map((season) => (
+        <Card key={`${season.season}-${season.marketing_year}`}>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base">
+              {t('msp.seasonTitle', { season: season.season, year: season.marketing_year })}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="overflow-x-auto">
+            <table className="w-full min-w-[420px] text-sm">
+              <thead>
+                <tr className="border-b text-left text-gray-600 dark:border-gray-700 dark:text-gray-400">
+                  <th className="py-2 pr-2 font-medium">{t('msp.crop')}</th>
+                  <th className="py-2 pr-2 text-right font-medium">{t('msp.price')}</th>
+                  <th className="py-2 pr-2 text-right font-medium">{t('msp.increase')}</th>
+                  <th className="py-2 font-medium">{t('common.source')}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {season.rows.map((r) => (
+                  <tr key={r.crop} className="border-b last:border-0 dark:border-gray-800">
+                    <td className="py-1.5 pr-2">{localName(r, lng)}</td>
+                    <td className="py-1.5 pr-2 text-right font-medium">{formatMoney(r.msp_inr_per_quintal, lng)}</td>
+                    <td className="py-1.5 pr-2 text-right">
+                      {r.increase_over_previous !== undefined ? `+${formatMoney(r.increase_over_previous, lng)}` : '—'}
+                    </td>
+                    <td className="py-1.5">
+                      <a href={r.source_url} target="_blank" rel="noreferrer noopener" className="underline">
+                        PIB {formatDate(r.announced_on, lng)}
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </CardContent>
+        </Card>
+      ))}
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base">{t('msp.frpTitle')}</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-1 text-sm">
+          {query.data.sugarcane_frp.map((f) => (
+            <p key={f.sugar_season}>
+              {t('msp.frpLine', {
+                season: f.sugar_season,
+                price: formatMoney(f.frp_inr_per_quintal, lng),
+                recovery: f.basic_recovery_rate_pct,
+              })}{' '}
+              <ExtLink href={f.source_url}>{t('common.source')}</ExtLink>
+            </p>
+          ))}
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base">{t('msp.notesTitle')}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="mb-2 text-sm">{t('msp.noMspCrops')}</p>
+          <ul className="list-disc space-y-1 pl-5 text-xs text-gray-600 dark:text-gray-400" lang="en">
+            {query.data.notes.map((n) => (
+              <li key={n}>{n}</li>
+            ))}
+          </ul>
+          <p className="mt-2 text-xs text-gray-500">
+            {t('msp.unit')} · {t('common.lastVerified', { date: formatDate(query.data.last_verified, lng) })}
+          </p>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
 
 const GovernmentSchemes: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [stateFilter, setStateFilter] = useState('all');
-  const [cropFilter, setCropFilter] = useState('all');
-  const [benefitFilter, setBenefitFilter] = useState('all');
-
-  const filteredSchemes = mockSchemes.filter(scheme => {
-    const matchesSearch = scheme.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         scheme.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesState = stateFilter === 'all' || scheme.state === stateFilter || scheme.state === 'All States';
-    const matchesCrop = cropFilter === 'all' || scheme.cropType.includes(cropFilter) || scheme.cropType === 'All Crops';
-    const matchesBenefit = benefitFilter === 'all' || scheme.benefitType === benefitFilter;
-
-    return matchesSearch && matchesState && matchesCrop && matchesBenefit;
-  });
-
-  const getBenefitTypeColor = (type: string) => {
-    switch (type) {
-      case 'subsidy': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300';
-      case 'insurance': return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300';
-      case 'loan': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300';
-      case 'training': return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300';
-      case 'technology': return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300';
-      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300';
-    }
-  };
-
+  const { t } = useTranslation('agro');
+  const [params, setParams] = useSearchParams();
+  const tab = params.get('tab') === 'msp' ? 'msp' : 'schemes';
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header />
-      
-      <div className="flex">
-        <Sidebar />
-        
-        <main className="flex-1 p-6">
-          <div className="container mx-auto px-4 py-8">
-            <div className="mb-8">
-              <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                🌾 Government Schemes
-              </h1>
-              <p className="text-lg text-gray-600 dark:text-gray-400">
-                Discover and apply for agriculture-related government schemes and benefits
-              </p>
-            </div>
-
-            {/* Search and Filters */}
-            <Card className="mb-8">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Filter className="w-5 h-5" />
-                  Search & Filter Schemes
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    <Input
-                      placeholder="Search schemes..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
-                  
-                  <Select value={stateFilter} onValueChange={setStateFilter}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select State" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All States</SelectItem>
-                      <SelectItem value="Maharashtra">Maharashtra</SelectItem>
-                      <SelectItem value="Kerala">Kerala</SelectItem>
-                      <SelectItem value="Punjab">Punjab</SelectItem>
-                      <SelectItem value="Karnataka">Karnataka</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={cropFilter} onValueChange={setCropFilter}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Crop Type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Crops</SelectItem>
-                      <SelectItem value="Rice">Rice</SelectItem>
-                      <SelectItem value="Wheat">Wheat</SelectItem>
-                      <SelectItem value="Cotton">Cotton</SelectItem>
-                      <SelectItem value="Sugarcane">Sugarcane</SelectItem>
-                      <SelectItem value="Fruits">Fruits</SelectItem>
-                      <SelectItem value="Vegetables">Vegetables</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={benefitFilter} onValueChange={setBenefitFilter}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Benefit Type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Benefits</SelectItem>
-                      <SelectItem value="subsidy">Subsidy</SelectItem>
-                      <SelectItem value="insurance">Insurance</SelectItem>
-                      <SelectItem value="loan">Loan</SelectItem>
-                      <SelectItem value="training">Training</SelectItem>
-                      <SelectItem value="technology">Technology</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Results Count */}
-            <div className="mb-6">
-              <p className="text-gray-600 dark:text-gray-400">
-                Found {filteredSchemes.length} scheme(s) matching your criteria
-              </p>
-            </div>
-
-            {/* Schemes Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {filteredSchemes.map((scheme) => (
-                <Card key={scheme.id} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="flex justify-between items-start mb-2">
-                      <CardTitle className="text-xl">{scheme.name}</CardTitle>
-                      <Badge className={getBenefitTypeColor(scheme.benefitType)}>
-                        {scheme.benefitType.toUpperCase()}
-                      </Badge>
-                    </div>
-                    <CardDescription>{scheme.description}</CardDescription>
-                  </CardHeader>
-                  
-                  <CardContent className="space-y-4">
-                    <div>
-                      <h4 className="font-semibold text-sm text-gray-900 dark:text-white mb-1">
-                        Eligibility:
-                      </h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        {scheme.eligibility}
-                      </p>
-                    </div>
-
-                    <div>
-                      <h4 className="font-semibold text-sm text-green-700 dark:text-green-400 mb-1">
-                        Benefits:
-                      </h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        {scheme.benefits}
-                      </p>
-                    </div>
-
-                    <div className="flex flex-wrap gap-2">
-                      <Badge variant="outline" className="flex items-center gap-1">
-                        <MapPin className="w-3 h-3" />
-                        {scheme.state}
-                      </Badge>
-                      <Badge variant="outline">
-                        {scheme.cropType}
-                      </Badge>
-                    </div>
-
-                    <div className="text-xs text-gray-500 dark:text-gray-400">
-                      Department: {scheme.department}
-                    </div>
-
-                    <Button 
-                      className="w-full"
-                      onClick={() => window.open(scheme.applyUrl, '_blank')}
-                    >
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      Apply Now
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            {filteredSchemes.length === 0 && (
-              <div className="text-center py-12">
-                <div className="text-6xl mb-4">🔍</div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  No schemes found
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Try adjusting your search criteria or filters
-                </p>
-              </div>
-            )}
-          </div>
-        </main>
-      </div>
-    </div>
+    <AppShell>
+      <PageHeader title={t('schemes.title')} subtitle={t('schemes.subtitle')} />
+      <Tabs value={tab} onValueChange={(v) => setParams(v === 'msp' ? { tab: 'msp' } : {}, { replace: true })}>
+        <TabsList className="mb-4">
+          <TabsTrigger value="schemes">
+            <Landmark className="mr-1 h-4 w-4" aria-hidden="true" />
+            {t('schemes.tab')}
+          </TabsTrigger>
+          <TabsTrigger value="msp">{t('msp.tab')}</TabsTrigger>
+        </TabsList>
+        <TabsContent value="schemes">
+          <SchemesList />
+        </TabsContent>
+        <TabsContent value="msp">
+          <MSPTable />
+        </TabsContent>
+      </Tabs>
+    </AppShell>
   );
 };
 

@@ -1,40 +1,103 @@
+import React, { useState } from 'react';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { Inbox } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import AppShell from '@/components/common/AppShell';
+import PageHeader from '@/components/common/PageHeader';
+import PageSpinner from '@/components/common/PageSpinner';
+import Pager from '@/components/common/Pager';
+import { EmptyState, ErrorAlert } from '@/components/common/QueryState';
+import ClaimButton from '@/components/advice/ClaimButton';
+import ConsultationCard from '@/components/advice/ConsultationCard';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { adviceApi } from '@/lib/api';
+import { PAGE_SIZE } from '@/lib/constants';
+import { CONSULTATION_STATUSES, type ConsultationStatus } from '@/lib/types';
 
-import React from 'react';
-import Header from '../../components/common/Header';
-import Sidebar from '../../components/common/Sidebar';
+const ALL = 'all';
 
-const ExpertConsultations: React.FC = () => {
+const QuestionList: React.FC<{ scope: 'open' | 'mine' }> = ({ scope }) => {
+  const { t } = useTranslation(['advice', 'common']);
+  const [page, setPage] = useState(0);
+  const [status, setStatus] = useState<ConsultationStatus | typeof ALL>(ALL);
+  const filters = {
+    scope,
+    status: scope === 'mine' && status !== ALL ? [status] : undefined,
+    limit: PAGE_SIZE,
+    offset: page * PAGE_SIZE,
+  };
+  const query = useQuery({
+    queryKey: ['consultations', 'expert', filters],
+    queryFn: () => adviceApi.consultations(filters),
+    placeholderData: keepPreviousData,
+  });
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header />
-      
-      <div className="flex">
-        <Sidebar />
-        
-        <main className="flex-1 p-6">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              Expert Consultations
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              Manage and respond to farmer consultation requests.
-            </p>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border p-8">
-            <div className="text-center">
-              <div className="text-6xl mb-4">👨‍🌾</div>
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                Consultation Management
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                This page will display and manage farmer consultation requests and expert responses.
-              </p>
-            </div>
-          </div>
-        </main>
-      </div>
+    <div className="space-y-3">
+      {scope === 'mine' && (
+        <Select
+          value={status}
+          onValueChange={(v) => {
+            setStatus(v as ConsultationStatus | typeof ALL);
+            setPage(0);
+          }}
+        >
+          <SelectTrigger className="sm:w-64" aria-label={t('expertList.statusFilter')}>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={ALL}>{t('expertList.allStatuses')}</SelectItem>
+            {CONSULTATION_STATUSES.filter((s) => s !== 'open').map((s) => (
+              <SelectItem key={s} value={s}>
+                {t(`common:consultationStatus.${s}`)}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      )}
+      {query.isLoading ? (
+        <PageSpinner />
+      ) : query.isError ? (
+        <ErrorAlert error={query.error} />
+      ) : !query.data || query.data.total === 0 ? (
+        <EmptyState icon={Inbox} title={scope === 'open' ? t('expertList.emptyOpen') : t('expertList.emptyMine')} />
+      ) : (
+        <>
+          {query.data.items.map((c) => (
+            <ConsultationCard
+              key={c.id}
+              consultation={c}
+              showFarmer
+              actions={scope === 'open' && c.expert_id === null ? <ClaimButton consultationId={c.id} /> : undefined}
+            />
+          ))}
+          <Pager page={page} total={query.data.total} pageSize={PAGE_SIZE} onPage={setPage} />
+        </>
+      )}
     </div>
+  );
+};
+
+/** Expert inbox: unassigned questions to take, and the questions they are answering. */
+const ExpertConsultations: React.FC = () => {
+  const { t } = useTranslation(['advice', 'common']);
+  return (
+    <AppShell>
+      <PageHeader title={t('expertList.title')} subtitle={t('expertList.subtitle')} />
+      <Tabs defaultValue="open">
+        <TabsList className="mb-4 grid w-full grid-cols-2 sm:inline-flex sm:w-auto">
+          <TabsTrigger value="open">{t('expertList.tabOpen')}</TabsTrigger>
+          <TabsTrigger value="mine">{t('expertList.tabMine')}</TabsTrigger>
+        </TabsList>
+        <TabsContent value="open">
+          <QuestionList scope="open" />
+        </TabsContent>
+        <TabsContent value="mine">
+          <QuestionList scope="mine" />
+        </TabsContent>
+      </Tabs>
+    </AppShell>
   );
 };
 

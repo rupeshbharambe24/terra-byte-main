@@ -1,0 +1,890 @@
+{
+ "meta": {
+  "title": "FAO-56 single crop coefficient parameters",
+  "compiled": "2026-11-24",
+  "source": "Allen, Pereira, Raes & Smith (1998) FAO Irrigation and Drainage Paper 56, Crop evapotranspiration",
+  "source_urls": {
+   "table_11_stage_lengths": "https://www.fao.org/4/x0490e/x0490e0b.htm#TABLE 11",
+   "table_12_kc": "https://www.fao.org/4/x0490e/x0490e0b.htm#TABLE 12",
+   "table_22_root_p": "https://www.fao.org/4/x0490e/x0490e0e.htm#TABLE 22",
+   "table_23_salinity_table_24_ky": "https://www.fao.org/4/x0490e/x0490e0e.htm"
+  },
+  "conventions": "Kc values from Table 12 for sub-humid climate (RHmin ~45%, u2 ~2 m/s). Where Table 12 leaves Kc_ini blank for a crop, the crop-group value printed on the group header row is used. Strings like '1.15-1.20' and '0.70-0.50' are FAO ranges. stage_lengths_days rows are FAO examples by region; recommended_stage_set = index of the row closest to Maharashtra conditions (TerraByte suggestion). Local stage dates (crop_calendar_maharashtra.json) should override FAO totals; scale the four stages proportionally.",
+  "et0": "Use Open-Meteo daily et0_fao_evapotranspiration (FAO-56 Penman-Monteith ET0, mm/day) as ET0.",
+  "crop_keys": "Crop keys harmonised with crop_calendar_maharashtra.json"
+ },
+ "formulas": {
+  "ETc": "ETc = Kc x ET0 (FAO-56 Eq. 58)",
+  "Kc_curve": "Kc = Kc_ini during initial stage; linear from Kc_ini to Kc_mid over development; Kc_mid over mid-season; linear from Kc_mid to Kc_end over late season (FAO-56 Eq. 66)",
+  "Kc_mid_climate_adjustment": "Kc_mid = Kc_mid(Tab) + [0.04(u2 - 2) - 0.004(RHmin - 45)] (h/3)^0.3 (FAO-56 Eq. 62; valid for 1 <= u2 <= 6 m/s, 20 <= RHmin <= 80 %, 0.1 < h < 10 m)",
+  "Kc_end_climate_adjustment": "Same form as Eq. 62, applied only when Kc_end(Tab) > 0.45 (FAO-56 Eq. 65)",
+  "Kc_ini_note": "Kc_ini depends strongly on wetting interval and ET0; FAO-56 Figs 29-30 / Eq. 59-60 give Kc_ini as a function of time between wetting events. Table values are typical.",
+  "TAW": "TAW = 1000 (theta_FC - theta_WP) Zr  [mm] (FAO-56 Eq. 82)",
+  "RAW": "RAW = p x TAW (FAO-56 Eq. 83)",
+  "p_adjustment": "p = p(Table 22) + 0.04 (5 - ETc), limited to 0.1 <= p <= 0.8 (FAO-56 Table 22 footnote/text)",
+  "Ks": "Ks = (TAW - Dr) / ((1 - p) TAW) when Dr > RAW, else 1 (FAO-56 Eq. 84); ETc_adj = Ks x Kc x ET0",
+  "daily_water_balance": "Dr,i = Dr,i-1 - (P - RO)i - Ii - CRi + ETc,i + DPi (FAO-56 Eq. 85). Irrigate when Dr >= RAW; net irrigation = Dr.",
+  "Zr_growth": "Root depth grows from ~0.15-0.20 m at sowing to Zr max (Table 22) at start of mid-season; FAO-56 interpolates linearly (TerraByte implementation choice).",
+  "salinity_yield": "Relative yield = 100 - b (ECe - ECe_threshold) for ECe > threshold (Table 23, Ayers & Westcot 1985)"
+ },
+ "effective_rainfall": {
+  "recommended": "Primary: run the FAO-56 daily root-zone water balance (Eq. 85) with runoff RO (e.g. USDA-SCS curve number) and deep percolation DP - this makes 'effective rainfall' implicit and is consistent with FAO-56.",
+  "simple_alternative": {
+   "name": "USDA Soil Conservation Service method as implemented in FAO CROPWAT (monthly)",
+   "formula": "Peff = P (125 - 0.2 P) / 125 for P <= 250 mm/month; Peff = 125 + 0.1 P for P > 250 mm/month",
+   "use": "Apply to monthly (or rolling 30-day) rainfall totals; for decadal/daily use FAO CROPWAT scales the monthly equation - do not apply to single-day rain.",
+   "sources": [
+    "Smith M. (1992) CROPWAT - a computer program for irrigation planning and management. FAO Irrigation and Drainage Paper 46",
+    "pyCropWat documentation (https://montimaj.github.io/pyCropWat) reproducing the CROPWAT formula"
+   ],
+   "verification": "Formula verified only via secondary documentation; FAO-46 original not opened."
+  },
+  "other_cropwat_options": "CROPWAT also offers fixed-percentage, dependable-rain (FAO/AGLW) and empirical-formula methods; their coefficients were not verified in this research and are deliberately omitted."
+ },
+ "crops": [
+  {
+   "crop": "cotton_bt",
+   "fao56_name": "Cotton",
+   "is_proxy": false,
+   "Kc_ini": 0.35,
+   "Kc_mid": "1.15-1.20",
+   "Kc_end": "0.70-0.50",
+   "max_height_m": "1.2-1.5",
+   "root_depth_m": "1.0-1.7",
+   "p_depletion": 0.65,
+   "stage_lengths_days": [
+    {
+     "initial": 30,
+     "development": 50,
+     "mid": 60,
+     "late": 55,
+     "total": 195,
+     "plant_date": "Mar-May",
+     "region": "Egypt; Pakistan; Calif."
+    },
+    {
+     "initial": 45,
+     "development": 90,
+     "mid": 45,
+     "late": 45,
+     "total": 225,
+     "plant_date": "Mar",
+     "region": "Calif. Desert, USA"
+    },
+    {
+     "initial": 30,
+     "development": 50,
+     "mid": 60,
+     "late": 55,
+     "total": 195,
+     "plant_date": "Sept",
+     "region": "Yemen"
+    },
+    {
+     "initial": 30,
+     "development": 50,
+     "mid": 55,
+     "late": 45,
+     "total": 180,
+     "plant_date": "April",
+     "region": "Texas"
+    }
+   ],
+   "recommended_stage_set": 3,
+   "Ky_seasonal": 0.85,
+   "salinity": {
+    "ECe_threshold_dS_m": 7.7,
+    "b_pct_per_dS_m": 5.2,
+    "rating": "T"
+   },
+   "notes": "No Indian row in FAO-56. Kharif Bt hybrids in Maharashtra run ~160-180 days (crop-calendar file); scale stages proportionally from the Texas row (180 d) - TerraByte choice, not FAO. Kc_ini = group value 0.35 (Table 12 fibre crops header)."
+  },
+  {
+   "crop": "soybean",
+   "fao56_name": "Soybeans",
+   "is_proxy": false,
+   "Kc_ini": 0.4,
+   "Kc_mid": 1.15,
+   "Kc_end": 0.5,
+   "max_height_m": "0.5-1.0",
+   "root_depth_m": "0.6-1.3",
+   "p_depletion": 0.5,
+   "stage_lengths_days": [
+    {
+     "initial": 15,
+     "development": 15,
+     "mid": 40,
+     "late": 15,
+     "total": 85,
+     "plant_date": "Dec",
+     "region": "Tropics"
+    },
+    {
+     "initial": 20,
+     "development": "30/35",
+     "mid": 60,
+     "late": 25,
+     "total": 140,
+     "plant_date": "May",
+     "region": "Central USA"
+    },
+    {
+     "initial": 20,
+     "development": 25,
+     "mid": 75,
+     "late": 30,
+     "total": 150,
+     "plant_date": "June",
+     "region": "Japan"
+    }
+   ],
+   "recommended_stage_set": 0,
+   "Ky_seasonal": 0.85,
+   "salinity": {
+    "ECe_threshold_dS_m": 5.0,
+    "b_pct_per_dS_m": 20.0,
+    "rating": "MT"
+   },
+   "notes": "Maharashtra varieties mature in ~90-110 days; the Tropics row (85 d) is the closest FAO set. Kc_ini = legume group value 0.4."
+  },
+  {
+   "crop": "tur_pigeonpea",
+   "fao56_name": null,
+   "is_proxy": false,
+   "Kc_ini": null,
+   "Kc_mid": null,
+   "Kc_end": null,
+   "max_height_m": null,
+   "root_depth_m": null,
+   "p_depletion": null,
+   "stage_lengths_days": [],
+   "recommended_stage_set": null,
+   "Ky_seasonal": null,
+   "salinity": null,
+   "notes": "Pigeonpea is not listed in FAO-56 Tables 11/12/22. Generic 'Beans, dry and Pulses' row (Kc 0.4/1.15/0.35, h 0.4 m, root 0.6-0.9 m, p 0.45) is a poor proxy for a 150-200 day, 1.5-2 m shrub - needs Indian (ICRISAT/AICRP) Kc data. GAP."
+  },
+  {
+   "crop": "chickpea_gram",
+   "fao56_name": "Chick pea",
+   "is_proxy": false,
+   "Kc_ini": 0.4,
+   "Kc_mid": 1.0,
+   "Kc_end": 0.35,
+   "max_height_m": 0.4,
+   "root_depth_m": "0.6-1.0",
+   "p_depletion": 0.5,
+   "stage_lengths_days": [],
+   "recommended_stage_set": null,
+   "Ky_seasonal": null,
+   "salinity": null,
+   "notes": "Table 11 has no chickpea stage lengths (GAP; use crop-calendar duration ~95-120 d and split e.g. by lentil proportions - TerraByte choice). Table 12 also lists 'Grabanzo' (garbanzo = chickpea) with Kc 0.4/1.15/0.35, h 0.8 m - inconsistent with 'Chick pea' row; FAO-56 itself gives both."
+  },
+  {
+   "crop": "wheat",
+   "fao56_name": "Spring Wheat (Table 12/22); 'Barley/Oats/Wheat' (Table 11)",
+   "is_proxy": false,
+   "Kc_ini": 0.3,
+   "Kc_mid": 1.15,
+   "Kc_end": "0.25-0.4",
+   "max_height_m": 1.0,
+   "root_depth_m": "1.0-1.5",
+   "p_depletion": 0.55,
+   "stage_lengths_days": [
+    {
+     "initial": 15,
+     "development": 25,
+     "mid": 50,
+     "late": 30,
+     "total": 120,
+     "plant_date": "November",
+     "region": "Central India"
+    },
+    {
+     "initial": 20,
+     "development": 25,
+     "mid": 60,
+     "late": 30,
+     "total": 135,
+     "plant_date": "March/Apr",
+     "region": "35-45 degrees L"
+    },
+    {
+     "initial": 15,
+     "development": 30,
+     "mid": 65,
+     "late": 40,
+     "total": 150,
+     "plant_date": "July",
+     "region": "East Africa"
+    },
+    {
+     "initial": 20,
+     "development": 50,
+     "mid": 60,
+     "late": 30,
+     "total": 160,
+     "plant_date": "Dec",
+     "region": "Calif. Desert, USA"
+    }
+   ],
+   "recommended_stage_set": 0,
+   "Ky_seasonal": 1.15,
+   "salinity": {
+    "ECe_threshold_dS_m": 6.0,
+    "b_pct_per_dS_m": 7.1,
+    "rating": "MT",
+    "note": "Triticum aestivum; semidwarf 8.6 / 3.0"
+   },
+   "notes": "Use the Central India (November) row - FAO-56's only explicitly Indian wheat entry. Kc_end 0.25-0.4: higher value if harvested earlier/greener. Kc_ini = cereal group 0.3."
+  },
+  {
+   "crop": "rice_paddy",
+   "fao56_name": "Rice",
+   "is_proxy": false,
+   "Kc_ini": 1.05,
+   "Kc_mid": 1.2,
+   "Kc_end": "0.90-0.60",
+   "max_height_m": 1.0,
+   "root_depth_m": "0.5-1.0",
+   "p_depletion": 0.2,
+   "stage_lengths_days": [
+    {
+     "initial": 30,
+     "development": 30,
+     "mid": 60,
+     "late": 30,
+     "total": 150,
+     "plant_date": "Dec; May",
+     "region": "Tropics; Mediterranean"
+    },
+    {
+     "initial": 30,
+     "development": 30,
+     "mid": 80,
+     "late": 40,
+     "total": 180,
+     "plant_date": "May",
+     "region": "Tropics"
+    }
+   ],
+   "recommended_stage_set": 0,
+   "Ky_seasonal": null,
+   "salinity": {
+    "ECe_threshold_dS_m": 3.0,
+    "b_pct_per_dS_m": 12.0,
+    "rating": "S"
+   },
+   "notes": "p 0.20 is relative to saturation (Table 22 footnote). Puddled/flooded rice needs a separate ponded water balance (percolation + standing water); FAO-56 Kc applies to the transplanted field. Medium-duration Konkan/Vidarbha varieties 120-140 d: scale the 150-d row."
+  },
+  {
+   "crop": "jowar_sorghum",
+   "fao56_name": "Sorghum - grain",
+   "is_proxy": false,
+   "Kc_ini": 0.3,
+   "Kc_mid": "1.00-1.10",
+   "Kc_end": 0.55,
+   "max_height_m": "1-2",
+   "root_depth_m": "1.0-2.0",
+   "p_depletion": 0.55,
+   "stage_lengths_days": [
+    {
+     "initial": 20,
+     "development": 35,
+     "mid": 40,
+     "late": 30,
+     "total": 130,
+     "plant_date": "May/June",
+     "region": "USA, Pakistan, Mediterranean"
+    },
+    {
+     "initial": 20,
+     "development": 35,
+     "mid": 45,
+     "late": 30,
+     "total": 140,
+     "plant_date": "Mar/April",
+     "region": "Arid Region"
+    }
+   ],
+   "recommended_stage_set": 0,
+   "Ky_seasonal": 0.9,
+   "salinity": {
+    "ECe_threshold_dS_m": 6.8,
+    "b_pct_per_dS_m": 16.0,
+    "rating": "MT"
+   },
+   "notes": "Use for both kharif and rabi jowar; rabi jowar (~110-120 d) grows on stored soil moisture - scale stages. Kc_ini = cereal group 0.3."
+  },
+  {
+   "crop": "bajra_pearl_millet",
+   "fao56_name": "Millet",
+   "is_proxy": false,
+   "Kc_ini": 0.3,
+   "Kc_mid": 1.0,
+   "Kc_end": 0.3,
+   "max_height_m": 1.5,
+   "root_depth_m": "1.0-2.0",
+   "p_depletion": 0.55,
+   "stage_lengths_days": [
+    {
+     "initial": 15,
+     "development": 25,
+     "mid": 40,
+     "late": 25,
+     "total": 105,
+     "plant_date": "June",
+     "region": "Pakistan"
+    },
+    {
+     "initial": 20,
+     "development": 30,
+     "mid": 55,
+     "late": 35,
+     "total": 140,
+     "plant_date": "April",
+     "region": "Central USA"
+    }
+   ],
+   "recommended_stage_set": 0,
+   "Ky_seasonal": null,
+   "salinity": {
+    "ECe_threshold_dS_m": null,
+    "b_pct_per_dS_m": null,
+    "rating": "MS"
+   },
+   "notes": "Pakistan June row (105 d) matches kharif bajra (75-90 d hybrids: scale)."
+  },
+  {
+   "crop": "maize",
+   "fao56_name": "Maize, Field (grain)",
+   "is_proxy": false,
+   "Kc_ini": 0.3,
+   "Kc_mid": 1.2,
+   "Kc_end": "0.60-0.35",
+   "max_height_m": 2.0,
+   "root_depth_m": "1.0-1.7",
+   "p_depletion": 0.55,
+   "stage_lengths_days": [
+    {
+     "initial": 20,
+     "development": 35,
+     "mid": 40,
+     "late": 30,
+     "total": 125,
+     "plant_date": "June",
+     "region": "Nigeria (humid)"
+    },
+    {
+     "initial": 20,
+     "development": 35,
+     "mid": 40,
+     "late": 30,
+     "total": 125,
+     "plant_date": "October",
+     "region": "India (dry, cool)"
+    },
+    {
+     "initial": 25,
+     "development": 40,
+     "mid": 45,
+     "late": 30,
+     "total": 140,
+     "plant_date": "Dec/Jan",
+     "region": "Arid Climate"
+    },
+    {
+     "initial": 30,
+     "development": 50,
+     "mid": 60,
+     "late": 40,
+     "total": 180,
+     "plant_date": "April",
+     "region": "East Africa (alt.)"
+    }
+   ],
+   "recommended_stage_set": {
+    "kharif": 0,
+    "rabi": 1
+   },
+   "Ky_seasonal": 1.25,
+   "salinity": {
+    "ECe_threshold_dS_m": 1.7,
+    "b_pct_per_dS_m": 12.0,
+    "rating": "MS"
+   },
+   "notes": "FAO-56 gives an explicit 'India (dry, cool), October' row - use for rabi maize; Nigeria (humid) June row as kharif analogue. Kc_end 0.60 if harvested at high grain moisture, 0.35 if field-dried."
+  },
+  {
+   "crop": "sugarcane",
+   "fao56_name": "Sugar Cane (virgin / ratoon)",
+   "is_proxy": false,
+   "Kc_ini": 0.4,
+   "Kc_mid": 1.25,
+   "Kc_end": 0.75,
+   "max_height_m": 3.0,
+   "root_depth_m": "1.2-2.0",
+   "p_depletion": 0.65,
+   "stage_lengths_days": {
+    "virgin": [
+     {
+      "initial": 35,
+      "development": 60,
+      "mid": 190,
+      "late": 120,
+      "total": 405,
+      "plant_date": null,
+      "region": "Low Latitudes"
+     },
+     {
+      "initial": 50,
+      "development": 70,
+      "mid": 220,
+      "late": 140,
+      "total": 480,
+      "plant_date": null,
+      "region": "Tropics"
+     },
+     {
+      "initial": 75,
+      "development": 105,
+      "mid": 330,
+      "late": 210,
+      "total": 720,
+      "plant_date": null,
+      "region": "Hawaii, USA"
+     }
+    ],
+    "ratoon": [
+     {
+      "initial": 25,
+      "development": 70,
+      "mid": 135,
+      "late": 50,
+      "total": 280,
+      "plant_date": null,
+      "region": "Low Latitudes"
+     },
+     {
+      "initial": 30,
+      "development": 50,
+      "mid": 180,
+      "late": 60,
+      "total": 320,
+      "plant_date": null,
+      "region": "Tropics"
+     },
+     {
+      "initial": 35,
+      "development": 105,
+      "mid": 210,
+      "late": 70,
+      "total": 420,
+      "plant_date": null,
+      "region": "Hawaii, USA"
+     }
+    ]
+   },
+   "recommended_stage_set": {
+    "adsali": "virgin[1] (480 d; adsali is 16-18 months - stretch mid-season)",
+    "pre_seasonal": "virgin[1] (480 d) or scale to 14-15 months",
+    "suru": "virgin[0] (405 d; suru 12-13 months)",
+    "ratoon": "ratoon[1]"
+   },
+   "Ky_seasonal": 1.2,
+   "salinity": {
+    "ECe_threshold_dS_m": 1.7,
+    "b_pct_per_dS_m": 5.9,
+    "rating": "MS"
+   },
+   "notes": "Mapping of Maharashtra planting seasons to FAO rows is a TerraByte suggestion, not FAO."
+  },
+  {
+   "crop": "onion",
+   "fao56_name": "Onions - dry",
+   "is_proxy": false,
+   "Kc_ini": 0.7,
+   "Kc_mid": 1.05,
+   "Kc_end": 0.75,
+   "max_height_m": 0.4,
+   "root_depth_m": "0.3-0.6",
+   "p_depletion": 0.3,
+   "stage_lengths_days": [
+    {
+     "initial": 15,
+     "development": 25,
+     "mid": 70,
+     "late": 40,
+     "total": 150,
+     "plant_date": "April",
+     "region": "Mediterranean"
+    },
+    {
+     "initial": 20,
+     "development": 35,
+     "mid": 110,
+     "late": 45,
+     "total": 210,
+     "plant_date": "Oct; Jan",
+     "region": "Arid Region; Calif."
+    }
+   ],
+   "recommended_stage_set": 0,
+   "Ky_seasonal": 1.1,
+   "salinity": {
+    "ECe_threshold_dS_m": 1.2,
+    "b_pct_per_dS_m": 16.0,
+    "rating": "S"
+   },
+   "notes": "Indian transplanted onion: 110-145 days after transplanting (crop-calendar file) - shorter than FAO rows; scale. Kc_ini = small-vegetable group 0.7."
+  },
+  {
+   "crop": "tomato",
+   "fao56_name": "Tomato",
+   "is_proxy": false,
+   "Kc_ini": 0.6,
+   "Kc_mid": 1.15,
+   "Kc_end": "0.70-0.90",
+   "max_height_m": 0.6,
+   "root_depth_m": "0.7-1.5",
+   "p_depletion": 0.4,
+   "stage_lengths_days": [
+    {
+     "initial": 30,
+     "development": 40,
+     "mid": 40,
+     "late": 25,
+     "total": 135,
+     "plant_date": "January",
+     "region": "Arid Region"
+    },
+    {
+     "initial": 35,
+     "development": 40,
+     "mid": 50,
+     "late": 30,
+     "total": 155,
+     "plant_date": "Apr/May",
+     "region": "Calif., USA"
+    },
+    {
+     "initial": 25,
+     "development": 40,
+     "mid": 60,
+     "late": 30,
+     "total": 155,
+     "plant_date": "Jan",
+     "region": "Calif. Desert, USA"
+    },
+    {
+     "initial": 35,
+     "development": 45,
+     "mid": 70,
+     "late": 30,
+     "total": 180,
+     "plant_date": "Oct/Nov",
+     "region": "Arid Region"
+    }
+   ],
+   "recommended_stage_set": 0,
+   "Ky_seasonal": 1.05,
+   "salinity": {
+    "ECe_threshold_dS_m": "0.9-2.5",
+    "b_pct_per_dS_m": 9.0,
+    "rating": "MS"
+   },
+   "notes": "Kc_mid 1.15 footnote: sometimes higher for stakes/trellised crops >2 m. Kc_ini = Solanaceae group 0.6."
+  },
+  {
+   "crop": "potato",
+   "fao56_name": "Potato",
+   "is_proxy": false,
+   "Kc_ini": 0.5,
+   "Kc_mid": 1.15,
+   "Kc_end": 0.75,
+   "max_height_m": 0.6,
+   "root_depth_m": "0.4-0.6",
+   "p_depletion": 0.35,
+   "stage_lengths_days": [
+    {
+     "initial": 25,
+     "development": 30,
+     "mid": "30/45",
+     "late": 30,
+     "total": "115/130",
+     "plant_date": "Jan/Nov",
+     "region": "(Semi) Arid Climate"
+    },
+    {
+     "initial": 25,
+     "development": 30,
+     "mid": 45,
+     "late": 30,
+     "total": 130,
+     "plant_date": "May",
+     "region": "Continental Climate"
+    }
+   ],
+   "recommended_stage_set": 0,
+   "Ky_seasonal": 1.1,
+   "salinity": {
+    "ECe_threshold_dS_m": 1.7,
+    "b_pct_per_dS_m": 12.0,
+    "rating": "MS"
+   },
+   "notes": "Kc_end 0.75 for long season with vine kill (footnote 4)."
+  },
+  {
+   "crop": "okra_bhendi",
+   "fao56_name": null,
+   "is_proxy": false,
+   "Kc_ini": null,
+   "Kc_mid": null,
+   "Kc_end": null,
+   "max_height_m": null,
+   "root_depth_m": null,
+   "p_depletion": null,
+   "stage_lengths_days": [],
+   "recommended_stage_set": null,
+   "Ky_seasonal": null,
+   "salinity": null,
+   "notes": "Okra is not listed in FAO-56. GAP - needs Indian lysimeter Kc data (e.g. AICRP on Irrigation Water Management)."
+  },
+  {
+   "crop": "brinjal",
+   "fao56_name": "Egg Plant",
+   "is_proxy": false,
+   "Kc_ini": 0.6,
+   "Kc_mid": 1.05,
+   "Kc_end": 0.9,
+   "max_height_m": 0.8,
+   "root_depth_m": "0.7-1.2",
+   "p_depletion": 0.45,
+   "stage_lengths_days": [
+    {
+     "initial": 30,
+     "development": 40,
+     "mid": 40,
+     "late": 20,
+     "total": 130,
+     "plant_date": "October",
+     "region": "Arid Region"
+    },
+    {
+     "initial": 30,
+     "development": 45,
+     "mid": 40,
+     "late": 25,
+     "total": 140,
+     "plant_date": "May/June",
+     "region": "Mediterranean"
+    }
+   ],
+   "recommended_stage_set": 0,
+   "Ky_seasonal": null,
+   "salinity": {
+    "ECe_threshold_dS_m": null,
+    "b_pct_per_dS_m": null,
+    "rating": "MS"
+   },
+   "notes": "Second row total printed as '40' in FAO HTML; stages sum to 140."
+  },
+  {
+   "crop": "chilli",
+   "fao56_name": "Sweet Peppers (bell) - PROXY",
+   "is_proxy": true,
+   "Kc_ini": 0.6,
+   "Kc_mid": 1.05,
+   "Kc_end": 0.9,
+   "max_height_m": 0.7,
+   "root_depth_m": "0.5-1.0",
+   "p_depletion": 0.3,
+   "stage_lengths_days": [
+    {
+     "initial": "25/30",
+     "development": 35,
+     "mid": 40,
+     "late": 20,
+     "total": 125,
+     "plant_date": "April/June",
+     "region": "Europe and Mediterranean"
+    },
+    {
+     "initial": 30,
+     "development": 40,
+     "mid": 110,
+     "late": 30,
+     "total": 210,
+     "plant_date": "October",
+     "region": "Arid Region"
+    }
+   ],
+   "recommended_stage_set": null,
+   "Ky_seasonal": 1.1,
+   "salinity": {
+    "ECe_threshold_dS_m": "1.5-1.7",
+    "b_pct_per_dS_m": "12.0-14.0",
+    "rating": "MS",
+    "note": "'Peppers'"
+   },
+   "notes": "FAO-56 has no hot-pepper/chilli entry; bell pepper used as proxy - flag in UI."
+  },
+  {
+   "crop": "groundnut",
+   "fao56_name": "Groundnut (Peanut)",
+   "is_proxy": false,
+   "Kc_ini": 0.4,
+   "Kc_mid": 1.15,
+   "Kc_end": 0.6,
+   "max_height_m": 0.4,
+   "root_depth_m": "0.5-1.0",
+   "p_depletion": 0.5,
+   "stage_lengths_days": [
+    {
+     "initial": 25,
+     "development": 35,
+     "mid": 45,
+     "late": 25,
+     "total": 130,
+     "plant_date": "Dry season",
+     "region": "West Africa"
+    },
+    {
+     "initial": 35,
+     "development": 35,
+     "mid": 35,
+     "late": 35,
+     "total": 140,
+     "plant_date": null,
+     "region": "High Latitudes"
+    },
+    {
+     "initial": 35,
+     "development": 45,
+     "mid": 35,
+     "late": 25,
+     "total": 140,
+     "plant_date": "May/June",
+     "region": "Mediterranean"
+    }
+   ],
+   "recommended_stage_set": 0,
+   "Ky_seasonal": 0.7,
+   "salinity": {
+    "ECe_threshold_dS_m": 3.2,
+    "b_pct_per_dS_m": 29.0,
+    "rating": "MS"
+   },
+   "notes": "Indian bunch varieties 100-125 d (crop calendar): scale the West Africa row."
+  },
+  {
+   "crop": "grapes",
+   "fao56_name": "Grapes - Table or Raisin",
+   "is_proxy": false,
+   "Kc_ini": 0.3,
+   "Kc_mid": 0.85,
+   "Kc_end": 0.45,
+   "max_height_m": 2.0,
+   "root_depth_m": "1.0-2.0",
+   "p_depletion": 0.35,
+   "stage_lengths_days": [
+    {
+     "initial": 20,
+     "development": 40,
+     "mid": 120,
+     "late": 60,
+     "total": 240,
+     "plant_date": "April",
+     "region": "Low Latitudes"
+    },
+    {
+     "initial": 20,
+     "development": 50,
+     "mid": 75,
+     "late": 60,
+     "total": 205,
+     "plant_date": "Mar",
+     "region": "Calif., USA"
+    }
+   ],
+   "recommended_stage_set": 0,
+   "Ky_seasonal": 0.85,
+   "salinity": {
+    "ECe_threshold_dS_m": 1.5,
+    "b_pct_per_dS_m": 9.6,
+    "rating": "MS"
+   },
+   "notes": "Maharashtra table grapes are double-pruned (April foundation pruning, Sept-Oct fruit pruning); FAO stage lengths assume one cycle - define two Kc cycles per year from pruning dates (TerraByte design choice; see NRCG fertigation stages in RDF file)."
+  },
+  {
+   "crop": "pomegranate",
+   "fao56_name": null,
+   "is_proxy": false,
+   "Kc_ini": null,
+   "Kc_mid": null,
+   "Kc_end": null,
+   "max_height_m": null,
+   "root_depth_m": null,
+   "p_depletion": null,
+   "stage_lengths_days": [],
+   "recommended_stage_set": null,
+   "Ky_seasonal": null,
+   "salinity": null,
+   "notes": "Pomegranate is not listed in FAO-56. GAP - ICAR-NRC Pomegranate publishes bahar-wise water requirement; not retrieved."
+  },
+  {
+   "crop": "banana",
+   "fao56_name": "Banana (1st year / 2nd year)",
+   "is_proxy": false,
+   "Kc_ini": {
+    "year1": 0.5,
+    "year2": 1.0
+   },
+   "Kc_mid": {
+    "year1": 1.1,
+    "year2": 1.2
+   },
+   "Kc_end": {
+    "year1": 1.0,
+    "year2": 1.1
+   },
+   "max_height_m": {
+    "year1": 3,
+    "year2": 4
+   },
+   "root_depth_m": "0.5-0.9",
+   "p_depletion": 0.35,
+   "stage_lengths_days": {
+    "year1": [
+     {
+      "initial": 120,
+      "development": 90,
+      "mid": 120,
+      "late": 60,
+      "total": 390,
+      "plant_date": "Mar",
+      "region": "Mediterranean"
+     }
+    ],
+    "year2": [
+     {
+      "initial": 120,
+      "development": 60,
+      "mid": 180,
+      "late": 5,
+      "total": 365,
+      "plant_date": "Feb",
+      "region": "Mediterranean"
+     }
+    ]
+   },
+   "recommended_stage_set": null,
+   "Ky_seasonal": "1.2-1.35",
+   "salinity": {
+    "ECe_threshold_dS_m": null,
+    "b_pct_per_dS_m": null,
+    "rating": "MS"
+   },
+   "notes": "Kc fields are per-year dicts. Maharashtra Grand Naine mrig/kande bahar crops are ~12-15 months - use year1 set."
+  }
+ ]
+}

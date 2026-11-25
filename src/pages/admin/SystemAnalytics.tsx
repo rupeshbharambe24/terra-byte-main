@@ -1,166 +1,147 @@
-
 import React from 'react';
-import Header from '../../components/common/Header';
-import Sidebar from '../../components/common/Sidebar';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from '../../components/ui/chart';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, LineChart, Line, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import AppShell from '@/components/common/AppShell';
+import PageHeader from '@/components/common/PageHeader';
+import PageSpinner from '@/components/common/PageSpinner';
+import { ErrorAlert } from '@/components/common/QueryState';
+import Breakdown from '@/components/dashboard/Breakdown';
+import DayChart from '@/components/dashboard/DayChart';
+import Section from '@/components/dashboard/Section';
+import { dashboardApi } from '@/lib/api';
+import { formatHours, orderedCounts } from '@/lib/dashboard';
+import { formatMoney, formatNumber } from '@/lib/format';
+import { BOOKING_STATUSES, CONSULTATION_STATUSES, ORDER_STATUSES, ROLES, USER_STATUSES } from '@/lib/types';
 
 const SystemAnalytics: React.FC = () => {
-  const userGrowthData = [
-    { month: 'Jan', farmers: 120, vendors: 15, experts: 8 },
-    { month: 'Feb', farmers: 180, vendors: 22, experts: 12 },
-    { month: 'Mar', farmers: 250, vendors: 28, experts: 15 },
-    { month: 'Apr', farmers: 320, vendors: 35, experts: 18 },
-    { month: 'May', farmers: 410, vendors: 42, experts: 23 }
-  ];
-
-  const activityData = [
-    { day: 'Mon', logins: 890, queries: 234, transactions: 45 },
-    { day: 'Tue', logins: 1250, queries: 312, transactions: 67 },
-    { day: 'Wed', logins: 1100, queries: 289, transactions: 52 },
-    { day: 'Thu', logins: 1350, queries: 345, transactions: 78 },
-    { day: 'Fri', logins: 1450, queries: 398, transactions: 89 },
-    { day: 'Sat', logins: 890, queries: 234, transactions: 34 },
-    { day: 'Sun', logins: 680, queries: 189, transactions: 23 }
-  ];
-
-  const userDistribution = [
-    { name: 'Farmers', value: 68, color: '#22C55E' },
-    { name: 'Vendors', value: 18, color: '#3B82F6' },
-    { name: 'Experts', value: 12, color: '#8B5CF6' },
-    { name: 'Admins', value: 2, color: '#F59E0B' }
-  ];
-
-  const systemMetrics = [
-    { label: 'Total Users', value: '1,245', change: '+12%', trend: 'up' },
-    { label: 'Daily Active Users', value: '892', change: '+8%', trend: 'up' },
-    { label: 'System Uptime', value: '99.8%', change: '+0.2%', trend: 'up' },
-    { label: 'Response Time', value: '245ms', change: '-15ms', trend: 'down' }
-  ];
-
-  const chartConfig = {
-    farmers: { label: 'Farmers', color: '#22C55E' },
-    vendors: { label: 'Vendors', color: '#3B82F6' },
-    experts: { label: 'Experts', color: '#8B5CF6' },
-    logins: { label: 'Logins', color: '#22C55E' },
-    queries: { label: 'Queries', color: '#3B82F6' },
-    transactions: { label: 'Transactions', color: '#8B5CF6' }
-  };
+  const { t, i18n } = useTranslation(['dashboard', 'common']);
+  const lng = i18n.resolvedLanguage;
+  const units = { min: t('shared.unitMin'), h: t('shared.unitHour') };
+  const { data, isLoading, isError, error } = useQuery({ queryKey: ['dashboard', 'admin'], queryFn: dashboardApi.admin });
+  const count = (n: number) => formatNumber(n, lng);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header />
-      
-      <div className="flex">
-        <Sidebar />
-        
-        <main className="flex-1 p-6">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              System Analytics
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              Platform usage and performance analytics.
-            </p>
+    <AppShell>
+      <PageHeader title={t('system.title')} subtitle={t('system.subtitle')} />
+      {isLoading ? (
+        <PageSpinner />
+      ) : isError || !data ? (
+        <ErrorAlert error={error} />
+      ) : (
+        <div className="space-y-6">
+          <div className="grid gap-6 lg:grid-cols-2">
+            <Section title={t('system.newUsers')} note={t('system.perDayNote')}>
+              <DayChart
+                series={data.new_users_last_30_days}
+                metric="count"
+                label={t('system.signUps')}
+                emptyText={t('shared.noActivity')}
+                format={count}
+              />
+            </Section>
+            <Section title={t('system.ordersPerDay')} note={t('system.ordersPerDayNote')}>
+              <DayChart
+                series={data.orders_last_30_days}
+                metric="count"
+                label={t('system.orders')}
+                emptyText={t('shared.noActivity')}
+                format={count}
+                color="#2563eb"
+              />
+            </Section>
           </div>
 
-          {/* Key Metrics */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            {systemMetrics.map((metric, index) => (
-              <Card key={index}>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">{metric.label}</p>
-                      <p className="text-2xl font-bold text-gray-900 dark:text-white">{metric.value}</p>
-                    </div>
-                    <div className={`text-sm font-medium ${
-                      metric.trend === 'up' ? 'text-green-600' : 'text-red-600'
-                    }`}>
-                      {metric.change}
-                    </div>
+          <div className="grid gap-6 lg:grid-cols-2">
+            <Section title={t('admin.usersByRole')}>
+              <Breakdown
+                ariaLabel={t('admin.usersByRole')}
+                emptyText={t('admin.noUsers')}
+                rows={orderedCounts(data.users_by_role, ROLES).map(({ key, count: n }) => ({ key, label: t(`common:roles.${key}`), count: n }))}
+              />
+            </Section>
+            <Section title={t('system.usersByStatus')}>
+              <Breakdown
+                ariaLabel={t('system.usersByStatus')}
+                emptyText={t('admin.noUsers')}
+                rows={orderedCounts(data.users_by_status, USER_STATUSES).map(({ key, count: n }) => ({ key, label: t(`common:status.${key}`), count: n }))}
+              />
+            </Section>
+            <Section
+              title={t('system.ordersByStatus')}
+              note={t('system.deliveredValue', { value: formatMoney(data.delivered_order_value, lng) })}
+            >
+              <Breakdown
+                ariaLabel={t('system.ordersByStatus')}
+                emptyText={t('system.none')}
+                rows={orderedCounts(data.orders_by_status, ORDER_STATUSES).map(({ key, count: n }) => ({ key, label: t(`common:orderStatus.${key}`), count: n }))}
+              />
+            </Section>
+            <Section
+              title={t('system.bookingsByStatus')}
+              note={t('system.rentalValue', { value: formatMoney(data.completed_rental_value, lng) })}
+            >
+              <Breakdown
+                ariaLabel={t('system.bookingsByStatus')}
+                emptyText={t('system.none')}
+                rows={orderedCounts(data.bookings_by_status, BOOKING_STATUSES).map(({ key, count: n }) => ({ key, label: t(`common:bookingStatus.${key}`), count: n }))}
+              />
+            </Section>
+            <Section title={t('system.consultationsByStatus')}>
+              <Breakdown
+                ariaLabel={t('system.consultationsByStatus')}
+                emptyText={t('system.none')}
+                rows={orderedCounts(data.consultations_by_status, CONSULTATION_STATUSES).map(({ key, count: n }) => ({
+                  key,
+                  label: t(`common:consultationStatus.${key}`),
+                  count: n,
+                }))}
+              />
+            </Section>
+            <Section title={t('system.responseTime')} note={t('system.responseTimeNote')}>
+              {data.response_times.responded === 0 ? (
+                <p className="text-sm text-gray-500 dark:text-gray-400">{t('expert.noReplies')}</p>
+              ) : (
+                <dl className="grid grid-cols-2 gap-4">
+                  <div>
+                    <dt className="text-sm text-gray-600 dark:text-gray-400">{t('shared.median')}</dt>
+                    <dd className="text-2xl font-bold">{formatHours(data.response_times.median_hours, lng, units)}</dd>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
+                  <div>
+                    <dt className="text-sm text-gray-600 dark:text-gray-400">{t('shared.average')}</dt>
+                    <dd className="text-2xl font-bold">{formatHours(data.response_times.average_hours, lng, units)}</dd>
+                  </div>
+                  <p className="col-span-2 text-xs text-gray-500">{t('shared.basedOn', { count: data.response_times.responded })}</p>
+                </dl>
+              )}
+            </Section>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-            {/* User Growth Chart */}
-            <Card>
-              <CardHeader>
-                <CardTitle>User Growth</CardTitle>
-                <CardDescription>Monthly user registration by type</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ChartContainer config={chartConfig} className="h-80">
-                  <BarChart data={userGrowthData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month" />
-                    <YAxis />
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                    <Bar dataKey="farmers" fill="var(--color-farmers)" />
-                    <Bar dataKey="vendors" fill="var(--color-vendors)" />
-                    <Bar dataKey="experts" fill="var(--color-experts)" />
-                  </BarChart>
-                </ChartContainer>
-              </CardContent>
-            </Card>
-
-            {/* User Distribution */}
-            <Card>
-              <CardHeader>
-                <CardTitle>User Distribution</CardTitle>
-                <CardDescription>Percentage of users by role</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="h-80">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                      <Pie
-                        data={userDistribution}
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={80}
-                        dataKey="value"
-                        label={({ name, value }) => `${name}: ${value}%`}
-                      >
-                        {userDistribution.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
-                      </Pie>
-                      <ChartTooltip />
-                    </PieChart>
-                  </ResponsiveContainer>
+          <Section title={t('system.community')}>
+            <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+              {(
+                [
+                  ['forumPosts', data.forum_posts],
+                  ['forumReplies', data.forum_replies],
+                  ['openReports', data.open_reports],
+                  ['hiddenItems', data.hidden_items],
+                  ['articles', data.articles_published],
+                  ['kvks', data.kvks],
+                  ['products', data.products_active],
+                  ['equipment', data.equipment_active],
+                ] as const
+              ).map(([key, value]) => (
+                <div key={key}>
+                  <dt className="text-sm text-gray-600 dark:text-gray-400">{t(`system.counts.${key}`)}</dt>
+                  <dd className="text-xl font-bold tabular-nums">{count(value)}</dd>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
+              ))}
+            </dl>
+          </Section>
 
-          {/* Activity Chart */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Weekly Activity</CardTitle>
-              <CardDescription>Daily platform activity metrics</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ChartContainer config={chartConfig} className="h-80">
-                <LineChart data={activityData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="day" />
-                  <YAxis />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <Line type="monotone" dataKey="logins" stroke="var(--color-logins)" strokeWidth={2} />
-                  <Line type="monotone" dataKey="queries" stroke="var(--color-queries)" strokeWidth={2} />
-                  <Line type="monotone" dataKey="transactions" stroke="var(--color-transactions)" strokeWidth={2} />
-                </LineChart>
-              </ChartContainer>
-            </CardContent>
-          </Card>
-        </main>
-      </div>
-    </div>
+          <p className="text-xs text-gray-500 dark:text-gray-400">{t('system.definitions')}</p>
+        </div>
+      )}
+    </AppShell>
   );
 };
 

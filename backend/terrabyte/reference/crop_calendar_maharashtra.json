@@ -1,0 +1,2554 @@
+{
+ "meta": {
+  "title": "Crop calendars - Maharashtra, India",
+  "generated": "2026-11-24",
+  "conventions": {
+   "dates": "MM-DD; crop windows crossing new year have end < start (e.g. 12-15 to 02-15)",
+   "week_to_date": "1st week=01-07, 2nd week=08-14, 3rd week=15-21, 4th/last week=22-end of month; 1st fortnight=01-15, 2nd fortnight=16-end; month-only text uses full month(s)",
+   "seed_rate_kg_ha": "number or {min,max}; per-acre figures converted with 1 ha = 2.471 acre (noted in seed_rate_text)",
+   "null": "null = not found in consulted sources (never estimated)",
+   "region_keys": "'all' = state-wide SAU/ICAR guidance; '<region>_<district>' = district contingency plan (sec 1.12 'normal sowing window'); several 'all_*' keys hold alternative sources for comparison",
+   "regions": [
+    "vidarbha",
+    "marathwada",
+    "western_maharashtra",
+    "north_maharashtra (Khandesh/Nashik)",
+    "konkan"
+   ]
+  },
+  "caveats": [
+   "ICAR-CRIDA district contingency plans date from 2011 and give 'normal' windows, not always crop-variety-specific; Bt-specific guidance is from CICR/MPKV.",
+   "MPKV Krishi Darshani 2026 is in Marathi with legacy fonts; values were read from rendered page images (PDF page numbers given) and translated.",
+   "MPKV guidance mainly targets Western Maharashtra, Khandesh and the scarcity zone; Vidarbha (PDKV), Marathwada (VNMKV) and Konkan (BSKKV) SAU packages were not directly available except PDKV recommendations and CRIDA plans prepared with those SAUs."
+  ],
+  "sources": [
+   {
+    "key": "KD",
+    "name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+    "url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf"
+   },
+   {
+    "key": "CP_AMR",
+    "name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Amravati (Vidarbha), sec 1.12",
+    "url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Amravati.pdf"
+   },
+   {
+    "key": "CP_AKL",
+    "name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Akola (Vidarbha), sec 1.12",
+    "url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Akola.pdf"
+   },
+   {
+    "key": "CP_CHD",
+    "name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Chandrapur (east Vidarbha), sec 1.12",
+    "url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Chandrapur.pdf"
+   },
+   {
+    "key": "CP_NAN",
+    "name": "ICAR-CRIDA/VNMKV(MAU) District Agriculture Contingency Plan: Nanded (Marathwada), 2011, sec 1.12",
+    "url": "https://icar-crida.res.in/CP/Maharastra/MAU,%20Parbhani/Maharashtra%2029-Nanded-%2031-12-2011.pdf"
+   },
+   {
+    "key": "CP_JAL",
+    "name": "ICAR-CRIDA/VNMKV(MAU) District Agriculture Contingency Plan: Jalna (Marathwada), 2011, sec 1.12",
+    "url": "https://icar-crida.res.in/CP/Maharastra/MAU,%20Parbhani/Maharashtra%2033-Jalna-31-12-2011.pdf"
+   },
+   {
+    "key": "CP_SOL",
+    "name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Solapur (Western Maharashtra, scarcity zone), 2011, sec 1.12",
+    "url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH1-Solapur%203.2.2011.pdf"
+   },
+   {
+    "key": "CP_SAN",
+    "name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Sangli (Western Maharashtra), 2011, sec 1.12",
+    "url": "https://icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH9-SANGLI%2031.03.2011.pdf"
+   },
+   {
+    "key": "CP_KOL",
+    "name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Kolhapur (Western Maharashtra), 2011, sec 1.12",
+    "url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH5-%20KOLHAPUR%2031.03.2011.pdf"
+   },
+   {
+    "key": "CP_DHU",
+    "name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Dhule (North Maharashtra/Khandesh), 2011, sec 1.12",
+    "url": "https://icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH3-DHULE%2031.03.2011.pdf"
+   },
+   {
+    "key": "CP_NSK",
+    "name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Nashik (North Maharashtra), 2011, sec 1.12",
+    "url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH7-NASIK%2031.03.2011.pdf"
+   },
+   {
+    "key": "CP_RTN",
+    "name": "ICAR-CRIDA/Dr BSKKV District Agriculture Contingency Plan: Ratnagiri (Konkan), 2011, sec 1.12",
+    "url": "https://icar-crida.res.in/CP/Maharastra/BSKKV,%20Dapoli/MH24-Ratnagiri%2004.10.2011.pdf"
+   },
+   {
+    "key": "CP_RAI",
+    "name": "ICAR-CRIDA/Dr BSKKV District Agriculture Contingency Plan: Raigad (Konkan), 2011, sec 1.12",
+    "url": "https://icar-crida.res.in/CP/Maharastra/BSKKV,%20Dapoli/MH23-Raigarh%2004.10.2011.pdf"
+   },
+   {
+    "key": "PDKV24",
+    "name": "Dr PDKV Akola, Research Recommendations 2024 (English)",
+    "url": "https://www.pdkv.ac.in/Circulars/Recom-2024English.pdf"
+   },
+   {
+    "key": "PDKVTI",
+    "name": "Dr PDKV Akola, Agro-Technologies (Technology Inventory II)",
+    "url": "https://www.pdkv.ac.in/pdf/technology-inventory-II.pdf"
+   },
+   {
+    "key": "CICR",
+    "name": "ICAR-CICR Nagpur, Bulletin: High Density Planting System for cotton (English)",
+    "url": "https://cicr.org.in/wp-content/uploads/2026/05/Bulletin-HDPS-English.pdf"
+   },
+   {
+    "key": "MPKV_COT",
+    "name": "MPKV Rahuri, crop-wise variety sheets: Cotton",
+    "url": "https://mpkv.ac.in/Uploads/Research/10-Cotton_20230912061049.pdf"
+   },
+   {
+    "key": "MPKV_CANE",
+    "name": "MPKV Rahuri, crop-wise variety sheets: Sugarcane (CSRS Padegaon)",
+    "url": "https://mpkv.ac.in/Uploads/Research/09%20-%20Sugarcane_20241014054253.pdf"
+   },
+   {
+    "key": "MPKV_PULSE",
+    "name": "MPKV Rahuri, crop-wise variety sheets: Chickpea/pulses (incl. pigeonpea)",
+    "url": "https://mpkv.ac.in/Uploads/Research/07%20-%20Cheackpea_20210608024632.pdf"
+   },
+   {
+    "key": "MPKV_WHT",
+    "name": "MPKV Rahuri, crop-wise variety sheets: Wheat (2025)",
+    "url": "https://mpkv.ac.in/Uploads/Research/04%20-%20Wheat_20250822024052.pdf"
+   },
+   {
+    "key": "MPKV_ONION",
+    "name": "MPKV Rahuri, Onion Storage Scheme recommendations (2026 upload)",
+    "url": "https://mpkv.ac.in/Uploads/Research/20260819_123631_cf1ef5e78c9a27a5306bb5e2b55d4eb4.pdf"
+   },
+   {
+    "key": "MPKV_BAN",
+    "name": "MPKV Rahuri, AICRP on Banana, Banana Research Station Jalgaon - recommendations",
+    "url": "https://mpkv.ac.in/Uploads/Research/4.%20AICRP%20on%20Banana_20250825095911.pdf"
+   },
+   {
+    "key": "IIMR_GAP",
+    "name": "ICAR-IIMR Hyderabad, Good Agricultural Practices for millets (English, 2026)",
+    "url": "https://millets.res.in/pub/2026/GAP-English.pdf"
+   },
+   {
+    "key": "IIMR_RS",
+    "name": "ICAR-IIMR Millets Chalisa: Rabi sorghum",
+    "url": "https://millets.res.in/farmer/2025/Millets_chalisa/English/3Millets_chalisa_rabi_sorghum.pdf"
+   },
+   {
+    "key": "NHB_ON_SEASON",
+    "name": "National Horticulture Board, Onion - Propagation/Season of planting (Maharashtra & Gujarat row)",
+    "url": "https://nhb.gov.in/pdf/vegetable/onion/oni011.pdf"
+   },
+   {
+    "key": "NHB_ON_PLANT",
+    "name": "National Horticulture Board, Onion - Planting (spacing)",
+    "url": "https://nhb.gov.in/pdf/vegetable/onion/oni010.pdf"
+   },
+   {
+    "key": "NHB_ON_VAR",
+    "name": "National Horticulture Board, Onion - Varieties (DOGR Bhima varieties, maturity days)",
+    "url": "https://nhb.gov.in/pdf/vegetable/onion/oni013.pdf"
+   },
+   {
+    "key": "NHB_GRAPE",
+    "name": "National Horticulture Board, Grape - Training/Pruning (cites NRC Grapes)",
+    "url": "https://nhb.gov.in/pdf/fruits/grape/gra005.pdf"
+   },
+   {
+    "key": "NHB_POM",
+    "name": "National Horticulture Board, Pomegranate - Bahar treatment",
+    "url": "https://nhb.gov.in/pdf/fruits/pomegranate/pom005.pdf"
+   }
+  ]
+ },
+ "crops": [
+  {
+   "crop": "cotton_bt",
+   "season": "kharif",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "06-08",
+      "end": "07-07",
+      "text": "Rainfed: dry sowing 7-8 days before expected monsoon in 1st/2nd week of June (not on light soils or where waterlogging/heavy weeds); otherwise sow as soon as adequate Mrig-nakshatra rain is received in 2nd or 3rd week of June; if monsoon is late sow up to 1st week of July (with shorter-duration varieties, reduced spacing and ~20% higher seed rate)."
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": "Bt (rainfed): 90 x 60 (medium soil, 18,500 plants/ha); 90 x 90 (heavy soil, 12,300 plants/ha)",
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.136-137 (diary p.117-118)",
+     "notes": "Spacing table on PDF p.137 (diary p.118). Bt duration not stated. Window start/end derived: 2nd week June start, 1st week July end."
+    },
+    "all_cicr": {
+     "sowing_window": {
+      "start": "06-10",
+      "end": "06-30",
+      "text": "Generally 10th to 30th June is optimum time for sowing in Central India and Telangana."
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": {
+      "min": 4.4,
+      "max": 6.7
+     },
+     "seed_rate_text": "Seed per acre (450 g packets): 6 packets/acre for HDPS 90x15; 4 packets/acre for closer spacing 90x30 (converted: 6x0.45 kg x 2.471 = 6.7 kg/ha; 4x0.45x2.471 = 4.4 kg/ha)",
+     "spacing_cm": "90 x 15 (HDPS, shallow/red soils, 29,629 plants/acre); 90 x 30 (medium-deep to deep soils, 14,814 plants/acre)",
+     "irrigated_or_rainfed": "rainfed",
+     "sowing_trigger": "Manual sowing may be taken up after receipt of 70 mm cumulative rainfall in 3 consecutive days.",
+     "source_name": "ICAR-CICR Nagpur, Bulletin: High Density Planting System for cotton (English)",
+     "source_url": "https://cicr.org.in/wp-content/uploads/2026/05/Bulletin-HDPS-English.pdf",
+     "notes": "For compact BG II hybrids under rainfed conditions (HDPS)."
+    },
+    "vidarbha": {
+     "sowing_window": null,
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "sowing_trigger": "Sow after onset of monsoon with receipt of adequate rainfall (75 mm to 100 mm) in Vidarbha region; late sowing (10 to 15 July) results in 24% reduction in yield.",
+     "source_name": "Dr PDKV Akola, Research Recommendations 2024 (English)",
+     "source_url": "https://www.pdkv.ac.in/Circulars/Recom-2024English.pdf"
+    },
+    "vidarbha_amravati": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "06-30",
+      "text": "Kharif-Rainfed: 15th June - 30th June"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Amravati (Vidarbha), sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Amravati.pdf"
+    },
+    "vidarbha_akola": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "06-30",
+      "text": "Kharif-Rainfed: 15th June - 30th June"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Akola (Vidarbha), sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Akola.pdf"
+    },
+    "vidarbha_chandrapur": {
+     "sowing_window": {
+      "start": "06-18",
+      "end": "07-01",
+      "text": "Kharif-Rainfed: 18 June - 1 July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Chandrapur (east Vidarbha), sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Chandrapur.pdf"
+    },
+    "marathwada_nanded": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-15",
+      "text": "Kharif-Rainfed: June 15 to July 15"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/VNMKV(MAU) District Agriculture Contingency Plan: Nanded (Marathwada), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MAU,%20Parbhani/Maharashtra%2029-Nanded-%2031-12-2011.pdf"
+    },
+    "marathwada_jalna": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-15",
+      "text": "Kharif-Rainfed: June 15 to July 15"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/VNMKV(MAU) District Agriculture Contingency Plan: Jalna (Marathwada), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MAU,%20Parbhani/Maharashtra%2033-Jalna-31-12-2011.pdf"
+    },
+    "north_maharashtra_dhule": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-14",
+      "text": "Kharif Rainfed: 3rd week of June - 2nd week of July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Dhule (North Maharashtra/Khandesh), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH3-DHULE%2031.03.2011.pdf"
+    }
+   },
+   "notes": "Contingency plans are not Bt-specific (cotton generally); they date from 2011."
+  },
+  {
+   "crop": "cotton_bt",
+   "season": "pre_monsoon_irrigated",
+   "regions": {
+    "vidarbha_amravati": {
+     "sowing_window": {
+      "start": "05-20",
+      "end": "05-30",
+      "text": "Kharif-Irrigated: 20th-30th May (Pre monsoon); 1st-30th June"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Amravati (Vidarbha), sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Amravati.pdf"
+    },
+    "vidarbha_akola": {
+     "sowing_window": {
+      "start": "05-20",
+      "end": "05-30",
+      "text": "Kharif-Irrigated: 20th May-30th May (Premonsoon), 1-30 June"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Akola (Vidarbha), sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Akola.pdf"
+    },
+    "vidarbha_pdkv": {
+     "sowing_window": {
+      "start": "05-25",
+      "end": "05-30",
+      "text": "Pre-monsoon cotton should be sown in last week of May (25-30) for higher seed cotton yield in Vidarbha (released 1984)"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "Dr PDKV Akola, Agro-Technologies (Technology Inventory II)",
+     "source_url": "https://www.pdkv.ac.in/pdf/technology-inventory-II.pdf"
+    },
+    "marathwada_nanded": {
+     "sowing_window": {
+      "start": "05-15",
+      "end": "06-15",
+      "text": "Kharif-Irrigated: May 15 to June 15"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/VNMKV(MAU) District Agriculture Contingency Plan: Nanded (Marathwada), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MAU,%20Parbhani/Maharashtra%2029-Nanded-%2031-12-2011.pdf"
+    },
+    "marathwada_jalna": {
+     "sowing_window": {
+      "start": "05-15",
+      "end": "06-15",
+      "text": "Kharif-Irrigated: May 15 to June 15"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/VNMKV(MAU) District Agriculture Contingency Plan: Jalna (Marathwada), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MAU,%20Parbhani/Maharashtra%2033-Jalna-31-12-2011.pdf"
+    },
+    "north_maharashtra_dhule": {
+     "sowing_window": {
+      "start": "05-01",
+      "end": "06-07",
+      "text": "Kharif Irrigated: 1st week of May - 1st week of June"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Dhule (North Maharashtra/Khandesh), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH3-DHULE%2031.03.2011.pdf"
+    },
+    "western_maharashtra": {
+     "sowing_window": {
+      "start": "03-01",
+      "end": "04-30",
+      "text": "Summer irrigated tract: March - April (for MPKV non-Bt variety entries)"
+     },
+     "duration_days": {
+      "min": 145,
+      "max": 210
+     },
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, crop-wise variety sheets: Cotton",
+     "source_url": "https://mpkv.ac.in/Uploads/Research/10-Cotton_20230912061049.pdf",
+     "notes": "Duration range spans MPKV public (non-Bt) cotton varieties in the sheet (145-155 to 200-210 days); Bt hybrid duration not given by this source."
+    }
+   }
+  },
+  {
+   "crop": "soybean",
+   "season": "kharif",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": null,
+      "end": "07-07",
+      "text": "Sow with monsoon rains up to the first week of July; sowing after 15 July reduces yield; do not sow before June or after 15 July, nor without adequate moisture (moist to ~6 inches depth)."
+     },
+     "duration_days": {
+      "min": 82,
+      "max": 115
+     },
+     "seed_rate_kg_ha": {
+      "min": 55,
+      "max": 75
+     },
+     "seed_rate_text": "55-75 kg/ha for seed with >=70% germination",
+     "spacing_cm": "45 x 5",
+     "irrigated_or_rainfed": "rainfed",
+     "sowing_trigger": "Adequate soil moisture to about 6 inches (15 cm) depth at sowing; no dry sowing.",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.91 (diary p.72)",
+     "notes": "Start date not given as a calendar date (\"with monsoon\"); duration from 15-variety table: JS 9560 82-85 days to MAUS 1281 100-115 days; seed depth not more than 4 cm; BBF or ridge-furrow layout recommended."
+    },
+    "vidarbha_amravati": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-15",
+      "text": "Kharif-Rainfed: 15th June - 15th July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Amravati (Vidarbha), sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Amravati.pdf"
+    },
+    "vidarbha_akola": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-15",
+      "text": "Kharif-Rainfed: 15th June - 15th July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Akola (Vidarbha), sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Akola.pdf"
+    },
+    "vidarbha_chandrapur": {
+     "sowing_window": {
+      "start": "06-18",
+      "end": "07-01",
+      "text": "Kharif-Rainfed: 18 June - 1 July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Chandrapur (east Vidarbha), sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Chandrapur.pdf"
+    },
+    "marathwada_nanded": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-15",
+      "text": "Kharif-Rainfed: June 15 to July 15"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/VNMKV(MAU) District Agriculture Contingency Plan: Nanded (Marathwada), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MAU,%20Parbhani/Maharashtra%2029-Nanded-%2031-12-2011.pdf"
+    },
+    "western_maharashtra_sangli": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "06-30",
+      "text": "Kharif-Rainfed: 15th June to 30th June; Kharif-Irrigated: 15th May - 30th May"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Sangli (Western Maharashtra), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH9-SANGLI%2031.03.2011.pdf",
+     "notes": "Sangli lists irrigated soybean 15-30 May."
+    },
+    "western_maharashtra_kolhapur": {
+     "sowing_window": {
+      "start": "06-01",
+      "end": "07-07",
+      "text": "Kharif-Rainfed: 1st week of June to 1st week of July; Kharif-Irrigated: 4th week of May to 1st week of July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Kolhapur (Western Maharashtra), 2011, sec 1.12",
+     "source_url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH5-%20KOLHAPUR%2031.03.2011.pdf"
+    }
+   }
+  },
+  {
+   "crop": "tur_pigeonpea",
+   "season": "kharif",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "06-16",
+      "end": "07-07",
+      "text": "Sow early after first rains; sowing in the 2nd fortnight of June; sow before 7 July (yield declines with delay)."
+     },
+     "duration_days": {
+      "min": 155,
+      "max": 180
+     },
+     "seed_rate_kg_ha": {
+      "min": 12,
+      "max": 15
+     },
+     "seed_rate_text": "12-15 kg/ha (line sowing); 5-6 kg/ha for dibbling at wide spacing",
+     "spacing_cm": "60 x 20 or 90 x 20 (sole, medium duration); wider 180 x 30 or 90 x 60 also recommended; 180x30 allows 3 rows soybean intercrop",
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.83-84 (diary p.64-65)",
+     "notes": "Durations from variety table (Phule Pallavi 155-160 ... PDKV Ashlesha 175-180)."
+    },
+    "all_mpkv_sheet": {
+     "sowing_window": {
+      "start": "06-16",
+      "end": "07-07",
+      "text": "Optimum sowing period for pigeonpea: 2nd fortnight of June to First week of July"
+     },
+     "duration_days": {
+      "min": 135,
+      "max": 170
+     },
+     "seed_rate_kg_ha": {
+      "min": 4.4,
+      "max": 4.9
+     },
+     "seed_rate_text": "1.800-2.000 kg/acre (as printed; converted x2.471)",
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "MPKV Rahuri, crop-wise variety sheets: Chickpea/pulses (incl. pigeonpea)",
+     "source_url": "https://mpkv.ac.in/Uploads/Research/07%20-%20Cheackpea_20210608024632.pdf",
+     "notes": "CONFLICT: per-acre seed rate in MPKV variety sheet (~4.4-4.9 kg/ha) is far below Krishi Darshani 12-15 kg/ha; likely refers to wide-spaced/dibbled or intercrop seeding. Durations by variety: Vishakha-1 135-140, Rajeshwari 135-150, Vipula 160-170."
+    },
+    "vidarbha_amravati": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-10",
+      "text": "Kharif-Rainfed: 15th June - 10th July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Amravati (Vidarbha), sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Amravati.pdf"
+    },
+    "vidarbha_chandrapur": {
+     "sowing_window": {
+      "start": "06-18",
+      "end": "07-01",
+      "text": "Kharif-Rainfed: 18 June - 1 July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Chandrapur (east Vidarbha), sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Chandrapur.pdf"
+    },
+    "marathwada_nanded": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-30",
+      "text": "Kharif-Rainfed: June 15 to July 30"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/VNMKV(MAU) District Agriculture Contingency Plan: Nanded (Marathwada), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MAU,%20Parbhani/Maharashtra%2029-Nanded-%2031-12-2011.pdf"
+    },
+    "marathwada_jalna": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-30",
+      "text": "Kharif-Rainfed: June 15 to July 30; Kharif-Irrigated: May 15 to June 30"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/VNMKV(MAU) District Agriculture Contingency Plan: Jalna (Marathwada), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MAU,%20Parbhani/Maharashtra%2033-Jalna-31-12-2011.pdf"
+    },
+    "western_maharashtra_solapur": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-15",
+      "text": "Kharif-Rainfed: 15th June to 15th July (Kharif-Irrigated listed as 15th July to 15th Aug.)"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Solapur (Western Maharashtra, scarcity zone), 2011, sec 1.12",
+     "source_url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH1-Solapur%203.2.2011.pdf"
+    }
+   }
+  },
+  {
+   "crop": "chickpea_gram",
+   "season": "rabi",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "09-20",
+      "end": "10-10",
+      "text": "Rainfed crop: 20th Sept to 10 Oct"
+     },
+     "duration_days": {
+      "min": 105,
+      "max": 120
+     },
+     "seed_rate_kg_ha": {
+      "min": 74.1,
+      "max": 98.8
+     },
+     "seed_rate_text": "Desi: 30 kg/acre or 35-40 kg/acre depending on variety (converted x2.471)",
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "MPKV Rahuri, crop-wise variety sheets: Chickpea/pulses (incl. pigeonpea)",
+     "source_url": "https://mpkv.ac.in/Uploads/Research/07%20-%20Cheackpea_20210608024632.pdf",
+     "notes": "Kabuli (e.g. Kripa) seed rate 45-50 kg/acre. Spacing not given in sheet."
+    },
+    "all_irrigated": {
+     "sowing_window": {
+      "start": "10-20",
+      "end": "11-10",
+      "text": "Irrigated crop: 20th Oct to 10 Nov"
+     },
+     "duration_days": {
+      "min": 105,
+      "max": 120
+     },
+     "seed_rate_kg_ha": {
+      "min": 74.1,
+      "max": 98.8
+     },
+     "seed_rate_text": "30 / 35-40 kg/acre (desi); 45-50 kg/acre (kabuli)",
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, crop-wise variety sheets: Chickpea/pulses (incl. pigeonpea)",
+     "source_url": "https://mpkv.ac.in/Uploads/Research/07%20-%20Cheackpea_20210608024632.pdf"
+    },
+    "vidarbha_kabuli_pdkv": {
+     "sowing_window": {
+      "start": null,
+      "end": "10-20",
+      "text": "Kabuli ICCV-2: early planting up to 20 October at 30x10 cm; late sowing up to 20 November at 45x10 cm with 100 kg/ha seed"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": 100,
+     "seed_rate_text": "100 kg/ha (kabuli ICCV-2, late sowing)",
+     "spacing_cm": "30 x 10 (timely); 45 x 10 (late)",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "Dr PDKV Akola, Agro-Technologies (Technology Inventory II)",
+     "source_url": "https://www.pdkv.ac.in/pdf/technology-inventory-II.pdf"
+    },
+    "vidarbha_amravati": {
+     "sowing_window": {
+      "start": "10-01",
+      "end": "10-15",
+      "text": "Rabi-Rainfed: 1st October - 15th October; Rabi-Irrigated: 15th October - 15th November"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Amravati (Vidarbha), sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Amravati.pdf"
+    },
+    "vidarbha_chandrapur": {
+     "sowing_window": {
+      "start": "10-01",
+      "end": "11-04",
+      "text": "Rabi rainfed/irrigated: 01 Oct - 4 Nov"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed/irrigated",
+     "source_name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Chandrapur (east Vidarbha), sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Chandrapur.pdf"
+    },
+    "marathwada_nanded": {
+     "sowing_window": {
+      "start": "10-01",
+      "end": "10-15",
+      "text": "Rabi-Rainfed: 1-15 Oct; Rabi-Irrigated: 15 Oct to Nov 15"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/VNMKV(MAU) District Agriculture Contingency Plan: Nanded (Marathwada), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MAU,%20Parbhani/Maharashtra%2029-Nanded-%2031-12-2011.pdf"
+    },
+    "marathwada_jalna": {
+     "sowing_window": {
+      "start": "10-01",
+      "end": "10-15",
+      "text": "Rabi-Rainfed: Oct.1 to 15; Rabi-Irrigated: Oct 15 to Nov.15"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/VNMKV(MAU) District Agriculture Contingency Plan: Jalna (Marathwada), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MAU,%20Parbhani/Maharashtra%2033-Jalna-31-12-2011.pdf"
+    },
+    "western_maharashtra_solapur": {
+     "sowing_window": {
+      "start": "09-25",
+      "end": "10-15",
+      "text": "Rabi-Rainfed: 25 Sept to 15th Oct; Rabi-Irrigated: 20th Oct to 20th Nov"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Solapur (Western Maharashtra, scarcity zone), 2011, sec 1.12",
+     "source_url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH1-Solapur%203.2.2011.pdf"
+    },
+    "western_maharashtra_kolhapur": {
+     "sowing_window": {
+      "start": "10-20",
+      "end": "11-10",
+      "text": "Rabi-Irrigated: 20th Oct to 10th Nov"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Kolhapur (Western Maharashtra), 2011, sec 1.12",
+     "source_url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH5-%20KOLHAPUR%2031.03.2011.pdf"
+    },
+    "north_maharashtra_dhule": {
+     "sowing_window": {
+      "start": "10-08",
+      "end": "11-14",
+      "text": "Rabi Rainfed: 2nd week of October - 2nd week of November"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Dhule (North Maharashtra/Khandesh), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH3-DHULE%2031.03.2011.pdf"
+    }
+   }
+  },
+  {
+   "crop": "wheat",
+   "season": "rabi",
+   "regions": {
+    "all_timely_irrigated": {
+     "sowing_window": {
+      "start": "11-01",
+      "end": "11-15",
+      "text": "1st Fortnight of November (Timely)"
+     },
+     "duration_days": {
+      "min": 110,
+      "max": 120
+     },
+     "seed_rate_kg_ha": {
+      "min": 98.8,
+      "max": 98.8
+     },
+     "seed_rate_text": "40 kg/acre timely sown (converted x2.471)",
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, crop-wise variety sheets: Wheat (2025)",
+     "source_url": "https://mpkv.ac.in/Uploads/Research/04%20-%20Wheat_20250822024052.pdf",
+     "notes": "Late sown: 1st fortnight of December, 50 kg/acre, 105-110 days. Rainfed/restricted irrigation: 2nd fortnight of October, 30 kg/acre (rainfed) / 40 kg/acre (restricted irrigation)."
+    },
+    "all_kd": {
+     "sowing_window": null,
+     "duration_days": null,
+     "seed_rate_kg_ha": {
+      "min": 100,
+      "max": 125
+     },
+     "seed_rate_text": "Irrigated timely 100-125 kg/ha; late sown 125-150 kg/ha; restricted irrigation 75-100 kg/ha",
+     "spacing_cm": "20 cm rows (timely); 18 cm rows (late)",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.66 (diary p.47)"
+    },
+    "all_late": {
+     "sowing_window": {
+      "start": "12-01",
+      "end": "12-15",
+      "text": "1st Fortnight of December (Late)"
+     },
+     "duration_days": {
+      "min": 105,
+      "max": 110
+     },
+     "seed_rate_kg_ha": {
+      "min": 123.6,
+      "max": 123.6
+     },
+     "seed_rate_text": "50 kg/acre late sown",
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, crop-wise variety sheets: Wheat (2025)",
+     "source_url": "https://mpkv.ac.in/Uploads/Research/04%20-%20Wheat_20250822024052.pdf"
+    },
+    "all_rainfed": {
+     "sowing_window": {
+      "start": "10-16",
+      "end": "10-31",
+      "text": "Second Fortnight of October (rainfed / restricted irrigation varieties)"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": {
+      "min": 74.1,
+      "max": 98.8
+     },
+     "seed_rate_text": "30 kg/acre rainfed; 40 kg/acre restricted irrigation",
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed/limited irrigation",
+     "source_name": "MPKV Rahuri, crop-wise variety sheets: Wheat (2025)",
+     "source_url": "https://mpkv.ac.in/Uploads/Research/04%20-%20Wheat_20250822024052.pdf"
+    },
+    "vidarbha_amravati": {
+     "sowing_window": {
+      "start": "11-01",
+      "end": "11-15",
+      "text": "Rabi-Irrigated: 1st November - 15th November"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Amravati (Vidarbha), sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Amravati.pdf"
+    },
+    "vidarbha_akola": {
+     "sowing_window": {
+      "start": "11-01",
+      "end": "11-15",
+      "text": "Rabi-Irrigated: 1-15 Nov (Rainfed 1-15 Oct)"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Akola (Vidarbha), sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Akola.pdf"
+    },
+    "vidarbha_chandrapur": {
+     "sowing_window": {
+      "start": "11-05",
+      "end": "12-02",
+      "text": "Rabi: 5 Nov - 2 Dec"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Chandrapur (east Vidarbha), sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Chandrapur.pdf"
+    },
+    "marathwada_nanded": {
+     "sowing_window": {
+      "start": "11-15",
+      "end": "12-15",
+      "text": "Rabi-Irrigated: 15 Nov - 15 Dec (Rainfed 15-30 Oct)"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/VNMKV(MAU) District Agriculture Contingency Plan: Nanded (Marathwada), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MAU,%20Parbhani/Maharashtra%2029-Nanded-%2031-12-2011.pdf"
+    },
+    "marathwada_jalna": {
+     "sowing_window": {
+      "start": "11-01",
+      "end": "11-20",
+      "text": "Rabi-Irrigated: Nov.1 to Nov 20"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/VNMKV(MAU) District Agriculture Contingency Plan: Jalna (Marathwada), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MAU,%20Parbhani/Maharashtra%2033-Jalna-31-12-2011.pdf"
+    },
+    "western_maharashtra_solapur": {
+     "sowing_window": {
+      "start": "11-15",
+      "end": "12-15",
+      "text": "Rabi-Irrigated: 15th Nov to 15th Dec"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Solapur (Western Maharashtra, scarcity zone), 2011, sec 1.12",
+     "source_url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH1-Solapur%203.2.2011.pdf"
+    },
+    "western_maharashtra_kolhapur": {
+     "sowing_window": {
+      "start": "10-01",
+      "end": "11-15",
+      "text": "Rabi-Irrigated: 1st fortnight of October to 1st Fortnight of Nov"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Kolhapur (Western Maharashtra), 2011, sec 1.12",
+     "source_url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH5-%20KOLHAPUR%2031.03.2011.pdf"
+    },
+    "north_maharashtra_nashik": {
+     "sowing_window": {
+      "start": "11-01",
+      "end": "11-15",
+      "text": "Rabi-Irrigated: 1st fortnight of November"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Nashik (North Maharashtra), 2011, sec 1.12",
+     "source_url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH7-NASIK%2031.03.2011.pdf"
+    }
+   }
+  },
+  {
+   "crop": "rice_paddy",
+   "season": "kharif",
+   "window_refers_to": "nursery sowing / direct seeding",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "05-25",
+      "end": "07-07",
+      "text": "Kharif nursery sowing on raised beds from 25 May to 7 July; direct dibbling/drilling 1 June to 7 July."
+     },
+     "duration_days": {
+      "min": 90,
+      "max": 150
+     },
+     "seed_rate_kg_ha": {
+      "min": 30,
+      "max": 40
+     },
+     "seed_rate_text": "Transplanting: 30-40 kg/ha (hybrids 20 kg/ha); drilling 75-100 kg/ha; dibbling 50-60 kg/ha",
+     "spacing_cm": "Dibbling: early varieties 15 x 15, mid/late 20 x 15; drilling rows 22.5 or 30",
+     "irrigated_or_rainfed": "rainfed (transplanted, >1000 mm rainfall areas)",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.51-53 (diary p.32-34)",
+     "notes": "Window refers to nursery sowing (transplanted crop) or direct seeding. Transplanting date window not captured. Duration across MPKV-listed varieties (90-100 to 145-150 days). Transplanting used where rainfall >1000 mm; drilling in sub-montane, Marathwada and W. Maharashtra on heavier soils."
+    },
+    "konkan_ratnagiri": {
+     "sowing_window": {
+      "start": "05-15",
+      "end": "06-14",
+      "text": "Kharif-Rainfed: 3rd week of May to 2nd week of June"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/Dr BSKKV District Agriculture Contingency Plan: Ratnagiri (Konkan), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/BSKKV,%20Dapoli/MH24-Ratnagiri%2004.10.2011.pdf",
+     "notes": "South Konkan; likely nursery sowing time."
+    },
+    "konkan_raigad": {
+     "sowing_window": {
+      "start": "05-25",
+      "end": "06-25",
+      "text": "Kharif-Rainfed: 25th May to 25th June"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/Dr BSKKV District Agriculture Contingency Plan: Raigad (Konkan), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/BSKKV,%20Dapoli/MH23-Raigarh%2004.10.2011.pdf"
+    },
+    "vidarbha_chandrapur": {
+     "sowing_window": {
+      "start": "06-18",
+      "end": "07-29",
+      "text": "Kharif-Rainfed: 18 June - 29 July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Chandrapur (east Vidarbha), sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Chandrapur.pdf"
+    },
+    "western_maharashtra_kolhapur": {
+     "sowing_window": {
+      "start": "05-15",
+      "end": "06-07",
+      "text": "Kharif-Rainfed/Irrigated: 3rd week of May to 1st week of June"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed/irrigated",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Kolhapur (Western Maharashtra), 2011, sec 1.12",
+     "source_url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH5-%20KOLHAPUR%2031.03.2011.pdf"
+    },
+    "north_maharashtra_nashik": {
+     "sowing_window": {
+      "start": "06-08",
+      "end": "06-21",
+      "text": "Low land paddy (rainfed): 2nd week to 3rd week of June"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Nashik (North Maharashtra), 2011, sec 1.12",
+     "source_url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH7-NASIK%2031.03.2011.pdf"
+    },
+    "north_maharashtra_dhule": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-14",
+      "text": "Kharif Rainfed: 3rd week of June - 2nd week of July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Dhule (North Maharashtra/Khandesh), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH3-DHULE%2031.03.2011.pdf"
+    }
+   }
+  },
+  {
+   "crop": "rice_paddy",
+   "season": "rabi_summer",
+   "regions": {
+    "konkan_ratnagiri": {
+     "sowing_window": {
+      "start": "11-08",
+      "end": "12-14",
+      "text": "Rabi-Irrigated: 2nd week of Nov. to 2nd week of December"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/Dr BSKKV District Agriculture Contingency Plan: Ratnagiri (Konkan), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/BSKKV,%20Dapoli/MH24-Ratnagiri%2004.10.2011.pdf"
+    },
+    "konkan_raigad": {
+     "sowing_window": {
+      "start": "11-16",
+      "end": "11-30",
+      "text": "Rabi-Irrigated: 2nd fortnight of November"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/Dr BSKKV District Agriculture Contingency Plan: Raigad (Konkan), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/BSKKV,%20Dapoli/MH23-Raigarh%2004.10.2011.pdf"
+    }
+   }
+  },
+  {
+   "crop": "jowar_sorghum",
+   "season": "kharif",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": null,
+      "end": "07-07",
+      "text": "Sow as early as possible after good monsoon rain at workable moisture (preferably within 1st week of July); with irrigation sow in last week of June."
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": 10,
+     "seed_rate_text": "10 kg/ha",
+     "spacing_cm": "45 x 15",
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.61-62 (diary p.42-43)",
+     "notes": "Thin to 1.80 lakh plants/ha."
+    },
+    "all_iimr": {
+     "sowing_window": {
+      "start": "06-22",
+      "end": "07-07",
+      "text": "The last week of June to the first week of July is the ideal time for sowing (rainfed kharif); irrigated 10-15 days before monsoon onset."
+     },
+     "duration_days": {
+      "min": 95,
+      "max": 115
+     },
+     "seed_rate_kg_ha": {
+      "min": 8,
+      "max": 10
+     },
+     "seed_rate_text": "8-10 kg/ha",
+     "spacing_cm": "45 x 15 or 60 x 10",
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-IIMR Hyderabad, Good Agricultural Practices for millets (English, 2026)",
+     "source_url": "https://millets.res.in/pub/2026/GAP-English.pdf",
+     "notes": "Duration = harvest at physiological maturity (95-115 days), national guidance, not Maharashtra-specific."
+    },
+    "vidarbha_amravati": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-10",
+      "text": "Kharif-Rainfed: 15th June - 10th July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Amravati (Vidarbha), sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Amravati.pdf"
+    },
+    "vidarbha_akola": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-10",
+      "text": "Kharif-Rainfed: 15th June - 10th July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Akola (Vidarbha), sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Akola.pdf"
+    },
+    "marathwada_nanded": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-15",
+      "text": "Kharif-Rainfed: June 15 to July 15"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/VNMKV(MAU) District Agriculture Contingency Plan: Nanded (Marathwada), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MAU,%20Parbhani/Maharashtra%2029-Nanded-%2031-12-2011.pdf"
+    },
+    "western_maharashtra_sangli": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "06-30",
+      "text": "Kharif-Rainfed: 15th June to 30th June"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Sangli (Western Maharashtra), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH9-SANGLI%2031.03.2011.pdf"
+    },
+    "western_maharashtra_kolhapur": {
+     "sowing_window": {
+      "start": "06-08",
+      "end": "07-07",
+      "text": "Kharif-Rainfed: 2nd week of June to 1st week of July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Kolhapur (Western Maharashtra), 2011, sec 1.12",
+     "source_url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH5-%20KOLHAPUR%2031.03.2011.pdf"
+    },
+    "north_maharashtra_dhule": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-14",
+      "text": "Kharif Rainfed: 3rd week of June - 2nd week of July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Dhule (North Maharashtra/Khandesh), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH3-DHULE%2031.03.2011.pdf"
+    }
+   }
+  },
+  {
+   "crop": "jowar_sorghum",
+   "season": "rabi",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "09-15",
+      "end": "10-15",
+      "text": "Rabi sorghum sowing 15 September to 15 October at 5 cm depth in moist soil"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": 10,
+     "seed_rate_text": "10 kg/ha",
+     "spacing_cm": "45 x 15 (rainfed; 1.48 lakh plants/ha); 45 x 12 (irrigated)",
+     "irrigated_or_rainfed": "rainfed/irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.59-60 (diary p.40-41)",
+     "notes": "Varieties chosen by soil depth (light <30 cm, medium <60 cm, heavy >60 cm)."
+    },
+    "all_iimr": {
+     "sowing_window": {
+      "start": "09-16",
+      "end": "10-15",
+      "text": "Optimum sowing time for rabi sorghum is 2nd fortnight of September to 1st fortnight of October; in double cropping extended up to 2nd fortnight of October."
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": {
+      "min": 8,
+      "max": 10
+     },
+     "seed_rate_text": "8-10 kg/ha (3 kg/acre); 10-12 kg/ha for delayed sowing",
+     "spacing_cm": "45 x 15",
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-IIMR Millets Chalisa: Rabi sorghum",
+     "source_url": "https://millets.res.in/farmer/2025/Millets_chalisa/English/3Millets_chalisa_rabi_sorghum.pdf"
+    },
+    "vidarbha_chandrapur": {
+     "sowing_window": {
+      "start": "09-27",
+      "end": "09-30",
+      "text": "Rabi: 27-30 Sep"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/Dr PDKV District Agriculture Contingency Plan: Chandrapur (east Vidarbha), sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/PDKV,%20Akola/Chandrapur.pdf"
+    },
+    "marathwada_nanded": {
+     "sowing_window": {
+      "start": "10-01",
+      "end": "10-15",
+      "text": "Rabi-Rainfed: 1-15 Oct; Rabi-Irrigated: 15 Oct - 15 Nov"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/VNMKV(MAU) District Agriculture Contingency Plan: Nanded (Marathwada), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MAU,%20Parbhani/Maharashtra%2029-Nanded-%2031-12-2011.pdf"
+    },
+    "marathwada_jalna": {
+     "sowing_window": {
+      "start": "10-01",
+      "end": "10-15",
+      "text": "Rabi-Rainfed: Oct.1 to 15; Rabi-Irrigated: Oct 15 to Nov.15"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/VNMKV(MAU) District Agriculture Contingency Plan: Jalna (Marathwada), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MAU,%20Parbhani/Maharashtra%2033-Jalna-31-12-2011.pdf"
+    },
+    "western_maharashtra_solapur": {
+     "sowing_window": {
+      "start": "09-15",
+      "end": "10-15",
+      "text": "Rabi-Rainfed: 15 Sep to 15th Oct; Rabi-Irrigated: 30th Sep to 15th Oct"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Solapur (Western Maharashtra, scarcity zone), 2011, sec 1.12",
+     "source_url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH1-Solapur%203.2.2011.pdf"
+    },
+    "western_maharashtra_sangli": {
+     "sowing_window": {
+      "start": "09-15",
+      "end": "10-15",
+      "text": "Rabi-Rainfed: 15 September to 15 Oct; Rabi-Irrigated: 30th September to 15th Oct"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Sangli (Western Maharashtra), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH9-SANGLI%2031.03.2011.pdf"
+    },
+    "north_maharashtra_dhule": {
+     "sowing_window": {
+      "start": "09-15",
+      "end": "10-14",
+      "text": "Rabi Rainfed: 3rd week of September - 2nd week of October"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Dhule (North Maharashtra/Khandesh), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH3-DHULE%2031.03.2011.pdf"
+    }
+   }
+  },
+  {
+   "crop": "bajra_pearl_millet",
+   "season": "kharif",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-15",
+      "text": "Kharif: 15 June to 15 July"
+     },
+     "duration_days": {
+      "min": 74,
+      "max": 90
+     },
+     "seed_rate_kg_ha": {
+      "min": 3,
+      "max": 4
+     },
+     "seed_rate_text": "3-4 kg/ha",
+     "spacing_cm": "45 x 15 (dryland, ~2.22 lakh plants/ha); 30 x 15 (assured rainfall/irrigated)",
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.57 (diary p.38)"
+    },
+    "all_iimr": {
+     "sowing_window": null,
+     "duration_days": null,
+     "seed_rate_kg_ha": {
+      "min": 4,
+      "max": 5
+     },
+     "seed_rate_text": "4-5 kg/ha line sowing",
+     "spacing_cm": "45 x 10-15 (zones >450 mm rain)",
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-IIMR Hyderabad, Good Agricultural Practices for millets (English, 2026)",
+     "source_url": "https://millets.res.in/pub/2026/GAP-English.pdf",
+     "notes": "In Marathwada region dry sowing prior to onset of monsoon is recommended (IIMR)."
+    },
+    "marathwada_jalna": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-30",
+      "text": "Kharif-Rainfed: June 15 to July 30"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/VNMKV(MAU) District Agriculture Contingency Plan: Jalna (Marathwada), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MAU,%20Parbhani/Maharashtra%2033-Jalna-31-12-2011.pdf"
+    },
+    "western_maharashtra_sangli": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-15",
+      "text": "Kharif-Rainfed: 15th June to 15th July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Sangli (Western Maharashtra), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH9-SANGLI%2031.03.2011.pdf"
+    },
+    "north_maharashtra_dhule": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-14",
+      "text": "Kharif Rainfed: 3rd week of June - 2nd week of July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Dhule (North Maharashtra/Khandesh), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH3-DHULE%2031.03.2011.pdf"
+    },
+    "north_maharashtra_nashik": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "06-30",
+      "text": "Kharif-Rainfed: 3rd week of June to 4th week of June"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Nashik (North Maharashtra), 2011, sec 1.12",
+     "source_url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH7-NASIK%2031.03.2011.pdf"
+    }
+   }
+  },
+  {
+   "crop": "bajra_pearl_millet",
+   "season": "summer",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "01-01",
+      "end": "02-15",
+      "text": "Summer: 1 January to 15 February"
+     },
+     "duration_days": {
+      "min": 74,
+      "max": 90
+     },
+     "seed_rate_kg_ha": {
+      "min": 3,
+      "max": 4
+     },
+     "seed_rate_text": "3-4 kg/ha",
+     "spacing_cm": "30 x 15 (irrigated)",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.57 (diary p.38)"
+    }
+   }
+  },
+  {
+   "crop": "maize",
+   "season": "kharif",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-15",
+      "text": "Kharif sowing preferably between 15 June and 15 July"
+     },
+     "duration_days": {
+      "min": 70,
+      "max": 110
+     },
+     "seed_rate_kg_ha": {
+      "min": 14.8,
+      "max": 19.8
+     },
+     "seed_rate_text": "6-8 kg/acre for grain (converted x2.471); fodder maize 30 kg/acre",
+     "spacing_cm": "75 x 20 (late & medium varieties); 60 x 20 (early varieties)",
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.70-71 (diary p.51-52)",
+     "notes": "Dibble 4-5 cm deep. Duration groups: late 100-110, medium 90-100, early 80-90, extra-early 70-80 days."
+    },
+    "marathwada_jalna": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-30",
+      "text": "Kharif-Rainfed: June 15 to July 30; Kharif-Irrigated: June 15 to July 30"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/VNMKV(MAU) District Agriculture Contingency Plan: Jalna (Marathwada), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MAU,%20Parbhani/Maharashtra%2033-Jalna-31-12-2011.pdf"
+    },
+    "north_maharashtra_dhule": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-14",
+      "text": "Kharif Rainfed: 3rd week of June - 2nd week of July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Dhule (North Maharashtra/Khandesh), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH3-DHULE%2031.03.2011.pdf"
+    },
+    "north_maharashtra_nashik": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-14",
+      "text": "Kharif-Rainfed: 3rd week of June to 2nd week of July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Nashik (North Maharashtra), 2011, sec 1.12",
+     "source_url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH7-NASIK%2031.03.2011.pdf"
+    }
+   }
+  },
+  {
+   "crop": "maize",
+   "season": "rabi",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "10-15",
+      "end": "11-10",
+      "text": "Rabi sowing between 15 October and 10 November"
+     },
+     "duration_days": {
+      "min": 70,
+      "max": 110
+     },
+     "seed_rate_kg_ha": {
+      "min": 14.8,
+      "max": 19.8
+     },
+     "seed_rate_text": "6-8 kg/acre (converted)",
+     "spacing_cm": "75 x 20 / 60 x 20",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.71 (diary p.52)"
+    }
+   }
+  },
+  {
+   "crop": "sugarcane",
+   "season": "adsali",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "07-15",
+      "end": "08-15",
+      "text": "Adsali planting 15 July to 15 August"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.104 (diary p.85)",
+     "notes": "Duration months from MPKV sheet.",
+     "duration_months": {
+      "min": 16,
+      "max": 18
+     }
+    },
+    "all_mpkv_sheet": {
+     "sowing_window": {
+      "start": "07-15",
+      "end": "08-15",
+      "text": "Adsali -15 July to 15 August"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "seed_rate_text": "10000-12000 two eye bud setts per acre or 4500-5500 sugarcane plantlets per acre",
+     "spacing_cm": "120 (medium soils) / 150 (deep black soils) row spacing [MPKV sugarcane sheet]",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, crop-wise variety sheets: Sugarcane (CSRS Padegaon)",
+     "source_url": "https://mpkv.ac.in/Uploads/Research/09%20-%20Sugarcane_20241014054253.pdf",
+     "duration_months": {
+      "min": 16,
+      "max": 18
+     }
+    },
+    "western_maharashtra_sangli": {
+     "sowing_window": {
+      "start": "08-01",
+      "end": "08-15",
+      "text": "Adsali: August 1st-August 15th"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Sangli (Western Maharashtra), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH9-SANGLI%2031.03.2011.pdf"
+    }
+   }
+  },
+  {
+   "crop": "sugarcane",
+   "season": "pre_seasonal",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "10-15",
+      "end": "11-30",
+      "text": "Pre-seasonal planting 15 October to 30 November"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.104 (diary p.85)",
+     "duration_months": {
+      "min": 14,
+      "max": 16
+     }
+    },
+    "all_mpkv_sheet": {
+     "sowing_window": {
+      "start": "10-15",
+      "end": "11-15",
+      "text": "Preseason- 15 October to 15 November"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "seed_rate_text": "10000-12000 two eye bud setts per acre or 4500-5500 plantlets per acre",
+     "spacing_cm": "120 (medium soils) / 150 (deep black soils) row spacing [MPKV sugarcane sheet]",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, crop-wise variety sheets: Sugarcane (CSRS Padegaon)",
+     "source_url": "https://mpkv.ac.in/Uploads/Research/09%20-%20Sugarcane_20241014054253.pdf",
+     "duration_months": {
+      "min": 14,
+      "max": 16
+     }
+    },
+    "western_maharashtra_sangli": {
+     "sowing_window": {
+      "start": "10-15",
+      "end": "11-15",
+      "text": "Pre seasonal: October 15th - November 15th"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Sangli (Western Maharashtra), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH9-SANGLI%2031.03.2011.pdf"
+    },
+    "western_maharashtra_kolhapur": {
+     "sowing_window": {
+      "start": "10-15",
+      "end": "11-15",
+      "text": "Preseasonal (15th Oct to 15th Nov)"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Kolhapur (Western Maharashtra), 2011, sec 1.12",
+     "source_url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH5-%20KOLHAPUR%2031.03.2011.pdf"
+    }
+   },
+   "notes": "CONFLICT: Krishi Darshani 2026 ends pre-seasonal window 30 Nov; MPKV variety sheet and CRIDA plans end 15 Nov."
+  },
+  {
+   "crop": "sugarcane",
+   "season": "suru",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "12-15",
+      "end": "02-15",
+      "text": "Suru planting 15 December to 15 February; cane planted after 15 February is less profitable"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.104 (diary p.85)",
+     "duration_months": {
+      "min": 12,
+      "max": 14
+     }
+    },
+    "all_mpkv_sheet": {
+     "sowing_window": {
+      "start": "01-15",
+      "end": "02-15",
+      "text": "Suru -15 January to 15 February"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "seed_rate_text": "10000-12000 two eye bud setts per acre or 4500-5500 plantlets per acre",
+     "spacing_cm": "120 (medium soils) / 150 (deep black soils) row spacing [MPKV sugarcane sheet]",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, crop-wise variety sheets: Sugarcane (CSRS Padegaon)",
+     "source_url": "https://mpkv.ac.in/Uploads/Research/09%20-%20Sugarcane_20241014054253.pdf",
+     "duration_months": {
+      "min": 12,
+      "max": 14
+     }
+    },
+    "western_maharashtra_sangli": {
+     "sowing_window": {
+      "start": "01-15",
+      "end": "01-30",
+      "text": "Seasonal: Jan 15th -30th"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Sangli (Western Maharashtra), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH9-SANGLI%2031.03.2011.pdf"
+    },
+    "western_maharashtra_kolhapur": {
+     "sowing_window": {
+      "start": "12-15",
+      "end": "02-15",
+      "text": "suru (15th Dec to 15th Feb)"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Kolhapur (Western Maharashtra), 2011, sec 1.12",
+     "source_url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH5-%20KOLHAPUR%2031.03.2011.pdf"
+    }
+   },
+   "notes": "CONFLICT: suru start 15 Dec (Krishi Darshani 2026, Kolhapur CP) vs 15 Jan (MPKV variety sheet) vs Jan 15-30 (Sangli CP)."
+  },
+  {
+   "crop": "onion",
+   "season": "kharif",
+   "window_refers_to": "transplanting",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "07-01",
+      "end": "08-31",
+      "text": "Transplanting: Kharif July - August"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": {
+      "min": 7.4,
+      "max": 9.9
+     },
+     "seed_rate_text": "3-4 kg/acre (converted)",
+     "spacing_cm": "15 x 10",
+     "irrigated_or_rainfed": "rainfed/irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.184 (diary p.165)"
+    },
+    "all_mpkv_optimum": {
+     "sowing_window": {
+      "start": "07-15",
+      "end": "08-01",
+      "text": "Optimum time of transplanting identified for kharif (15th July to 1st August) [cv. Phule Safed]"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": "15 x 10 (kharif, flat beds)",
+     "source_name": "MPKV Rahuri, Onion Storage Scheme recommendations (2026 upload)",
+     "source_url": "https://mpkv.ac.in/Uploads/Research/20260819_123631_cf1ef5e78c9a27a5306bb5e2b55d4eb4.pdf"
+    },
+    "maharashtra_nhb": {
+     "sowing_window": {
+      "start": "07-01",
+      "end": "08-31",
+      "text": "Maharashtra & Gujarat - Kharif: sowing (nursery) May-June, transplanting July-August; seedlings 6-7 weeks old"
+     },
+     "duration_days": {
+      "min": 110,
+      "max": 115
+     },
+     "seed_rate_kg_ha": {
+      "min": 8,
+      "max": 10
+     },
+     "seed_rate_text": "8-10 kg seed/ha for nursery (5-7 kg/ha cited elsewhere with drip/sprinkler nursery - not verified)",
+     "spacing_cm": "15 x 10 (kharif) [NHB oni010]",
+     "source_name": "National Horticulture Board, Onion - Propagation/Season of planting (Maharashtra & Gujarat row)",
+     "source_url": "https://nhb.gov.in/pdf/vegetable/onion/oni011.pdf",
+     "notes": "Duration = days after transplanting for DOGR kharif varieties (Bhima Super 110-115; Bhima Shubra 112) from NHB oni013.",
+     "nursery_sowing": {
+      "start": "05-01",
+      "end": "06-30",
+      "text": "May-June"
+     }
+    },
+    "north_maharashtra_nashik": {
+     "sowing_window": {
+      "start": "07-15",
+      "end": "08-14",
+      "text": "Onion Kharif-Rainfed: 3rd week of July to 2nd week of August"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Nashik (North Maharashtra), 2011, sec 1.12",
+     "source_url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH7-NASIK%2031.03.2011.pdf"
+    }
+   }
+  },
+  {
+   "crop": "onion",
+   "season": "late_kharif_rangda",
+   "window_refers_to": "transplanting",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "09-01",
+      "end": "10-31",
+      "text": "Transplanting: Rangda September - October"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": {
+      "min": 7.4,
+      "max": 9.9
+     },
+     "seed_rate_text": "3-4 kg/acre (converted)",
+     "spacing_cm": "15 x 10",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.184 (diary p.165)"
+    },
+    "all_mpkv_optimum": {
+     "sowing_window": {
+      "start": "09-15",
+      "end": "10-01",
+      "text": "Optimum transplanting for rangada (15th September to 1st October)"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "source_name": "MPKV Rahuri, Onion Storage Scheme recommendations (2026 upload)",
+     "source_url": "https://mpkv.ac.in/Uploads/Research/20260819_123631_cf1ef5e78c9a27a5306bb5e2b55d4eb4.pdf"
+    },
+    "maharashtra_nhb": {
+     "sowing_window": {
+      "start": "09-01",
+      "end": "10-31",
+      "text": "Late Kharif or early Rabi: sowing August-September, transplanting September-October"
+     },
+     "duration_days": {
+      "min": 115,
+      "max": 130
+     },
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "source_name": "National Horticulture Board, Onion - Propagation/Season of planting (Maharashtra & Gujarat row)",
+     "source_url": "https://nhb.gov.in/pdf/vegetable/onion/oni011.pdf",
+     "notes": "Duration after transplanting: Bhima Red 115-120, Bhima Shubra 125, Bhima Shakti 130 (NHB oni013).",
+     "nursery_sowing": {
+      "start": "08-01",
+      "end": "09-30",
+      "text": "August-September"
+     }
+    },
+    "north_maharashtra_nashik": {
+     "sowing_window": {
+      "start": "09-15",
+      "end": "10-14",
+      "text": "Onion Rabi-Irrigated: 3rd week of September to 2nd week of October"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Nashik (North Maharashtra), 2011, sec 1.12",
+     "source_url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH7-NASIK%2031.03.2011.pdf",
+     "notes": "Nashik CP labels this 'Rabi-Irrigated'; timing matches late-kharif/rangda."
+    }
+   }
+  },
+  {
+   "crop": "onion",
+   "season": "rabi",
+   "window_refers_to": "transplanting",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "11-01",
+      "end": "12-31",
+      "text": "Transplanting: Rabi/summer November - December"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": {
+      "min": 7.4,
+      "max": 9.9
+     },
+     "seed_rate_text": "3-4 kg/acre (converted)",
+     "spacing_cm": "15 x 10",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.184 (diary p.165)"
+    },
+    "all_mpkv_optimum": {
+     "sowing_window": {
+      "start": "11-01",
+      "end": "12-15",
+      "text": "Optimum transplanting rabi (1st November and 15th December); summer 1st week of January [cv. Phule Safed]"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "source_name": "MPKV Rahuri, Onion Storage Scheme recommendations (2026 upload)",
+     "source_url": "https://mpkv.ac.in/Uploads/Research/20260819_123631_cf1ef5e78c9a27a5306bb5e2b55d4eb4.pdf"
+    },
+    "maharashtra_nhb": {
+     "sowing_window": {
+      "start": "12-01",
+      "end": "01-31",
+      "text": "Rabi: sowing November-December, transplanting December-January; 8-9 week old seedlings"
+     },
+     "duration_days": {
+      "min": 110,
+      "max": 145
+     },
+     "seed_rate_kg_ha": null,
+     "spacing_cm": "10 x 10 (rabi) [NHB oni010]",
+     "source_name": "National Horticulture Board, Onion - Propagation/Season of planting (Maharashtra & Gujarat row)",
+     "source_url": "https://nhb.gov.in/pdf/vegetable/onion/oni011.pdf",
+     "notes": "Duration after transplanting for DOGR rabi varieties 110-115 (Bhima Shweta) to 130 (Bhima Kiran) and older varieties up to 140-145 (NHB oni013).",
+     "nursery_sowing": {
+      "start": "11-01",
+      "end": "12-31",
+      "text": "November-December"
+     }
+    }
+   },
+   "notes": "CONFLICT: rabi transplanting Nov-Dec (MPKV) vs Dec-Jan (NHB). Rabi spacing 15x10 (MPKV) vs 10x10 (NHB)."
+  },
+  {
+   "crop": "tomato",
+   "season": "kharif",
+   "window_refers_to": "transplanting",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "06-01",
+      "end": "07-31",
+      "text": "Kharif nursery May-June, transplanting June-July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": {
+      "min": 0.125,
+      "max": 0.5
+     },
+     "seed_rate_text": "400-500 g/ha (open-pollinated); 125 g/ha (hybrids)",
+     "spacing_cm": "Determinate/medium: 75-90 x 30-40; tall/indeterminate: 90 x 30",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.188-189 (diary p.169-170)",
+     "notes": "Seedlings ready in 3-4 weeks depending on season. Crop duration not stated.",
+     "nursery_sowing": {
+      "start": "05-01",
+      "end": "06-30",
+      "text": "Kharif nursery May-June"
+     }
+    }
+   }
+  },
+  {
+   "crop": "tomato",
+   "season": "rabi",
+   "window_refers_to": "transplanting",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "10-01",
+      "end": "11-30",
+      "text": "Rabi nursery September-October, transplanting October-November"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": {
+      "min": 0.125,
+      "max": 0.5
+     },
+     "seed_rate_text": "400-500 g/ha (open-pollinated); 125 g/ha (hybrids)",
+     "spacing_cm": "Determinate/medium: 75-90 x 30-40; tall/indeterminate: 90 x 30",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.188-189 (diary p.169-170)",
+     "notes": "Seedlings ready in 3-4 weeks depending on season. Crop duration not stated.",
+     "nursery_sowing": {
+      "start": "09-01",
+      "end": "10-31",
+      "text": "Rabi nursery September-October"
+     }
+    }
+   }
+  },
+  {
+   "crop": "tomato",
+   "season": "summer",
+   "window_refers_to": "transplanting",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "02-01",
+      "end": "03-31",
+      "text": "Summer nursery January-February, transplanting February-March"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": {
+      "min": 0.125,
+      "max": 0.5
+     },
+     "seed_rate_text": "400-500 g/ha (open-pollinated); 125 g/ha (hybrids)",
+     "spacing_cm": "Determinate/medium: 75-90 x 30-40; tall/indeterminate: 90 x 30",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.188-189 (diary p.169-170)",
+     "notes": "Seedlings ready in 3-4 weeks depending on season. Crop duration not stated.",
+     "nursery_sowing": {
+      "start": "01-01",
+      "end": "02-28",
+      "text": "Summer nursery January-February"
+     }
+    }
+   }
+  },
+  {
+   "crop": "potato",
+   "season": "kharif",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "06-22",
+      "end": "07-15",
+      "text": "Kharif: end of June to 1st fortnight of July"
+     },
+     "duration_days": {
+      "min": 90,
+      "max": 100
+     },
+     "seed_rate_kg_ha": {
+      "min": 1500,
+      "max": 2000
+     },
+     "seed_rate_text": "15-20 quintal/ha seed tubers",
+     "spacing_cm": "60 x 20 (ridges and furrows)",
+     "irrigated_or_rainfed": "rainfed/irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.196 (diary p.177)"
+    }
+   }
+  },
+  {
+   "crop": "potato",
+   "season": "rabi",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "10-22",
+      "end": "11-15",
+      "text": "Rabi: end of October to 1st fortnight of November"
+     },
+     "duration_days": {
+      "min": 90,
+      "max": 100
+     },
+     "seed_rate_kg_ha": {
+      "min": 1500,
+      "max": 2000
+     },
+     "seed_rate_text": "15-20 quintal/ha seed tubers",
+     "spacing_cm": "60 x 20 (ridges and furrows)",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.196 (diary p.177)",
+     "notes": "Kufri Surya recommended for rabi in Maharashtra plains."
+    }
+   }
+  },
+  {
+   "crop": "okra_bhendi",
+   "season": "kharif",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "06-01",
+      "end": "07-31",
+      "text": "Kharif: June - July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": {
+      "min": 12,
+      "max": 15
+     },
+     "seed_rate_text": "12-15 kg/ha",
+     "spacing_cm": "30 x 15",
+     "irrigated_or_rainfed": "rainfed/irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.191 (diary p.172)"
+    }
+   }
+  },
+  {
+   "crop": "okra_bhendi",
+   "season": "summer",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "01-01",
+      "end": "02-28",
+      "text": "Summer: January - February"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": {
+      "min": 12,
+      "max": 15
+     },
+     "seed_rate_text": "12-15 kg/ha",
+     "spacing_cm": "30 x 15",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.191 (diary p.172)"
+    }
+   }
+  },
+  {
+   "crop": "brinjal",
+   "season": "kharif",
+   "window_refers_to": "transplanting",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "07-01",
+      "end": "08-31",
+      "text": "Planting: Kharif July - August"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": {
+      "min": 0.12,
+      "max": 0.5
+     },
+     "seed_rate_text": "400-500 g/ha (varieties); 120-150 g/ha (hybrids); nursery 40-45 days",
+     "spacing_cm": "90 x 90 (kharif); hybrids 120 x 90",
+     "irrigated_or_rainfed": "rainfed/irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.186 (diary p.167)"
+    }
+   }
+  },
+  {
+   "crop": "brinjal",
+   "season": "summer",
+   "window_refers_to": "transplanting",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "02-01",
+      "end": "03-31",
+      "text": "Planting: Summer February - March"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": {
+      "min": 0.12,
+      "max": 0.5
+     },
+     "seed_rate_text": "400-500 g/ha (varieties); 120-150 g/ha (hybrids)",
+     "spacing_cm": "75 x 75 (summer); hybrids 120 x 90",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.186 (diary p.167)"
+    }
+   }
+  },
+  {
+   "crop": "chilli",
+   "season": "kharif",
+   "window_refers_to": "transplanting",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "06-01",
+      "end": "07-31",
+      "text": "Planting time: Kharif June - July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": {
+      "min": 1.0,
+      "max": 1.25
+     },
+     "seed_rate_text": "1.0-1.25 kg/ha; seedlings raised in nursery (40-45 days)",
+     "spacing_cm": "60 x 45",
+     "irrigated_or_rainfed": "rainfed/irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.185 (diary p.166)",
+     "notes": "Only kharif season listed in Krishi Darshani; rabi/summer chilli not covered by sources consulted."
+    }
+   }
+  },
+  {
+   "crop": "groundnut",
+   "season": "kharif",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "07-15",
+      "text": "Kharif: 15 June - 15 July"
+     },
+     "duration_days": {
+      "min": 100,
+      "max": 128
+     },
+     "seed_rate_kg_ha": {
+      "min": 100,
+      "max": 125
+     },
+     "seed_rate_text": "100 kg/ha (Phule Chaitanya, Phule Dhani); 120-125 kg/ha (Phule Unnati, Phule Bharati, Phule Warna, Phule Morna)",
+     "spacing_cm": "30 x 10",
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.89 (diary p.70)"
+    },
+    "western_maharashtra_sangli": {
+     "sowing_window": {
+      "start": "06-15",
+      "end": "06-30",
+      "text": "Kharif-Rainfed: 15th June to 30th June; Kharif-Irrigated: 1st June to 15th July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Sangli (Western Maharashtra), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH9-SANGLI%2031.03.2011.pdf"
+    },
+    "western_maharashtra_kolhapur": {
+     "sowing_window": {
+      "start": "06-08",
+      "end": "07-14",
+      "text": "Kharif-Rainfed: 2nd week of June to 2nd week of July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/MPKV District Agriculture Contingency Plan: Kolhapur (Western Maharashtra), 2011, sec 1.12",
+     "source_url": "https://www.icar-crida.res.in/CP/Maharastra/MPKVV,%20Rahuri/MH5-%20KOLHAPUR%2031.03.2011.pdf"
+    },
+    "konkan_ratnagiri": {
+     "sowing_window": null,
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "rainfed",
+     "source_name": "ICAR-CRIDA/Dr BSKKV District Agriculture Contingency Plan: Ratnagiri (Konkan), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/BSKKV,%20Dapoli/MH24-Ratnagiri%2004.10.2011.pdf",
+     "notes": "Kharif groundnut window in Ratnagiri CP table is garbled in text extraction (mentions '2nd week of June' and '3rd week of June'); not parsed."
+    }
+   }
+  },
+  {
+   "crop": "groundnut",
+   "season": "summer",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "01-15",
+      "end": "02-15",
+      "text": "Summer: 15 January to 15 February; night minimum temperature at sowing should be 18 C or above"
+     },
+     "duration_days": {
+      "min": 105,
+      "max": 128
+     },
+     "seed_rate_kg_ha": {
+      "min": 100,
+      "max": 125
+     },
+     "seed_rate_text": "100-125 kg/ha by variety",
+     "spacing_cm": "30 x 10",
+     "irrigated_or_rainfed": "irrigated",
+     "sowing_trigger": "Minimum night temperature >= 18 C at sowing.",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.89 (diary p.70)"
+    },
+    "konkan_ratnagiri": {
+     "sowing_window": {
+      "start": "12-08",
+      "end": "01-14",
+      "text": "Rabi-Irrigated: 2nd week of December to 2nd week of January"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/Dr BSKKV District Agriculture Contingency Plan: Ratnagiri (Konkan), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/BSKKV,%20Dapoli/MH24-Ratnagiri%2004.10.2011.pdf"
+    },
+    "konkan_raigad": {
+     "sowing_window": {
+      "start": "12-16",
+      "end": "12-31",
+      "text": "Rabi-Irrigated: 2nd fortnight of December"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "ICAR-CRIDA/Dr BSKKV District Agriculture Contingency Plan: Raigad (Konkan), 2011, sec 1.12",
+     "source_url": "https://icar-crida.res.in/CP/Maharastra/BSKKV,%20Dapoli/MH23-Raigarh%2004.10.2011.pdf"
+    }
+   },
+   "notes": "Konkan summer groundnut (rice fallows) is sown ~1 month earlier than the state-wide (MPKV) window."
+  },
+  {
+   "crop": "grapes",
+   "season": "foundation_pruning",
+   "window_refers_to": "pruning",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "04-01",
+      "end": "04-30",
+      "text": "In Maharashtra and north Karnataka vines rest ~1 month after harvest; canes are cut back in April keeping 1-2 buds ('back'/'growth' pruning)"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "source_name": "National Horticulture Board, Grape - Training/Pruning (cites NRC Grapes)",
+     "source_url": "https://nhb.gov.in/pdf/fruits/grape/gra005.pdf",
+     "notes": "Canes develop in 4-5 months after April pruning. Exact day-range not given; April used as whole month. NRC Grapes site (nrcgrapes.icar.gov.in) did not resolve from this machine."
+    }
+   }
+  },
+  {
+   "crop": "grapes",
+   "season": "fruit_pruning",
+   "window_refers_to": "pruning",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "09-01",
+      "end": "10-31",
+      "text": "In the month of September-October these canes are pruned for fruiting ('forward' or winter pruning)"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "source_name": "National Horticulture Board, Grape - Training/Pruning (cites NRC Grapes)",
+     "source_url": "https://nhb.gov.in/pdf/fruits/grape/gra005.pdf",
+     "notes": "Vines normally start yielding about 5 months from forward pruning (no day count given). Ethrel 1000-1500 ppm 3-4 days before October pruning to induce leaf drop (NRC Grapes table cited by NHB).",
+     "harvest_after_pruning_months": 5
+    }
+   }
+  },
+  {
+   "crop": "pomegranate",
+   "season": "ambia_bahar",
+   "window_refers_to": "flowering/bahar regulation",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "01-01",
+      "end": "02-28",
+      "text": "Flowering season: January-February (ambia bahar)"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "National Horticulture Board, Pomegranate - Bahar treatment",
+     "source_url": "https://nhb.gov.in/pdf/fruits/pomegranate/pom005.pdf",
+     "notes": "Irrigation withheld ~2 months before bahar; medium pruning 40-45 days after withholding irrigation; fruits ready 4-5 months after flowering. Spacing 4.5 x 3.0 m per MPKV Krishi Darshani 2026 PDF p.157.",
+     "harvest_months": "June to September; assured irrigation needed; good colour/quality, suits export"
+    }
+   }
+  },
+  {
+   "crop": "pomegranate",
+   "season": "mrig_bahar",
+   "window_refers_to": "flowering/bahar regulation",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "06-01",
+      "end": "07-31",
+      "text": "Flowering season: June-July (mrig bahar)"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "National Horticulture Board, Pomegranate - Bahar treatment",
+     "source_url": "https://nhb.gov.in/pdf/fruits/pomegranate/pom005.pdf",
+     "notes": "Irrigation withheld ~2 months before bahar; medium pruning 40-45 days after withholding irrigation; fruits ready 4-5 months after flowering. Spacing 4.5 x 3.0 m per MPKV Krishi Darshani 2026 PDF p.157.",
+     "harvest_months": "December to February; largely rain-fed flowering"
+    }
+   }
+  },
+  {
+   "crop": "pomegranate",
+   "season": "hasta_bahar",
+   "window_refers_to": "flowering/bahar regulation",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "09-01",
+      "end": "10-31",
+      "text": "Flowering season: September-October (hasta bahar)"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "National Horticulture Board, Pomegranate - Bahar treatment",
+     "source_url": "https://nhb.gov.in/pdf/fruits/pomegranate/pom005.pdf",
+     "notes": "Irrigation withheld ~2 months before bahar; medium pruning 40-45 days after withholding irrigation; fruits ready 4-5 months after flowering. Spacing 4.5 x 3.0 m per MPKV Krishi Darshani 2026 PDF p.157.",
+     "harvest_months": "March to April; stress hard to induce in rains, may flower poorly"
+    }
+   }
+  },
+  {
+   "crop": "pomegranate",
+   "season": "all_bahar_spacing",
+   "regions": {
+    "all": {
+     "sowing_window": null,
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": "450 x 300 (4.5 x 3.0 m; 296 plants/acre)",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.157 (diary p.138)",
+     "notes": "Take only one bahar per year; first bahar 2 years after planting."
+    }
+   }
+  },
+  {
+   "crop": "banana",
+   "season": "mrig_bag",
+   "window_refers_to": "planting",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "06-01",
+      "end": "06-30",
+      "text": "Mrig bag (June planting)"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": "150 x 150 (dwarf: Shrimanti, Phule Pride); 175 x 175 (tall: Grand Naine)",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.151 (diary p.132)"
+    },
+    "north_maharashtra_jalgaon": {
+     "sowing_window": {
+      "start": "06-01",
+      "end": "07-31",
+      "text": "Best time for planting Mrig bagh is June-July"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": "Basrai June planting 150 x 150; Grand Naine raised bed 175 x 175; drip: Basrai 120 x 150, Grand Naine paired row 100 x 120 x 210",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, AICRP on Banana, Banana Research Station Jalgaon - recommendations",
+     "source_url": "https://mpkv.ac.in/Uploads/Research/4.%20AICRP%20on%20Banana_20250825095911.pdf"
+    }
+   }
+  },
+  {
+   "crop": "banana",
+   "season": "kande_bag",
+   "window_refers_to": "planting",
+   "regions": {
+    "all": {
+     "sowing_window": {
+      "start": "10-01",
+      "end": "11-30",
+      "text": "Kande bag (October-November planting)"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": "150 x 150 (dwarf); 175 x 175 (tall)",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, Krishi Darshani 2026 (Marathi diary; read from rendered page images)",
+     "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+     "source_page": "PDF p.151 (diary p.132)"
+    },
+    "north_maharashtra_jalgaon": {
+     "sowing_window": {
+      "start": "10-01",
+      "end": "11-30",
+      "text": "Kandebagh is October-November"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": "Basrai October planting 135 x 150",
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, AICRP on Banana, Banana Research Station Jalgaon - recommendations",
+     "source_url": "https://mpkv.ac.in/Uploads/Research/4.%20AICRP%20on%20Banana_20250825095911.pdf"
+    }
+   }
+  },
+  {
+   "crop": "banana",
+   "season": "february_planting_khandesh",
+   "window_refers_to": "planting",
+   "regions": {
+    "north_maharashtra_khandesh": {
+     "sowing_window": {
+      "start": "02-01",
+      "end": "02-07",
+      "text": "Tissue culture Grand Naine in first week of February, in addition to June and October plantings, for Khandesh (Jalgaon, Nandurbar, Dhule) (2016)"
+     },
+     "duration_days": null,
+     "seed_rate_kg_ha": null,
+     "spacing_cm": null,
+     "irrigated_or_rainfed": "irrigated",
+     "source_name": "MPKV Rahuri, AICRP on Banana, Banana Research Station Jalgaon - recommendations",
+     "source_url": "https://mpkv.ac.in/Uploads/Research/4.%20AICRP%20on%20Banana_20250825095911.pdf"
+    }
+   }
+  }
+ ]
+}

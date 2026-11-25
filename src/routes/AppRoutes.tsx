@@ -1,265 +1,154 @@
+import React, { Suspense, lazy } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import ProtectedRoute from '@/components/common/ProtectedRoute';
+import DemoBanner from '@/components/common/DemoBanner';
+import PageSpinner from '@/components/common/PageSpinner';
+import LandingPage from '@/pages/LandingPage';
+import type { Role } from '@/lib/types';
 
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import ProtectedRoute from '../components/common/ProtectedRoute';
+// Every page except the landing page is code-split, so a farmer never downloads admin pages.
+const LoginPage = lazy(() => import('@/pages/LoginPage'));
+const RegisterPage = lazy(() => import('@/pages/RegisterPage'));
+const NotFound = lazy(() => import('@/pages/NotFound'));
+const Unauthorized = lazy(() => import('@/pages/Unauthorized'));
 
-// Public pages
-import LandingPage from '../pages/LandingPage';
-import LoginPage from '../pages/LoginPage';
-import RegisterPage from '../pages/RegisterPage';
-import NotFound from '../pages/NotFound';
+const FarmerDashboard = lazy(() => import('@/pages/dashboard/FarmerDashboard'));
+const VendorDashboard = lazy(() => import('@/pages/dashboard/VendorDashboard'));
+const HardwareVendorDashboard = lazy(() => import('@/pages/dashboard/HardwareVendorDashboard'));
+const AdminDashboard = lazy(() => import('@/pages/dashboard/AdminDashboard'));
+const ExpertDashboard = lazy(() => import('@/pages/dashboard/ExpertDashboard'));
 
-// Dashboards
-import FarmerDashboard from '../pages/dashboard/FarmerDashboard';
-import VendorDashboard from '../pages/dashboard/VendorDashboard';
-import HardwareVendorDashboard from '../pages/dashboard/HardwareVendorDashboard';
-import AdminDashboard from '../pages/dashboard/AdminDashboard';
-import ExpertDashboard from '../pages/dashboard/ExpertDashboard';
+const SoilFertilizer = lazy(() => import('@/pages/features/SoilFertilizer'));
+const WeatherForecast = lazy(() => import('@/pages/features/WeatherForecast'));
+const SmartIrrigation = lazy(() => import('@/pages/features/SmartIrrigation'));
+const CropPlanning = lazy(() => import('@/pages/features/CropPlanning'));
+const DiseaseDetection = lazy(() => import('@/pages/features/DiseaseDetection'));
+const EquipmentRentals = lazy(() => import('@/pages/features/EquipmentRentals'));
+const Marketplace = lazy(() => import('@/pages/features/Marketplace'));
+const PriceForecast = lazy(() => import('@/pages/features/PriceForecast'));
+const GovernmentSchemes = lazy(() => import('@/pages/features/GovernmentSchemes'));
+const KVKConsultation = lazy(() => import('@/pages/features/KVKConsultation'));
+const Forums = lazy(() => import('@/pages/features/Forums'));
+const FinancialManagement = lazy(() => import('@/pages/features/FinancialManagement'));
+const Notifications = lazy(() => import('@/pages/features/Notifications'));
+const Settings = lazy(() => import('@/pages/features/Settings'));
 
-// Feature pages
-import SoilMonitoring from '../pages/features/SoilMonitoring';
-import SmartIrrigation from '../pages/features/SmartIrrigation';
-import CropPlanning from '../pages/features/CropPlanning';
-import DiseaseDetection from '../pages/features/DiseaseDetection';
-import EquipmentRentals from '../pages/features/EquipmentRentals';
-import Marketplace from '../pages/features/Marketplace';
-import PriceForecast from '../pages/features/PriceForecast';
-import GovernmentSchemes from '../pages/features/GovernmentSchemes';
-import KVKConsultation from '../pages/features/KVKConsultation';
-import Forums from '../pages/features/Forums';
-import PrecisionFertilizer from '../pages/features/PrecisionFertilizer';
-import FinancialManagement from '../pages/features/FinancialManagement';
-import Notifications from '../pages/features/Notifications';
-import Settings from '../pages/features/Settings';
+const VendorProducts = lazy(() => import('@/pages/vendor/VendorProducts'));
+const VendorOrders = lazy(() => import('@/pages/vendor/VendorOrders'));
+const VendorAnalytics = lazy(() => import('@/pages/vendor/VendorAnalytics'));
 
-// Vendor Pages
-import VendorProducts from '../pages/vendor/VendorProducts';
-import VendorOrders from '../pages/vendor/VendorOrders';
-import VendorAnalytics from '../pages/vendor/VendorAnalytics';
+const HardwareEquipment = lazy(() => import('@/pages/hardware/HardwareEquipment'));
+const HardwareRentals = lazy(() => import('@/pages/hardware/HardwareRentals'));
+const HardwareCalendar = lazy(() => import('@/pages/hardware/HardwareCalendar'));
 
-// Hardware Vendor Pages
-import HardwareEquipment from '../pages/hardware/HardwareEquipment';
-import HardwareRentals from '../pages/hardware/HardwareRentals';
-import HardwareCalendar from '../pages/hardware/HardwareCalendar';
+const AdminUsers = lazy(() => import('@/pages/admin/UserManagement'));
+const AdminVendorApprovals = lazy(() => import('@/pages/admin/VendorApprovals'));
+const AdminAnalytics = lazy(() => import('@/pages/admin/SystemAnalytics'));
+const AdminContent = lazy(() => import('@/pages/admin/ContentModeration'));
+const AdminAIPerformance = lazy(() => import('@/pages/admin/AIModelPerformance'));
+const AdminKVKIntegration = lazy(() => import('@/pages/admin/KVKIntegration'));
+const AdminKVKManagement = lazy(() => import('@/pages/admin/KVKManagement'));
 
-// Admin Pages
-import AdminUsers from '../pages/admin/UserManagement';
-import AdminVendorApprovals from '../pages/admin/VendorApprovals';
-import AdminAnalytics from '../pages/admin/SystemAnalytics';
-import AdminContent from '../pages/admin/ContentModeration';
-import AdminAIPerformance from '../pages/admin/AIModelPerformance';
-import AdminKVKIntegration from '../pages/admin/KVKIntegration';
-import AdminKVKManagement from '../pages/admin/KVKManagement';
+const ExpertConsultations = lazy(() => import('@/pages/expert/ExpertConsultations'));
+const ExpertKnowledge = lazy(() => import('@/pages/expert/ExpertKnowledge'));
 
-// Expert Pages
-import ExpertConsultations from '../pages/expert/ExpertConsultations';
-import ExpertKnowledge from '../pages/expert/ExpertKnowledge';
+const MyOrders = lazy(() => import('@/pages/farmer/MyOrders'));
+const OrderDetail = lazy(() => import('@/pages/farmer/OrderDetail'));
+const Knowledge = lazy(() => import('@/pages/farmer/Knowledge'));
+const ArticleView = lazy(() => import('@/pages/farmer/ArticleView'));
+const ConsultationThread = lazy(() => import('@/pages/shared/ConsultationThread'));
+const AdminConsultations = lazy(() => import('@/pages/admin/AdminConsultations'));
+const ForumPost = lazy(() => import('@/pages/features/ForumPost'));
 
-const AppRoutes: React.FC = () => {
-  const { user, isLoading } = useAuth();
+const ToSoilFertilizer: React.FC = () => <Navigate to="/soil-fertilizer" replace />;
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-green-600"></div>
-      </div>
-    );
-  }
+interface AppRoute {
+  path: string;
+  roles: Role[];
+  Component: React.ComponentType;
+  /** Still shows placeholder data: render the "Demo data" banner. */
+  demo?: boolean;
+}
 
-  return (
+const ALL_ROLES: Role[] = ['farmer', 'vendor', 'hardware_vendor', 'admin', 'expert'];
+
+const PROTECTED_ROUTES: AppRoute[] = [
+  // Farmer
+  { path: '/farmer-dashboard', roles: ['farmer'], Component: FarmerDashboard },
+  { path: '/soil-fertilizer', roles: ['farmer'], Component: SoilFertilizer },
+  // Old links: soil monitoring and precision fertilizer are now one real feature.
+  { path: '/soil-monitoring', roles: ['farmer'], Component: ToSoilFertilizer },
+  { path: '/precision-fertilizer', roles: ['farmer'], Component: ToSoilFertilizer },
+  { path: '/smart-irrigation', roles: ['farmer'], Component: SmartIrrigation },
+  { path: '/weather-forecast', roles: ['farmer'], Component: WeatherForecast },
+  { path: '/crop-planning', roles: ['farmer'], Component: CropPlanning },
+  { path: '/disease-detection', roles: ['farmer'], Component: DiseaseDetection },
+  { path: '/equipment-rentals', roles: ['farmer'], Component: EquipmentRentals },
+  { path: '/marketplace', roles: ['farmer', 'vendor'], Component: Marketplace },
+  { path: '/orders', roles: ['farmer'], Component: MyOrders },
+  { path: '/orders/:orderId', roles: ['farmer'], Component: OrderDetail },
+  { path: '/price-forecast', roles: ['farmer'], Component: PriceForecast },
+  { path: '/financial-management', roles: ['farmer'], Component: FinancialManagement },
+  { path: '/government-schemes', roles: ['farmer'], Component: GovernmentSchemes },
+  { path: '/kvk-consultation', roles: ['farmer'], Component: KVKConsultation },
+  { path: '/knowledge', roles: ['farmer', 'expert', 'admin'], Component: Knowledge },
+  { path: '/knowledge/:articleId', roles: ['farmer', 'expert', 'admin'], Component: ArticleView },
+  { path: '/consultations/:consultationId', roles: ['farmer', 'expert', 'admin'], Component: ConsultationThread },
+  { path: '/forums', roles: ['farmer', 'expert', 'admin'], Component: Forums },
+  { path: '/forums/:postId', roles: ['farmer', 'expert', 'admin'], Component: ForumPost },
+  // Everyone
+  { path: '/notifications', roles: ALL_ROLES, Component: Notifications },
+  { path: '/settings', roles: ALL_ROLES, Component: Settings },
+  // Vendor
+  { path: '/vendor-dashboard', roles: ['vendor'], Component: VendorDashboard },
+  { path: '/vendor-products', roles: ['vendor'], Component: VendorProducts },
+  { path: '/vendor-orders', roles: ['vendor'], Component: VendorOrders },
+  { path: '/vendor-analytics', roles: ['vendor'], Component: VendorAnalytics },
+  // Hardware vendor
+  { path: '/hardware-vendor-dashboard', roles: ['hardware_vendor'], Component: HardwareVendorDashboard },
+  { path: '/hardware-equipment', roles: ['hardware_vendor'], Component: HardwareEquipment },
+  { path: '/hardware-rentals', roles: ['hardware_vendor'], Component: HardwareRentals },
+  { path: '/hardware-calendar', roles: ['hardware_vendor'], Component: HardwareCalendar },
+  // Admin
+  { path: '/admin-dashboard', roles: ['admin'], Component: AdminDashboard },
+  { path: '/admin-users', roles: ['admin'], Component: AdminUsers },
+  { path: '/admin-vendor-approvals', roles: ['admin'], Component: AdminVendorApprovals },
+  { path: '/admin-analytics', roles: ['admin'], Component: AdminAnalytics },
+  { path: '/admin-content', roles: ['admin'], Component: AdminContent },
+  { path: '/admin-consultations', roles: ['admin'], Component: AdminConsultations },
+  { path: '/admin-ai-performance', roles: ['admin'], Component: AdminAIPerformance },
+  { path: '/admin-kvk-integration', roles: ['admin'], Component: AdminKVKIntegration },
+  { path: '/admin-kvk-management', roles: ['admin'], Component: AdminKVKManagement },
+  // Expert
+  { path: '/expert-dashboard', roles: ['expert'], Component: ExpertDashboard },
+  { path: '/expert-consultations', roles: ['expert'], Component: ExpertConsultations },
+  { path: '/expert-knowledge', roles: ['expert'], Component: ExpertKnowledge },
+];
+
+const AppRoutes: React.FC = () => (
+  <Suspense fallback={<PageSpinner />}>
     <Routes>
-      {/* Public routes */}
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/unauthorized" element={<Unauthorized />} />
 
-      {/* Protected routes */}
-      <Route path="/farmer-dashboard" element={
-        <ProtectedRoute requiredRole={['farmer']}>
-          <FarmerDashboard />
-        </ProtectedRoute>
-      } />
+      {PROTECTED_ROUTES.map(({ path, roles, Component, demo }) => (
+        <Route
+          key={path}
+          path={path}
+          element={
+            <ProtectedRoute requiredRole={roles}>
+              {demo && <DemoBanner />}
+              <Component />
+            </ProtectedRoute>
+          }
+        />
+      ))}
 
-      {/* Feature pages - accessible by farmers */}
-      <Route path="/soil-monitoring" element={
-        <ProtectedRoute requiredRole={['farmer']}>
-          <SoilMonitoring />
-        </ProtectedRoute>
-      } />
-      <Route path="/smart-irrigation" element={
-        <ProtectedRoute requiredRole={['farmer']}>
-          <SmartIrrigation />
-        </ProtectedRoute>
-      } />
-      <Route path="/crop-planning" element={
-        <ProtectedRoute requiredRole={['farmer']}>
-          <CropPlanning />
-        </ProtectedRoute>
-      } />
-      <Route path="/disease-detection" element={
-        <ProtectedRoute requiredRole={['farmer']}>
-          <DiseaseDetection />
-        </ProtectedRoute>
-      } />
-      <Route path="/equipment-rentals" element={
-        <ProtectedRoute requiredRole={['farmer']}>
-          <EquipmentRentals />
-        </ProtectedRoute>
-      } />
-      <Route path="/marketplace" element={
-        <ProtectedRoute requiredRole={['farmer', 'agri_vendor']}>
-          <Marketplace />
-        </ProtectedRoute>
-      } />
-      <Route path="/price-forecast" element={
-        <ProtectedRoute requiredRole={['farmer']}>
-          <PriceForecast />
-        </ProtectedRoute>
-      } />
-      <Route path="/financial-management" element={
-        <ProtectedRoute requiredRole={['farmer']}>
-          <FinancialManagement />
-        </ProtectedRoute>
-      } />
-      <Route path="/government-schemes" element={
-        <ProtectedRoute requiredRole={['farmer']}>
-          <GovernmentSchemes />
-        </ProtectedRoute>
-      } />
-      <Route path="/kvk-consultation" element={
-        <ProtectedRoute requiredRole={['farmer']}>
-          <KVKConsultation />
-        </ProtectedRoute>
-      } />
-      <Route path="/forums" element={
-        <ProtectedRoute requiredRole={['farmer', 'expert']}>
-          <Forums />
-        </ProtectedRoute>
-      } />
-      <Route path="/precision-fertilizer" element={
-        <ProtectedRoute requiredRole={['farmer']}>
-          <PrecisionFertilizer />
-        </ProtectedRoute>
-      } />
-      <Route path="/notifications" element={
-        <ProtectedRoute requiredRole={['farmer', 'agri_vendor', 'hardware_vendor', 'admin', 'expert']}>
-          <Notifications />
-        </ProtectedRoute>
-      } />
-      <Route path="/settings" element={
-        <ProtectedRoute requiredRole={['farmer', 'agri_vendor', 'hardware_vendor', 'admin', 'expert']}>
-          <Settings />
-        </ProtectedRoute>
-      } />
-
-      {/* Vendor routes */}
-      <Route path="/vendor-dashboard" element={
-        <ProtectedRoute requiredRole={['agri_vendor']}>
-          <VendorDashboard />
-        </ProtectedRoute>
-      } />
-      <Route path="/vendor-products" element={
-        <ProtectedRoute requiredRole={['agri_vendor']}>
-          <VendorProducts />
-        </ProtectedRoute>
-      } />
-      <Route path="/vendor-orders" element={
-        <ProtectedRoute requiredRole={['agri_vendor']}>
-          <VendorOrders />
-        </ProtectedRoute>
-      } />
-      <Route path="/vendor-analytics" element={
-        <ProtectedRoute requiredRole={['agri_vendor']}>
-          <VendorAnalytics />
-        </ProtectedRoute>
-      } />
-
-      {/* Hardware Vendor routes */}
-      <Route path="/hardware-vendor-dashboard" element={
-        <ProtectedRoute requiredRole={['hardware_vendor']}>
-          <HardwareVendorDashboard />
-        </ProtectedRoute>
-      } />
-      <Route path="/hardware-equipment" element={
-        <ProtectedRoute requiredRole={['hardware_vendor']}>
-          <HardwareEquipment />
-        </ProtectedRoute>
-      } />
-      <Route path="/hardware-rentals" element={
-        <ProtectedRoute requiredRole={['hardware_vendor']}>
-          <HardwareRentals />
-        </ProtectedRoute>
-      } />
-      <Route path="/hardware-calendar" element={
-        <ProtectedRoute requiredRole={['hardware_vendor']}>
-          <HardwareCalendar />
-        </ProtectedRoute>
-      } />
-
-      {/* Admin routes */}
-      <Route path="/admin-dashboard" element={
-        <ProtectedRoute requiredRole={['admin']}>
-          <AdminDashboard />
-        </ProtectedRoute>
-      } />
-      <Route path="/admin-users" element={
-        <ProtectedRoute requiredRole={['admin']}>
-          <AdminUsers />
-        </ProtectedRoute>
-      } />
-      <Route path="/admin-vendor-approvals" element={
-        <ProtectedRoute requiredRole={['admin']}>
-          <AdminVendorApprovals />
-        </ProtectedRoute>
-      } />
-      <Route path="/admin-analytics" element={
-        <ProtectedRoute requiredRole={['admin']}>
-          <AdminAnalytics />
-        </ProtectedRoute>
-      } />
-      <Route path="/admin-content" element={
-        <ProtectedRoute requiredRole={['admin']}>
-          <AdminContent />
-        </ProtectedRoute>
-      } />
-      <Route path="/admin-ai-performance" element={
-        <ProtectedRoute requiredRole={['admin']}>
-          <AdminAIPerformance />
-        </ProtectedRoute>
-      } />
-      <Route path="/admin-kvk-integration" element={
-        <ProtectedRoute requiredRole={['admin']}>
-          <AdminKVKIntegration />
-        </ProtectedRoute>
-      } />
-      <Route path="/admin-kvk-management" element={
-        <ProtectedRoute requiredRole={['admin']}>
-          <AdminKVKManagement />
-        </ProtectedRoute>
-      } />
-
-      {/* Expert routes */}
-      <Route path="/expert-dashboard" element={
-        <ProtectedRoute requiredRole={['expert']}>
-          <ExpertDashboard />
-        </ProtectedRoute>
-      } />
-      <Route path="/expert-consultations" element={
-        <ProtectedRoute requiredRole={['expert']}>
-          <ExpertConsultations />
-        </ProtectedRoute>
-      } />
-      <Route path="/expert-knowledge" element={
-        <ProtectedRoute requiredRole={['expert']}>
-          <ExpertKnowledge />
-        </ProtectedRoute>
-      } />
-
-      {/* 404 route */}
       <Route path="*" element={<NotFound />} />
     </Routes>
-  );
-};
+  </Suspense>
+);
 
 export default AppRoutes;

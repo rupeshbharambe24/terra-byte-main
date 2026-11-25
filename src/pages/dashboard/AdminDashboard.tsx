@@ -1,151 +1,109 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../../components/common/Header';
-import Sidebar from '../../components/common/Sidebar';
-import { useAuth } from '../../context/AuthContext';
+import { useQuery } from '@tanstack/react-query';
+import { Building2, Flag, MessageSquare, Package, ShieldCheck, ShoppingCart, Tractor, Users } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import AppShell from '@/components/common/AppShell';
+import PageHeader from '@/components/common/PageHeader';
+import PageSpinner from '@/components/common/PageSpinner';
+import { ErrorAlert } from '@/components/common/QueryState';
+import Breakdown from '@/components/dashboard/Breakdown';
+import Section from '@/components/dashboard/Section';
+import StatCard from '@/components/dashboard/StatCard';
+import { dashboardApi } from '@/lib/api';
+import { orderedCounts, sumCounts } from '@/lib/dashboard';
+import { formatMoney } from '@/lib/format';
+import { ROLES } from '@/lib/types';
+
+const ADMIN_LINKS: [string, string][] = [
+  ['/admin-users', 'common:sidebar.userManagement'],
+  ['/admin-vendor-approvals', 'common:sidebar.vendorApprovals'],
+  ['/admin-analytics', 'common:sidebar.systemAnalytics'],
+  ['/admin-content', 'common:sidebar.contentModeration'],
+  ['/admin-consultations', 'common:sidebar.adminConsultations'],
+  ['/admin-kvk-management', 'common:sidebar.kvkManagement'],
+  ['/admin-kvk-integration', 'common:sidebar.kvkIntegration'],
+  ['/admin-ai-performance', 'common:sidebar.aiModelPerformance'],
+  ['/forums', 'common:sidebar.forums'],
+  ['/notifications', 'common:sidebar.notifications'],
+];
 
 const AdminDashboard: React.FC = () => {
-  const { user } = useAuth();
-
-  const adminCards = [
-    {
-      title: 'User Management',
-      description: 'Manage all platform users',
-      icon: '👥',
-      path: '/admin-users',
-      count: '1,245 users'
-    },
-    {
-      title: 'Vendor Approvals',
-      description: 'Review vendor applications',
-      icon: '✅',
-      path: '/admin-approvals',
-      count: '12 pending'
-    },
-    {
-      title: 'System Analytics',
-      description: 'Platform usage statistics',
-      icon: '📊',
-      path: '/admin-stats',
-      count: '98% uptime'
-    },
-    {
-      title: 'Content Moderation',
-      description: 'Moderate forums and content',
-      icon: '🛡️',
-      path: '/admin-moderation',
-      count: '5 reports'
-    },
-    {
-      title: 'KVK Integration',
-      description: 'Manage KVK partnerships',
-      icon: '🤝',
-      path: '/admin-kvk',
-      count: '150 centers'
-    },
-    {
-      title: 'AI Model Performance',
-      description: 'Monitor AI systems',
-      icon: '🤖',
-      path: '/admin-ai',
-      count: '99.2% accuracy'
-    }
-  ];
-
-  const systemStats = [
-    { label: 'Total Farmers', value: '845', trend: '+12%' },
-    { label: 'Active Sensors', value: '2,340', trend: '+5%' },
-    { label: 'Daily Queries', value: '156', trend: '+8%' },
-    { label: 'Equipment Rentals', value: '89', trend: '+15%' }
-  ];
-
-  const recentActions = [
-    { action: 'New vendor approved: AgriSeeds Co.', time: '10 minutes ago', type: 'approval' },
-    { action: 'System maintenance completed', time: '2 hours ago', type: 'system' },
-    { action: 'Expert Dr. Sharma verified', time: '4 hours ago', type: 'verification' },
-    { action: 'New KVK center added: Pune', time: '1 day ago', type: 'partnership' }
-  ];
+  const { t, i18n } = useTranslation(['dashboard', 'common']);
+  const lng = i18n.resolvedLanguage;
+  const { data, isLoading, isError, error } = useQuery({ queryKey: ['dashboard', 'admin'], queryFn: dashboardApi.admin });
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header />
-      
-      <div className="flex">
-        <Sidebar />
-        
-        <main className="flex-1 p-6">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              Admin Dashboard
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              Manage and monitor the TerraByte platform.
-            </p>
+    <AppShell>
+      <PageHeader title={t('admin.title')} subtitle={t('admin.subtitle')} />
+      {isLoading ? (
+        <PageSpinner />
+      ) : isError || !data ? (
+        <ErrorAlert error={error} />
+      ) : (
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <StatCard icon={Users} label={t('admin.users')} value={sumCounts(data.users_by_role)} to="/admin-users" />
+            <StatCard
+              icon={ShieldCheck}
+              label={t('admin.pendingApprovals')}
+              value={data.pending_approvals}
+              to="/admin-vendor-approvals"
+            />
+            <StatCard icon={Flag} label={t('admin.openReports')} value={data.open_reports} to="/admin-content" />
+            <StatCard icon={Building2} label={t('admin.kvks')} value={data.kvks} hint={t('admin.kvksHint')} to="/admin-kvk-management" />
+            <StatCard
+              icon={ShoppingCart}
+              label={t('admin.orders')}
+              value={sumCounts(data.orders_by_status)}
+              hint={t('admin.deliveredValue', { value: formatMoney(data.delivered_order_value, lng) })}
+            />
+            <StatCard
+              icon={Tractor}
+              label={t('admin.bookings')}
+              value={sumCounts(data.bookings_by_status)}
+              hint={t('admin.rentalValue', { value: formatMoney(data.completed_rental_value, lng) })}
+            />
+            <StatCard
+              icon={MessageSquare}
+              label={t('admin.consultations')}
+              value={sumCounts(data.consultations_by_status)}
+              hint={t('admin.unanswered', { count: (data.consultations_by_status.open ?? 0) + (data.consultations_by_status.assigned ?? 0) })}
+              to="/admin-consultations"
+            />
+            <StatCard
+              icon={Package}
+              label={t('admin.listings')}
+              value={`${data.products_active} / ${data.equipment_active}`}
+              hint={t('admin.listingsHint')}
+            />
           </div>
 
-          {/* System Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            {systemStats.map((stat, index) => (
-              <div key={index} className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{stat.label}</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
-                  </div>
-                  <div className="text-green-600 dark:text-green-400 text-sm font-medium">
-                    {stat.trend}
-                  </div>
-                </div>
+          <div className="grid gap-6 lg:grid-cols-2">
+            <Section title={t('admin.usersByRole')} link={{ to: '/admin-analytics', label: t('common:sidebar.systemAnalytics') }}>
+              <Breakdown
+                ariaLabel={t('admin.usersByRole')}
+                emptyText={t('admin.noUsers')}
+                rows={orderedCounts(data.users_by_role, ROLES).map(({ key, count }) => ({
+                  key,
+                  label: t(`common:roles.${key}`),
+                  count,
+                }))}
+              />
+            </Section>
+            <Section title={t('shared.quickLinks')}>
+              <div className="flex flex-wrap gap-2">
+                {ADMIN_LINKS.map(([to, key]) => (
+                  <Link key={to} to={to} className="rounded-lg border px-3 py-2 text-sm hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800">
+                    {t(key)}
+                  </Link>
+                ))}
               </div>
-            ))}
+            </Section>
           </div>
-
-          {/* Admin Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {adminCards.map((card, index) => (
-              <Link
-                key={index}
-                to={card.path}
-                className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all transform hover:scale-105"
-              >
-                <div className="text-3xl mb-4">{card.icon}</div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                  {card.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
-                  {card.description}
-                </p>
-                <p className="text-blue-600 dark:text-blue-400 text-sm font-medium">
-                  {card.count}
-                </p>
-              </Link>
-            ))}
-          </div>
-
-          {/* Recent Actions */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Recent Admin Actions</h2>
-            <div className="space-y-4">
-              {recentActions.map((action, index) => (
-                <div key={index} className="flex items-center space-x-4">
-                  <div className={`w-3 h-3 rounded-full ${
-                    action.type === 'approval' ? 'bg-green-500' :
-                    action.type === 'system' ? 'bg-blue-500' :
-                    action.type === 'verification' ? 'bg-purple-500' :
-                    'bg-orange-500'
-                  }`} />
-                  <div className="flex-1">
-                    <p className="text-gray-900 dark:text-white">{action.action}</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">{action.time}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </main>
-      </div>
-    </div>
+        </div>
+      )}
+    </AppShell>
   );
 };
 

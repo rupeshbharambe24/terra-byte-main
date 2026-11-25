@@ -1,0 +1,155 @@
+{
+  "types": {
+    "tractor": "Tractor",
+    "rotavator": "Rotavator",
+    "cultivator": "Cultivator",
+    "plough": "Plough",
+    "seed_drill": "Seed drill",
+    "sprayer": "Sprayer",
+    "harvester": "Harvester",
+    "thresher": "Thresher",
+    "reaper": "Reaper",
+    "water_pump": "Water pump",
+    "trolley": "Trolley",
+    "other": "Other"
+  },
+  "rate": {
+    "perHour": "{{amount}} / hour",
+    "perDay": "{{amount}} / day"
+  },
+  "duration": {
+    "hours_one": "{{count}} hour",
+    "hours_other": "{{count}} hours",
+    "days_one": "{{count}} day",
+    "days_other": "{{count}} days"
+  },
+  "period": "{{start}} to {{end}}",
+  "reasonLabel": "Reason (optional, shown to the other person)",
+  "filters": {
+    "search": "Search by machine or owner",
+    "type": "Equipment type",
+    "district": "District",
+    "allTypes": "All types",
+    "allDistricts": "All districts",
+    "status": "Status",
+    "allStatuses": "All statuses"
+  },
+  "farmer": {
+    "title": "Equipment rentals",
+    "subtitle": "Rent tractors and other machines from approved owners. The owner confirms each booking.",
+    "tabFind": "Find equipment",
+    "tabBookings": "My bookings"
+  },
+  "find": {
+    "book": "Book",
+    "empty": "No equipment matches these filters.",
+    "emptyBody": "Try another district or type. Only machines listed by approved owners are shown.",
+    "count_one": "{{count}} machine",
+    "count_other": "{{count}} machines"
+  },
+  "book": {
+    "title": "Book {{name}}",
+    "subtitle": "Owner: {{owner}}. Your request is sent to the owner, who accepts or rejects it.",
+    "unit": "Rent by",
+    "unitOption": {
+      "hour": "By the hour",
+      "day": "By the day"
+    },
+    "date": "Date",
+    "startDate": "Start date",
+    "startTime": "Start time (India time)",
+    "hours": "Number of hours",
+    "days": "Number of days",
+    "dayHint": "Day bookings run from midnight to midnight, India time.",
+    "note": "Note for the owner (optional)",
+    "estimate": "Estimated amount",
+    "estimateHint": "The final amount is calculated by the server from the owner's rate.",
+    "invalid": "Choose a date, a start time and a duration (1–{{hours}} hours or 1–{{days}} days).",
+    "paymentHint": "Pay the owner directly. TerraByte does not take payments.",
+    "busyTitle": "Already booked in the next {{days}} days",
+    "busyNone": "No bookings in the next {{days}} days.",
+    "submit": "Send booking request",
+    "done": "Booking request sent. The owner will confirm it."
+  },
+  "booking": {
+    "number": "Booking #{{id}}",
+    "period": "When",
+    "duration": "Duration",
+    "amount": "Amount",
+    "farmer": "Farmer",
+    "owner": "Owner",
+    "note": "Note",
+    "reason": "Reason"
+  },
+  "mine": {
+    "empty": "You have no bookings yet.",
+    "emptyBody": "Find a machine in the other tab and send a booking request.",
+    "cancel": "Cancel booking",
+    "cancelTitle": "Cancel booking #{{id}}?",
+    "cancelBody": "The owner will be notified and the time becomes free again.",
+    "cancelled": "Booking cancelled."
+  },
+  "equipment": {
+    "title": "My equipment",
+    "subtitle": "Machines you rent out. Farmers see active machines in the rentals list.",
+    "add": "Add equipment",
+    "empty": "You have not listed any equipment yet.",
+    "emptyBody": "Add a machine with its hourly or daily rate so farmers can book it.",
+    "active": "Active",
+    "inactive": "Inactive",
+    "deactivate": "Deactivate",
+    "reactivate": "Reactivate",
+    "deactivated": "{{name}} is hidden from farmers.",
+    "reactivated": "{{name}} is visible to farmers again.",
+    "saved": "{{name}} saved.",
+    "form": {
+      "titleNew": "Add equipment",
+      "titleEdit": "Edit equipment",
+      "description": "Farmers see these details and rates when they book.",
+      "name": "Name",
+      "type": "Type",
+      "ratePerHour": "Rate per hour (₹)",
+      "ratePerDay": "Rate per day (₹)",
+      "rateHint": "Give at least one rate. Leave a rate empty if you do not rent by that unit.",
+      "district": "District",
+      "noDistrict": "Not set",
+      "details": "Details (operator included, attachments, conditions)",
+      "photo": "Photo",
+      "nameRequired": "Enter a name (at least 2 characters).",
+      "invalidRate": "Rates must be positive amounts.",
+      "needRate": "Give an hourly rate, a daily rate or both."
+    }
+  },
+  "owner": {
+    "title": "Rental requests",
+    "subtitle": "Bookings of your equipment. Accept or reject requests and mark finished rentals as completed.",
+    "empty": "No bookings yet.",
+    "emptyBody": "Bookings appear here when farmers request your equipment.",
+    "count_one": "{{count}} booking",
+    "count_other": "{{count}} bookings",
+    "accept": "Accept",
+    "acceptTitle": "Accept booking #{{id}}?",
+    "acceptBody": "The farmer is notified and the time stays reserved for them.",
+    "accepted": "Booking accepted.",
+    "reject": "Reject",
+    "rejectTitle": "Reject booking #{{id}}?",
+    "rejectBody": "The farmer is notified and the time becomes free.",
+    "rejected": "Booking rejected.",
+    "complete": "Mark completed",
+    "completeTitle": "Mark booking #{{id}} completed?",
+    "completeBody": "The amount is added to the farmer's farm accounts as an expense.",
+    "completed": "Booking completed.",
+    "completeLater": "Can be marked completed once the booking has started."
+  },
+  "calendar": {
+    "title": "Booking calendar",
+    "subtitle": "Days on which each machine is requested, booked or was used (India time).",
+    "equipment": "Equipment",
+    "prev": "Previous month",
+    "next": "Next month",
+    "noEquipment": "Add equipment first to see its calendar.",
+    "legend": "Legend",
+    "monthBookings": "Bookings in {{month}}",
+    "noBookings": "No bookings this month."
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "users": {
+    "title": "User management",
+    "subtitle": "All registered accounts. Approve, reject or suspend users.",
+    "searchPlaceholder": "Search by name, mobile, email, business or district",
+    "allRoles": "All roles",
+    "allStatuses": "All statuses",
+    "total_one": "{{count}} user",
+    "total_other": "{{count}} users",
+    "empty": "No users match these filters.",
+    "columns": {
+      "user": "User",
+      "role": "Role",
+      "status": "Status",
+      "location": "Location",
+      "registered": "Registered",
+      "actions": "Actions"
+    },
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {{page}} of {{pages}}"
+  },
+  "approvals": {
+    "title": "Approvals",
+    "subtitle": "Vendors, equipment rental vendors and experts waiting for approval.",
+    "empty": "No accounts are waiting for approval.",
+    "count_one": "{{count}} account waiting",
+    "count_other": "{{count}} accounts waiting",
+    "organization": "Business / institution",
+    "qualifications": "Qualifications",
+    "contact": "Contact",
+    "location": "Location",
+    "registered": "Registered"
+  },
+  "actions": {
+    "approve": "Approve",
+    "reject": "Reject",
+    "suspend": "Suspend",
+    "reinstate": "Reinstate",
+    "cancel": "Cancel",
+    "reasonLabel": "Reason (optional, shown to the user)",
+    "reasonPlaceholder": "e.g. business details could not be verified",
+    "confirmTitle": {
+      "approve": "Approve {{name}}?",
+      "reject": "Reject {{name}}?",
+      "suspend": "Suspend {{name}}?"
+    },
+    "confirmBody": {
+      "approve": "They will be able to sign in and will be notified.",
+      "reject": "They will not be able to sign in and will be notified.",
+      "suspend": "They will be signed out and blocked until reinstated."
+    },
+    "done": {
+      "approve": "{{name}} approved.",
+      "reject": "{{name}} rejected.",
+      "suspend": "{{name}} suspended."
+    }
+  }
+}

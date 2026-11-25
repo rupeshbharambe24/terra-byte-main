@@ -1,0 +1,4380 @@
+{
+ "meta": {
+  "title": "Recommended dose of fertilizer (RDF) for Maharashtra crops",
+  "compiled": "2026-11-24",
+  "units": "kg/ha of N, P2O5, K2O unless basis=per_plant. Where the source prints per-acre doses, the printed values are kept in as_given and the per-ha fields are derived (x2.471) and listed in derived_fields. Ranges are [min,max].",
+  "how_to_use": "Pick the entry for crop+season+condition; adjust N, P2O5, K2O separately by the soil-test class of that nutrient using soil_test_ratings.json (adjustment_rules). Prefer Maharashtra SAU entries; 'status' = complete | partial | conflict_flagged.",
+  "primary_source": {
+   "name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "note": "Covers MPKV jurisdiction (Western + North Maharashtra, scarcity zone); Vidarbha (PDKV) and Marathwada (VNMKV) may differ - PDKV entries included where found; VNMKV and Dr. BSKKV (Konkan) packages not reached."
+  },
+  "other_sources": [
+   "https://mpkv.ac.in/Uploads/Research/10.%20Cotton_20200110053832.pdf",
+   "https://mpkv.ac.in/Uploads/Research/4.%20Wheat_20200110053545.pdf",
+   "https://mpkv.ac.in/Uploads/Research/2.%20Pearlmillet_20200110053501.pdf",
+   "https://mpkv.ac.in/Uploads/Research/5.%20Maize_20200110053602.pdf",
+   "https://mpkv.ac.in/Uploads/Research/3.%20Sorghum_20200110053526.pdf",
+   "https://mpkv.ac.in/Uploads/Research/1.%20Paddy_20200110043402.pdf",
+   "https://mpkv.ac.in/Uploads/Research/9.%20Sugarcane_20200110053812.pdf",
+   "https://www.pdkv.ac.in/Circulars/Recom-2017English.pdf",
+   "https://www.pdkv.ac.in/Circulars/Recom-2022English.pdf",
+   "https://www.pdkv.ac.in/Circulars/Recom-2023English.pdf",
+   "https://www.pdkv.ac.in/Circulars/Recom-2024English.pdf",
+   "https://www.pdkv.ac.in/Circulars/Recom-2025English.pdf",
+   "https://millets.res.in/farmer/2025/Millets_chalisa/English/2Millets_chalisa_kharif_sorghum.pdf",
+   "https://vikalp.kisansarathi.in/images/GFR_district-wise.pdf",
+   "https://niam.res.in/sites/default/files/pdfs/BalancedErtilization_TF89_Revised.pdf"
+  ],
+  "horticulture_meta": {
+   "title": "Recommended dose of fertilizer (RDF) - horticultural crops, Maharashtra",
+   "compiled": "2026-11-24",
+   "acre_to_ha_factor": 2.471,
+   "conventions": "P = P2O5, K = K2O unless noted. Values from Krishi Darshani 2026 are printed per acre; *_kg_ha fields for those entries are DERIVED (x2.471) and listed in derived_fields; original values in as_given. Ranges given as [low, high]. null = not stated in source. DAT/DAS/DAP = days after transplanting/sowing/planting.",
+   "source_priority": "MPKV Krishi Darshani 2026 (current official PoP) > MPKV research recommendations > ICAR institutes (DOGR, NRCG, NRCP) > NHB (secondary, national compiled) ",
+   "unreachable": "*.icar.gov.in (DOGR, NRCG, NRCP, NRCB, IIVR, CPRI, krishi.icar.gov.in) do not resolve from this machine; mirrors nrcgrapes.in and nrcpomegranate.in and the ICAR-DOGR/MANAGE book used.",
+   "status_values": "complete = NPK + organics + split given; partial = some elements missing; conflict_flagged = unit/consistency problem, do not use without verification"
+  },
+  "crop_keys": "Crop keys harmonised with crop_calendar_maharashtra.json"
+ },
+ "crops": [
+  {
+   "crop": "cotton_bt",
+   "season": "kharif",
+   "condition": "irrigated",
+   "variety_type": "Bt hybrid",
+   "basis": "per_ha",
+   "N_kg_ha": 123.6,
+   "P2O5_kg_ha": 61.8,
+   "K2O_kg_ha": 61.8,
+   "FYM_t_ha": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 20,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "20% N + full P and K at sowing"
+    },
+    {
+     "timing": "30 DAS",
+     "N_pct": 40,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "remaining N in two equal splits"
+    },
+    {
+     "timing": "60 DAS",
+     "N_pct": 40,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": null
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 50,
+    "P2O5": 25,
+    "K2O": 25
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p131 (printed p112), 'bagayati kapus' (irrigated cotton) fertilizer section",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Irrigated hybrids 40:20:20 kg/acre, improved varieties 32:16:16 kg/acre; Bt cotton gets 25% more than hybrid RDF = 50:25:25 kg/acre (stated in source). FYM ~8 cartloads/acre (unit not convertible). Drip alternative: same 50:25:25 kg/acre as water-soluble fertilizers in 14 weekly splits (1-21 DAP: 3 splits, 30% N/22% P/10% K; 22-66: 6 splits, 25/40/30; 67-77: 2 splits, 28/30/22; 78-98: 3 splits, 17/8/38). Sowing: 2nd fortnight May to 1st week June once temperature <35 C; not after 15 July."
+  },
+  {
+   "crop": "cotton_bt",
+   "season": "summer_irrigated",
+   "condition": "irrigated",
+   "variety_type": "Bt hybrid",
+   "basis": "per_ha",
+   "N_kg_ha": 125,
+   "P2O5_kg_ha": 65,
+   "K2O_kg_ha": 65,
+   "FYM_t_ha": 10,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "MPKV Rahuri, 'Recommendations released in last 10 years' crop sheet (Directorate of Research) - Cotton",
+   "source_url": "https://mpkv.ac.in/Uploads/Research/10.%20Cotton_20200110053832.pdf",
+   "source_locator": "recs 34 (2010-11) and 36",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Deccan canal tract of Western Maharashtra, summer-irrigated Bt cotton at 90x90 cm: 125:65:65 kg/ha; rec 36 cites RDF 125:63:63 + FYM 10 t/ha. Rec 35: paired-row (0.75-1.50 x 0.75 m) drip fertigation with 75% of RDF as water-soluble fertilizers in 13 weekly splits, totalling 90:45:45 kg/ha (10-30 DAP 18:9:5; 31-65 DAP 36:22:18; 66-100 DAP 36:14:22)."
+  },
+  {
+   "crop": "cotton_bt",
+   "season": "kharif",
+   "condition": "irrigated_drip",
+   "variety_type": "Bt hybrid (BG-II, mid-late)",
+   "basis": "per_ha",
+   "N_kg_ha": 120,
+   "P2O5_kg_ha": 60,
+   "K2O_kg_ha": 60,
+   "FYM_t_ha": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 10,
+     "P2O5_pct": 100,
+     "K2O_pct": 10,
+     "text": "P basal"
+    },
+    {
+     "timing": "20 DAS",
+     "N_pct": 20,
+     "P2O5_pct": 0,
+     "K2O_pct": 20,
+     "text": null
+    },
+    {
+     "timing": "40 DAS",
+     "N_pct": 25,
+     "P2O5_pct": 0,
+     "K2O_pct": 25,
+     "text": null
+    },
+    {
+     "timing": "60 DAS",
+     "N_pct": 25,
+     "P2O5_pct": 0,
+     "K2O_pct": 25,
+     "text": null
+    },
+    {
+     "timing": "80 DAS",
+     "N_pct": 20,
+     "P2O5_pct": 0,
+     "K2O_pct": 20,
+     "text": null
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "Dr. PDKV Akola, Research recommendations (Joint Agresco) 2025 (Vidarbha)",
+   "source_url": "https://www.pdkv.ac.in/Circulars/Recom-2025English.pdf",
+   "source_locator": "Soil Science rec 14; also 2024 rec 9",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Derived: PDKV 2025 rec 14 states '75% (90:45:45 kg N, P2O5, K2O/ha) recommended dose' under drip, implying 100% RDF = 120:60:60; PDKV 2024 rec 9 uses 125% RDN = 150 kg N and 75 kg K, consistent. Split shown is the 75%-RDF fertigation schedule (N & K via urea + MOP; P basal)."
+  },
+  {
+   "crop": "cotton_bt",
+   "season": "kharif",
+   "condition": "rainfed",
+   "variety_type": "Bt hybrid",
+   "basis": "per_ha",
+   "N_kg_ha": 123.6,
+   "P2O5_kg_ha": 64.2,
+   "K2O_kg_ha": 64.2,
+   "FYM_t_ha": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 20,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "10:26:26 kg/acre"
+    },
+    {
+     "timing": "30 DAS",
+     "N_pct": 40,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "20 kg N/acre"
+    },
+    {
+     "timing": "60 DAS",
+     "N_pct": 40,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "20 kg N/acre"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 50,
+    "P2O5": 26,
+    "K2O": 26
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p137 (printed p118), rainfed (jirayati) cotton fertilizer table",
+   "source_type": "primary",
+   "status": "conflict_flagged",
+   "notes": "Column headers say kg/acre but the total row is labelled kg/ha; per-acre reading is consistent with the other columns (improved desi 20:10:10, rainfed hybrid 32.5:16:16, American hybrid 40:20:20 per acre = classic ~50:25:25 / 80:40:40 / 100:50:50 per ha). Verify before use. Much higher than PDKV rainfed Bt (90:45:45 kg/ha)."
+  },
+  {
+   "crop": "cotton_bt",
+   "season": "kharif",
+   "condition": "rainfed",
+   "variety_type": "Bt hybrid",
+   "basis": "per_ha",
+   "N_kg_ha": 90,
+   "P2O5_kg_ha": 45,
+   "K2O_kg_ha": 45,
+   "FYM_t_ha": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "Dr. PDKV Akola, Research recommendations (Joint Agresco) 2025 (Vidarbha)",
+   "source_url": "https://www.pdkv.ac.in/Circulars/Recom-2025English.pdf",
+   "source_locator": "Soil Science rec 15 (also 2023 rec 8)",
+   "source_type": "primary",
+   "status": "partial",
+   "notes": "Split schedule not stated in these recs. PDKV 2022 rec 3: HDPS Bt variety (Rajat) rainfed at 60x15 cm with RDF 60:30:30."
+  },
+  {
+   "crop": "soybean",
+   "season": "kharif",
+   "condition": "rainfed",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 50,
+   "P2O5_kg_ha": 75,
+   "K2O_kg_ha": 45,
+   "FYM_t_ha": [
+    12,
+    15
+   ],
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "elemental sulphur",
+     "rate": "20 kg S/ha",
+     "method": "soil, mixed with FYM 1 month before sowing",
+     "timing": "pre-sowing",
+     "condition": "S-deficient soils, sub-montane zone (MPKV research rec, wheat sheet rec 8, 2015-16)"
+    },
+    {
+     "name": "chelated zinc",
+     "rate": "2 g/L (2000 ppm)",
+     "method": "foliar",
+     "timing": "35 DAS",
+     "condition": "sub-montane zone (KD 2026 rec 13, PDF p22)"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 100,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "all fertilizer at sowing, drilled with seed or before sowing"
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p92 (printed p73)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Per-ha values printed in source. Other sources: VNMKV-affiliated journal papers cite 30:60:30 kg/ha as soybean RDF for Marathwada (secondary, not verified against a VNMKV primary document)."
+  },
+  {
+   "crop": "tur_pigeonpea",
+   "season": "kharif",
+   "condition": "rainfed",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 24.7,
+   "P2O5_kg_ha": 49.4,
+   "K2O_kg_ha": 0.0,
+   "FYM_t_ha": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 100,
+     "P2O5_pct": 100,
+     "K2O_pct": null,
+     "text": "50 kg DAP/acre at sowing"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 10,
+    "P2O5": 20,
+    "K2O": 0
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p84 (printed p65)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Sole crop. For intercrops, apply the main crop's recommended dose to its rows (e.g. soybean+tur: 20 kg N + 30 kg P per acre for soybean). No K or S stated."
+  },
+  {
+   "crop": "chickpea_gram",
+   "season": "rabi",
+   "condition": "rainfed_and_irrigated",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 24.7,
+   "P2O5_kg_ha": 49.4,
+   "K2O_kg_ha": 29.7,
+   "FYM_t_ha": null,
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "urea 2% / KNO3 2%",
+     "rate": "200 g per 10 L",
+     "method": "foliar",
+     "timing": "urea at flowering/pod fill under moisture stress; KNO3 10-15 days later"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 100,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "50 kg DAP + 20 kg MOP per acre at sowing (drilled, not broadcast)"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 10,
+    "P2O5": 20,
+    "K2O": 12
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p81 (printed p62)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Corroborated by PDKV 2017 rec 17 (Vidarbha): RDF 25:50:30 kg/ha + ZnSO4 20 kg/ha (or two 0.5% ZnSO4 sprays) in Zn-deficient medium-deep black soils; PDKV critical soil Zn for chickpea 0.64 mg/kg."
+  },
+  {
+   "crop": "wheat",
+   "season": "rabi",
+   "condition": "irrigated_timely",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 118.6,
+   "P2O5_kg_ha": 59.3,
+   "K2O_kg_ha": 39.5,
+   "FYM_t_ha": 9.9,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "52 kg urea + 150 kg SSP + 27 kg MOP per acre"
+    },
+    {
+     "timing": "21 DAS",
+     "N_pct": 50,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "52 kg urea/acre"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 48,
+    "P2O5": 24,
+    "K2O": 16
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha",
+    "FYM_t_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p67 (printed p48), sowing 1-15 Nov",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "FYM 4 t/acre. MPKV research sheet states the same as 120:60:40 kg/ha (+FYM 10 t/ha) for timely sowing. Zn-deficient soils: ZnSO4 20 kg/ha incubated with FYM; Fe-deficient: FeSO4 20 kg/ha. PDKV (Vidarbha) differs: 2017 rec 6 150:50:50 kg/ha (N in 2 equal splits); 2025 rec 17 cites RDF 80:40:40."
+  },
+  {
+   "crop": "wheat",
+   "season": "rabi",
+   "condition": "irrigated_late",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 89.0,
+   "P2O5_kg_ha": 59.3,
+   "K2O_kg_ha": 39.5,
+   "FYM_t_ha": 9.9,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "40 kg urea + 150 kg SSP + 27 kg MOP per acre"
+    },
+    {
+     "timing": "21 DAS",
+     "N_pct": 50,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "40 kg urea/acre"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 36,
+    "P2O5": 24,
+    "K2O": 16
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha",
+    "FYM_t_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p67 (printed p48), sowing 15 Nov-15 Dec",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "MPKV research sheet (rec 18): late sown 90:60:40 kg/ha."
+  },
+  {
+   "crop": "wheat",
+   "season": "rabi",
+   "condition": "rainfed",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 39.5,
+   "P2O5_kg_ha": 19.8,
+   "K2O_kg_ha": 0.0,
+   "FYM_t_ha": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 100,
+     "P2O5_pct": 100,
+     "K2O_pct": null,
+     "text": "35 kg urea + 50 kg SSP per acre"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 16,
+    "P2O5": 8,
+    "K2O": 0
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p67 (printed p48)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": null
+  },
+  {
+   "crop": "rice_paddy",
+   "season": "kharif",
+   "condition": "transplanted",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 100,
+   "P2O5_kg_ha": 50,
+   "K2O_kg_ha": 50,
+   "FYM_t_ha": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at transplanting",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "1 bag urea + full SSP + MOP per acre"
+    },
+    {
+     "timing": "25-30 DAT",
+     "N_pct": 25,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "1/2 bag urea/acre"
+    },
+    {
+     "timing": "55-60 DAT",
+     "N_pct": 25,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "1/2 bag urea/acre"
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "MPKV Rahuri, 'Recommendations released in last 10 years' crop sheet (Directorate of Research) - Paddy; split from MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Research/1.%20Paddy_20200110043402.pdf",
+   "source_locator": "Paddy sheet rec 6 'RDF (NPK 100:50:50 kg/ha)'; split: KD 2026 PDF p54 (printed p35)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Split shown is for medium/late (nimgarvi/garvi) varieties; early (halvi) varieties: 1 bag urea + full P,K at transplanting and the rest at 25-30 DAT (wording in source partly ambiguous). Hybrids: per acre 2 bags + 14 kg urea, 2 bags + 25 kg SSP, 33 kg MOP. Konkan alternative: urea-DAP briquettes 170 kg/ha (56 N : 30 P2O5) + 50 kg K2O/ha deep-placed after transplanting; borax 5 kg/ha in B-deficient soils. Also confirmed by PDKV 2024 rec 5 (transplanted paddy 100:50:50, Vidarbha). Green manure 3-5 t/ha (glyricidia/dhaincha) recommended."
+  },
+  {
+   "crop": "rice_paddy",
+   "season": "kharif",
+   "condition": "drilled_direct_seeded",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 125,
+   "P2O5_kg_ha": 62.5,
+   "K2O_kg_ha": 62.5,
+   "FYM_t_ha": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "Dr. PDKV Akola, Research recommendations (Joint Agresco) 2017 (Eastern Vidarbha)",
+   "source_url": "https://www.pdkv.ac.in/Circulars/Recom-2017English.pdf",
+   "source_locator": "rec 7",
+   "source_type": "primary",
+   "status": "partial",
+   "notes": "Drilled rice, seed 75 kg/ha (coarse) or 50 kg/ha (fine). Split not stated."
+  },
+  {
+   "crop": "jowar_sorghum",
+   "season": "rabi",
+   "condition": "rainfed_shallow_soil",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 24.7,
+   "P2O5_kg_ha": null,
+   "K2O_kg_ha": null,
+   "FYM_t_ha": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 100,
+     "P2O5_pct": null,
+     "K2O_pct": null,
+     "text": "all fertilizer at sowing, drilled with two-bowl seed drill"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 10,
+    "P2O5": null,
+    "K2O": null
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p60 (printed p41), rabi jowar fertilizer table (light soil)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "MPKV research sheet: dryland scarcity-zone RDF 50:25 N:P2O5 kg/ha, plus 25 kg K2O/ha on Inceptisols (medium-deep). After kharif legumes, 20-30 kg N/ha can be saved."
+  },
+  {
+   "crop": "jowar_sorghum",
+   "season": "rabi",
+   "condition": "rainfed_medium_soil",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 39.5,
+   "P2O5_kg_ha": 19.8,
+   "K2O_kg_ha": null,
+   "FYM_t_ha": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 100,
+     "P2O5_pct": 100,
+     "K2O_pct": null,
+     "text": "all fertilizer at sowing, drilled with two-bowl seed drill"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 16,
+    "P2O5": 8,
+    "K2O": null
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p60 (printed p41), rabi jowar fertilizer table (medium soil)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "MPKV research sheet: dryland scarcity-zone RDF 50:25 N:P2O5 kg/ha, plus 25 kg K2O/ha on Inceptisols (medium-deep). After kharif legumes, 20-30 kg N/ha can be saved."
+  },
+  {
+   "crop": "jowar_sorghum",
+   "season": "rabi",
+   "condition": "rainfed_deep_soil",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 59.3,
+   "P2O5_kg_ha": 29.7,
+   "K2O_kg_ha": null,
+   "FYM_t_ha": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 100,
+     "P2O5_pct": 100,
+     "K2O_pct": null,
+     "text": "all fertilizer at sowing, drilled with two-bowl seed drill"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 24,
+    "P2O5": 12,
+    "K2O": null
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p60 (printed p41), rabi jowar fertilizer table (heavy soil)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "MPKV research sheet: dryland scarcity-zone RDF 50:25 N:P2O5 kg/ha, plus 25 kg K2O/ha on Inceptisols (medium-deep). After kharif legumes, 20-30 kg N/ha can be saved."
+  },
+  {
+   "crop": "jowar_sorghum",
+   "season": "rabi",
+   "condition": "irrigated_medium_soil",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 79.1,
+   "P2O5_kg_ha": 39.5,
+   "K2O_kg_ha": 49.4,
+   "FYM_t_ha": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": null
+    },
+    {
+     "timing": "~30 DAS (one month after sowing)",
+     "N_pct": 50,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": null
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 32,
+    "P2O5": 16,
+    "K2O": 20
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p60 (printed p41), rabi jowar fertilizer table (medium soil)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "MPKV research sheet: general RDF 80:40:40 kg/ha + 5 t FYM for irrigated rabi sorghum (W. Maharashtra medium-deep soils), ZnSO4 20 kg/ha in Zn-deficient soils."
+  },
+  {
+   "crop": "jowar_sorghum",
+   "season": "rabi",
+   "condition": "irrigated_deep_soil",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 98.8,
+   "P2O5_kg_ha": 49.4,
+   "K2O_kg_ha": 49.4,
+   "FYM_t_ha": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": null
+    },
+    {
+     "timing": "~30 DAS (one month after sowing)",
+     "N_pct": 50,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": null
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 40,
+    "P2O5": 20,
+    "K2O": 20
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p60 (printed p41), rabi jowar fertilizer table (heavy soil)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "MPKV research sheet: general RDF 80:40:40 kg/ha + 5 t FYM for irrigated rabi sorghum (W. Maharashtra medium-deep soils), ZnSO4 20 kg/ha in Zn-deficient soils."
+  },
+  {
+   "crop": "jowar_sorghum",
+   "season": "kharif",
+   "condition": "rainfed",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": [
+    60,
+    80
+   ],
+   "P2O5_kg_ha": [
+    30,
+    40
+   ],
+   "K2O_kg_ha": [
+    20,
+    40
+   ],
+   "FYM_t_ha": [
+    8,
+    10
+   ],
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "basal",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": null
+    },
+    {
+     "timing": "30-35 DAS",
+     "N_pct": 50,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": null
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "ICAR-IIMR Hyderabad, Millets Chalisa 2025: Rainy (kharif) sorghum (national guidance)",
+   "source_url": "https://millets.res.in/farmer/2025/Millets_chalisa/English/2Millets_chalisa_kharif_sorghum.pdf",
+   "source_locator": "Table 1",
+   "source_type": "primary_national",
+   "status": "partial",
+   "notes": "60:30:20 for low-rainfall shallow soils; 80:40:40 for moderate-high rainfall medium-deep soils. No Maharashtra-SAU kharif jowar table located. PDKV 2017 rec 12 (Vidarbha sorghum-wheat sequence) applies '75% RDF (90:45:45)' to kharif sorghum, implying a Vidarbha RDF of 120:60:60 kg/ha (derived, not stated)."
+  },
+  {
+   "crop": "bajra_pearl_millet",
+   "season": "kharif",
+   "condition": "rainfed",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 61.8,
+   "P2O5_kg_ha": 29.7,
+   "K2O_kg_ha": 29.7,
+   "FYM_t_ha": 5,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": null
+    },
+    {
+     "timing": "25-30 DAS (when soil moist)",
+     "N_pct": 50,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": null
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 25,
+    "P2O5": 12,
+    "K2O": 12
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p57-58 (printed p38-39)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "FYM/compost 5 t/ha per hectare at land preparation (printed per ha). MPKV research sheet (2014-15): 60:30:30 kg/ha + 5 t FYM (Dhule medium black soils)."
+  },
+  {
+   "crop": "bajra_pearl_millet",
+   "season": "summer",
+   "condition": "irrigated",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 86.5,
+   "P2O5_kg_ha": 44.5,
+   "K2O_kg_ha": 44.5,
+   "FYM_t_ha": 5,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": null
+    },
+    {
+     "timing": "25-30 DAS",
+     "N_pct": 50,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": null
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 35,
+    "P2O5": 18,
+    "K2O": 18
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p58 (printed p39)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "MPKV research sheet (2012-13, hybrid Shanti): FYM 5 t/ha + 90:45:45 kg/ha, sowing 1 Jan-4 Feb."
+  },
+  {
+   "crop": "maize",
+   "season": "kharif",
+   "condition": "irrigated_or_assured_rain",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 118.6,
+   "P2O5_kg_ha": 59.3,
+   "K2O_kg_ha": 39.5,
+   "FYM_t_ha": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 33.3,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "16 kg N (35 kg urea) + 150 kg SSP + 28 kg MOP per acre"
+    },
+    {
+     "timing": "30 DAS",
+     "N_pct": 33.3,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "35 kg urea/acre"
+    },
+    {
+     "timing": "40-45 DAS",
+     "N_pct": 33.3,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "35 kg urea/acre"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 48,
+    "P2O5": 24,
+    "K2O": 16
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p71 (printed p52)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "MPKV research sheet: general RDF 120:60:40 kg/ha + 10 t FYM; FeSO4 + ZnSO4 5 kg/ha each in Fe/Zn-deficient Entisols. ZnSO4 8-10 kg/acre at sowing if Zn deficient (KD p72). Pune-district revised (ICAR-NIASM TF-89, 2026): kharif 100:60:50, rabi 170:70:60 kg/ha."
+  },
+  {
+   "crop": "maize",
+   "season": "rabi",
+   "condition": "irrigated_or_assured_rain",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 118.6,
+   "P2O5_kg_ha": 59.3,
+   "K2O_kg_ha": 39.5,
+   "FYM_t_ha": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 33.3,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "16 kg N (35 kg urea) + 150 kg SSP + 28 kg MOP per acre"
+    },
+    {
+     "timing": "30 DAS",
+     "N_pct": 33.3,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "35 kg urea/acre"
+    },
+    {
+     "timing": "40-45 DAS",
+     "N_pct": 33.3,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "35 kg urea/acre"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 48,
+    "P2O5": 24,
+    "K2O": 16
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p71 (printed p52)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "MPKV research sheet: general RDF 120:60:40 kg/ha + 10 t FYM; FeSO4 + ZnSO4 5 kg/ha each in Fe/Zn-deficient Entisols. ZnSO4 8-10 kg/acre at sowing if Zn deficient (KD p72). Pune-district revised (ICAR-NIASM TF-89, 2026): kharif 100:60:50, rabi 170:70:60 kg/ha."
+  },
+  {
+   "crop": "sugarcane",
+   "season": "adsali",
+   "condition": "irrigated_surface",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 395.4,
+   "P2O5_kg_ha": 168.0,
+   "K2O_kg_ha": 168.0,
+   "FYM_t_ha": 30,
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "FeSO4 / ZnSO4 / MnSO4 / borax",
+     "rate": "10 / 8 / 4 / 2 kg per acre",
+     "method": "soil, incubated with FYM (10:1) 2-3 days",
+     "timing": "at planting",
+     "condition": "if soil test shows deficiency"
+    },
+    {
+     "name": "sulphur",
+     "rate": "62.5 kg S/ha",
+     "method": "soil",
+     "condition": "S-deficient soils"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "at planting",
+     "N_pct": 10.0,
+     "P2O5_pct": 50.0,
+     "K2O_pct": 50.0,
+     "text": "16:34:34 kg/acre"
+    },
+    {
+     "timing": "6-8 weeks after planting",
+     "N_pct": 40.0,
+     "P2O5_pct": 0.0,
+     "K2O_pct": 0.0,
+     "text": "64:0:0 kg/acre"
+    },
+    {
+     "timing": "12-16 weeks after planting",
+     "N_pct": 10.0,
+     "P2O5_pct": 0.0,
+     "K2O_pct": 0.0,
+     "text": "16:0:0 kg/acre"
+    },
+    {
+     "timing": "at final (big) earthing up",
+     "N_pct": 40.0,
+     "P2O5_pct": 50.0,
+     "K2O_pct": 50.0,
+     "text": "64:34:34 kg/acre"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 160,
+    "P2O5": 68,
+    "K2O": 68
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p108 (printed p89), Table 3",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "FYM 30 t/ha (printed per ha; or 5 t/ha vermicompost). For variety Co 86032 apply 25% more (adsali 200:85:85, pre-seasonal 160:85:85, suru 125:58:58 kg/acre). MPKV research sheet: pre-seasonal 340:170:170, ratoon 250:115:115 kg/ha (surface); drip = 70% (pre-seasonal 240:120:120, ratoon 175:80:80) in 13 fortnightly splits. KD 2026 rec 16 (PDF p22): pre-seasonal cane on medium-deep soil with 25 t/ha FYM, revised dose 380:190:190 kg/ha. Biofertilizer sett treatment (Acetobacter + PSB + KSB) saves 50% N, 25% P, 25% K."
+  },
+  {
+   "crop": "sugarcane",
+   "season": "pre_seasonal",
+   "condition": "irrigated_surface",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 336.1,
+   "P2O5_kg_ha": 168.0,
+   "K2O_kg_ha": 168.0,
+   "FYM_t_ha": 25,
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "FeSO4 / ZnSO4 / MnSO4 / borax",
+     "rate": "10 / 8 / 4 / 2 kg per acre",
+     "method": "soil, incubated with FYM (10:1) 2-3 days",
+     "timing": "at planting",
+     "condition": "if soil test shows deficiency"
+    },
+    {
+     "name": "sulphur",
+     "rate": "62.5 kg S/ha",
+     "method": "soil",
+     "condition": "S-deficient soils"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "at planting",
+     "N_pct": 10.3,
+     "P2O5_pct": 50.0,
+     "K2O_pct": 50.0,
+     "text": "14:34:34 kg/acre"
+    },
+    {
+     "timing": "6-8 weeks after planting",
+     "N_pct": 39.7,
+     "P2O5_pct": 0.0,
+     "K2O_pct": 0.0,
+     "text": "54:0:0 kg/acre"
+    },
+    {
+     "timing": "12-16 weeks after planting",
+     "N_pct": 10.3,
+     "P2O5_pct": 0.0,
+     "K2O_pct": 0.0,
+     "text": "14:0:0 kg/acre"
+    },
+    {
+     "timing": "at final (big) earthing up",
+     "N_pct": 39.7,
+     "P2O5_pct": 50.0,
+     "K2O_pct": 50.0,
+     "text": "54:34:34 kg/acre"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 136,
+    "P2O5": 68,
+    "K2O": 68
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p108 (printed p89), Table 3",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "FYM 25 t/ha (printed per ha; or 5 t/ha vermicompost). For variety Co 86032 apply 25% more (adsali 200:85:85, pre-seasonal 160:85:85, suru 125:58:58 kg/acre). MPKV research sheet: pre-seasonal 340:170:170, ratoon 250:115:115 kg/ha (surface); drip = 70% (pre-seasonal 240:120:120, ratoon 175:80:80) in 13 fortnightly splits. KD 2026 rec 16 (PDF p22): pre-seasonal cane on medium-deep soil with 25 t/ha FYM, revised dose 380:190:190 kg/ha. Biofertilizer sett treatment (Acetobacter + PSB + KSB) saves 50% N, 25% P, 25% K."
+  },
+  {
+   "crop": "sugarcane",
+   "season": "suru",
+   "condition": "irrigated_surface",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 247.1,
+   "P2O5_kg_ha": 113.7,
+   "K2O_kg_ha": 113.7,
+   "FYM_t_ha": 20,
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "FeSO4 / ZnSO4 / MnSO4 / borax",
+     "rate": "10 / 8 / 4 / 2 kg per acre",
+     "method": "soil, incubated with FYM (10:1) 2-3 days",
+     "timing": "at planting",
+     "condition": "if soil test shows deficiency"
+    },
+    {
+     "name": "sulphur",
+     "rate": "62.5 kg S/ha",
+     "method": "soil",
+     "condition": "S-deficient soils"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "at planting",
+     "N_pct": 10.0,
+     "P2O5_pct": 50.0,
+     "K2O_pct": 50.0,
+     "text": "10:23:23 kg/acre"
+    },
+    {
+     "timing": "6-8 weeks after planting",
+     "N_pct": 40.0,
+     "P2O5_pct": 0.0,
+     "K2O_pct": 0.0,
+     "text": "40:0:0 kg/acre"
+    },
+    {
+     "timing": "12-16 weeks after planting",
+     "N_pct": 10.0,
+     "P2O5_pct": 0.0,
+     "K2O_pct": 0.0,
+     "text": "10:0:0 kg/acre"
+    },
+    {
+     "timing": "at final (big) earthing up",
+     "N_pct": 40.0,
+     "P2O5_pct": 50.0,
+     "K2O_pct": 50.0,
+     "text": "40:23:23 kg/acre"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 100,
+    "P2O5": 46,
+    "K2O": 46
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p108 (printed p89), Table 3",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "FYM 20 t/ha (printed per ha; or 5 t/ha vermicompost). For variety Co 86032 apply 25% more (adsali 200:85:85, pre-seasonal 160:85:85, suru 125:58:58 kg/acre). MPKV research sheet: pre-seasonal 340:170:170, ratoon 250:115:115 kg/ha (surface); drip = 70% (pre-seasonal 240:120:120, ratoon 175:80:80) in 13 fortnightly splits. KD 2026 rec 16 (PDF p22): pre-seasonal cane on medium-deep soil with 25 t/ha FYM, revised dose 380:190:190 kg/ha. Biofertilizer sett treatment (Acetobacter + PSB + KSB) saves 50% N, 25% P, 25% K."
+  },
+  {
+   "crop": "sugarcane",
+   "season": "ratoon",
+   "condition": "irrigated_surface",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 250,
+   "P2O5_kg_ha": 115,
+   "K2O_kg_ha": 115,
+   "FYM_t_ha": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "MPKV Rahuri, 'Recommendations released in last 10 years' crop sheet (Directorate of Research) - Sugarcane",
+   "source_url": "https://mpkv.ac.in/Uploads/Research/9.%20Sugarcane_20200110053812.pdf",
+   "source_locator": "rec 31 (2012-13)",
+   "source_type": "primary",
+   "status": "partial",
+   "notes": "Split schedule for ratoon not captured. Drip: 175:80:80 kg/ha."
+  },
+  {
+   "crop": "sugarcane",
+   "season": "suru",
+   "condition": "irrigated_surface_vidarbha",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 275,
+   "P2O5_kg_ha": 125,
+   "K2O_kg_ha": 125,
+   "FYM_t_ha": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "basal",
+     "N_pct": 14,
+     "P2O5_pct": 50,
+     "K2O_pct": 50,
+     "text": "40:65:65"
+    },
+    {
+     "timing": "8-10 weeks",
+     "N_pct": 57.5,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "160:0:0"
+    },
+    {
+     "timing": "final earthing up (16-18 weeks)",
+     "N_pct": 28.5,
+     "P2O5_pct": 50,
+     "K2O_pct": 50,
+     "text": "75:60:60"
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "Dr. PDKV Akola, Research recommendations (Joint Agresco) 2024 (Vidarbha)",
+   "source_url": "https://www.pdkv.ac.in/Circulars/Recom-2024English.pdf",
+   "source_locator": "rec 4",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": null
+  },
+  {
+   "crop": "groundnut",
+   "season": "kharif",
+   "condition": "rainfed",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 24.7,
+   "P2O5_kg_ha": 49.4,
+   "K2O_kg_ha": 0.0,
+   "FYM_t_ha": 9.9,
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "gypsum",
+     "rate": "160 kg/acre (~395 kg/ha)",
+     "method": "soil",
+     "timing": "80 kg/acre at sowing + 80 kg/acre at pegging"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 100,
+     "P2O5_pct": 100,
+     "K2O_pct": null,
+     "text": null
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 10,
+    "P2O5": 20,
+    "K2O": 0
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha",
+    "FYM_t_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p90 (printed p71)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "'kg P' printed as sphurad (P2O5). FYM/compost 4 t/acre before last harrowing."
+  },
+  {
+   "crop": "groundnut",
+   "season": "summer",
+   "condition": "irrigated",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 18.5,
+   "P2O5_kg_ha": 37.1,
+   "K2O_kg_ha": 0.0,
+   "FYM_t_ha": null,
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "19:19:19",
+     "rate": "2%",
+     "method": "foliar",
+     "timing": "45 and 60 DAS"
+    },
+    {
+     "name": "gypsum",
+     "rate": "as kharif (160 kg/acre)",
+     "method": "soil"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 100,
+     "P2O5_pct": 100,
+     "K2O_pct": null,
+     "text": null
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 7.5,
+    "P2O5": 15,
+    "K2O": 0
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi; read from page images)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF p90 (printed p71)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "W. Maharashtra medium-black soils: 75% of RDF + 2% 19:19:19 sprays (2015 recommendation); FYM 10 t/ha. PDKV (Vidarbha) summer groundnut: 2025 rec 16 RDF 25:50:30 kg/ha with Zn-EDTA + Fe-EDDHA 1.5 kg/ha each; 2017 rec 4 TAG-24 at 20x10 cm 30:60:30."
+  },
+  {
+   "crop": "onion",
+   "season": "kharif",
+   "condition": "irrigated",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 98.8,
+   "P2O5_kg_ha": 49.4,
+   "K2O_kg_ha": 49.4,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": [
+    24.7,
+    29.7
+   ],
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "Phule micronutrient grade II (liquid)",
+     "rate": "100 ml per 10 L water",
+     "method": "foliar",
+     "timing": "35 and 45 DAT"
+    },
+    {
+     "name": "silicon (Si) formulation",
+     "rate": "2 ml/L",
+     "method": "foliar",
+     "timing": "20, 40 and 60 DAT (for higher, quality yield and to reduce pest/disease)"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "15 days before transplanting",
+     "N_pct": 0,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "FYM 10-12 t/acre incorporated 15 days before transplanting"
+    },
+    {
+     "timing": "basal (at transplanting)",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "20:20:20 kg N:P2O5:K2O per acre (1 bag urea + 2.5 bags SSP + 0.75 bag MOP)"
+    },
+    {
+     "timing": "30 DAT",
+     "N_pct": 25,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "remaining 20 kg N/acre (1 bag urea) in 2 equal splits at 30 and 45 DAT"
+    },
+    {
+     "timing": "45 DAT",
+     "N_pct": 25,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "second N split"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 40,
+    "P2O5": 20,
+    "K2O": 20
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF page 184 (printed page 165), Onion (कांदा)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Kharif: transplant Jul-Aug, spacing 15x10 cm. Diary gives one NPK dose (40:20:20 kg/acre) for all three seasons. Per-ha values derived x2.471 (~100:50:50 kg/ha, consistent with MPKV research 100:50:50). FYM 10-12 t/acre -> ~24.7-29.7 t/ha (derived)."
+  },
+  {
+   "crop": "onion",
+   "season": "late_kharif",
+   "condition": "irrigated",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 98.8,
+   "P2O5_kg_ha": 49.4,
+   "K2O_kg_ha": 49.4,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": [
+    24.7,
+    29.7
+   ],
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "Phule micronutrient grade II (liquid)",
+     "rate": "100 ml per 10 L water",
+     "method": "foliar",
+     "timing": "35 and 45 DAT"
+    },
+    {
+     "name": "silicon (Si) formulation",
+     "rate": "2 ml/L",
+     "method": "foliar",
+     "timing": "20, 40 and 60 DAT (for higher, quality yield and to reduce pest/disease)"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "15 days before transplanting",
+     "N_pct": 0,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "FYM 10-12 t/acre incorporated 15 days before transplanting"
+    },
+    {
+     "timing": "basal (at transplanting)",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "20:20:20 kg N:P2O5:K2O per acre (1 bag urea + 2.5 bags SSP + 0.75 bag MOP)"
+    },
+    {
+     "timing": "30 DAT",
+     "N_pct": 25,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "remaining 20 kg N/acre (1 bag urea) in 2 equal splits at 30 and 45 DAT"
+    },
+    {
+     "timing": "45 DAT",
+     "N_pct": 25,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "second N split"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 40,
+    "P2O5": 20,
+    "K2O": 20
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF page 184 (printed page 165), Onion (कांदा)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Rangda (late kharif): transplant Sep-Oct, spacing 15x10 cm. Diary gives one NPK dose (40:20:20 kg/acre) for all three seasons. Per-ha values derived x2.471 (~100:50:50 kg/ha, consistent with MPKV research 100:50:50). FYM 10-12 t/acre -> ~24.7-29.7 t/ha (derived)."
+  },
+  {
+   "crop": "onion",
+   "season": "rabi",
+   "condition": "irrigated",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 98.8,
+   "P2O5_kg_ha": 49.4,
+   "K2O_kg_ha": 49.4,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": [
+    24.7,
+    29.7
+   ],
+   "FYM_kg_plant": null,
+   "S_kg_ha": 45,
+   "micronutrients": [
+    {
+     "name": "Phule micronutrient grade II (liquid)",
+     "rate": "100 ml per 10 L water",
+     "method": "foliar",
+     "timing": "35 and 45 DAT"
+    },
+    {
+     "name": "silicon (Si) formulation",
+     "rate": "2 ml/L",
+     "method": "foliar",
+     "timing": "20, 40 and 60 DAT (for higher, quality yield and to reduce pest/disease)"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "15 days before transplanting",
+     "N_pct": 0,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "FYM; and in rabi S @ 45 kg/ha through gypsum or elemental sulphur mixed in soil 15 days before transplanting"
+    },
+    {
+     "timing": "basal (at transplanting)",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "20:20:20 kg N:P2O5:K2O per acre (1 bag urea + 2.5 bags SSP + 0.75 bag MOP)"
+    },
+    {
+     "timing": "30 DAT",
+     "N_pct": 25,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "remaining 20 kg N/acre (1 bag urea) in 2 equal splits at 30 and 45 DAT"
+    },
+    {
+     "timing": "45 DAT",
+     "N_pct": 25,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "second N split"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 40,
+    "P2O5": 20,
+    "K2O": 20
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF page 184 (printed page 165), Onion (कांदा)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Rabi/summer: transplant Nov-Dec, spacing 15x10 cm. Diary gives one NPK dose (40:20:20 kg/acre) for all three seasons. Per-ha values derived x2.471 (~100:50:50 kg/ha, consistent with MPKV research 100:50:50). FYM 10-12 t/acre -> ~24.7-29.7 t/ha (derived). S 45 kg/ha (per ha as printed) only stated for rabi; matches MPKV research rec. 2013-14 no.31 (45 kg S/ha via gypsum/elemental S, 15 days before transplanting, Rahuri, rabi; VEG PDF p4)."
+  },
+  {
+   "crop": "onion",
+   "season": "kharif",
+   "condition": "irrigated",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 75,
+   "P2O5_kg_ha": 40,
+   "K2O_kg_ha": 40,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": 15,
+   "FYM_kg_plant": null,
+   "S_kg_ha": 30,
+   "micronutrients": [
+    {
+     "name": "micronutrients",
+     "rate": null,
+     "method": null,
+     "timing": null,
+     "text": "beneficial based on soil test reports (no fixed dose)"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "basal (at planting)",
+     "N_pct": 33.3,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "S_pct": 100,
+     "text": "1/3 N + full P2O5, K2O and S at planting"
+    },
+    {
+     "timing": "30 DAP",
+     "N_pct": 33.3,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "remaining 2/3 N in two equal splits at 30 and 45 days after planting"
+    },
+    {
+     "timing": "45 DAP",
+     "N_pct": 33.3,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "second N split"
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "ICAR-DOGR Rajgurunagar & MANAGE, Good Agricultural Practices in Onion and Garlic Production (Kale et al., eds., 2022, ISBN 978-93-91668-35-8)",
+   "source_url": "https://www.manage.gov.in/publications/eBooks/Good%20Agricultural%20Practices%20in%20Onion%20and%20Garlic.pdf",
+   "source_locator": "Chapter on onion production technology, printed page 16 (PDF page 23), 'Manures and Fertilizers'",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Rabi & late kharif 110:40:60:30 NPKS; kharif 75:40:40:30 NPKS kg/ha. FYM 15 t/ha OR poultry manure / vermicompost 7.5 t/ha at last ploughing. S rule: 30 kg S/ha if soil S >15 kg/ha, 45 kg S/ha if soil S <15 kg/ha. Same book (PDF p39) cites AINRPOG 2021: 100% RDF (110:40:60:30) through drip at 6-day intervals gave 20.8-56.3% higher marketable yield vs flood/broadcast. ICAR-DOGR website itself (dogr.icar.gov.in) not reachable from this machine; this ICAR-DOGR co-published book used instead."
+  },
+  {
+   "crop": "onion",
+   "season": "late_kharif",
+   "condition": "irrigated",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 110,
+   "P2O5_kg_ha": 40,
+   "K2O_kg_ha": 60,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": 15,
+   "FYM_kg_plant": null,
+   "S_kg_ha": 30,
+   "micronutrients": [
+    {
+     "name": "micronutrients",
+     "rate": null,
+     "method": null,
+     "timing": null,
+     "text": "beneficial based on soil test reports (no fixed dose)"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "basal (at planting)",
+     "N_pct": 33.3,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "S_pct": 100,
+     "text": "1/3 N + full P2O5, K2O and S at planting"
+    },
+    {
+     "timing": "30 DAP",
+     "N_pct": 33.3,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "remaining 2/3 N in two equal splits at 30 and 45 days after planting"
+    },
+    {
+     "timing": "45 DAP",
+     "N_pct": 33.3,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "second N split"
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "ICAR-DOGR Rajgurunagar & MANAGE, Good Agricultural Practices in Onion and Garlic Production (Kale et al., eds., 2022, ISBN 978-93-91668-35-8)",
+   "source_url": "https://www.manage.gov.in/publications/eBooks/Good%20Agricultural%20Practices%20in%20Onion%20and%20Garlic.pdf",
+   "source_locator": "Chapter on onion production technology, printed page 16 (PDF page 23), 'Manures and Fertilizers'",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Rabi & late kharif 110:40:60:30 NPKS; kharif 75:40:40:30 NPKS kg/ha. FYM 15 t/ha OR poultry manure / vermicompost 7.5 t/ha at last ploughing. S rule: 30 kg S/ha if soil S >15 kg/ha, 45 kg S/ha if soil S <15 kg/ha. Same book (PDF p39) cites AINRPOG 2021: 100% RDF (110:40:60:30) through drip at 6-day intervals gave 20.8-56.3% higher marketable yield vs flood/broadcast. ICAR-DOGR website itself (dogr.icar.gov.in) not reachable from this machine; this ICAR-DOGR co-published book used instead."
+  },
+  {
+   "crop": "onion",
+   "season": "rabi",
+   "condition": "irrigated",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 110,
+   "P2O5_kg_ha": 40,
+   "K2O_kg_ha": 60,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": 15,
+   "FYM_kg_plant": null,
+   "S_kg_ha": 30,
+   "micronutrients": [
+    {
+     "name": "micronutrients",
+     "rate": null,
+     "method": null,
+     "timing": null,
+     "text": "beneficial based on soil test reports (no fixed dose)"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "basal (at planting)",
+     "N_pct": 33.3,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "S_pct": 100,
+     "text": "1/3 N + full P2O5, K2O and S at planting"
+    },
+    {
+     "timing": "30 DAP",
+     "N_pct": 33.3,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "remaining 2/3 N in two equal splits at 30 and 45 days after planting"
+    },
+    {
+     "timing": "45 DAP",
+     "N_pct": 33.3,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "second N split"
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "ICAR-DOGR Rajgurunagar & MANAGE, Good Agricultural Practices in Onion and Garlic Production (Kale et al., eds., 2022, ISBN 978-93-91668-35-8)",
+   "source_url": "https://www.manage.gov.in/publications/eBooks/Good%20Agricultural%20Practices%20in%20Onion%20and%20Garlic.pdf",
+   "source_locator": "Chapter on onion production technology, printed page 16 (PDF page 23), 'Manures and Fertilizers'",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Rabi & late kharif 110:40:60:30 NPKS; kharif 75:40:40:30 NPKS kg/ha. FYM 15 t/ha OR poultry manure / vermicompost 7.5 t/ha at last ploughing. S rule: 30 kg S/ha if soil S >15 kg/ha, 45 kg S/ha if soil S <15 kg/ha. Same book (PDF p39) cites AINRPOG 2021: 100% RDF (110:40:60:30) through drip at 6-day intervals gave 20.8-56.3% higher marketable yield vs flood/broadcast. ICAR-DOGR website itself (dogr.icar.gov.in) not reachable from this machine; this ICAR-DOGR co-published book used instead."
+  },
+  {
+   "crop": "onion",
+   "season": "kharif",
+   "condition": "irrigated",
+   "variety_type": "cv. B-780 / Phule Safed",
+   "basis": "per_ha",
+   "N_kg_ha": 100,
+   "P2O5_kg_ha": 50,
+   "K2O_kg_ha": 50,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": 40,
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at transplanting",
+     "N_pct": null,
+     "P2O5_pct": null,
+     "K2O_pct": null,
+     "text": "seedling soaking in Azospirillum for 30 min; no N split given"
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "MPKV Rahuri, Onion Storage Scheme - centre profile & recommendations",
+   "source_url": "https://mpkv.ac.in/Uploads/Research/20260819_123631_cf1ef5e78c9a27a5306bb5e2b55d4eb4.pdf",
+   "source_locator": "PDF page 3, item 8(c) Agrotechniques 2 and 3",
+   "source_type": "primary",
+   "status": "partial",
+   "notes": "Kharif onion cv. B-780: 40 t FYM/ha + 100:50:50 or 75:50:50 NPK kg/ha + Azospirillum seedling dip. Kharif cv. Phule Safed: 100:50:50 NPK kg/ha at 15x10 cm flat beds (no FYM stated). Green-top onion (rabi): basal 50:50:50 + 19:19:19 @0.5% sprays at 30 & 45 DAT. Rabi foliar 20:20:20 @5 g/L at 30, 45, 60 DAT (VEG PDF p7, rec. 49). Onion seed crop (bulb planting 1st week Nov, Western Ghat zone): 150:75:75 kg/ha (VEG PDF p2, rec. 9)."
+  },
+  {
+   "crop": "onion",
+   "season": "kharif",
+   "condition": "irrigated",
+   "variety_type": "N-53 (Rahuri)",
+   "basis": "per_ha",
+   "N_kg_ha": 150,
+   "P2O5_kg_ha": 60,
+   "K2O_kg_ha": 0,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": 25,
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "basal",
+     "N_pct": null,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "transplanted crop: full P,K + part N basal; N top-dressed in 2 splits at 30 and 45 DAT, before bulb initiation (NHB general text; basal N fraction not stated for transplanting)"
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "National Horticulture Board, crop production technology page (Manuring & Fertilization) - Onion",
+   "source_url": "https://www.nhb.gov.in/pdf/vegetable/onion/oni007.pdf",
+   "source_locator": "single page, table 'Maharashtra - Rahuri'",
+   "source_type": "secondary",
+   "status": "partial",
+   "notes": "Older compiled value. Same NHB table lists Nasik, Agrifound Light Red (rabi) 100:25:25 kg/ha. FYM 25 t/ha one month before transplanting. General range 100-150 N, 40-80 P2O5, 0-125 K2O."
+  },
+  {
+   "crop": "tomato",
+   "season": "kharif|rabi|summer",
+   "condition": "irrigated",
+   "variety_type": "open_pollinated",
+   "basis": "per_ha",
+   "N_kg_ha": 197.7,
+   "P2O5_kg_ha": 98.8,
+   "K2O_kg_ha": 98.8,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": 19.8,
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "micronutrients",
+     "rate": null,
+     "text": "apply after testing soil micronutrient availability (no fixed dose)"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "before transplanting (basal)",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "half N + all P and K before transplanting"
+    },
+    {
+     "timing": "3 equal splits at 20-day intervals after transplanting",
+     "N_pct": 50,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "remaining half N in 3 equal doses at 20-day intervals (i.e. ~16.7% each; exact DAT of first split not stated)"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 80,
+    "P2O5": 40,
+    "K2O": 40
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF page 189 (printed page 170), Tomato (टोमॅटो) - 'खतांचा वापर'",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Per acre: OP 80:40:40 kg (4 bags urea + 5 bags SSP + 1.5 bags MOP). FYM 8 t/acre (~19.8 t/ha derived). Planting: kharif Jun-Jul, rabi Oct-Nov, summer Feb-Mar. Derived per-ha ~198:99:99 is much higher than NHB OP 120:80:50."
+  },
+  {
+   "crop": "tomato",
+   "season": "kharif|rabi|summer",
+   "condition": "irrigated",
+   "variety_type": "hybrid",
+   "basis": "per_ha",
+   "N_kg_ha": 296.5,
+   "P2O5_kg_ha": 148.3,
+   "K2O_kg_ha": 148.3,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": 19.8,
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "before transplanting (basal)",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "half N + all P and K before transplanting"
+    },
+    {
+     "timing": "3 equal splits at 20-day intervals after transplanting",
+     "N_pct": 50,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "remaining half N in 3 equal doses at 20-day intervals (i.e. ~16.7% each; exact DAT of first split not stated)"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 120,
+    "P2O5": 60,
+    "K2O": 60
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF page 189 (printed page 170), Tomato (टोमॅटो) - 'खतांचा वापर'",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Per acre: hybrid 120:60:60 kg (6 bags urea + 7.5 bags SSP + 2 bags MOP). Derived ~297:148:148 kg/ha, consistent with MPKV 2010-11 drip rec. whose 80% RDF = 240:120:120 (implying RDF 300:150:150 kg/ha)."
+  },
+  {
+   "crop": "tomato",
+   "season": null,
+   "condition": "drip_fertigation",
+   "variety_type": "hybrid",
+   "basis": "per_ha",
+   "N_kg_ha": 240,
+   "P2O5_kg_ha": 120,
+   "K2O_kg_ha": 120,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": null,
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "14 equal weekly splits from planting",
+     "N_pct": 100,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "water-soluble fertilizers through drip, 14 equal weekly splits starting from planting (each ~7.14%)"
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "MPKV Rahuri, Vegetable - Recommendations released in last 10 years (research recommendations)",
+   "source_url": "https://mpkv.ac.in/Uploads/Research/12.%20Vegetable_20200110053854.pdf",
+   "source_locator": "PDF page 8, recommendation no. 61 (2010-11)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Recommended = 80% of RDF (240:120:120 N:P:K kg/ha) for hybrid tomato on medium deep black soils via drip. Implied 100% RDF = 300:150:150 kg/ha (derived). Source writes 'N:P:K' - assumed P2O5/K2O as per Indian convention."
+  },
+  {
+   "crop": "tomato",
+   "season": null,
+   "condition": "irrigated",
+   "variety_type": "open_pollinated",
+   "basis": "per_ha",
+   "N_kg_ha": 120,
+   "P2O5_kg_ha": 80,
+   "K2O_kg_ha": 50,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": [
+    15,
+    20
+   ],
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at transplanting",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "half N + full P,K"
+    },
+    {
+     "timing": "30 DAT",
+     "N_pct": 50,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "balance N"
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "National Horticulture Board, crop production technology page (Manuring & Fertilization) - Tomato",
+   "source_url": "https://www.nhb.gov.in/pdf/vegetable/tomato/tom007.pdf",
+   "source_locator": "single page",
+   "source_type": "secondary",
+   "status": "complete",
+   "notes": "National general recommendation, not Maharashtra-specific."
+  },
+  {
+   "crop": "tomato",
+   "season": null,
+   "condition": "irrigated",
+   "variety_type": "hybrid",
+   "basis": "per_ha",
+   "N_kg_ha": 180,
+   "P2O5_kg_ha": 100,
+   "K2O_kg_ha": 60,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": [
+    15,
+    20
+   ],
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at transplanting",
+     "N_pct": 33.3,
+     "P2O5_pct": 50,
+     "K2O_pct": 50,
+     "text": "60 kg N + half P,K"
+    },
+    {
+     "timing": "30 DAT",
+     "N_pct": 33.3,
+     "P2O5_pct": 50,
+     "K2O_pct": 50,
+     "text": "60 kg N + remaining P,K"
+    },
+    {
+     "timing": "50 DAT",
+     "N_pct": 33.3,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "60 kg N"
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "National Horticulture Board, crop production technology page (Manuring & Fertilization) - Tomato",
+   "source_url": "https://www.nhb.gov.in/pdf/vegetable/tomato/tom007.pdf",
+   "source_locator": "single page",
+   "source_type": "secondary",
+   "status": "complete",
+   "notes": "National general recommendation for hybrids."
+  },
+  {
+   "crop": "potato",
+   "season": "kharif",
+   "condition": "irrigated",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 98.8,
+   "P2O5_kg_ha": 59.3,
+   "K2O_kg_ha": 121.1,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": 19.8,
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "ZnSO4",
+     "rate_kg_acre": 8,
+     "rate_kg_ha_derived": 19.8,
+     "method": "soil, mixed with FYM",
+     "timing": "at planting"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "at planting",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "products per acre at planting: 1/2 bag urea, 1/2 bag SSP, 1 bag MOP (as printed)"
+    },
+    {
+     "timing": "~30 DAP (1 month after planting) with earthing up",
+     "N_pct": 50,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "1/2 bag urea per acre + earthing up"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 40,
+    "P2O5": 24,
+    "K2O": 49
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF page 196 (printed page 177), Potato (बटाटा) - 'रासायनिक खते'",
+   "source_type": "primary",
+   "status": "partial",
+   "notes": "Nutrient dose 40:24:49 kg N:P2O5:K2O per acre before/at planting (derived ~99:59:121 kg/ha). WARNING: the product quantities printed (1/2+1/2 bag urea ~ 20.7 kg N; 1/2 bag SSP ~ 4 kg P2O5; 1 bag MOP = 30 kg K2O) do NOT add up to 40:24:49; the N_pct split is inferred from the equal urea halves. Planting: kharif end-June to 1st fortnight July; rabi end-Oct to 1st fortnight Nov; ridges/furrows 60x20 cm; FYM 8 t/acre (~19.8 t/ha derived). Varieties Kufri Jyoti, Lavkar, Sindhuri, Surya, Pukhraj."
+  },
+  {
+   "crop": "potato",
+   "season": "rabi",
+   "condition": "irrigated",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 98.8,
+   "P2O5_kg_ha": 59.3,
+   "K2O_kg_ha": 121.1,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": 19.8,
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "ZnSO4",
+     "rate_kg_acre": 8,
+     "rate_kg_ha_derived": 19.8,
+     "method": "soil, mixed with FYM",
+     "timing": "at planting"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "at planting",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "products per acre at planting: 1/2 bag urea, 1/2 bag SSP, 1 bag MOP (as printed)"
+    },
+    {
+     "timing": "~30 DAP (1 month after planting) with earthing up",
+     "N_pct": 50,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "1/2 bag urea per acre + earthing up"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 40,
+    "P2O5": 24,
+    "K2O": 49
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF page 196 (printed page 177), Potato (बटाटा) - 'रासायनिक खते'",
+   "source_type": "primary",
+   "status": "partial",
+   "notes": "Nutrient dose 40:24:49 kg N:P2O5:K2O per acre before/at planting (derived ~99:59:121 kg/ha). WARNING: the product quantities printed (1/2+1/2 bag urea ~ 20.7 kg N; 1/2 bag SSP ~ 4 kg P2O5; 1 bag MOP = 30 kg K2O) do NOT add up to 40:24:49; the N_pct split is inferred from the equal urea halves. Planting: kharif end-June to 1st fortnight July; rabi end-Oct to 1st fortnight Nov; ridges/furrows 60x20 cm; FYM 8 t/acre (~19.8 t/ha derived). Varieties Kufri Jyoti, Lavkar, Sindhuri, Surya, Pukhraj."
+  },
+  {
+   "crop": "potato",
+   "season": "rabi",
+   "condition": "drip_fertigation",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 120,
+   "P2O5_kg_ha": 80,
+   "K2O_kg_ha": 120,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": null,
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "urea phosphate",
+     "rate": "2%",
+     "method": "foliar",
+     "timing": "30, 45 and 60 DAP"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "1-21 DAP (3 equal weekly splits)",
+     "N_pct": 15,
+     "P2O5_pct": 20,
+     "K2O_pct": 15,
+     "text": "N 18, P 16, K 18 kg/ha"
+    },
+    {
+     "timing": "22-42 DAP (3 equal weekly splits)",
+     "N_pct": 35,
+     "P2O5_pct": 40,
+     "K2O_pct": 35,
+     "text": "N 42, P 32, K 42 kg/ha"
+    },
+    {
+     "timing": "43-63 DAP (3 equal weekly splits)",
+     "N_pct": 40,
+     "P2O5_pct": 20,
+     "K2O_pct": 30,
+     "text": "N 48, P 16, K 36 kg/ha"
+    },
+    {
+     "timing": "64-77 DAP (2 equal weekly splits)",
+     "N_pct": 10,
+     "P2O5_pct": 20,
+     "K2O_pct": 20,
+     "text": "N 12, P 16, K 24 kg/ha"
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "MPKV Rahuri, Vegetable - Recommendations released in last 10 years (research recommendations)",
+   "source_url": "https://mpkv.ac.in/Uploads/Research/12.%20Vegetable_20200110053854.pdf",
+   "source_locator": "PDF page 4, recommendation no. 29 (2013-14), fertilizer schedule table",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "RDF 120:80:120 NPK kg/ha in water-soluble form through drip in 11 weekly splits, rabi potato on medium deep black soils. Table column headers say N, P, K; values sum to 120:80:120 so read as N:P2O5:K2O."
+  },
+  {
+   "crop": "potato",
+   "season": null,
+   "condition": "black soils of plateau",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": [
+    120,
+    150
+   ],
+   "P2O5_kg_ha": 50,
+   "K2O_kg_ha": 50,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": null,
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at planting",
+     "N_pct": 66.7,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "2/3 N + full P,K, band placed 5 cm from tubers"
+    },
+    {
+     "timing": "earthing up",
+     "N_pct": 33.3,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "balance N"
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "National Horticulture Board, crop production technology page (Manuring & Fertilization) - Potato",
+   "source_url": "https://www.nhb.gov.in/pdf/vegetable/potato/pot007.pdf",
+   "source_locator": "single page",
+   "source_type": "secondary",
+   "status": "complete",
+   "notes": "NHB value for 'black soils of plateau areas'. No FYM quantity given. ICAR-CPRI site not reachable from this machine."
+  },
+  {
+   "crop": "okra_bhendi",
+   "season": "kharif",
+   "condition": "irrigated",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 98.8,
+   "P2O5_kg_ha": 49.4,
+   "K2O_kg_ha": 49.4,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": [
+    9.9,
+    14.8
+   ],
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "FeSO4",
+     "rate_kg_acre": 8,
+     "rate_kg_ha_derived": 19.8,
+     "method": "soil with FYM",
+     "timing": "at sowing, if soil deficient"
+    },
+    {
+     "name": "ZnSO4",
+     "rate_kg_acre": 8,
+     "rate_kg_ha_derived": 19.8,
+     "method": "soil with FYM",
+     "timing": "at sowing, if soil deficient"
+    },
+    {
+     "name": "borax",
+     "rate_kg_acre": 2,
+     "rate_kg_ha_derived": 4.9,
+     "method": "soil with FYM",
+     "timing": "at sowing, if soil deficient"
+    },
+    {
+     "name": "Phule micronutrient grade II (alternative)",
+     "rate": "100 ml per 10 L",
+     "method": "foliar",
+     "timing": "30 and 45 DAS"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "basal (at sowing)",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "half N + all P,K at sowing"
+    },
+    {
+     "timing": "30 DAS",
+     "N_pct": 25,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "remaining 20 kg N/acre in two equal splits at 30 and 45 DAS"
+    },
+    {
+     "timing": "45 DAS",
+     "N_pct": 25,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "second split"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 40,
+    "P2O5": 20,
+    "K2O": 20
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF page 191 (printed page 172), Okra (भेंडी)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Varieties Phule Vimukta, Phule Gayatri; kharif sowing Jun-Jul, summer Jan-Feb; spacing 30x15 cm. 40:20:20 kg/acre (derived ~99:49:49 kg/ha, consistent with MPKV research 100:50:50). FYM 4-6 t/acre (derived ~9.9-14.8 t/ha) - lower than the research recommendation's 20 t/ha. Seed treatment Azotobacter + PSB 25 g/kg."
+  },
+  {
+   "crop": "okra_bhendi",
+   "season": "summer",
+   "condition": "irrigated",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 98.8,
+   "P2O5_kg_ha": 49.4,
+   "K2O_kg_ha": 49.4,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": [
+    9.9,
+    14.8
+   ],
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "FeSO4",
+     "rate_kg_acre": 8,
+     "rate_kg_ha_derived": 19.8,
+     "method": "soil with FYM",
+     "timing": "at sowing, if soil deficient"
+    },
+    {
+     "name": "ZnSO4",
+     "rate_kg_acre": 8,
+     "rate_kg_ha_derived": 19.8,
+     "method": "soil with FYM",
+     "timing": "at sowing, if soil deficient"
+    },
+    {
+     "name": "borax",
+     "rate_kg_acre": 2,
+     "rate_kg_ha_derived": 4.9,
+     "method": "soil with FYM",
+     "timing": "at sowing, if soil deficient"
+    },
+    {
+     "name": "Phule micronutrient grade II (alternative)",
+     "rate": "100 ml per 10 L",
+     "method": "foliar",
+     "timing": "30 and 45 DAS"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "basal (at sowing)",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "half N + all P,K at sowing"
+    },
+    {
+     "timing": "30 DAS",
+     "N_pct": 25,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "remaining 20 kg N/acre in two equal splits at 30 and 45 DAS"
+    },
+    {
+     "timing": "45 DAS",
+     "N_pct": 25,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "second split"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 40,
+    "P2O5": 20,
+    "K2O": 20
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF page 191 (printed page 172), Okra (भेंडी)",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Varieties Phule Vimukta, Phule Gayatri; kharif sowing Jun-Jul, summer Jan-Feb; spacing 30x15 cm. 40:20:20 kg/acre (derived ~99:49:49 kg/ha, consistent with MPKV research 100:50:50). FYM 4-6 t/acre (derived ~9.9-14.8 t/ha) - lower than the research recommendation's 20 t/ha. Seed treatment Azotobacter + PSB 25 g/kg."
+  },
+  {
+   "crop": "okra_bhendi",
+   "season": null,
+   "condition": "irrigated",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": 100,
+   "P2O5_kg_ha": 50,
+   "K2O_kg_ha": 50,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": 20,
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "FeSO4",
+     "rate_kg_ha": 20,
+     "method": "soil",
+     "timing": "at sowing (Fe/Zn/B-deficient soils)"
+    },
+    {
+     "name": "ZnSO4",
+     "rate_kg_ha": 20,
+     "method": "soil",
+     "timing": "at sowing"
+    },
+    {
+     "name": "borax",
+     "rate_kg_ha": 5,
+     "method": "soil",
+     "timing": "at sowing"
+    },
+    {
+     "name": "FeSO4 0.5% + ZnSO4 0.5% + boric acid 0.2% (alternative)",
+     "method": "foliar",
+     "timing": "30 and 45 DAS"
+    }
+   ],
+   "split_schedule": [],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "MPKV Rahuri, Vegetable - Recommendations released in last 10 years (research recommendations)",
+   "source_url": "https://mpkv.ac.in/Uploads/Research/12.%20Vegetable_20200110053854.pdf",
+   "source_locator": "PDF page 7, recommendation no. 50 (2011-12) (also no. 56)",
+   "source_type": "primary",
+   "status": "partial",
+   "notes": "RDF stated as FYM 20 t/ha + 100:50:50 N:P2O5:K2O kg/ha; split timing not given in this source. Summer okra yield-target STCR equations (rec. 38, PDF p5) also available."
+  },
+  {
+   "crop": "okra_bhendi",
+   "season": null,
+   "condition": "irrigated",
+   "variety_type": "open_pollinated",
+   "basis": "per_ha",
+   "N_kg_ha": 100,
+   "P2O5_kg_ha": 60,
+   "K2O_kg_ha": 50,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": [
+    20,
+    25
+   ],
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at sowing",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": ""
+    },
+    {
+     "timing": "30 DAS + earthing up",
+     "N_pct": 50,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": ""
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "National Horticulture Board, crop production technology page (Manuring & Fertilization) - Okra",
+   "source_url": "https://www.nhb.gov.in/pdf/vegetable/okra/okr006.pdf",
+   "source_locator": "single page",
+   "source_type": "secondary",
+   "status": "complete",
+   "notes": "National general."
+  },
+  {
+   "crop": "okra_bhendi",
+   "season": null,
+   "condition": "irrigated",
+   "variety_type": "hybrid",
+   "basis": "per_ha",
+   "N_kg_ha": 150,
+   "P2O5_kg_ha": 112,
+   "K2O_kg_ha": 75,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": [
+    20,
+    25
+   ],
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "basal",
+     "N_pct": 30,
+     "P2O5_pct": 50,
+     "K2O_pct": 50,
+     "text": ""
+    },
+    {
+     "timing": "~4 weeks after sowing",
+     "N_pct": 40,
+     "P2O5_pct": 50,
+     "K2O_pct": 25,
+     "text": ""
+    },
+    {
+     "timing": "~7 weeks after sowing",
+     "N_pct": 30,
+     "P2O5_pct": 0,
+     "K2O_pct": 25,
+     "text": ""
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "National Horticulture Board, crop production technology page (Manuring & Fertilization) - Okra",
+   "source_url": "https://www.nhb.gov.in/pdf/vegetable/okra/okr006.pdf",
+   "source_locator": "single page",
+   "source_type": "secondary",
+   "status": "complete",
+   "notes": "National general, hybrids."
+  },
+  {
+   "crop": "brinjal",
+   "season": "kharif|summer",
+   "condition": "irrigated",
+   "variety_type": "improved and hybrid (single dose given)",
+   "basis": "per_ha",
+   "N_kg_ha": 148.3,
+   "P2O5_kg_ha": 74.1,
+   "K2O_kg_ha": 74.1,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": [
+    19.8,
+    24.7
+   ],
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "Phule micronutrient grade II (liquid)",
+     "rate": "100 ml per 10 L",
+     "method": "foliar",
+     "timing": "35 and 45 DAT"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "15 days before transplanting",
+     "N_pct": 0,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "FYM"
+    },
+    {
+     "timing": "at transplanting",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "30 kg N (1.5 bags urea) + 30 kg P2O5 (3 bags + 37.5 kg SSP) + 30 kg K2O (1 bag MOP) per acre"
+    },
+    {
+     "timing": "30 DAT",
+     "N_pct": 25,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "15 kg N (34 kg urea) per acre"
+    },
+    {
+     "timing": "45 DAT",
+     "N_pct": 25,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "15 kg N (34 kg urea) per acre"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 60,
+    "P2O5": 30,
+    "K2O": 30
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF pages 186-187 (printed pages 167-168), Brinjal (वांगी) incl. fertilizer table",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Varieties Phule Harit, Krishna (hybrid), Phule Arjun (hybrid); kharif Jul-Aug, summer Feb-Mar; spacing kharif 90x90, hybrid 120x90 cm. 60:30:30 kg/acre -> derived ~148:74:74 kg/ha. Diary gives no separate hybrid dose (NHB hybrid: 200:100:100 kg/ha)."
+  },
+  {
+   "crop": "brinjal",
+   "season": null,
+   "condition": "irrigated",
+   "variety_type": "open_pollinated",
+   "basis": "per_ha",
+   "N_kg_ha": 150,
+   "P2O5_kg_ha": 100,
+   "K2O_kg_ha": 50,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": [
+    15,
+    20
+   ],
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "at transplanting",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": ""
+    },
+    {
+     "timing": "45 DAT",
+     "N_pct": 16.7,
+     "text": "1.5 months after transplanting"
+    },
+    {
+     "timing": "75 DAT",
+     "N_pct": 16.7,
+     "text": "1 month after first split"
+    },
+    {
+     "timing": "105 DAT",
+     "N_pct": 16.7,
+     "text": "3.5 months after transplanting"
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "National Horticulture Board, crop production technology page (Manuring & Fertilization) - Brinjal",
+   "source_url": "https://www.nhb.gov.in/pdf/vegetable/brinjal/bri006.pdf",
+   "source_locator": "single page",
+   "source_type": "secondary",
+   "status": "complete",
+   "notes": "National general."
+  },
+  {
+   "crop": "brinjal",
+   "season": null,
+   "condition": "irrigated",
+   "variety_type": "hybrid",
+   "basis": "per_ha",
+   "N_kg_ha": 200,
+   "P2O5_kg_ha": 100,
+   "K2O_kg_ha": 100,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": [
+    15,
+    20
+   ],
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "basal",
+     "N_pct": 25,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": ""
+    },
+    {
+     "timing": "20 DAT",
+     "N_pct": 25,
+     "text": ""
+    },
+    {
+     "timing": "just before flowering",
+     "N_pct": 25,
+     "text": ""
+    },
+    {
+     "timing": "after first picking",
+     "N_pct": 25,
+     "text": ""
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "National Horticulture Board, crop production technology page (Manuring & Fertilization) - Brinjal",
+   "source_url": "https://www.nhb.gov.in/pdf/vegetable/brinjal/bri006.pdf",
+   "source_locator": "single page",
+   "source_type": "secondary",
+   "status": "complete",
+   "notes": "NHB text says 'remaining 75% of P is applied in three equal split doses' - evidently a typo for N since 100% P is basal; N split read as 3 equal 25% doses."
+  },
+  {
+   "crop": "chilli",
+   "season": "kharif",
+   "condition": "irrigated (not differentiated)",
+   "variety_type": "Phule Jyoti; same dose for green and dry/red chilli",
+   "basis": "per_ha",
+   "N_kg_ha": 98.8,
+   "P2O5_kg_ha": 49.4,
+   "K2O_kg_ha": 49.4,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": [
+    19.8,
+    24.7
+   ],
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "15 days before transplanting",
+     "N_pct": 0,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "FYM"
+    },
+    {
+     "timing": "at transplanting",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "20 kg N (1 bag urea) + 20 kg P2O5 (2 bags + 25 kg SSP) + 20 kg K2O (34 kg MOP) per acre"
+    },
+    {
+     "timing": "30 DAT",
+     "N_pct": 25,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "10 kg N (22 kg urea) per acre"
+    },
+    {
+     "timing": "45 DAT",
+     "N_pct": 25,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "10 kg N (22 kg urea) per acre"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre",
+    "N": 40,
+    "P2O5": 20,
+    "K2O": 20
+   },
+   "derived_fields": [
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF page 185 (printed page 166), Chilli (मिरची) incl. fertilizer table",
+   "source_type": "primary",
+   "status": "partial",
+   "notes": "Transplant Jun-Jul, 60x45 cm. Derived ~99:49:49 kg/ha. Yields given: green 150-200 q/ha, red dry 15-20 q/ha - one dose for both. No rainfed vs irrigated or hybrid differentiation found; no S/micronutrient dose. Seed treatment Azotobacter + PSB 25 g/kg or Phule Biomix 10 g/kg; Trichoderma 5 g/kg. NHB chilli manuring page not found at the usual URL pattern."
+  },
+  {
+   "crop": "grapes",
+   "season": "annual (foundation + fruit pruning cycle)",
+   "condition": "drip_fertigation",
+   "variety_type": "Thompson Seedless on Dogridge rootstock",
+   "basis": "per_ha",
+   "N_kg_ha": 266,
+   "P2O5_kg_ha": 177.5,
+   "K2O_kg_ha": 266,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": null,
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "Foundation (back) pruning: 1-30 days, shoot growth (Apr-May)",
+     "N_kg_ha": 60,
+     "P2O5_kg_ha": 0,
+     "K2O_kg_ha": 0
+    },
+    {
+     "timing": "Foundation pruning: 31-40 days, shoot growth (Apr-May)",
+     "N_kg_ha": 20,
+     "P2O5_kg_ha": 35.5,
+     "K2O_kg_ha": 0
+    },
+    {
+     "timing": "Foundation pruning: 41-60 days, fruit bud differentiation (May-Jun)",
+     "N_kg_ha": 0,
+     "P2O5_kg_ha": 71,
+     "K2O_kg_ha": 0
+    },
+    {
+     "timing": "Foundation pruning: 61-120 days, cane maturity & fruit bud development (Jun-Aug)",
+     "N_kg_ha": 0,
+     "P2O5_kg_ha": 0,
+     "K2O_kg_ha": 80
+    },
+    {
+     "timing": "Fruit (forward) pruning: 1-40 days, shoot growth (Oct-Nov)",
+     "N_kg_ha": 80,
+     "P2O5_kg_ha": 0,
+     "K2O_kg_ha": 0
+    },
+    {
+     "timing": "Fruit pruning: 41-55 days, bloom to shatter (Nov-Dec)",
+     "N_kg_ha": 0,
+     "P2O5_kg_ha": 26.5,
+     "K2O_kg_ha": 0
+    },
+    {
+     "timing": "Fruit pruning: 56-70 days, berry growth (Dec-Jan)",
+     "N_kg_ha": 0,
+     "P2O5_kg_ha": 26.5,
+     "K2O_kg_ha": 0
+    },
+    {
+     "timing": "Fruit pruning: 71-105 days, berry growth (Dec-Jan)",
+     "N_kg_ha": 80,
+     "P2O5_kg_ha": 0,
+     "K2O_kg_ha": 80
+    },
+    {
+     "timing": "Fruit pruning: 106 days-harvest, ripening (Jan-Mar)",
+     "N_kg_ha": 0,
+     "P2O5_kg_ha": 0,
+     "K2O_kg_ha": 80
+    },
+    {
+     "timing": "Rest period: harvest to foundation pruning, ~20 days (Mar-Apr)",
+     "N_kg_ha": 26,
+     "P2O5_kg_ha": 18,
+     "K2O_kg_ha": 26
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "ICAR-NRC for Grapes, Pune - Fertigation schedule for table grape (Dr. J. Sharma & Dr. A.K. Upadhyay)",
+   "source_url": "https://www.nrcgrapes.in/fertigation-schedule-for-table-grape.htm",
+   "source_locator": "web page table 'Fertigation schedule for Thompson Seedless grafted on Dogridge'",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Worked out on heavy calcareous soils with saline irrigation water (EC 1.7-1.8 dS/m) at 10 ft x 6 ft spacing; applicable down to 8 ft x 5 ft (density not stated; 10x6 ft ~ 1,794 vines/ha derived, not used). Doses are guidelines; adjust with soil, petiole and water test and nutrients from FYM/compost. NRCG research highlight: P via fertigation for mature TS/Dogridge can be reduced by 50% to 176 kg P2O5/ha (https://www.nrcgrapes.in/Research-Achievements.htm). nrcgrapes.icar.gov.in domain not reachable; nrcgrapes.in mirror used. Per-vine g not given."
+  },
+  {
+   "crop": "grapes",
+   "season": "annual (back/April pruning + fruit/October pruning)",
+   "condition": "irrigated",
+   "variety_type": "vines on Dogridge rootstock",
+   "basis": "per_acre_as_printed",
+   "N_kg_ha": null,
+   "P2O5_kg_ha": null,
+   "K2O_kg_ha": null,
+   "per_plant_g": null,
+   "plants_per_ha": 2222,
+   "FYM_t_ha": null,
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "after back (April/foundation) pruning",
+     "N_pct": 70,
+     "P2O5_pct": 50,
+     "K2O_pct": 30,
+     "text": "70% N (186 kg; printed '266 kg urea'), 50% P2O5 (178 kg / 1110 kg SSP), 30% K2O (80 kg / 134 kg MOP)"
+    },
+    {
+     "timing": "immediately after fruit (October) pruning",
+     "N_pct": 0,
+     "P2O5_pct": 50,
+     "K2O_pct": 0,
+     "text": "remaining P2O5 immediately after fruit pruning"
+    },
+    {
+     "timing": "fruit pruning to 70-100 days",
+     "N_pct": 30,
+     "P2O5_pct": 0,
+     "K2O_pct": null,
+     "text": "remaining N split up to 70-100 days after fruit pruning"
+    },
+    {
+     "timing": "up to veraison (berry softening, 'पाणी उतरणे')",
+     "N_pct": 0,
+     "P2O5_pct": 0,
+     "K2O_pct": 49,
+     "text": "70% of remaining K2O (=49% of total)"
+    },
+    {
+     "timing": "at veraison",
+     "N_pct": 0,
+     "P2O5_pct": 0,
+     "K2O_pct": 21,
+     "text": "remaining 30% of remaining K2O (=21% of total)"
+    }
+   ],
+   "as_given": {
+    "unit": "kg/acre (as printed)",
+    "N": 266,
+    "P2O5": 355,
+    "K2O": 266,
+    "products_as_printed": "580 kg urea, 620 kg SSP, 445 g [sic] MOP"
+   },
+   "derived_fields": [],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF page 155 (printed page 136), Grapes (द्राक्षे) - 'खत व्यवस्थापन'",
+   "source_type": "primary",
+   "status": "conflict_flagged",
+   "notes": "Printed as 'प्रति एकरी' (per acre) 266:355:266 kg N:P2O5:K2O. These are numerically the NRCG per-HECTARE figures (266 N, 266 K2O; 355 P2O5 = pre-revision P that NRCG later halved to 177.5); per-acre reading would equal ~657:877:657 kg/ha - implausible. Product quantities are internally inconsistent (620 kg SSP vs 1110 kg SSP in first split; '445 g' MOP). Treat unit as UNVERIFIED; kg/ha fields left null intentionally. Spacing 3 x 1.5 m, 2,222 vines/ha (as printed). No FYM or micronutrient dose in this section."
+  },
+  {
+   "crop": "grapes",
+   "season": "bearing vines",
+   "condition": "petiole-test based",
+   "variety_type": null,
+   "basis": "per_ha",
+   "N_kg_ha": null,
+   "P2O5_kg_ha": null,
+   "K2O_kg_ha": null,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": null,
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "MgSO4",
+     "rate_kg_ha": "90-180 by petiole Mg (adequate 135); 250 kg/ha at pruning for Mg deficiency",
+     "method": "soil"
+    },
+    {
+     "name": "ZnSO4",
+     "rate_kg_ha": 250,
+     "method": "soil (or foliar 200 g/100 L + 50 ml detergent)",
+     "timing": "for Zn deficiency (Nasik, Ahmednagar)"
+    },
+    {
+     "name": "borax or boric acid",
+     "rate_kg_ha": 10,
+     "method": "soil (or foliar 1 g/L, 4 sprays before flowering)"
+    },
+    {
+     "name": "FeSO4 250 g + citric acid 50 g /100 L (or soil Fe-EDDHA)",
+     "method": "foliar",
+     "timing": "Fe deficiency (Nasik, Pune)"
+    },
+    {
+     "name": "Ca acetate/chloride/nitrate 2 g/L",
+     "method": "foliar",
+     "timing": "bunch stem necrosis (Thompson Seedless, Pune)"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "days after back pruning",
+     "text": "0-30: N high, P medium; 32-60: N low, P high, K low, Mg medium; 61-90: P medium, K high, Mg medium; 91-120: K low"
+    },
+    {
+     "timing": "days after forward pruning",
+     "text": "0-40: N high, P/K/Mg low; 41-70: N,P,K medium, Mg low; 71-110: N,P low, K high, Mg medium; 111-140: K medium"
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "National Horticulture Board, crop production technology page (Manuring & Fertilization) - Grapes (citing NRC Grapes & APEDA pre-harvest manual)",
+   "source_url": "https://www.nhb.gov.in/pdf/fruits/grape/gra007.pdf",
+   "source_locator": "single page, petiole table",
+   "source_type": "secondary",
+   "status": "partial",
+   "notes": "Petiole-based doses (kg/ha): N - black clay 666/500/333 (low/adequate/high petiole N), red sandy 300/225/150; 'P' black clay 888/666/444, red sandy 500/375/250; 'K' black clay 666/500/333, red sandy 1000/750/500 (source does not state whether P/K are element or oxide; very high - use with caution). Pre-bearing: 100 g urea + 200 g SSP per vine monthly. Fixed N/P/K fields left null because dose depends on petiole test."
+  },
+  {
+   "crop": "pomegranate",
+   "season": "annual (bearing, any bahar)",
+   "condition": "irrigated",
+   "variety_type": null,
+   "basis": "per_plant",
+   "N_kg_ha": 457.1,
+   "P2O5_kg_ha": 182.9,
+   "K2O_kg_ha": 182.9,
+   "per_plant_g": {
+    "N": 625,
+    "P2O5": 250,
+    "K2O": 250
+   },
+   "plants_per_ha": 731,
+   "FYM_t_ha": 29.7,
+   "FYM_kg_plant": [
+    40,
+    50
+   ],
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "N in 2 equal splits (timing not stated in this table; see NHB/GoM entry: at bahar + 1-1.5 months later)",
+     "N_pct": 50,
+     "P2O5_pct": null,
+     "K2O_pct": null,
+     "text": "नत्र २ समान हप्त्यात विभागून द्यावे"
+    },
+    {
+     "timing": "at bahar",
+     "text": "FYM + neem cake 3 kg/plant mixed, applied by ring method around the tree (PDF p158 item 14)"
+    }
+   ],
+   "as_given": {
+    "unit": "g/plant/year and kg/acre",
+    "per_acre_kg": {
+     "N": 185,
+     "P2O5": 74,
+     "K2O": 74
+    },
+    "FYM_t_acre": 12,
+    "plants_per_acre": 296,
+    "products_g_plant_year": {
+     "urea": 1400,
+     "SSP": 1600,
+     "MOP": 400
+    }
+   },
+   "derived_fields": [
+    "plants_per_ha",
+    "N_kg_ha",
+    "P2O5_kg_ha",
+    "K2O_kg_ha",
+    "FYM_t_ha"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF page 157 (printed page 138), Pomegranate (डाळिंब) table 'खते'; PDF page 158 item 14",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Full-grown tree: FYM 40-50 kg + 625 g N, 250 g P2O5, 250 g K2O per plant per year. Spacing 4.5 x 3.0 m (296 plants/acre; ~731/ha derived; geometric 740/ha). Per acre 185:74:74 kg (derived ~457:183:183 kg/ha). Varieties Ganesh, G-137, Mridula, Phule Arakta, Bhagwa, Phule Bhagwa Super, Phule Anardana."
+  },
+  {
+   "crop": "pomegranate",
+   "season": "annual, age-wise",
+   "condition": "irrigated",
+   "variety_type": null,
+   "basis": "per_plant",
+   "N_kg_ha": null,
+   "P2O5_kg_ha": null,
+   "K2O_kg_ha": null,
+   "per_plant_g": {
+    "N": 625,
+    "P2O5": 250,
+    "K2O": 250
+   },
+   "plants_per_ha": null,
+   "FYM_t_ha": null,
+   "FYM_kg_plant": [
+    30,
+    40
+   ],
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "young plants (first 3 years)",
+     "text": "3 equal doses in July, September and February"
+    },
+    {
+     "timing": "bearing: at bahar treatment",
+     "N_pct": 50,
+     "P2O5_pct": 100,
+     "K2O_pct": 100,
+     "text": "half N + full P and K at bahar treatment"
+    },
+    {
+     "timing": "bearing: 1-1.5 months after bahar treatment",
+     "N_pct": 50,
+     "P2O5_pct": 0,
+     "K2O_pct": 0,
+     "text": "balance half N"
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "National Horticulture Board, crop production technology page (Manuring & Fertilization) - Pomegranate (table sourced from Dept. of Agriculture, Govt. of Maharashtra)",
+   "source_url": "https://www.nhb.gov.in/pdf/fruits/pomegranate/pom007.pdf",
+   "source_locator": "single page table",
+   "source_type": "secondary",
+   "status": "complete",
+   "notes": "Columns labelled 'P (g)' and 'K (g)' - mapped to P2O5/K2O by assumption (matches MPKV 625:250:250 for >5 yr). Apply in basin 1 m from trunk.",
+   "age_wise": [
+    {
+     "age_yr": 2,
+     "FYM_kg": 5,
+     "N_g": 250,
+     "P_g": 125,
+     "K_g": 125
+    },
+    {
+     "age_yr": 3,
+     "FYM_kg": 10,
+     "N_g": 500,
+     "P_g": 125,
+     "K_g": 250
+    },
+    {
+     "age_yr": 4,
+     "FYM_kg": 20,
+     "N_g": 500,
+     "P_g": 125,
+     "K_g": 250
+    },
+    {
+     "age_yr": 5,
+     "FYM_kg": 20,
+     "N_g": 500,
+     "P_g": 125,
+     "K_g": 250
+    },
+    {
+     "age_yr": ">5",
+     "FYM_kg": "30-40",
+     "N_g": 625,
+     "P_g": 250,
+     "K_g": 250
+    }
+   ]
+  },
+  {
+   "crop": "pomegranate",
+   "season": "Mrig/late Mrig & Ambia bahar (bearing orchards)",
+   "condition": "drip_fertigation + basal",
+   "variety_type": null,
+   "basis": "per_plant",
+   "N_kg_ha": null,
+   "P2O5_kg_ha": null,
+   "K2O_kg_ha": null,
+   "per_plant_g": {
+    "N": [
+     225,
+     280
+    ],
+    "P2O5": 63,
+    "K2O": 200,
+    "Ca": 488,
+    "Mg": 80
+   },
+   "plants_per_ha": null,
+   "FYM_t_ha": null,
+   "FYM_kg_plant": [
+    20,
+    25
+   ],
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "gypsum",
+     "rate": "2.80 kg/plant (488 g Ca)",
+     "timing": "basal after harvest/pruning"
+    },
+    {
+     "name": "MgSO4",
+     "rate": "800 g/plant (80 g Mg)",
+     "timing": "basal"
+    },
+    {
+     "name": "gypsum 1.14 kg/tree + MgSO4 300 g/tree",
+     "timing": "Ambia bahar, flowering"
+    },
+    {
+     "name": "micronutrient mixture",
+     "rate": "1.0-2.0 kg/ha",
+     "method": "foliar",
+     "timing": "flowering and after fruit set"
+    },
+    {
+     "name": "MnSO4",
+     "rate": "6 g/L, 2 sprays at 10-15 day interval",
+     "method": "foliar",
+     "timing": "fruit development (Mrig)"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "basal: soon after harvest of previous crop / after pruning",
+     "text": "20-25 kg FYM (or 13-15 kg FYM + 2 kg vermicompost + 2 kg neem cake) + 225-280 g N (490-610 g urea), 63 g P2O5 (395 g SSP), 200 g K2O (335 g MOP), Ca, Mg per plant; increase by 25% if leaf test is below optimum"
+    },
+    {
+     "timing": "Ambia bahar, flowering",
+     "text": "fertigate MKP (0:52:34) 11 kg/ha + SOP (0:0:50) 11 kg/ha per application, 7 applications at 7-day interval"
+    },
+    {
+     "timing": "Ambia bahar, after fruit set",
+     "text": "fertigate urea 13.70-23.13 kg/ha/application x 8 at 7-day interval; MKP 11 + SOP 11 kg/ha once"
+    },
+    {
+     "timing": "Mrig bahar, fruit development",
+     "text": "fertigate urea 41.44-69.56 kg/ha/application, MKP 22.20 and SOP 22.20 kg/ha/application at 7-day interval (number of applications not stated in this section); MKP 5-6 g/L foliar x3"
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "ICAR-NRC on Pomegranate, Solapur - Bimonthly Pomegranate Advisory for Bearing Orchards (Feb-Mar 2023)",
+   "source_url": "https://nrcpomegranate.in/wp-content/uploads/2025/09/127.pdf",
+   "source_locator": "pages 1-3, sections I.B, II.B, III.B",
+   "source_type": "primary",
+   "status": "partial",
+   "notes": "Stage-wise advisory, not a single annual RDF: basal per-plant dose + bahar-stage fertigation in kg/ha. Season total per plant cannot be computed without plant density and number of Mrig applications. nrcpomegranate.icar.gov.in not reachable; nrcpomegranate.in mirror used."
+  },
+  {
+   "crop": "banana",
+   "season": "Mrig bag (Jun) / Kande bag (Oct-Nov) / Feb (Khandesh)",
+   "condition": "irrigated, soil application",
+   "variety_type": null,
+   "basis": "per_plant",
+   "N_kg_ha": null,
+   "P2O5_kg_ha": null,
+   "K2O_kg_ha": null,
+   "per_plant_g": {
+    "N": 200,
+    "P2O5": 60,
+    "K2O": 200
+   },
+   "plants_per_ha": [
+    3265,
+    4444
+   ],
+   "FYM_t_ha": null,
+   "FYM_kg_plant": 10,
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "EDTA-Zn and EDTA-Fe",
+     "rate": "50 g each per 10 L",
+     "method": "foliar",
+     "timing": "2nd and 4th month after planting"
+    },
+    {
+     "name": "ZnSO4 and FeSO4",
+     "rate": "15 g each per plant mixed in 150 g FYM",
+     "method": "soil",
+     "timing": "5th and 7th month"
+    },
+    {
+     "name": "sulphur (elemental)",
+     "rate": "20 g/plant, incubated 1 week with FYM 1:10",
+     "method": "soil",
+     "timing": "2 equal splits: at planting and 165 DAP"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "30 DAP",
+     "urea_g": 82,
+     "SSP_g": 375,
+     "MOP_g": 83,
+     "N_pct": 18.9,
+     "P2O5_pct": 100,
+     "K2O_pct": 25
+    },
+    {
+     "timing": "75 DAP",
+     "urea_g": 82,
+     "N_pct": 18.9,
+     "P2O5_pct": 0,
+     "K2O_pct": 0
+    },
+    {
+     "timing": "120 DAP",
+     "urea_g": 82,
+     "N_pct": 18.9,
+     "P2O5_pct": 0,
+     "K2O_pct": 0
+    },
+    {
+     "timing": "165 DAP",
+     "urea_g": 82,
+     "MOP_g": 83,
+     "N_pct": 18.9,
+     "P2O5_pct": 0,
+     "K2O_pct": 25
+    },
+    {
+     "timing": "210 DAP",
+     "urea_g": 36,
+     "N_pct": 8.3,
+     "P2O5_pct": 0,
+     "K2O_pct": 0
+    },
+    {
+     "timing": "255 DAP",
+     "urea_g": 36,
+     "MOP_g": 83,
+     "N_pct": 8.3,
+     "P2O5_pct": 0,
+     "K2O_pct": 25
+    },
+    {
+     "timing": "300 DAP",
+     "urea_g": 36,
+     "MOP_g": 83,
+     "N_pct": 8.3,
+     "P2O5_pct": 0,
+     "K2O_pct": 25
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [
+    "plants_per_ha",
+    "split N_pct"
+   ],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF pages 151-152 (printed 132-133), Banana (केळी), Table 1",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Soil application 200 g N, 60 g P2O5, 200 g K2O per plant; Table 1 products/plant: urea 436, SSP 375, MOP 332 g. FYM 10 kg/plant or vermicompost 5 kg/plant; Azospirillum 25 g + PSB 25 g/plant at planting. Spacing: dwarf (Shrimanti, Phule Pride) 1.5x1.5 m (4,444/ha derived), tall (Grand Naine) 1.75x1.75 m (3,265/ha derived). N_pct derived from urea g. Table note: adjust per soil test."
+  },
+  {
+   "crop": "banana",
+   "season": "as above",
+   "condition": "drip_fertigation",
+   "variety_type": null,
+   "basis": "per_plant",
+   "N_kg_ha": null,
+   "P2O5_kg_ha": null,
+   "K2O_kg_ha": null,
+   "per_plant_g": {
+    "N": 150,
+    "P2O5": 60,
+    "K2O": 150
+   },
+   "plants_per_ha": [
+    3265,
+    4444
+   ],
+   "FYM_t_ha": null,
+   "FYM_kg_plant": 10,
+   "S_kg_ha": null,
+   "micronutrients": [
+    {
+     "name": "EDTA-Zn and EDTA-Fe",
+     "rate": "50 g each per 10 L",
+     "method": "foliar",
+     "timing": "2nd and 4th month after planting"
+    },
+    {
+     "name": "ZnSO4 and FeSO4",
+     "rate": "15 g each per plant mixed in 150 g FYM",
+     "method": "soil",
+     "timing": "5th and 7th month"
+    },
+    {
+     "name": "sulphur (elemental)",
+     "rate": "20 g/plant, incubated 1 week with FYM 1:10",
+     "method": "soil",
+     "timing": "2 equal splits: at planting and 165 DAP"
+    }
+   ],
+   "split_schedule": [
+    {
+     "timing": "weeks 1-16 (16 weekly doses)",
+     "text": "per 1000 plants per week: urea 4.5 kg, MAP 12:61:0 6.5 kg, MOP 3.0 kg"
+    },
+    {
+     "timing": "weeks 17-28 (12)",
+     "text": "urea 13.5 kg, MOP 8.5 kg per 1000 plants/week"
+    },
+    {
+     "timing": "weeks 29-40 (12)",
+     "text": "urea 5.5 kg, MOP 7.0 kg per 1000 plants/week"
+    },
+    {
+     "timing": "weeks 41-44 (4)",
+     "text": "MOP 5.0 kg per 1000 plants/week"
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "MPKV Rahuri, Krishi Darshani 2026 (official annual diary / package of practices, Marathi)",
+   "source_url": "https://mpkv.ac.in/Uploads/Publication/20260725_120158_8d696de12b98586f94302f37cb1884b2.pdf",
+   "source_locator": "PDF pages 151-152 (printed 132-133), Banana, section 'फर्टिगेशन' and Table 2",
+   "source_type": "primary",
+   "status": "complete",
+   "notes": "Fertigation instead of soil application: 150 g N, 60 g P2O5, 150 g K2O per plant. Table 2 totals check (derived): ~150 g N, ~63 g P2O5, ~152 g K2O per plant. A further drip schedule of 150 g N, 45 g P2O5, 150 g K2O/plant with MAP 4.65 kg/1000 plants/week (weeks 1-16) appears in the climate-resilient practices section (PDF p153-154) - not verified in detail."
+  },
+  {
+   "crop": "banana",
+   "season": null,
+   "condition": "irrigated",
+   "variety_type": "tissue culture (national)",
+   "basis": "per_plant",
+   "N_kg_ha": null,
+   "P2O5_kg_ha": null,
+   "K2O_kg_ha": null,
+   "per_plant_g": null,
+   "plants_per_ha": null,
+   "FYM_t_ha": [
+    40,
+    50
+   ],
+   "FYM_kg_plant": null,
+   "S_kg_ha": null,
+   "micronutrients": [],
+   "split_schedule": [
+    {
+     "timing": "30 DAP",
+     "text": "urea 45 g (or AS 100), SSP 125, MOP 50 g/plant"
+    },
+    {
+     "timing": "75 DAP",
+     "text": "urea 90/AS 195, SSP 125, MOP 85"
+    },
+    {
+     "timing": "110 DAP",
+     "text": "urea 110/AS 245, SSP 125, MOP 85"
+    },
+    {
+     "timing": "150 DAP",
+     "text": "urea 110/AS 245, SSP 125, MOP 100"
+    },
+    {
+     "timing": "180 DAP",
+     "text": "urea 90/AS 195, SSP 125, MOP 100"
+    },
+    {
+     "timing": "bunch emergence",
+     "text": "MOP 85"
+    }
+   ],
+   "as_given": null,
+   "derived_fields": [],
+   "source_name": "National Horticulture Board, crop production technology page (Manuring & Fertilization) - Banana (citing NRC Banana)",
+   "source_url": "https://www.nhb.gov.in/pdf/fruits/banana/ban007.pdf",
+   "source_locator": "single page, TC banana table",
+   "source_type": "secondary",
+   "status": "partial",
+   "notes": "Product-based (g/plant); nutrient totals not stated by source and not computed here. Not Maharashtra-specific. Literature commonly cites Jalgaon RDF 200:40:200 g N:P2O5:K2O + 10 kg FYM/plant (e.g. MPKV fertigation papers) - differs from current Krishi Darshani 200:60:200."
+  }
+ ],
+ "district_gfr_icar_iiss": {
+  "description": "ICAR-IISS Bhopal bulletin 'District-wise general fertilizer recommendations for major crops in India' (STCR targeted-yield framework + SHC data 2023-25 + district yields). Maharashtra annexure. kg/ha. Earlier state-level GFR used by the bulletin: rice 100:50:50, wheat 100:50:50, sugarcane 340:170:170, kharif & rabi maize 120:60:40. '**' districts: rice data not part of nutrient balance computation. Wheat note: with FYM 5 t/ha reduce 20 kg N, 5 kg P2O5, 10 kg K2O.",
+  "source_url": "https://vikalp.kisansarathi.in/images/GFR_district-wise.pdf",
+  "source_note": "Copy hosted on vikalp.kisansarathi.in (iiss.icar.gov.in does not resolve from the research machine); publication date not printed - appears 2025-26. Values are much lower than SAU RDFs for wheat (50:30:20) - treat as a soil-fertility-adjusted district GFR, not a replacement for SAU RDF without review.",
+  "rows": [
+   {
+    "district": "Ahilyanagar",
+    "rice": {
+     "N": 110,
+     "P2O5": 30,
+     "K2O": 60
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": {
+     "N": 285,
+     "P2O5": 100,
+     "K2O": 100
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 30,
+     "K2O": 35
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 35,
+     "K2O": 45
+    }
+   },
+   {
+    "district": "Akola",
+    "rice": {
+     "N": 75,
+     "P2O5": 40,
+     "K2O": 50
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": null,
+    "kharif_maize": null,
+    "rabi_maize": null
+   },
+   {
+    "district": "Amravati",
+    "rice": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": {
+     "N": 100,
+     "P2O5": 60,
+     "K2O": 60
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 60,
+     "K2O": 30
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 35,
+     "K2O": 30
+    }
+   },
+   {
+    "district": "Beed",
+    "rice": {
+     "N": 60,
+     "P2O5": 30,
+     "K2O": 40
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": null,
+    "kharif_maize": null,
+    "rabi_maize": null
+   },
+   {
+    "district": "Bhandara",
+    "rice": {
+     "N": 75,
+     "P2O5": 50,
+     "K2O": 45
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": {
+     "N": 100,
+     "P2O5": 60,
+     "K2O": 60
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 40,
+     "K2O": 30
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 40,
+     "K2O": 30
+    }
+   },
+   {
+    "district": "Buldhana",
+    "rice": {
+     "N": 60,
+     "P2O5": 30,
+     "K2O": 40
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": null,
+    "kharif_maize": null,
+    "rabi_maize": null
+   },
+   {
+    "district": "Chandrapur",
+    "rice": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 50
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": {
+     "N": 100,
+     "P2O5": 60,
+     "K2O": 70
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 30,
+     "K2O": 35
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 30,
+     "K2O": 35
+    }
+   },
+   {
+    "district": "Chhatrapati Sambhajinagar",
+    "rice": {
+     "N": 75,
+     "P2O5": 40,
+     "K2O": 50
+    },
+    "wheat": {
+     "N": 110,
+     "P2O5": 40,
+     "K2O": 20
+    },
+    "sugarcane": null,
+    "kharif_maize": null,
+    "rabi_maize": null
+   },
+   {
+    "district": "Dharashiv",
+    "rice": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": {
+     "N": 100,
+     "P2O5": 80,
+     "K2O": 60
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 30,
+     "K2O": 30
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 30,
+     "K2O": 30
+    }
+   },
+   {
+    "district": "Dhule",
+    "rice": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 25
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": {
+     "N": 235,
+     "P2O5": 100,
+     "K2O": 60
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 55,
+     "K2O": 30
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 45,
+     "K2O": 30
+    }
+   },
+   {
+    "district": "Gadchiroli",
+    "rice": {
+     "N": 75,
+     "P2O5": 50,
+     "K2O": 60
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": {
+     "N": 150,
+     "P2O5": 100,
+     "K2O": 100
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 60,
+     "K2O": 50
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 40,
+     "K2O": 40
+    }
+   },
+   {
+    "district": "Gondia",
+    "rice": {
+     "N": 85,
+     "P2O5": 30,
+     "K2O": 60
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": {
+     "N": 100,
+     "P2O5": 60,
+     "K2O": 75
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 55,
+     "K2O": 50
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 30,
+     "K2O": 35
+    }
+   },
+   {
+    "district": "Hingoli",
+    "rice": {
+     "N": 75,
+     "P2O5": 40,
+     "K2O": 40
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": null,
+    "kharif_maize": null,
+    "rabi_maize": null
+   },
+   {
+    "district": "Jalgaon",
+    "rice": {
+     "N": 75,
+     "P2O5": 40,
+     "K2O": 40
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": null,
+    "kharif_maize": null,
+    "rabi_maize": null
+   },
+   {
+    "district": "Jalna",
+    "rice": {
+     "N": 75,
+     "P2O5": 40,
+     "K2O": 40
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": null,
+    "kharif_maize": null,
+    "rabi_maize": null
+   },
+   {
+    "district": "Kolhapur",
+    "rice": {
+     "N": 130,
+     "P2O5": 50,
+     "K2O": 60
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": {
+     "N": 130,
+     "P2O5": 80,
+     "K2O": 60
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 45,
+     "K2O": 30
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 70,
+     "K2O": 60
+    }
+   },
+   {
+    "district": "Latur",
+    "rice": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": {
+     "N": 230,
+     "P2O5": 100,
+     "K2O": 60
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 30,
+     "K2O": 30
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 35,
+     "K2O": 30
+    }
+   },
+   {
+    "district": "Nagpur",
+    "rice": {
+     "N": 65,
+     "P2O5": 30,
+     "K2O": 40
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": {
+     "N": 100,
+     "P2O5": 60,
+     "K2O": 60
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 55,
+     "K2O": 30
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 30,
+     "K2O": 30
+    }
+   },
+   {
+    "district": "Nanded",
+    "rice": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": {
+     "N": 100,
+     "P2O5": 60,
+     "K2O": 60
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 30,
+     "K2O": 30
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 55,
+     "K2O": 30
+    }
+   },
+   {
+    "district": "Nandurbar",
+    "rice": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 40
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 50
+    },
+    "sugarcane": {
+     "N": 175,
+     "P2O5": 100,
+     "K2O": 100
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 50,
+     "K2O": 50
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 65,
+     "K2O": 60
+    }
+   },
+   {
+    "district": "Nashik",
+    "rice": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 45
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": {
+     "N": 185,
+     "P2O5": 100,
+     "K2O": 60
+    },
+    "kharif_maize": {
+     "N": 120,
+     "P2O5": 60,
+     "K2O": 50
+    },
+    "rabi_maize": {
+     "N": 125,
+     "P2O5": 70,
+     "K2O": 60
+    }
+   },
+   {
+    "district": "Palghar",
+    "rice": {
+     "N": 90,
+     "P2O5": 30,
+     "K2O": 60
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": {
+     "N": 135,
+     "P2O5": 60,
+     "K2O": 100
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 30,
+     "K2O": 40
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 40,
+     "K2O": 60
+    }
+   },
+   {
+    "district": "Parbhani",
+    "rice": {
+     "N": 105,
+     "P2O5": 50,
+     "K2O": 60
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": null,
+    "kharif_maize": null,
+    "rabi_maize": null
+   },
+   {
+    "district": "Pune",
+    "rice": {
+     "N": 125,
+     "P2O5": 50,
+     "K2O": 60
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": {
+     "N": 300,
+     "P2O5": 100,
+     "K2O": 85
+    },
+    "kharif_maize": {
+     "N": 100,
+     "P2O5": 60,
+     "K2O": 50
+    },
+    "rabi_maize": {
+     "N": 170,
+     "P2O5": 70,
+     "K2O": 60
+    }
+   },
+   {
+    "district": "Raigad",
+    "rice": {
+     "N": 70,
+     "P2O5": 30,
+     "K2O": 60
+    },
+    "wheat": null,
+    "sugarcane": {
+     "N": 100,
+     "P2O5": 75,
+     "K2O": 60
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 30,
+     "K2O": 30
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 45,
+     "K2O": 30
+    }
+   },
+   {
+    "district": "Ratnagiri",
+    "rice": {
+     "N": 75,
+     "P2O5": 35,
+     "K2O": 60
+    },
+    "wheat": null,
+    "sugarcane": {
+     "N": 100,
+     "P2O5": 85,
+     "K2O": 60
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 30,
+     "K2O": 30
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 45,
+     "K2O": 30
+    }
+   },
+   {
+    "district": "Sangli",
+    "rice": {
+     "N": 85,
+     "P2O5": 30,
+     "K2O": 55
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": {
+     "N": 300,
+     "P2O5": 100,
+     "K2O": 85
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 50,
+     "K2O": 30
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 55,
+     "K2O": 35
+    }
+   },
+   {
+    "district": "Satara",
+    "rice": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 30
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": {
+     "N": 260,
+     "P2O5": 100,
+     "K2O": 90
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 35,
+     "K2O": 30
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 30,
+     "K2O": 30
+    }
+   },
+   {
+    "district": "Sindhudurg",
+    "rice": {
+     "N": 105,
+     "P2O5": 50,
+     "K2O": 60
+    },
+    "wheat": null,
+    "sugarcane": {
+     "N": 125,
+     "P2O5": 90,
+     "K2O": 60
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 30,
+     "K2O": 30
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 50,
+     "K2O": 30
+    }
+   },
+   {
+    "district": "Solapur",
+    "rice": {
+     "N": 60,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": null,
+    "kharif_maize": null,
+    "rabi_maize": null
+   },
+   {
+    "district": "Thane",
+    "rice": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 35
+    },
+    "wheat": null,
+    "sugarcane": {
+     "N": 155,
+     "P2O5": 80,
+     "K2O": 60
+    },
+    "kharif_maize": {
+     "N": 80,
+     "P2O5": 30,
+     "K2O": 30
+    },
+    "rabi_maize": {
+     "N": 100,
+     "P2O5": 45,
+     "K2O": 30
+    }
+   },
+   {
+    "district": "Wardha",
+    "rice": {
+     "N": 100,
+     "P2O5": 50,
+     "K2O": 50
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": null,
+    "kharif_maize": null,
+    "rabi_maize": null
+   },
+   {
+    "district": "Washim",
+    "rice": {
+     "N": 75,
+     "P2O5": 40,
+     "K2O": 50
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": null,
+    "kharif_maize": null,
+    "rabi_maize": null
+   },
+   {
+    "district": "Yavatmal",
+    "rice": {
+     "N": 75,
+     "P2O5": 40,
+     "K2O": 50
+    },
+    "wheat": {
+     "N": 50,
+     "P2O5": 30,
+     "K2O": 20
+    },
+    "sugarcane": null,
+    "kharif_maize": null,
+    "rabi_maize": null
+   }
+  ]
+ }
+}

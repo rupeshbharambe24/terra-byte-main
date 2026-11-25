@@ -1,0 +1,1646 @@
+{
+ "meta": {
+  "title": "Curated disease information for the TerraByte disease model classes",
+  "verified_on": "2026-11-25",
+  "reviewed_by_agronomist": false,
+  "rules": [
+   "Text is written in our own words. The cited NIPHM/DPPQS package is the crop-level reference; cultural measures are standard IPM practice and still need review by an agronomist (reviewed_by_agronomist: false).",
+   "Chemical options are listed only where the cited NIPHM/DPPQS AESA-based IPM package names them for that crop and disease; banned or restricted active ingredients are never listed (see banned_active_ingredients).",
+   "Chemical options are shown only for confident results."
+  ],
+  "chemical_disclaimer": "Guidance only. The IPM packages date from 2014-2017: check that the product has a current CIB&RC label claim for this crop, read the label, wear protective equipment, observe the waiting period before harvest, and consult your KVK or agriculture officer.",
+  "no_chemical_text": "No chemical option is listed here. Consult your agriculture officer or KVK before using any pesticide.",
+  "banned_list_source": "https://ppqs.gov.in/sites/default/files/list_of_pesticides_which_are_banned_refused_registration_and_restricted_in_use%20%2831.10.26%29.pdf"
+ },
+ "banned_active_ingredients": [
+  "Alachlor",
+  "Aldicarb",
+  "Aldrin",
+  "BHC",
+  "Benomyl",
+  "Calcium cyanide",
+  "Carbaryl",
+  "Chlorbenzilate",
+  "Chlordane",
+  "Chlorfenvinphos",
+  "Copper acetoarsenite",
+  "Diazinon",
+  "DBCP",
+  "Dichlorvos",
+  "Dicofol",
+  "Dieldrin",
+  "Dinocap",
+  "Endosulfan",
+  "Endrin",
+  "Ethyl mercury chloride",
+  "Ethyl parathion",
+  "EDB",
+  "Fenarimol",
+  "Fenthion",
+  "Heptachlor",
+  "Lindane",
+  "Linuron",
+  "Maleic hydrazide",
+  "Menazon",
+  "Methomyl",
+  "Methoxy ethyl mercury chloride",
+  "Methyl parathion",
+  "Metoxuron",
+  "Nitrofen",
+  "Paraquat dimethyl sulphate",
+  "PCNB",
+  "Pentachlorophenol",
+  "Phenyl mercury acetate",
+  "Phorate",
+  "Phosphamidon",
+  "Sodium cyanide",
+  "Sodium methane arsonate",
+  "Tetradifon",
+  "Thiometon",
+  "Toxaphene",
+  "Triazophos",
+  "Tridemorph",
+  "TCA",
+  "Trichlorfon",
+  "Paraquat dichloride",
+  "Captafol",
+  "Nicotine sulfate",
+  "Dalapon",
+  "Ferbam",
+  "Formothion",
+  "Nickel chloride",
+  "PDCB",
+  "Simazine",
+  "Sirmate",
+  "Warfarin",
+  "2,4,5-T",
+  "Ammonium sulphamate",
+  "Azinphos ethyl",
+  "Azinphos methyl",
+  "Binapacryl",
+  "Calcium arsenate",
+  "Carbophenothion",
+  "Chinomethionate",
+  "Dicrotophos",
+  "EPN",
+  "Fentin acetate",
+  "Fentin hydroxide",
+  "Lead arsenate",
+  "Leptophos",
+  "Mephosfolan",
+  "Mevinphos",
+  "Thiodemeton",
+  "Disulfoton",
+  "Vamidothion",
+  "Streptomycin",
+  "Tetracycline",
+  "Streptocycline",
+  "Glyphosate",
+  "Aluminium phosphide",
+  "Methyl bromide",
+  "DDT",
+  "Fenitrothion",
+  "Monocrotophos"
+ ],
+ "classes": {
+  "capsicum__bacterial_spot": {
+   "crop": "capsicum",
+   "name": {
+    "en": "Bacterial spot",
+    "hi": "जीवाणु धब्बा",
+    "mr": "जिवाणूजन्य ठिपके"
+   },
+   "type": "bacterial",
+   "pathogen": "Xanthomonas spp.",
+   "description": "A bacterial disease spread by infected seed and rain splash.",
+   "symptoms": [
+    "Small water-soaked spots on leaves that turn brown",
+    "Leaf drop; scabby spots on fruit"
+   ],
+   "cultural": [
+    "Use disease-free seed and seedlings.",
+    "Avoid overhead irrigation; remove crop debris.",
+    "Rotate with non-solanaceous crops."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Chilli",
+     "url": "https://www.niphm.gov.in/IPMPackages/Chilli.pdf"
+    }
+   ]
+  },
+  "capsicum__healthy": {
+   "crop": "capsicum",
+   "name": {
+    "en": "Healthy capsicum leaf",
+    "hi": "स्वस्थ शिमला मिर्च पत्ती",
+    "mr": "निरोगी ढोबळी मिरची पान"
+   },
+   "pathogen": null,
+   "chemical": [],
+   "type": "healthy",
+   "description": "No disease symptoms were recognised on this leaf.",
+   "symptoms": [],
+   "cultural": [
+    "Keep scouting the field weekly; check several plants, not just one leaf.",
+    "Remove weeds and volunteer plants that can carry pests and diseases."
+   ],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Chilli",
+     "url": "https://www.niphm.gov.in/IPMPackages/Chilli.pdf"
+    }
+   ]
+  },
+  "chilli__bacterial_spot": {
+   "crop": "chilli",
+   "name": {
+    "en": "Bacterial spot",
+    "hi": "जीवाणु धब्बा",
+    "mr": "जिवाणूजन्य ठिपके"
+   },
+   "type": "bacterial",
+   "pathogen": "Xanthomonas spp.",
+   "description": "A bacterial disease spread by infected seed and rain splash.",
+   "symptoms": [
+    "Small water-soaked spots on leaves that turn brown; leaf drop"
+   ],
+   "cultural": [
+    "Use disease-free seed and seedlings; avoid overhead irrigation; rotate crops."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Chilli",
+     "url": "https://www.niphm.gov.in/IPMPackages/Chilli.pdf"
+    }
+   ]
+  },
+  "chilli__cercospora_leaf_spot": {
+   "crop": "chilli",
+   "name": {
+    "en": "Cercospora leaf spot",
+    "hi": "सर्कोस्पोरा पत्ती धब्बा",
+    "mr": "सर्कोस्पोरा पानावरील ठिपके"
+   },
+   "type": "fungal",
+   "pathogen": "Cercospora capsici",
+   "description": "A fungal leaf spot favoured by humid weather.",
+   "symptoms": [
+    "Round spots with light grey centres and dark borders (frog-eye)"
+   ],
+   "cultural": [
+    "Remove infected leaves and crop debris; avoid overhead irrigation; rotate crops."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Chilli",
+     "url": "https://www.niphm.gov.in/IPMPackages/Chilli.pdf"
+    }
+   ]
+  },
+  "chilli__healthy": {
+   "crop": "chilli",
+   "name": {
+    "en": "Healthy chilli leaf",
+    "hi": "स्वस्थ मिर्च पत्ती",
+    "mr": "निरोगी मिरची पान"
+   },
+   "pathogen": null,
+   "chemical": [],
+   "type": "healthy",
+   "description": "No disease symptoms were recognised on this leaf.",
+   "symptoms": [],
+   "cultural": [
+    "Keep scouting the field weekly; check several plants, not just one leaf.",
+    "Remove weeds and volunteer plants that can carry pests and diseases."
+   ],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Chilli",
+     "url": "https://www.niphm.gov.in/IPMPackages/Chilli.pdf"
+    }
+   ]
+  },
+  "chilli__leaf_curl_virus": {
+   "crop": "chilli",
+   "name": {
+    "en": "Leaf curl virus",
+    "hi": "पत्ती मरोड़ विषाणु",
+    "mr": "पाने गुंडाळणारा विषाणू (चुरडा-मुरडा)"
+   },
+   "type": "viral",
+   "pathogen": "Chilli leaf curl virus (whitefly-borne)",
+   "description": "A virus disease spread by whitefly; infected plants cannot be cured.",
+   "symptoms": [
+    "Upward curling and puckering of leaves",
+    "Small leaves, stunted plants, few fruits"
+   ],
+   "cultural": [
+    "Raise seedlings under insect-proof net; use healthy seedlings.",
+    "Rogue out infected plants; use yellow sticky traps to monitor whitefly."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Chilli",
+     "url": "https://www.niphm.gov.in/IPMPackages/Chilli.pdf"
+    }
+   ]
+  },
+  "chilli__nutrient_deficiency": {
+   "crop": "chilli",
+   "name": {
+    "en": "Nutrient deficiency",
+    "hi": "पोषक तत्वों की कमी",
+    "mr": "अन्नद्रव्यांची कमतरता"
+   },
+   "type": "nutrient",
+   "pathogen": null,
+   "description": "Leaf colour changes caused by a lack of one or more nutrients, not by a disease.",
+   "symptoms": [
+    "Yellowing or discoloration of leaves without spots"
+   ],
+   "cultural": [
+    "Get a soil test and apply fertiliser according to it."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Chilli",
+     "url": "https://www.niphm.gov.in/IPMPackages/Chilli.pdf"
+    }
+   ]
+  },
+  "chilli__white_spot": {
+   "crop": "chilli",
+   "name": {
+    "en": "White spot",
+    "hi": "सफेद धब्बा",
+    "mr": "पांढरे ठिपके"
+   },
+   "type": "unknown",
+   "pathogen": null,
+   "description": "White spots on leaves as labelled in the source dataset; the cause is not specified.",
+   "symptoms": [
+    "White or pale spots on leaves"
+   ],
+   "cultural": [
+    "Ask an expert to identify the cause before treating."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Chilli",
+     "url": "https://www.niphm.gov.in/IPMPackages/Chilli.pdf"
+    }
+   ]
+  },
+  "cotton__alternaria_leaf_spot": {
+   "crop": "cotton",
+   "name": {
+    "en": "Alternaria leaf spot",
+    "hi": "अल्टरनेरिया पत्ती धब्बा",
+    "mr": "अल्टरनेरिया पानावरील ठिपके"
+   },
+   "type": "fungal",
+   "pathogen": "Alternaria macrospora",
+   "description": "A fungal leaf spot common on stressed or older leaves.",
+   "symptoms": [
+    "Brown circular spots with concentric rings; leaves drop"
+   ],
+   "cultural": [
+    "Give balanced nutrition (avoid potassium deficiency); remove infected debris."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Cotton",
+     "url": "https://www.niphm.gov.in/IPMPackages/Cotton.pdf"
+    }
+   ]
+  },
+  "cotton__bacterial_blight": {
+   "crop": "cotton",
+   "name": {
+    "en": "Bacterial blight",
+    "hi": "जीवाणु झुलसा",
+    "mr": "जिवाणूजन्य करपा"
+   },
+   "type": "bacterial",
+   "pathogen": "Xanthomonas citri pv. malvacearum",
+   "description": "A bacterial disease spread by infected seed and rain splash.",
+   "symptoms": [
+    "Angular water-soaked spots on leaves that turn brown",
+    "Black lesions on veins and stems"
+   ],
+   "cultural": [
+    "Use acid-delinted or treated, disease-free seed.",
+    "Remove and destroy infected plant debris; rotate crops."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Cotton",
+     "url": "https://www.niphm.gov.in/IPMPackages/Cotton.pdf"
+    }
+   ]
+  },
+  "cotton__fusarium_wilt": {
+   "crop": "cotton",
+   "name": {
+    "en": "Fusarium wilt",
+    "hi": "फ्यूजेरियम उकठा",
+    "mr": "फ्युजेरियम मर"
+   },
+   "type": "fungal",
+   "pathogen": "Fusarium oxysporum f. sp. vasinfectum",
+   "description": "A soil-borne wilt; affected plants cannot recover.",
+   "symptoms": [
+    "Yellowing and wilting of leaves, starting from the lower ones",
+    "Brown discoloration inside the stem"
+   ],
+   "cultural": [
+    "Grow tolerant varieties; rotate with non-host crops.",
+    "Uproot and destroy wilted plants; apply organic manure."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Cotton",
+     "url": "https://www.niphm.gov.in/IPMPackages/Cotton.pdf"
+    }
+   ]
+  },
+  "cotton__healthy": {
+   "crop": "cotton",
+   "name": {
+    "en": "Healthy cotton leaf",
+    "hi": "स्वस्थ कपास पत्ती",
+    "mr": "निरोगी कापूस पान"
+   },
+   "pathogen": null,
+   "chemical": [],
+   "type": "healthy",
+   "description": "No disease symptoms were recognised on this leaf.",
+   "symptoms": [],
+   "cultural": [
+    "Keep scouting the field weekly; check several plants, not just one leaf.",
+    "Remove weeds and volunteer plants that can carry pests and diseases."
+   ],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Cotton",
+     "url": "https://www.niphm.gov.in/IPMPackages/Cotton.pdf"
+    }
+   ]
+  },
+  "cotton__verticillium_wilt": {
+   "crop": "cotton",
+   "name": {
+    "en": "Verticillium wilt",
+    "hi": "वर्टिसिलियम उकठा",
+    "mr": "व्हर्टिसिलियम मर"
+   },
+   "type": "fungal",
+   "pathogen": "Verticillium dahliae",
+   "description": "A soil-borne wilt favoured by cool weather.",
+   "symptoms": [
+    "Yellow patches between veins, leaf drying and wilting"
+   ],
+   "cultural": [
+    "Rotate with non-host crops such as cereals; remove infected plants."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Cotton",
+     "url": "https://www.niphm.gov.in/IPMPackages/Cotton.pdf"
+    }
+   ]
+  },
+  "grape__bacterial_leaf_spot": {
+   "crop": "grape",
+   "name": {
+    "en": "Bacterial leaf spot",
+    "hi": "जीवाणु पत्ती धब्बा",
+    "mr": "जिवाणूजन्य पानावरील ठिपके"
+   },
+   "type": "bacterial",
+   "pathogen": "Xanthomonas campestris",
+   "description": "A bacterial disease that spreads in warm, wet weather.",
+   "symptoms": [
+    "Small dark angular spots on leaves, often along veins"
+   ],
+   "cultural": [
+    "Collect and destroy infected plant parts.",
+    "Increase air movement in the vineyard.",
+    "Remove diseased canes during pruning."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Grapes",
+     "url": "https://www.niphm.gov.in/IPMPackages/Grapes.pdf"
+    }
+   ]
+  },
+  "grape__black_rot": {
+   "crop": "grape",
+   "name": {
+    "en": "Black rot",
+    "hi": "काला सड़न",
+    "mr": "काळी कूज"
+   },
+   "type": "fungal",
+   "pathogen": "Guignardia bidwellii",
+   "description": "A fungal disease (rare in India) that affects leaves and berries.",
+   "symptoms": [
+    "Brown circular leaf spots with dark borders and black dots",
+    "Berries shrivel and turn black"
+   ],
+   "cultural": [
+    "Remove mummified berries and infected canes; keep the canopy open."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Grapes",
+     "url": "https://www.niphm.gov.in/IPMPackages/Grapes.pdf"
+    }
+   ]
+  },
+  "grape__downy_mildew": {
+   "crop": "grape",
+   "name": {
+    "en": "Downy mildew",
+    "hi": "मृदुरोमिल आसिता",
+    "mr": "केवडा"
+   },
+   "type": "oomycete",
+   "pathogen": "Plasmopara viticola",
+   "description": "A major grape disease in humid or rainy weather (common after rain in Nashik).",
+   "symptoms": [
+    "Yellow oily spots on the upper leaf surface",
+    "White downy growth on the underside of leaves",
+    "Affected bunches shrivel"
+   ],
+   "cultural": [
+    "Prune after the second week of October; remove and destroy affected parts at pruning.",
+    "Collect infected leaves and dispose of them in a compost pit."
+   ],
+   "chemical": [
+    {
+     "active_ingredient": "Copper oxychloride",
+     "formulation": "50% WP",
+     "dose": "1 kg in 300–400 l of water per acre",
+     "source": {
+      "title": "NIPHM / DPPQS: AESA based IPM package – Grapes",
+      "url": "https://www.niphm.gov.in/IPMPackages/Grapes.pdf"
+     }
+    },
+    {
+     "active_ingredient": "Dimethomorph",
+     "formulation": "50% WP",
+     "dose": "400 g in 300 l of water per acre",
+     "source": {
+      "title": "NIPHM / DPPQS: AESA based IPM package – Grapes",
+      "url": "https://www.niphm.gov.in/IPMPackages/Grapes.pdf"
+     }
+    },
+    {
+     "active_ingredient": "Cymoxanil + Mancozeb",
+     "formulation": "8% + 64% WP",
+     "dose": "600–800 g in 200–400 l of water per acre",
+     "source": {
+      "title": "NIPHM / DPPQS: AESA based IPM package – Grapes",
+      "url": "https://www.niphm.gov.in/IPMPackages/Grapes.pdf"
+     }
+    }
+   ],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Grapes",
+     "url": "https://www.niphm.gov.in/IPMPackages/Grapes.pdf"
+    }
+   ]
+  },
+  "grape__esca": {
+   "crop": "grape",
+   "name": {
+    "en": "Esca (black measles)",
+    "hi": "एस्का",
+    "mr": "एस्का"
+   },
+   "type": "fungal",
+   "pathogen": "Trunk disease fungi (Phaeomoniella, Phaeoacremonium)",
+   "description": "A trunk disease complex; leaf symptoms appear in summer.",
+   "symptoms": [
+    "Tiger-stripe pattern: yellow or red areas between veins that dry out"
+   ],
+   "cultural": [
+    "Prune in dry weather and remove dead wood; protect large pruning wounds."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Grapes",
+     "url": "https://www.niphm.gov.in/IPMPackages/Grapes.pdf"
+    }
+   ]
+  },
+  "grape__healthy": {
+   "crop": "grape",
+   "name": {
+    "en": "Healthy grape leaf",
+    "hi": "स्वस्थ अंगूर पत्ती",
+    "mr": "निरोगी द्राक्ष पान"
+   },
+   "pathogen": null,
+   "chemical": [],
+   "type": "healthy",
+   "description": "No disease symptoms were recognised on this leaf.",
+   "symptoms": [],
+   "cultural": [
+    "Keep scouting the field weekly; check several plants, not just one leaf.",
+    "Remove weeds and volunteer plants that can carry pests and diseases."
+   ],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Grapes",
+     "url": "https://www.niphm.gov.in/IPMPackages/Grapes.pdf"
+    }
+   ]
+  },
+  "grape__leaf_blight": {
+   "crop": "grape",
+   "name": {
+    "en": "Leaf blight (Isariopsis leaf spot)",
+    "hi": "पत्ती झुलसा",
+    "mr": "पानांचा करपा"
+   },
+   "type": "fungal",
+   "pathogen": "Pseudocercospora vitis",
+   "description": "A fungal leaf spot that appears late in the season.",
+   "symptoms": [
+    "Dark brown irregular spots on leaves; leaves dry and drop early"
+   ],
+   "cultural": [
+    "Remove fallen leaves; keep the canopy open."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Grapes",
+     "url": "https://www.niphm.gov.in/IPMPackages/Grapes.pdf"
+    }
+   ]
+  },
+  "grape__powdery_mildew": {
+   "crop": "grape",
+   "name": {
+    "en": "Powdery mildew",
+    "hi": "चूर्णिल आसिता",
+    "mr": "भुरी"
+   },
+   "type": "fungal",
+   "pathogen": "Erysiphe necator (Uncinula necator)",
+   "description": "A fungal disease favoured by dry, cloudy weather and dense canopies.",
+   "symptoms": [
+    "White to grey powdery growth on leaves, shoots and berries",
+    "Berries crack"
+   ],
+   "cultural": [
+    "Manage the canopy for air movement and light; reduce humidity in the vineyard.",
+    "Use under-vine irrigation and avoid excess water."
+   ],
+   "chemical": [
+    {
+     "active_ingredient": "Sulphur",
+     "formulation": "80% WG",
+     "dose": "0.75–1 kg in 300–400 l of water per acre",
+     "source": {
+      "title": "NIPHM / DPPQS: AESA based IPM package – Grapes",
+      "url": "https://www.niphm.gov.in/IPMPackages/Grapes.pdf"
+     }
+    },
+    {
+     "active_ingredient": "Kresoxim-methyl",
+     "formulation": "44.3% SC",
+     "dose": "240–280 ml in 200 l of water per acre",
+     "source": {
+      "title": "NIPHM / DPPQS: AESA based IPM package – Grapes",
+      "url": "https://www.niphm.gov.in/IPMPackages/Grapes.pdf"
+     }
+    },
+    {
+     "active_ingredient": "Hexaconazole",
+     "formulation": "5% EC",
+     "dose": "200–400 ml in 200 l of water per acre",
+     "source": {
+      "title": "NIPHM / DPPQS: AESA based IPM package – Grapes",
+      "url": "https://www.niphm.gov.in/IPMPackages/Grapes.pdf"
+     }
+    }
+   ],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Grapes",
+     "url": "https://www.niphm.gov.in/IPMPackages/Grapes.pdf"
+    }
+   ]
+  },
+  "maize__common_rust": {
+   "crop": "maize",
+   "name": {
+    "en": "Common rust",
+    "hi": "रतुआ (रस्ट)",
+    "mr": "तांबेरा"
+   },
+   "type": "fungal",
+   "pathogen": "Puccinia sorghi",
+   "description": "A fungal disease that forms rust-coloured pustules on leaves.",
+   "symptoms": [
+    "Small, raised, reddish-brown powdery pustules on both leaf surfaces"
+   ],
+   "cultural": [
+    "Grow resistant or tolerant hybrids.",
+    "Remove volunteer plants and weeds."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Maize",
+     "url": "https://www.niphm.gov.in/IPMPackages/Maize.pdf"
+    }
+   ]
+  },
+  "maize__gray_leaf_spot": {
+   "crop": "maize",
+   "name": {
+    "en": "Grey leaf spot",
+    "hi": "धूसर पत्ती धब्बा",
+    "mr": "राखाडी पानावरील ठिपके"
+   },
+   "type": "fungal",
+   "pathogen": "Cercospora zeae-maydis",
+   "description": "A fungal leaf disease favoured by warm, humid weather and crop residue.",
+   "symptoms": [
+    "Long, narrow, rectangular grey-brown lesions between leaf veins"
+   ],
+   "cultural": [
+    "Rotate crops and manage infected residue.",
+    "Grow tolerant hybrids."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Maize",
+     "url": "https://www.niphm.gov.in/IPMPackages/Maize.pdf"
+    }
+   ]
+  },
+  "maize__healthy": {
+   "crop": "maize",
+   "name": {
+    "en": "Healthy maize leaf",
+    "hi": "स्वस्थ मक्का पत्ती",
+    "mr": "निरोगी मका पान"
+   },
+   "pathogen": null,
+   "chemical": [],
+   "type": "healthy",
+   "description": "No disease symptoms were recognised on this leaf.",
+   "symptoms": [],
+   "cultural": [
+    "Keep scouting the field weekly; check several plants, not just one leaf.",
+    "Remove weeds and volunteer plants that can carry pests and diseases."
+   ],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Maize",
+     "url": "https://www.niphm.gov.in/IPMPackages/Maize.pdf"
+    }
+   ]
+  },
+  "maize__northern_leaf_blight": {
+   "crop": "maize",
+   "name": {
+    "en": "Turcicum (northern) leaf blight",
+    "hi": "टर्सिकम पत्ती झुलसा",
+    "mr": "टर्सिकम पानांचा करपा"
+   },
+   "type": "fungal",
+   "pathogen": "Exserohilum turcicum",
+   "description": "A fungal leaf blight favoured by moderate temperatures and heavy dew.",
+   "symptoms": [
+    "Long, cigar-shaped grey-green to tan lesions on leaves"
+   ],
+   "cultural": [
+    "Grow resistant hybrids.",
+    "Rotate crops and manage infected residue."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Maize",
+     "url": "https://www.niphm.gov.in/IPMPackages/Maize.pdf"
+    }
+   ]
+  },
+  "pigeonpea__healthy": {
+   "crop": "pigeonpea",
+   "name": {
+    "en": "Healthy pigeonpea leaf",
+    "hi": "स्वस्थ अरहर पत्ती",
+    "mr": "निरोगी तूर पान"
+   },
+   "pathogen": null,
+   "chemical": [],
+   "type": "healthy",
+   "description": "No disease symptoms were recognised on this leaf.",
+   "symptoms": [],
+   "cultural": [
+    "Keep scouting the field weekly; check several plants, not just one leaf.",
+    "Remove weeds and volunteer plants that can carry pests and diseases."
+   ],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Redgram",
+     "url": "https://www.niphm.gov.in/IPMPackages/Redgram.pdf"
+    }
+   ]
+  },
+  "pigeonpea__leaf_spot": {
+   "crop": "pigeonpea",
+   "name": {
+    "en": "Leaf spot",
+    "hi": "पत्ती धब्बा",
+    "mr": "पानावरील ठिपके"
+   },
+   "type": "fungal",
+   "pathogen": "Cercospora spp. (reported)",
+   "description": "A fungal leaf spot favoured by humid weather.",
+   "symptoms": [
+    "Small brown spots on leaves; leaves may drop"
+   ],
+   "cultural": [
+    "Remove infected leaves and crop debris; rotate crops."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Redgram",
+     "url": "https://www.niphm.gov.in/IPMPackages/Redgram.pdf"
+    }
+   ]
+  },
+  "pigeonpea__leaf_webber": {
+   "crop": "pigeonpea",
+   "name": {
+    "en": "Leaf webber damage",
+    "hi": "पत्ती लपेटक",
+    "mr": "पाने गुंडाळणारी अळी"
+   },
+   "type": "pest",
+   "pathogen": "Grapholita / Maruca larvae (leaf webbers)",
+   "description": "Caterpillars web leaves and flowers together and feed inside.",
+   "symptoms": [
+    "Leaves and flowers webbed together; feeding damage inside the webs"
+   ],
+   "cultural": [
+    "Hand-pick and destroy webbed leaves with larvae; conserve natural enemies."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Redgram",
+     "url": "https://www.niphm.gov.in/IPMPackages/Redgram.pdf"
+    }
+   ]
+  },
+  "pigeonpea__sterility_mosaic": {
+   "crop": "pigeonpea",
+   "name": {
+    "en": "Sterility mosaic",
+    "hi": "बांझपन मोज़ेक",
+    "mr": "वांझ मोझॅक"
+   },
+   "type": "viral",
+   "pathogen": "Pigeonpea sterility mosaic virus (mite-borne)",
+   "description": "A virus disease spread by eriophyid mites; affected plants bear few or no pods.",
+   "symptoms": [
+    "Light green mosaic on small leaves",
+    "Bushy plants without flowers or pods"
+   ],
+   "cultural": [
+    "Grow resistant varieties; uproot and destroy infected plants early.",
+    "Remove volunteer and ratoon pigeonpea plants that carry the mites."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Redgram",
+     "url": "https://www.niphm.gov.in/IPMPackages/Redgram.pdf"
+    }
+   ]
+  },
+  "potato__early_blight": {
+   "crop": "potato",
+   "name": {
+    "en": "Early blight",
+    "hi": "अगेती झुलसा",
+    "mr": "लवकर येणारा करपा"
+   },
+   "type": "fungal",
+   "pathogen": "Alternaria solani",
+   "description": "A fungal disease of older leaves, common in warm weather with dew.",
+   "symptoms": [
+    "Dark brown spots with concentric rings on older leaves",
+    "Yellowing and drying of leaves"
+   ],
+   "cultural": [
+    "Use healthy seed tubers and varieties with resistance where available.",
+    "Remove crop debris; give balanced fertiliser."
+   ],
+   "chemical": [
+    {
+     "active_ingredient": "Mancozeb",
+     "formulation": "75% WP",
+     "dose": "600–800 g in 300 l of water per acre",
+     "source": {
+      "title": "NIPHM / DPPQS: AESA based IPM package – Potato",
+      "url": "https://www.niphm.gov.in/IPMPackages/Potato.pdf"
+     }
+    },
+    {
+     "active_ingredient": "Chlorothalonil",
+     "formulation": "75% WP",
+     "dose": "350–500 g in 240–320 l of water per acre",
+     "source": {
+      "title": "NIPHM / DPPQS: AESA based IPM package – Potato",
+      "url": "https://www.niphm.gov.in/IPMPackages/Potato.pdf"
+     }
+    },
+    {
+     "active_ingredient": "Copper oxychloride",
+     "formulation": "50% WP",
+     "dose": "1 kg in 300–400 l of water per acre",
+     "source": {
+      "title": "NIPHM / DPPQS: AESA based IPM package – Potato",
+      "url": "https://www.niphm.gov.in/IPMPackages/Potato.pdf"
+     }
+    }
+   ],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Potato",
+     "url": "https://www.niphm.gov.in/IPMPackages/Potato.pdf"
+    }
+   ]
+  },
+  "potato__healthy": {
+   "crop": "potato",
+   "name": {
+    "en": "Healthy potato leaf",
+    "hi": "स्वस्थ आलू पत्ती",
+    "mr": "निरोगी बटाटा पान"
+   },
+   "pathogen": null,
+   "chemical": [],
+   "type": "healthy",
+   "description": "No disease symptoms were recognised on this leaf.",
+   "symptoms": [],
+   "cultural": [
+    "Keep scouting the field weekly; check several plants, not just one leaf.",
+    "Remove weeds and volunteer plants that can carry pests and diseases."
+   ],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Potato",
+     "url": "https://www.niphm.gov.in/IPMPackages/Potato.pdf"
+    }
+   ]
+  },
+  "potato__late_blight": {
+   "crop": "potato",
+   "name": {
+    "en": "Late blight",
+    "hi": "पछेती झुलसा",
+    "mr": "उशिरा येणारा करपा"
+   },
+   "type": "oomycete",
+   "pathogen": "Phytophthora infestans",
+   "description": "The most destructive potato disease; spreads fast in cool, humid weather.",
+   "symptoms": [
+    "Water-soaked, dark patches on leaf tips and edges",
+    "White mould under leaves",
+    "Brown rot in tubers"
+   ],
+   "cultural": [
+    "Use healthy seed tubers and resistant varieties (several Kufri varieties are resistant).",
+    "Use short-duration varieties; destroy infected haulms and cull piles."
+   ],
+   "chemical": [
+    {
+     "active_ingredient": "Dimethomorph",
+     "formulation": "50% WP",
+     "dose": "400 g in 300 l of water per acre",
+     "source": {
+      "title": "NIPHM / DPPQS: AESA based IPM package – Potato",
+      "url": "https://www.niphm.gov.in/IPMPackages/Potato.pdf"
+     }
+    },
+    {
+     "active_ingredient": "Cyazofamid",
+     "formulation": "34.5% SC",
+     "dose": "80 ml in 200 l of water per acre",
+     "source": {
+      "title": "NIPHM / DPPQS: AESA based IPM package – Potato",
+      "url": "https://www.niphm.gov.in/IPMPackages/Potato.pdf"
+     }
+    },
+    {
+     "active_ingredient": "Mancozeb",
+     "formulation": "75% WP",
+     "dose": "600–800 g in 300 l of water per acre",
+     "source": {
+      "title": "NIPHM / DPPQS: AESA based IPM package – Potato",
+      "url": "https://www.niphm.gov.in/IPMPackages/Potato.pdf"
+     }
+    }
+   ],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Potato",
+     "url": "https://www.niphm.gov.in/IPMPackages/Potato.pdf"
+    }
+   ]
+  },
+  "rice__bacterial_blight": {
+   "crop": "rice",
+   "name": {
+    "en": "Bacterial leaf blight",
+    "hi": "जीवाणु पत्ती झुलसा",
+    "mr": "जिवाणूजन्य पानांचा करपा"
+   },
+   "type": "bacterial",
+   "pathogen": "Xanthomonas oryzae pv. oryzae",
+   "description": "A bacterial disease favoured by high nitrogen and flooding.",
+   "symptoms": [
+    "Yellow to white stripes starting from leaf tips and edges",
+    "Leaves dry and turn straw-coloured"
+   ],
+   "cultural": [
+    "Grow resistant varieties; avoid excess nitrogen.",
+    "Do not let water flow from infected to healthy fields; keep bunds clean."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Rice",
+     "url": "https://www.niphm.gov.in/IPMPackages/Rice.pdf"
+    }
+   ]
+  },
+  "rice__blast": {
+   "crop": "rice",
+   "name": {
+    "en": "Blast",
+    "hi": "झोंका (ब्लास्ट)",
+    "mr": "करपा (ब्लास्ट)"
+   },
+   "type": "fungal",
+   "pathogen": "Magnaporthe oryzae",
+   "description": "A fungal disease of leaves, nodes and panicles.",
+   "symptoms": [
+    "Spindle-shaped spots with grey centres and brown edges on leaves",
+    "Neck of the panicle turns black and breaks"
+   ],
+   "cultural": [
+    "Grow resistant varieties; avoid excess nitrogen; remove weed hosts."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Rice",
+     "url": "https://www.niphm.gov.in/IPMPackages/Rice.pdf"
+    }
+   ]
+  },
+  "rice__brown_spot": {
+   "crop": "rice",
+   "name": {
+    "en": "Brown spot",
+    "hi": "भूरा धब्बा",
+    "mr": "तपकिरी ठिपके"
+   },
+   "type": "fungal",
+   "pathogen": "Bipolaris oryzae",
+   "description": "A fungal disease common in nutrient-poor or stressed crops.",
+   "symptoms": [
+    "Oval brown spots with grey centres on leaves"
+   ],
+   "cultural": [
+    "Use healthy seed; correct soil nutrient deficiencies (balanced fertiliser)."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Rice",
+     "url": "https://www.niphm.gov.in/IPMPackages/Rice.pdf"
+    }
+   ]
+  },
+  "rice__tungro": {
+   "crop": "rice",
+   "name": {
+    "en": "Tungro",
+    "hi": "टुंग्रो",
+    "mr": "टुंग्रो"
+   },
+   "type": "viral",
+   "pathogen": "Rice tungro viruses (leafhopper-borne)",
+   "description": "A virus disease spread by green leafhoppers.",
+   "symptoms": [
+    "Yellow to orange leaves starting from the tip",
+    "Stunted plants with fewer tillers"
+   ],
+   "cultural": [
+    "Grow resistant varieties; remove infected plants and stubble; synchronise planting."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Rice",
+     "url": "https://www.niphm.gov.in/IPMPackages/Rice.pdf"
+    }
+   ]
+  },
+  "soybean__bacterial_blight": {
+   "crop": "soybean",
+   "name": {
+    "en": "Bacterial blight",
+    "hi": "जीवाणु झुलसा",
+    "mr": "जिवाणूजन्य करपा"
+   },
+   "type": "bacterial",
+   "pathogen": "Pseudomonas savastanoi pv. glycinea",
+   "description": "A bacterial disease spread by seed and rain splash in cool, wet weather.",
+   "symptoms": [
+    "Small angular water-soaked spots that turn brown with a yellow halo"
+   ],
+   "cultural": [
+    "Use clean seed; rotate crops and bury or remove residue."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Soyabean",
+     "url": "https://www.niphm.gov.in/IPMPackages/Soyabean.pdf"
+    }
+   ]
+  },
+  "soybean__cercospora_leaf_blight": {
+   "crop": "soybean",
+   "name": {
+    "en": "Cercospora leaf blight",
+    "hi": "सर्कोस्पोरा पत्ती झुलसा",
+    "mr": "सर्कोस्पोरा पानांचा करपा"
+   },
+   "type": "fungal",
+   "pathogen": "Cercospora kikuchii",
+   "description": "A fungal disease of upper leaves late in the season.",
+   "symptoms": [
+    "Purple-bronze, leathery discoloration of upper leaves",
+    "Purple staining of seeds"
+   ],
+   "cultural": [
+    "Use healthy seed; rotate crops and manage residue."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Soyabean",
+     "url": "https://www.niphm.gov.in/IPMPackages/Soyabean.pdf"
+    }
+   ]
+  },
+  "soybean__healthy": {
+   "crop": "soybean",
+   "name": {
+    "en": "Healthy soybean leaf",
+    "hi": "स्वस्थ सोयाबीन पत्ती",
+    "mr": "निरोगी सोयाबीन पान"
+   },
+   "pathogen": null,
+   "chemical": [],
+   "type": "healthy",
+   "description": "No disease symptoms were recognised on this leaf.",
+   "symptoms": [],
+   "cultural": [
+    "Keep scouting the field weekly; check several plants, not just one leaf.",
+    "Remove weeds and volunteer plants that can carry pests and diseases."
+   ],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Soyabean",
+     "url": "https://www.niphm.gov.in/IPMPackages/Soyabean.pdf"
+    }
+   ]
+  },
+  "soybean__rust": {
+   "crop": "soybean",
+   "name": {
+    "en": "Soybean rust",
+    "hi": "सोयाबीन रतुआ",
+    "mr": "सोयाबीन तांबेरा"
+   },
+   "type": "fungal",
+   "pathogen": "Phakopsora pachyrhizi",
+   "description": "A fungal disease that can cause early leaf drop in humid weather.",
+   "symptoms": [
+    "Small tan to reddish-brown lesions with pustules, mostly on the underside of leaves",
+    "Leaves yellow and drop early"
+   ],
+   "cultural": [
+    "Sow at the recommended time and grow tolerant varieties.",
+    "Avoid very dense sowing; remove volunteer soybean plants."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Soyabean",
+     "url": "https://www.niphm.gov.in/IPMPackages/Soyabean.pdf"
+    }
+   ]
+  },
+  "soybean__sudden_death_syndrome": {
+   "crop": "soybean",
+   "name": {
+    "en": "Sudden death syndrome",
+    "hi": "अचानक मृत्यु रोग",
+    "mr": "अचानक मर रोग"
+   },
+   "type": "fungal",
+   "pathogen": "Fusarium virguliforme",
+   "description": "A soil-borne root disease whose leaf symptoms appear around flowering.",
+   "symptoms": [
+    "Yellow patches between veins that turn brown while veins stay green",
+    "Leaves drop"
+   ],
+   "cultural": [
+    "Improve drainage; rotate crops; avoid soil compaction."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Soyabean",
+     "url": "https://www.niphm.gov.in/IPMPackages/Soyabean.pdf"
+    }
+   ]
+  },
+  "sugarcane__healthy": {
+   "crop": "sugarcane",
+   "name": {
+    "en": "Healthy sugarcane leaf",
+    "hi": "स्वस्थ गन्ना पत्ती",
+    "mr": "निरोगी ऊस पान"
+   },
+   "pathogen": null,
+   "chemical": [],
+   "type": "healthy",
+   "description": "No disease symptoms were recognised on this leaf.",
+   "symptoms": [],
+   "cultural": [
+    "Keep scouting the field weekly; check several plants, not just one leaf.",
+    "Remove weeds and volunteer plants that can carry pests and diseases."
+   ],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Sugarcane",
+     "url": "https://www.niphm.gov.in/IPMPackages/Sugarcane.pdf"
+    }
+   ]
+  },
+  "sugarcane__mosaic": {
+   "crop": "sugarcane",
+   "name": {
+    "en": "Mosaic",
+    "hi": "मोज़ेक",
+    "mr": "मोझॅक"
+   },
+   "type": "viral",
+   "pathogen": "Sugarcane mosaic virus (aphid-borne, and through infected setts)",
+   "description": "A virus disease; infected setts carry it to the next crop.",
+   "symptoms": [
+    "Pale green and dark green streaks or mottling on leaves"
+   ],
+   "cultural": [
+    "Use healthy setts from disease-free seed nurseries; rogue out infected clumps."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Sugarcane",
+     "url": "https://www.niphm.gov.in/IPMPackages/Sugarcane.pdf"
+    }
+   ]
+  },
+  "sugarcane__red_rot": {
+   "crop": "sugarcane",
+   "name": {
+    "en": "Red rot",
+    "hi": "लाल सड़न",
+    "mr": "लाल कूज"
+   },
+   "type": "fungal",
+   "pathogen": "Colletotrichum falcatum",
+   "description": "A serious sugarcane disease spread mainly through infected setts.",
+   "symptoms": [
+    "Drying of leaves from the top",
+    "Red inner tissue with white patches when the cane is split",
+    "Sour smell"
+   ],
+   "cultural": [
+    "Plant healthy setts from disease-free nurseries; grow resistant varieties.",
+    "Uproot and destroy affected clumps; avoid ratooning a diseased crop; rotate crops."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Sugarcane",
+     "url": "https://www.niphm.gov.in/IPMPackages/Sugarcane.pdf"
+    }
+   ]
+  },
+  "sugarcane__rust": {
+   "crop": "sugarcane",
+   "name": {
+    "en": "Rust",
+    "hi": "रतुआ (रस्ट)",
+    "mr": "तांबेरा"
+   },
+   "type": "fungal",
+   "pathogen": "Puccinia spp.",
+   "description": "A fungal leaf disease favoured by humid weather.",
+   "symptoms": [
+    "Small yellow spots that become orange-brown pustules on leaves"
+   ],
+   "cultural": [
+    "Grow resistant varieties; avoid excess nitrogen."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Sugarcane",
+     "url": "https://www.niphm.gov.in/IPMPackages/Sugarcane.pdf"
+    }
+   ]
+  },
+  "sugarcane__yellow_leaf": {
+   "crop": "sugarcane",
+   "name": {
+    "en": "Yellow leaf",
+    "hi": "पीली पत्ती",
+    "mr": "पिवळे पान"
+   },
+   "type": "viral",
+   "pathogen": "Sugarcane yellow leaf virus (aphid-borne)",
+   "description": "A virus disease that causes yellowing of the leaf midrib.",
+   "symptoms": [
+    "Yellowing of the midrib on the underside of leaves, spreading to the leaf blade"
+   ],
+   "cultural": [
+    "Use healthy setts (e.g. from tissue-culture or heat-treated seed nurseries)."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Sugarcane",
+     "url": "https://www.niphm.gov.in/IPMPackages/Sugarcane.pdf"
+    }
+   ]
+  },
+  "tomato__bacterial_spot": {
+   "crop": "tomato",
+   "name": {
+    "en": "Bacterial spot",
+    "hi": "जीवाणु धब्बा",
+    "mr": "जिवाणूजन्य ठिपके"
+   },
+   "type": "bacterial",
+   "pathogen": "Xanthomonas spp.",
+   "description": "A bacterial disease spread by rain splash, infected seed and transplants.",
+   "symptoms": [
+    "Small, dark, water-soaked spots on leaves, sometimes with a yellow halo",
+    "Raised scabby spots on fruit"
+   ],
+   "cultural": [
+    "Use seed and seedlings from disease-free nurseries.",
+    "Avoid overhead irrigation and working in the field when plants are wet.",
+    "Remove crop debris after harvest and rotate with non-solanaceous crops."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Tomato",
+     "url": "https://www.niphm.gov.in/IPMPackages/Tomato.pdf"
+    }
+   ]
+  },
+  "tomato__early_blight": {
+   "crop": "tomato",
+   "name": {
+    "en": "Early blight",
+    "hi": "अगेती झुलसा",
+    "mr": "लवकर येणारा करपा"
+   },
+   "type": "fungal",
+   "pathogen": "Alternaria solani",
+   "description": "A fungal leaf disease that starts on older, lower leaves and spreads upwards.",
+   "symptoms": [
+    "Brown spots with concentric rings (target-like) on older leaves",
+    "Yellowing around the spots; leaves dry and drop"
+   ],
+   "cultural": [
+    "Use resistant or tolerant varieties.",
+    "Change the nursery bed location every season; remove weeds and volunteer tomato plants.",
+    "Avoid planting overlapping tomato crops in adjacent fields; fertilise properly."
+   ],
+   "chemical": [
+    {
+     "active_ingredient": "Mancozeb",
+     "formulation": "75% WG",
+     "dose": "400 g in 200 l of water per acre",
+     "source": {
+      "title": "NIPHM / DPPQS: AESA based IPM package – Tomato",
+      "url": "https://www.niphm.gov.in/IPMPackages/Tomato.pdf"
+     }
+    },
+    {
+     "active_ingredient": "Azoxystrobin",
+     "formulation": "23% SC",
+     "dose": "200 ml in 200 l of water per acre",
+     "source": {
+      "title": "NIPHM / DPPQS: AESA based IPM package – Tomato",
+      "url": "https://www.niphm.gov.in/IPMPackages/Tomato.pdf"
+     }
+    },
+    {
+     "active_ingredient": "Copper oxychloride",
+     "formulation": "50% WP",
+     "dose": "1000 g in 300–400 l of water per acre",
+     "source": {
+      "title": "NIPHM / DPPQS: AESA based IPM package – Tomato",
+      "url": "https://www.niphm.gov.in/IPMPackages/Tomato.pdf"
+     }
+    }
+   ],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Tomato",
+     "url": "https://www.niphm.gov.in/IPMPackages/Tomato.pdf"
+    }
+   ]
+  },
+  "tomato__healthy": {
+   "crop": "tomato",
+   "name": {
+    "en": "Healthy tomato leaf",
+    "hi": "स्वस्थ टमाटर पत्ती",
+    "mr": "निरोगी टोमॅटो पान"
+   },
+   "pathogen": null,
+   "chemical": [],
+   "type": "healthy",
+   "description": "No disease symptoms were recognised on this leaf.",
+   "symptoms": [],
+   "cultural": [
+    "Keep scouting the field weekly; check several plants, not just one leaf.",
+    "Remove weeds and volunteer plants that can carry pests and diseases."
+   ],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Tomato",
+     "url": "https://www.niphm.gov.in/IPMPackages/Tomato.pdf"
+    }
+   ]
+  },
+  "tomato__late_blight": {
+   "crop": "tomato",
+   "name": {
+    "en": "Late blight",
+    "hi": "पछेती झुलसा",
+    "mr": "उशिरा येणारा करपा"
+   },
+   "type": "oomycete",
+   "pathogen": "Phytophthora infestans",
+   "description": "A fast-spreading disease in cool, humid or rainy weather that can destroy a crop in days.",
+   "symptoms": [
+    "Large, water-soaked, grey-green to brown patches on leaves",
+    "White mould on the underside of leaves in humid weather",
+    "Brown, firm patches on fruit"
+   ],
+   "cultural": [
+    "Keep the field clean (field sanitation) and destroy alternate hosts.",
+    "Give light irrigation; avoid long leaf wetness.",
+    "Remove and destroy badly affected plants."
+   ],
+   "chemical": [
+    {
+     "active_ingredient": "Cymoxanil + Mancozeb",
+     "formulation": "8% + 64% WP",
+     "dose": "600 g in 200–300 l of water per acre",
+     "source": {
+      "title": "NIPHM / DPPQS: AESA based IPM package – Tomato",
+      "url": "https://www.niphm.gov.in/IPMPackages/Tomato.pdf"
+     }
+    },
+    {
+     "active_ingredient": "Famoxadone + Cymoxanil",
+     "formulation": "16.6% + 22.1% SC",
+     "dose": "200 g in 200 l of water per acre",
+     "source": {
+      "title": "NIPHM / DPPQS: AESA based IPM package – Tomato",
+      "url": "https://www.niphm.gov.in/IPMPackages/Tomato.pdf"
+     }
+    },
+    {
+     "active_ingredient": "Copper oxychloride",
+     "formulation": "50% WP",
+     "dose": "1000 g in 300–400 l of water per acre",
+     "source": {
+      "title": "NIPHM / DPPQS: AESA based IPM package – Tomato",
+      "url": "https://www.niphm.gov.in/IPMPackages/Tomato.pdf"
+     }
+    }
+   ],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Tomato",
+     "url": "https://www.niphm.gov.in/IPMPackages/Tomato.pdf"
+    }
+   ]
+  },
+  "tomato__leaf_mold": {
+   "crop": "tomato",
+   "name": {
+    "en": "Leaf mould",
+    "hi": "पत्ती फफूंद",
+    "mr": "पानांवरील बुरशी"
+   },
+   "type": "fungal",
+   "pathogen": "Passalora fulva",
+   "description": "A fungal disease mostly of humid, poorly ventilated crops (e.g. polyhouses).",
+   "symptoms": [
+    "Pale yellow patches on the upper leaf surface",
+    "Olive-green to brown velvety mould on the underside"
+   ],
+   "cultural": [
+    "Improve air movement: wider spacing, staking and pruning lower leaves.",
+    "Reduce humidity in protected cultivation; avoid wetting the leaves."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Tomato",
+     "url": "https://www.niphm.gov.in/IPMPackages/Tomato.pdf"
+    }
+   ]
+  },
+  "tomato__mosaic_virus": {
+   "crop": "tomato",
+   "name": {
+    "en": "Mosaic virus",
+    "hi": "मोज़ेक विषाणु",
+    "mr": "मोझॅक विषाणू"
+   },
+   "type": "viral",
+   "pathogen": "Tomato mosaic virus",
+   "description": "A virus disease spread by contact (hands, tools) and infected seed. It cannot be cured.",
+   "symptoms": [
+    "Light and dark green mottling of leaves",
+    "Distorted, fern-like leaves; stunted plants"
+   ],
+   "cultural": [
+    "Remove and destroy infected plants; wash hands and tools after handling them.",
+    "Use healthy seed and seedlings."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Tomato",
+     "url": "https://www.niphm.gov.in/IPMPackages/Tomato.pdf"
+    }
+   ]
+  },
+  "tomato__septoria_leaf_spot": {
+   "crop": "tomato",
+   "name": {
+    "en": "Septoria leaf spot",
+    "hi": "सेप्टोरिया पत्ती धब्बा",
+    "mr": "सेप्टोरिया पानावरील ठिपके"
+   },
+   "type": "fungal",
+   "pathogen": "Septoria lycopersici",
+   "description": "A fungal leaf spot that starts on lower leaves after wet weather.",
+   "symptoms": [
+    "Many small round spots with dark borders and grey centres",
+    "Tiny black dots in the centre of the spots; heavy leaf drop"
+   ],
+   "cultural": [
+    "Remove and destroy infected lower leaves and crop debris.",
+    "Rotate with non-solanaceous crops and avoid overhead irrigation."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Tomato",
+     "url": "https://www.niphm.gov.in/IPMPackages/Tomato.pdf"
+    }
+   ]
+  },
+  "tomato__spider_mites": {
+   "crop": "tomato",
+   "name": {
+    "en": "Spider mites",
+    "hi": "मकड़ी (माइट)",
+    "mr": "कोळी (माइट)"
+   },
+   "type": "pest",
+   "pathogen": "Tetranychus spp.",
+   "description": "Tiny mites that suck sap from the underside of leaves, mostly in hot, dry weather.",
+   "symptoms": [
+    "Fine yellow speckles on leaves; leaves turn bronze and dry",
+    "Fine webbing on the underside of leaves"
+   ],
+   "cultural": [
+    "Conserve natural enemies such as predatory mites; avoid unnecessary broad-spectrum sprays.",
+    "Keep plants well watered and remove heavily infested leaves."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Tomato",
+     "url": "https://www.niphm.gov.in/IPMPackages/Tomato.pdf"
+    }
+   ]
+  },
+  "tomato__target_spot": {
+   "crop": "tomato",
+   "name": {
+    "en": "Target spot",
+    "hi": "टारगेट स्पॉट",
+    "mr": "टार्गेट ठिपके"
+   },
+   "type": "fungal",
+   "pathogen": "Corynespora cassiicola",
+   "description": "A fungal leaf spot favoured by warm, humid weather.",
+   "symptoms": [
+    "Brown spots with light centres and rings on leaves, stems and fruit"
+   ],
+   "cultural": [
+    "Improve air movement and avoid long leaf wetness.",
+    "Remove crop debris and rotate crops."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Tomato",
+     "url": "https://www.niphm.gov.in/IPMPackages/Tomato.pdf"
+    }
+   ]
+  },
+  "tomato__yellow_leaf_curl_virus": {
+   "crop": "tomato",
+   "name": {
+    "en": "Leaf curl virus",
+    "hi": "पत्ती मरोड़ विषाणु",
+    "mr": "पाने गुंडाळणारा विषाणू (लीफ कर्ल)"
+   },
+   "type": "viral",
+   "pathogen": "Tomato leaf curl viruses (whitefly-borne)",
+   "description": "A virus disease spread by whitefly. Infected plants cannot be cured.",
+   "symptoms": [
+    "Upward or downward curling and crinkling of leaves",
+    "Yellow leaf edges, stunted plants",
+    "Few flowers and fruits"
+   ],
+   "cultural": [
+    "Raise the nursery under insect-proof net to keep whitefly out.",
+    "Remove and destroy infected seedlings and plants (roguing); use healthy seedlings only.",
+    "Grow barrier crops such as maize or sorghum around the field; use yellow sticky traps (about 10 per acre) to monitor whitefly."
+   ],
+   "chemical": [],
+   "sources": [
+    {
+     "title": "NIPHM / DPPQS: AESA based IPM package – Tomato",
+     "url": "https://www.niphm.gov.in/IPMPackages/Tomato.pdf"
+    }
+   ]
+  }
+ }
+}
