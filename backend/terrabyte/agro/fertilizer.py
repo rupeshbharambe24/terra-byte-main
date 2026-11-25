@@ -271,13 +271,21 @@ def rdf_options(crop: str) -> list[RDFOption]:
     return out
 
 
-def rdf_option(crop: str, option_id: int | None) -> RDFOption | None:
-    """The requested option, or the first usable one (complete entries first)."""
+def season_matches(option_season: str | None, season: str | None) -> bool:
+    """RDF seasons can be combined, e.g. "kharif|rabi|summer"."""
+    if not option_season or not season:
+        return False
+    return season in option_season.split("|")
+
+
+def rdf_option(crop: str, option_id: int | None, season: str | None = None) -> RDFOption | None:
+    """The requested option, or the first usable one: same season first, then complete
+    entries first."""
     options = rdf_options(crop)
     if option_id is not None:
         return next((o for o in options if o.id == option_id), None)
     usable = [o for o in options if o.usable]
-    usable.sort(key=lambda o: o.status != "complete")
+    usable.sort(key=lambda o: (not season_matches(o.season, season), o.status != "complete"))
     return usable[0] if usable else None
 
 

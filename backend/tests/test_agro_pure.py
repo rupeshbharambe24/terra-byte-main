@@ -110,6 +110,14 @@ def test_rdf_options_flag_unusable_entries():
     assert default is not None and default.usable and default.status == "complete"
 
 
+def test_default_rdf_prefers_the_field_season():
+    rabi = fert.rdf_option("onion", None, "rabi")
+    assert rabi is not None and rabi.season == "rabi"
+    tomato = fert.rdf_option("tomato", None, "summer")
+    assert tomato is not None and fert.season_matches(tomato.season, "summer")
+    assert not fert.season_matches(None, "rabi")
+
+
 def test_rdf_range_uses_lower_value_with_note():
     jowar = next(o for o in fert.rdf_options("jowar_sorghum") if o.season == "kharif")
     assert jowar.n == 60 and jowar.p2o5 == 30

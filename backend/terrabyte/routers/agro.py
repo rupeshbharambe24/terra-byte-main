@@ -199,18 +199,21 @@ def fertilizer_dose(data: DoseIn, farmer: FarmerUser, db: DbSession) -> dict[str
     crop = resolve_crop(data.crop)
     if crop is None:
         raise ApiError(422, "unknown_crop", "Unknown crop.")
-    option = fert.rdf_option(crop, data.rdf_id)
+    area = data.area_acres
+    test = None
+    season = None
+    if data.field_id is not None:
+        field = _own_field(db, farmer, data.field_id)
+        area = area or field.area_acres
+        if resolve_crop(field.current_crop) == crop:
+            season = field.season
+    option = fert.rdf_option(crop, data.rdf_id, season)
     if option is None:
         raise ApiError(404, "no_rdf", "No recommended dose is available for this crop yet.")
     if not option.usable:
         raise ApiError(
             422, "rdf_not_usable", "This recommendation cannot be used for a calculation."
         )
-    area = data.area_acres
-    test = None
-    if data.field_id is not None:
-        field = _own_field(db, farmer, data.field_id)
-        area = area or field.area_acres
     if data.soil_test_id is not None:
         test = db.get(SoilTest, data.soil_test_id)
         owner = db.get(Field, test.field_id).owner_id if test else None

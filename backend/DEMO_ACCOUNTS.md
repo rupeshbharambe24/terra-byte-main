@@ -21,14 +21,15 @@ All accounts use the password **`Demo@12345`**. Log in with the mobile number or
 - The pending vendor (`9000000023`) cannot log in until an admin approves it on
   *Admin → Vendor approvals*; use it to try the approval flow.
 - `uv run terrabyte-seed --reset` **wipes the development database** and recreates it
-  with these accounts and the demo walkthrough (re-run `terrabyte-import-kvk` after it).
+  with these accounts, the demo walkthrough and the bundled KVK directory.
 - Starter products and equipment belong to the demo vendors. They are labelled as demo
   listings; prices are vendor-entered listing prices, not market data.
 - The walkthrough (created once): orders in every state (delivered, shipped, placed,
   accepted, rejected), an accepted and a requested equipment booking, one completed
   rental, a consultation thread, an open question, an expert article, forum posts and
   one open report. All of it is authored by the demo users and marked "(demo)".
-- The KVK directory is empty until the verified list is imported with
+- The 50 Maharashtra KVKs (official sources, verified 2026-11-24) are imported from
+  `terrabyte/reference/kvk_maharashtra.json`; update them with
   `uv run terrabyte-import-kvk <file.json>`.
 - Create a real admin with `uv run terrabyte-admin create-admin` (admins cannot
   self-register).

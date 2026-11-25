@@ -449,8 +449,14 @@ const SoilFertilizer: React.FC = () => {
   const usable = useMemo(() => (options.data?.options ?? []).filter((o) => o.usable), [options.data]);
   const flagged = useMemo(() => (options.data?.options ?? []).filter((o) => !o.usable), [options.data]);
   useEffect(() => {
-    setRdfId(usable.length > 0 ? String(usable.find((o) => o.status === 'complete')?.id ?? usable[0].id) : '');
-  }, [usable]);
+    // Same season as the field's crop plan first, then complete entries (as the server does).
+    const season = toCropKey(field?.current_crop) === crop ? field?.season : null;
+    const sameSeason = (o: RDFOption) => Boolean(season && o.season?.split('|').includes(season));
+    const ranked = [...usable].sort(
+      (a, b) => Number(sameSeason(b)) - Number(sameSeason(a)) || Number(b.status === 'complete') - Number(a.status === 'complete')
+    );
+    setRdfId(ranked.length > 0 ? String(ranked[0].id) : '');
+  }, [usable, crop, field?.current_crop, field?.season]);
 
   const doseInput = {
     crop,
