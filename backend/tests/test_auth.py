@@ -104,11 +104,10 @@ def test_patch_me_and_password(client):
     assert login(client, "9876543210", "another-pass-2").status_code == 200
 
 
-def test_ml_placeholders_return_503(client):
-    for path in ("/api/disease/detect",):
-        res = client.post(path)
-        assert res.status_code == 503
-        assert res.json()["detail"] == "being rebuilt"
+def test_old_prototype_ml_endpoints_are_gone(client):
+    # The broken prototype endpoints were replaced by /disease, /prices and /agro (Phase 3).
+    for path in ("/api/disease/detect", "/api/price-forecast", "/api/fertilizer-recommendation"):
+        assert client.post(path).status_code in (404, 405)
 
 
 def test_error_responses_have_no_stack_trace(client):

@@ -3,6 +3,7 @@
 from terrabyte.models.advisory import KVK, Consultation, ConsultationMessage, KnowledgeArticle
 from terrabyte.models.community import ForumPost, ForumReply, ForumReport, Notification
 from terrabyte.models.data import DataImport, LedgerEntry, MandiPrice, ModelEvaluation
+from terrabyte.models.disease import DiseaseCheck
 from terrabyte.models.enums import (
     BookingStatus,
     ConsultationStatus,
@@ -30,6 +31,7 @@ __all__ = [
     "ConsultationMessage",
     "ConsultationStatus",
     "DataImport",
+    "DiseaseCheck",
     "Equipment",
     "Field",
     "KnowledgeArticle",

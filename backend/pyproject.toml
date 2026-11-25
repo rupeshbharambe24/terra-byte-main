@@ -8,6 +8,8 @@ license = "MIT"
 dependencies = [
     "fastapi>=0.165.0",
     "httpx>=0.28.1",
+    "numpy>=2.5.5",
+    "onnxruntime>=1.32.0",
     "openpyxl>=3.1.5",
     "pillow>=13.0.0",
     "pwdlib[argon2]>=0.4.2",
@@ -27,6 +29,7 @@ terrabyte-import-kvk = "terrabyte.kvk_import:main"
 terrabyte-import-legacy-prices = "terrabyte.prices.legacy_import:main"
 terrabyte-ingest-prices = "terrabyte.prices.ingest:main"
 terrabyte-backtest-prices = "terrabyte.prices.evaluate:main"
+terrabyte-load-model-metrics = "terrabyte.disease.metrics:main"
 
 [build-system]
 requires = ["hatchling"]

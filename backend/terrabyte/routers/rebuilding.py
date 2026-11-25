@@ -10,9 +10,8 @@ from terrabyte.errors import ApiError
 
 router = APIRouter(tags=["being rebuilt"])
 
-_PATHS = [
-    "/disease/{rest:path}",
-]
+# Every prototype endpoint has been rebuilt (Phase 3); kept empty for any future placeholder.
+_PATHS: list[str] = []
 
 
 def _being_rebuilt() -> None:

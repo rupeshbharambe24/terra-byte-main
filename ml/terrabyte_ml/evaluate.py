@@ -27,7 +27,7 @@ from . import taxonomy as tx
 from .data import ImageDataset, eval_transform, load_index
 from .paths import REPORTS
 from .sources import SOURCES
-from .train import RUN, build_model, device, predict_logits
+from .train import RUN, build_model, device, predict_logits, single_thread
 
 VERSION = "disease-mnv3l-v1"
 TPR_TARGET = 0.95
@@ -80,7 +80,12 @@ class Scorer:
 
 
 def run_logits(rows, classes, model, dev):
-    dl = DataLoader(ImageDataset(rows, classes, eval_transform()), batch_size=128, num_workers=6)
+    dl = DataLoader(
+        ImageDataset(rows, classes, eval_transform()),
+        batch_size=128,
+        num_workers=4,
+        worker_init_fn=single_thread,
+    )
     return predict_logits(model, dl, dev)
 
 

@@ -34,6 +34,7 @@ class Settings(BaseSettings):
     upload_dir: Path = DATA_DIR / "uploads"
     max_upload_mb: int = 8
     data_gov_in_api_key: str | None = None
+    disease_model_dir: Path = BACKEND_DIR / "models" / "disease"
 
     @property
     def max_upload_bytes(self) -> int:

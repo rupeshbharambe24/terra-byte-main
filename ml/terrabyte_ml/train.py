@@ -26,6 +26,11 @@ BACKBONE = "mobilenetv3_large_100.ra_in1k"
 RUN = RUNS / "disease_v1"
 
 
+def single_thread(_worker_id: int) -> None:
+    """Data-loader workers: one thread each (avoids oversubscribing the CPU)."""
+    torch.set_num_threads(1)
+
+
 def device() -> torch.device:
     return torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 
@@ -71,14 +76,16 @@ def main(epochs: int = 12, batch_size: int = 64, limit_minutes: float = 75.0) ->
         ImageDataset(train_rows, classes, train_transform()),
         batch_size=batch_size,
         sampler=sampler,
-        num_workers=8,
+        num_workers=6,
+        worker_init_fn=single_thread,
         persistent_workers=True,
         drop_last=True,
     )
     val_dl = DataLoader(
         ImageDataset(val_rows, classes, eval_transform()),
         batch_size=128,
-        num_workers=6,
+        num_workers=4,
+        worker_init_fn=single_thread,
         persistent_workers=True,
     )
     dev = device()
@@ -118,6 +125,8 @@ def main(epochs: int = 12, batch_size: int = 64, limit_minutes: float = 75.0) ->
                 sched.step()
             seen += len(y)
             loss_sum += loss.item() * len(y)
+            if (seen // len(y)) % 50 == 0:
+                print(f"  {seen} images, {seen / (time.time() - t0):.0f} img/s", flush=True)
         logits, ys = predict_logits(model, val_dl, dev)
         f1 = macro_f1(ys, logits.argmax(1), len(classes))
         acc = float((logits.argmax(1) == ys).mean())

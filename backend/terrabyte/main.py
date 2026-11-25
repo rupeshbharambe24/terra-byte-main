@@ -22,6 +22,7 @@ from terrabyte.routers import (
     agro,
     auth,
     dashboard,
+    disease,
     farm,
     forum,
     health,
@@ -90,6 +91,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         agro,
         reference,
         prices,
+        disease,
         rebuilding,
     ):
         app.include_router(module.router, prefix="/api")
